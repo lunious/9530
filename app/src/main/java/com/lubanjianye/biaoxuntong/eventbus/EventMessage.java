@@ -19,6 +19,10 @@ public class EventMessage {
     public static final String BIND_COMPANY_SUCCESS = "company";
     public static final String TOKEN_FALSE = "token_false";
 
+    public static final String LOCA_AREA = "loca_area";
+
+    public static final String LOCA_AREA_CHANGE = "loca_area_change";
+
 
     public final String message;
 

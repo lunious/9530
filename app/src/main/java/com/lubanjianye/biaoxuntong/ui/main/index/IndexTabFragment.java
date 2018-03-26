@@ -2,9 +2,10 @@ package com.lubanjianye.biaoxuntong.ui.main.index;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import com.baidu.location.LocationClientOption;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.igexin.sdk.PushManager;
 import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
@@ -51,6 +53,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
+import pub.devrel.easypermissions.AfterPermissionGranted;
+import pub.devrel.easypermissions.EasyPermissions;
+
 import static com.lubanjianye.biaoxuntong.app.BiaoXunTong.getApplicationContext;
 
 /**
@@ -62,13 +67,16 @@ import static com.lubanjianye.biaoxuntong.app.BiaoXunTong.getApplicationContext;
  * 描述:     TODO
  */
 
-public class IndexTabFragment extends BaseFragment implements View.OnClickListener, BDLocationListener {
+public class IndexTabFragment extends BaseFragment implements View.OnClickListener, BDLocationListener, EasyPermissions.PermissionCallbacks {
 
     private SlidingTabLayout indexStlTab = null;
     private ViewPager indexVp = null;
     private LinearLayout llSearch = null;
     private ImageView ivAdd = null;
 
+    private List<HotCity> hotCities;
+
+    public LocationClient mLocationClient = null;
 
     private String clientID = PushManager.getInstance().getClientid(getApplicationContext());
 
@@ -80,13 +88,13 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
     private long userId = 0;
     private PromptDialog promptDialog;
 
-    private Boolean IsToken = true;
     private boolean isInitCache = false;
 
     private LinearLayout ll_location = null;
     private AppCompatTextView tv_location = null;
 
-    public LocationClient mLocationClient = null;
+
+    private String locationArea = "";
 
 
     @Override
@@ -138,6 +146,15 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
         mLocationClient.setLocOption(option);
 
 
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
+            String area = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
+            tv_location.setText(area);
+
+        } else {
+            tv_location.setText("四川");
+        }
+
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -162,18 +179,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
     public void initData() {
 
         requestData();
-        //开始定位
-        mLocationClient.start();
 
-        //热门城市
-        hotCities = new ArrayList<>();
-        hotCities.add(new HotCity("四川", "四川", null));
-        hotCities.add(new HotCity("重庆", "重庆", null));
-
-    }
-
-    @Override
-    public void initEvent() {
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.TOKEN_FALSE)) {
 
@@ -201,10 +207,34 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
     }
 
+    @Override
+    public void initEvent() {
+        //热门城市
+        hotCities = new ArrayList<>();
+        hotCities.add(new HotCity("四川", "四川", null));
+        hotCities.add(new HotCity("重庆", "重庆", null));
+
+
+        BiaoXunTong.getHandler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //检查定位
+                locationTask();
+            }
+        }, 4000);
+
+
+    }
+
 
     public void requestData() {
 
-        Log.d("DASBDASDASD", "我被调用了");
+        String mDiqu = tv_location.getText().toString();
+
+        Log.d("DASBDASDASD", mDiqu);
+
+        //保存地区
+        AppSharePreferenceMgr.put(getContext(), EventMessage.LOCA_AREA, mDiqu);
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             //得到用户userId
@@ -216,7 +246,8 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
             OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
                     .params("userId", userId)
                     .params("clientId", clientID)
-                    .cacheKey("index_tab_cache_login" + userId)
+                    .params("diqu", mDiqu)
+                    .cacheKey("index_tab_cache_login" + userId + mDiqu)
                     .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                     .cacheTime(3600 * 48000)
                     .execute(new StringCallback() {
@@ -239,10 +270,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                     mList.add(name);
                                 }
 
-                                mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
-                                indexVp.setAdapter(mAdapter);
-                                indexStlTab.setViewPager(indexVp);
-                                mAdapter.notifyDataSetChanged();
+                                setUI(mList);
 
                             } else {
                                 ToastUtil.shortToast(getContext(), message);
@@ -268,10 +296,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                         mList.add(name);
                                     }
 
-                                    mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
-                                    indexVp.setAdapter(mAdapter);
-                                    indexStlTab.setViewPager(indexVp);
-                                    mAdapter.notifyDataSetChanged();
+                                    setUI(mList);
 
                                 } else {
                                     ToastUtil.shortToast(getContext(), message);
@@ -285,7 +310,8 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
         } else {
             OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
                     .params("clientId", clientID)
-                    .cacheKey("index_tab_cache_no_login" + userId)
+                    .params("diqu", mDiqu)
+                    .cacheKey("index_tab_cache_no_login" + userId + mDiqu)
                     .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                     .cacheTime(3600 * 48000)
                     .execute(new StringCallback() {
@@ -307,10 +333,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                     mList.add(name);
                                 }
 
-                                mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
-                                indexVp.setAdapter(mAdapter);
-                                indexStlTab.setViewPager(indexVp);
-                                mAdapter.notifyDataSetChanged();
+                                setUI(mList);
                             } else {
                                 ToastUtil.shortToast(getContext(), message);
                             }
@@ -335,10 +358,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                         mList.add(name);
                                     }
 
-                                    mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
-                                    indexVp.setAdapter(mAdapter);
-                                    indexStlTab.setViewPager(indexVp);
-                                    mAdapter.notifyDataSetChanged();
+                                    setUI(mList);
 
                                 } else {
                                     ToastUtil.shortToast(getContext(), message);
@@ -352,7 +372,26 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
     }
 
-    private List<HotCity> hotCities;
+
+    private void setUI(List<String> mList) {
+        mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
+        indexVp.setAdapter(mAdapter);
+        indexStlTab.setViewPager(indexVp);
+        mAdapter.notifyDataSetChanged();
+
+
+        BiaoXunTong.getHandler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (promptDialog != null) {
+                    promptDialog.dismissImmediately();
+                }
+            }
+        }, 1000);
+
+
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -364,41 +403,182 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                 startActivity(new Intent(getActivity(), SortColumnActivity.class));
                 break;
             case R.id.ll_location:
-                CityPicker.getInstance()
-                        .setFragmentManager(getFragmentManager())
-                        .enableAnimation(true)
-                        .setAnimationStyle(R.style.CustomAnim)
-                        .setLocatedCity(new LocatedCity("成都", "浙江", "101210101"))
-                        .setHotCities(hotCities)
-                        .setOnPickListener(new OnPickListener() {
-                            @Override
-                            public void onPick(int position, City data) {
-                                tv_location.setText(data == null ? "四川" : String.format("%s", data.getName()));
-                            }
+                if (!TextUtils.isEmpty(locationArea)) {
+                    CityPicker.getInstance()
+                            .setFragmentManager(getFragmentManager())
+                            .enableAnimation(true)
+                            .setAnimationStyle(R.style.CustomAnim)
+                            .setLocatedCity(new LocatedCity(locationArea, "", ""))
+                            .setHotCities(hotCities)
+                            .setOnPickListener(new OnPickListener() {
+                                @Override
+                                public void onPick(int position, City data) {
 
-                            @Override
-                            public void onLocate() {
-                                //开始定位，这里模拟一下定位
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        CityPicker.getInstance()
-                                                .locateComplete(new LocatedCity("成都", "广东", "101280601"),
-                                                        LocateState.SUCCESS);
+
+                                    if (data != null) {
+
+                                        if (!data.getName().equals(tv_location.getText().toString())) {
+                                            tv_location.setText(String.format("%s", data.getName()));
+                                            if (indexStlTab != null) {
+                                                indexStlTab.setCurrentTab(0);
+                                                indexStlTab.setViewPager(indexVp);
+                                                indexStlTab.notifyDataSetChanged();
+                                            }
+                                            promptDialog.showLoading("请稍后");
+                                            requestData();
+                                            EventBus.getDefault().post(new EventMessage(EventMessage.LOCA_AREA_CHANGE));
+                                        }
+
+
+                                    } else {
+                                        tv_location.setText(tv_location.getText().toString());
                                     }
-                                }, 2000);
-                            }
-                        })
-                        .show();
+
+
+                                }
+
+                                @Override
+                                public void onLocate() {
+                                    //开始定位，这里模拟一下定位
+                                    locationTask();
+
+                                }
+                            })
+                            .show();
+                } else {
+                    CityPicker.getInstance()
+                            .setFragmentManager(getFragmentManager())
+                            .enableAnimation(true)
+                            .setAnimationStyle(R.style.CustomAnim)
+                            .setHotCities(hotCities)
+                            .setOnPickListener(new OnPickListener() {
+                                @Override
+                                public void onPick(int position, City data) {
+
+
+                                    if (data != null) {
+                                        if (!data.getName().equals(tv_location.getText().toString())) {
+                                            tv_location.setText(String.format("%s", data.getName()));
+                                            if (indexStlTab != null) {
+                                                indexStlTab.setCurrentTab(0);
+                                                indexStlTab.setViewPager(indexVp);
+                                                indexStlTab.notifyDataSetChanged();
+                                            }
+                                            promptDialog.showLoading("请稍后");
+                                            requestData();
+                                            EventBus.getDefault().post(new EventMessage(EventMessage.LOCA_AREA_CHANGE));
+                                        }
+
+                                    } else {
+                                        tv_location.setText(tv_location.getText().toString());
+                                    }
+
+
+                                }
+
+                                @Override
+                                public void onLocate() {
+                                    //开始定位，这里模拟一下定位
+                                    locationTask();
+
+                                }
+                            })
+                            .show();
+                }
                 break;
             default:
                 break;
         }
     }
 
+    private static final int RC_LOCATION_PERM = 123;
+
+    @AfterPermissionGranted(RC_LOCATION_PERM)
+    public void locationTask() {
+        if (EasyPermissions.hasPermissions(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+            // Have permission, do the thing!
+            //开始定位
+            mLocationClient.start();
+        } else {
+            // Ask for one permission
+            EasyPermissions.requestPermissions(
+                    this,
+                    getString(R.string.rationale_location),
+                    RC_LOCATION_PERM,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION);
+
+        }
+
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+
+    }
+
+
     @Override
     public void onReceiveLocation(BDLocation bdLocation) {
-        String city = bdLocation.getCity();
-        Log.d("BDASBDASDA", city);
+        String province = bdLocation.getProvince();
+        locationArea = province.substring(0, province.length() - 1);
+
+
+        String area = tv_location.getText().toString();
+
+        if (!area.equals(locationArea)) {
+            //是否切换地区
+            final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
+                @Override
+                public void onClick(PromptButton button) {
+
+                }
+            });
+            cancel.setTextColor(getResources().getColor(R.color.main_status_yellow));
+            cancel.setTextSize(16);
+
+            final PromptButton sure = new PromptButton("切      换", new PromptButtonListener() {
+                @Override
+                public void onClick(PromptButton button) {
+                    //确认切换地区，刷新数据
+                    tv_location.setText(locationArea);
+
+                    //更新UI
+                    if (indexStlTab != null) {
+                        indexStlTab.setCurrentTab(0);
+                        indexStlTab.setViewPager(indexVp);
+                        indexStlTab.notifyDataSetChanged();
+                    }
+
+                    promptDialog.showLoading("请稍后");
+                    requestData();
+
+                    EventBus.getDefault().post(new EventMessage(EventMessage.LOCA_AREA_CHANGE));
+                }
+            });
+            sure.setTextColor(getResources().getColor(R.color.main_status_blue));
+            sure.setTextSize(16);
+            promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
+                    .round(8).loadingDuration(200);
+            promptDialog.showWarnAlert("当前定位为" + locationArea + "," + "是否切换到" + locationArea + "?", cancel, sure, true);
+        }
+
+
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        Log.d("AJSNBDASDA", "同意");
+        mLocationClient.start();
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        Log.d("AJSNBDASDA", "拒绝");
+
+        Log.d("HBDAHUBSDASDA", "requestCode==" + requestCode + "\n" + "perms==" + perms.size());
     }
 }
