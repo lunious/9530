@@ -348,4 +348,10 @@ public class ResultSearchFragment extends BaseFragment {
 
 
     }
+    @Override
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
+        hideSoftInput();
+    }
+
 }

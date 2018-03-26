@@ -696,4 +696,10 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                 break;
         }
     }
+
+    @Override
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
+        hideSoftInput();
+    }
 }
