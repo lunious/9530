@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.ui.main.index.detail;
+package com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,11 +8,13 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
@@ -22,6 +24,9 @@ import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
@@ -43,25 +48,25 @@ import java.util.List;
 
 /**
  * 项目名:   Lunioussky
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.index.detail
- * 文件名:   IndexBxtgdjDetailFragment
+ * 包名:     com.lubanjianye.biaoxuntong.ui.main.collection.detail
+ * 文件名:   IndexSggjyDetailFragment
  * 创建者:   lunious
- * 创建时间: 2017/10/26  23:10
+ * 创建时间: 2017/10/23  23:57
  * 描述:     TODO
  */
 
-public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
+public class IndexSggjyDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
+
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
-    private MultipleStatusView bxtgdjDetailStatusView = null;
+    private MultipleStatusView indexSggjyDetailStatusView = null;
     private AppCompatTextView tvMainTitle = null;
-    private LinearLayout llType = null;
-    private AppCompatTextView tvType = null;
     private AppCompatTextView tvMainArea = null;
-    private AppCompatTextView tvMainPubTime = null;
-    private AppCompatTextView tvMainDeadTime = null;
-    private AppCompatTextView tvPuNum = null;
+    private AppCompatTextView tvPubTime = null;
+    private AppCompatTextView tvDeadTime = null;
+    private AppCompatTextView tvFbt = null;
+    private AppCompatTextView tvYw = null;
     private AppCompatTextView tv1 = null;
     private AppCompatTextView tv2 = null;
     private AppCompatTextView tv3 = null;
@@ -69,7 +74,6 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
     private AppCompatTextView tv5 = null;
     private AppCompatTextView tv6 = null;
     private AppCompatTextView tv7 = null;
-    private AppCompatTextView endSam = null;
     private ImageView ivFav = null;
     private LinearLayout llFav = null;
     private LinearLayout llShare = null;
@@ -79,6 +83,10 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
     private LinearLayout llQQBoShare = null;
     private LinearLayout llWeixinBoShare = null;
     private LinearLayout llPyqShare = null;
+
+    private AppCompatTextView tvGz = null;
+    private AppCompatTextView tvJg = null;
+
 
     private static final String ARG_ENTITYID = "ARG_ENTITYID";
     private static final String ARG_ENTITY = "ARG_ENTITY";
@@ -94,49 +102,55 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
     private String shareUrl = "";
 
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
-    private String ajaxType = "0";
+    private String ajaxlogtype = "";
+
+    private String zbjgId = "";
 
 
-    public static IndexBxtgdjDetailFragment create(@NonNull int entityId, String entity, String ajaxlogtype) {
+    public static IndexSggjyDetailFragment create(@NonNull int entityId, String entity, String ajaxlogtype) {
         final Bundle args = new Bundle();
         args.putInt(ARG_ENTITYID, entityId);
         args.putString(ARG_ENTITY, entity);
         args.putString(ARG_AJAXTYPE, ajaxlogtype);
-        final IndexBxtgdjDetailFragment fragment = new IndexBxtgdjDetailFragment();
+        final IndexSggjyDetailFragment fragment = new IndexSggjyDetailFragment();
         fragment.setArguments(args);
-
         return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         final Bundle args = getArguments();
         if (args != null) {
             mEntityId = args.getInt(ARG_ENTITYID);
             mEntity = args.getString(ARG_ENTITY);
-            ajaxType = args.getString(ARG_AJAXTYPE);
+            ajaxlogtype = args.getString(ARG_AJAXTYPE);
         }
     }
 
-
     @Override
     public Object setLayout() {
-        return R.layout.fragment_index_bxtgdj_detail;
+        return R.layout.fragment_index_sggjy_detail;
     }
 
     @Override
     public void initView() {
+
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+
         llIvBack = getView().findViewById(R.id.ll_iv_back);
         mainBarName = getView().findViewById(R.id.main_bar_name);
-        bxtgdjDetailStatusView = getView().findViewById(R.id.bxtgdj_detail_status_view);
+        indexSggjyDetailStatusView = getView().findViewById(R.id.index_sggjy_detail_status_view);
         tvMainTitle = getView().findViewById(R.id.tv_main_title);
-        llType = getView().findViewById(R.id.ll_type);
-        tvType = getView().findViewById(R.id.tv_type);
         tvMainArea = getView().findViewById(R.id.tv_main_area);
-        tvMainPubTime = getView().findViewById(R.id.tv_main_pub_time);
-        tvMainDeadTime = getView().findViewById(R.id.tv_main_dead_time);
-        tvPuNum = getView().findViewById(R.id.tv_pu_num);
+        tvPubTime = getView().findViewById(R.id.tv_pub_time);
+        tvDeadTime = getView().findViewById(R.id.tv_dead_time);
+        tvFbt = getView().findViewById(R.id.tv_fbt);
+        tvYw = getView().findViewById(R.id.tv_yw);
         tv1 = getView().findViewById(R.id.tv1);
         tv2 = getView().findViewById(R.id.tv2);
         tv3 = getView().findViewById(R.id.tv3);
@@ -144,12 +158,10 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
         tv5 = getView().findViewById(R.id.tv5);
         tv6 = getView().findViewById(R.id.tv6);
         tv7 = getView().findViewById(R.id.tv7);
-        endSam = getView().findViewById(R.id.endSam);
         ivFav = getView().findViewById(R.id.iv_fav);
         llFav = getView().findViewById(R.id.ll_fav);
         llShare = getView().findViewById(R.id.ll_share);
         detailNsv = getView().findViewById(R.id.detail_nsv);
-
         llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
         llQQBoShare = getView().findViewById(R.id.ll_qq_share);
         llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
@@ -158,19 +170,23 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
         llIvBack.setOnClickListener(this);
         llShare.setOnClickListener(this);
         llFav.setOnClickListener(this);
-
         llWeiBoShare.setOnClickListener(this);
         llQQBoShare.setOnClickListener(this);
         llWeixinBoShare.setOnClickListener(this);
         llPyqShare.setOnClickListener(this);
+        tvYw.setOnClickListener(this);
 
+        tvGz = getView().findViewById(R.id.tv_gzgg);
+        tvJg = getView().findViewById(R.id.tv_jggg);
+        tvGz.setOnClickListener(this);
+        tvJg.setOnClickListener(this);
     }
 
     @Override
     public void initData() {
         llIvBack.setVisibility(View.VISIBLE);
         mainBarName.setText("标讯详情");
-        bxtgdjDetailStatusView.setOnRetryClickListener(mRetryClickListener);
+        indexSggjyDetailStatusView.setOnRetryClickListener(mRetryClickListener);
     }
 
     @Override
@@ -195,8 +211,10 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if (scrollY > oldScrollY) {
                     // 向下滑动
+                    if (mainBarName != null) {
+                        mainBarName.setText(shareTitle);
+                    }
 
-                    mainBarName.setText(shareTitle);
                 }
 
                 if (scrollY < oldScrollY) {
@@ -216,19 +234,19 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
         });
     }
 
+
     private long id = 0;
-    private String nickName = "";
-    private String token = "";
-    private String comid = "";
-    private String imageUrl = "";
+
+    private String gzUrl = "";
+    private String jgEntity = "";
+    private String jgEntityId = "";
 
     private void requestData() {
 
-
         if (!NetUtil.isNetworkConnected(getActivity())) {
-            bxtgdjDetailStatusView.showNoNetwork();
+            indexSggjyDetailStatusView.showNoNetwork();
         } else {
-            bxtgdjDetailStatusView.showLoading();
+            indexSggjyDetailStatusView.showLoading();
 
 
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
@@ -236,10 +254,6 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
 
                 for (int i = 0; i < users.size(); i++) {
                     id = users.get(0).getId();
-                    nickName = users.get(0).getNickName();
-                    token = users.get(0).getToken();
-                    comid = users.get(0).getComid();
-                    imageUrl = users.get(0).getImageUrl();
                 }
 
                 OkGo.<String>post(BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL)
@@ -247,7 +261,7 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
                         .params("entity", mEntity)
                         .params("userid", id)
                         .params("deviceId", deviceId)
-                        .params("ajaxlogtype", ajaxType)
+                        .params("ajaxlogtype", ajaxlogtype)
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
@@ -257,16 +271,35 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
                                 final JSONObject object = JSON.parseObject(jiemi);
                                 String status = object.getString("status");
                                 int favorite = object.getInteger("favorite");
-                                if (favorite == 1) {
-                                    myFav = 1;
-                                    ivFav.setImageResource(R.mipmap.ic_faved_pressed);
-                                } else if (favorite == 0) {
-                                    myFav = 0;
-                                    ivFav.setImageResource(R.mipmap.ic_fav_pressed);
-                                }
 
                                 if ("200".equals(status)) {
+                                    if (favorite == 1) {
+                                        myFav = 1;
+                                        ivFav.setImageResource(R.mipmap.ic_faved_pressed);
+                                    } else if (favorite == 0) {
+                                        myFav = 0;
+                                        ivFav.setImageResource(R.mipmap.ic_fav_pressed);
+                                    }
                                     final JSONObject data = object.getJSONObject("data");
+
+                                    //判断是否有更正和结果
+                                    //1、判断有误更正
+                                    final JSONArray arrayGz = data.getJSONArray("listGzUrl");
+                                    //2、判断有无结果
+                                    final JSONArray arrayJg = data.getJSONArray("listJgId");
+                                    if (arrayGz != null) {
+                                        gzUrl = arrayGz.getString(arrayGz.size() - 1);
+                                    } else {
+                                        tvGz.setVisibility(View.GONE);
+                                    }
+                                    if (arrayJg != null) {
+                                        JSONObject list = arrayJg.getJSONObject(arrayJg.size() - 1);
+                                        jgEntity = list.getString("entity");
+                                        jgEntityId = list.getString("entityId");
+                                    } else {
+                                        tvJg.setVisibility(View.GONE);
+                                    }
+
                                     String reportTitle = data.getString("reportTitle");
                                     shareUrl = data.getString("url");
                                     shareTitle = reportTitle;
@@ -275,124 +308,93 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
                                     } else {
                                         tvMainTitle.setText("/");
                                     }
-                                    String entryType = data.getString("entryType");
-                                    if (!TextUtils.isEmpty(entryType)) {
-                                        tvType.setText(entryType);
-                                    } else {
-                                        llType.setVisibility(View.GONE);
-                                    }
-
                                     String area = data.getString("area");
                                     if (!TextUtils.isEmpty(area)) {
                                         tvMainArea.setText(area);
                                     } else {
                                         tvMainArea.setText("/");
                                     }
-                                    String beginTime = data.getString("beginTime");
-                                    if (!TextUtils.isEmpty(beginTime)) {
-                                        tvMainPubTime.setText(beginTime);
+                                    String sysTime = data.getString("sysTime");
+                                    if (!TextUtils.isEmpty(sysTime)) {
+                                        tvPubTime.setText(sysTime);
                                     } else {
-                                        tvMainPubTime.setText("/");
+                                        tvPubTime.setText("/");
                                     }
-                                    String endTime = data.getString("endTime");
-                                    if (!TextUtils.isEmpty(endTime)) {
-                                        tvMainDeadTime.setText(endTime);
+                                    String deadTime = data.getString("deadTime");
+                                    if (!TextUtils.isEmpty(deadTime)) {
+                                        tvDeadTime.setText(deadTime);
                                     } else {
-                                        tvMainDeadTime.setText("/");
+                                        tvDeadTime.setText("/");
                                     }
-                                    String entryNum = data.getString("entryNum");
-                                    if (!TextUtils.isEmpty(entryNum)) {
-                                        tvPuNum.setText(entryNum);
+                                    String entryName = data.getString("entryName");
+                                    if (!TextUtils.isEmpty(entryName)) {
+                                        tvFbt.setText(entryName);
                                     } else {
-                                        tvPuNum.setText("/");
+                                        tvFbt.setText("");
                                     }
-                                    String one = data.getString("one");
-                                    if (one != null) {
+                                    String squone = data.getString("squone");
+                                    if (!TextUtils.isEmpty(squone)) {
                                         //将所有<*a标签替换成html标签
-                                        one = one.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        one = one.replace("\n", "<br/>");
-                                        tv1.setText(Html.fromHtml(one));
-                                        shareContent = one;
-                                    } else {
-                                        tv1.setText("/");
+                                        squone = squone.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
+                                        squone = squone.replace("\n", "<br/>");
+                                        tv1.setText(Html.fromHtml(squone));
+                                        shareContent = squone;
                                     }
-                                    String two = data.getString("two");
-                                    if (two != null) {
+                                    String squtwo = data.getString("squtwo");
+                                    if (!TextUtils.isEmpty(squtwo)) {
                                         //将所有<*a标签替换成html标签
-                                        two = two.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        two = two.replace("\n", "<br/>");
-                                        tv2.setText(Html.fromHtml(two));
-                                    } else {
-                                        tv2.setText("/");
+                                        squtwo = squtwo.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
+                                        squtwo = squtwo.replace("\n", "<br/>");
+                                        tv2.setText(Html.fromHtml(squtwo));
                                     }
-                                    String three = data.getString("three");
-                                    if (three != null) {
+                                    String squthree = data.getString("squthree");
+                                    if (!TextUtils.isEmpty(squthree)) {
                                         //将所有<*a标签替换成html标签
-                                        three = three.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        three = three.replace("\n", "<br/>");
-                                        tv3.setText(Html.fromHtml(three));
-                                    } else {
-                                        tv3.setText("/");
+                                        squthree = squthree.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
+                                        squthree = squthree.replace("\n", "<br/>");
+                                        tv3.setText(Html.fromHtml(squthree));
                                     }
-                                    String four = data.getString("four");
-                                    if (four != null) {
+                                    String squfour = data.getString("squfour");
+                                    if (!TextUtils.isEmpty(squfour)) {
                                         //将所有<*a标签替换成html标签
-                                        four = four.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        four = four.replace("\n", "<br/>");
-                                        tv4.setText(Html.fromHtml(four));
-                                    } else {
-                                        tv4.setText("/");
+                                        squfour = squfour.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
+                                        squfour = squfour.replace("\n", "<br/>");
+                                        tv4.setText(Html.fromHtml(squfour));
                                     }
-                                    String five = data.getString("five");
-                                    if (five != null) {
+                                    String squfive = data.getString("squfive");
+                                    if (!TextUtils.isEmpty(squfive)) {
                                         //将所有<*a标签替换成html标签
-                                        five = five.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        five = five.replace("\n", "<br/>");
-                                        tv5.setText(Html.fromHtml(five));
-                                    } else {
-                                        tv5.setText("/");
+                                        squfive = squfive.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
+                                        squfive = squfive.replace("\n", "<br/>");
+                                        tv5.setText(Html.fromHtml(squfive));
                                     }
-                                    String six = data.getString("six");
-                                    if (six != null) {
+                                    String squsix = data.getString("squsix");
+                                    if (!TextUtils.isEmpty(squsix)) {
                                         //将所有<*a标签替换成html标签
-                                        six = six.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        six = six.replace("\n", "<br/>");
-                                        tv6.setText(Html.fromHtml(six));
-                                    } else {
-                                        tv6.setText("/");
+                                        squsix = squsix.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
+                                        squsix = squsix.replace("\n", "<br/>");
+                                        tv6.setText(Html.fromHtml(squsix));
                                     }
-                                    String seven = data.getString("seven");
-                                    if (seven != null) {
+                                    String squseven = data.getString("squseven");
+                                    if (!TextUtils.isEmpty(squseven)) {
                                         //将所有<*a标签替换成html标签
-                                        seven = seven.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        seven = seven.replace("\n", "<br/>");
-                                        tv7.setText(Html.fromHtml(seven));
-                                    } else {
-                                        tv7.setText("/");
+                                        squseven = squseven.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
+                                        squseven = squseven.replace("\n", "<br/>");
+                                        tv7.setText(Html.fromHtml(squseven));
                                     }
-                                    String endsam = data.getString("endsam");
-                                    if (endsam != null) {
-                                        //将所有<*a标签替换成html标签
-                                        endsam = endsam.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        endsam = endsam.replace("\n", "<br/>");
-                                        endSam.setText(Html.fromHtml(endsam));
-                                    } else {
-                                        endSam.setText("/");
-                                    }
-                                    bxtgdjDetailStatusView.showContent();
+
+                                    indexSggjyDetailStatusView.showContent();
                                 } else {
-                                    bxtgdjDetailStatusView.showError();
+                                    indexSggjyDetailStatusView.showError();
                                 }
                             }
                         });
-
             } else {
-
                 OkGo.<String>post(BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL)
                         .params("entityId", mEntityId)
                         .params("entity", mEntity)
                         .params("deviceId", deviceId)
-                        .params("ajaxlogtype", ajaxType)
+                        .params("ajaxlogtype", ajaxlogtype)
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
@@ -402,8 +404,27 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
                                 String status = object.getString("status");
 
                                 if ("200".equals(status)) {
-                                    bxtgdjDetailStatusView.showContent();
+                                    indexSggjyDetailStatusView.showContent();
                                     final JSONObject data = object.getJSONObject("data");
+
+                                    //判断是否有更正和结果
+                                    //1、判断有误更正
+                                    final JSONArray arrayGz = data.getJSONArray("listGzUrl");
+                                    //2、判断有无结果
+                                    final JSONArray arrayJg = data.getJSONArray("listJgId");
+                                    if (arrayGz != null) {
+                                        gzUrl = arrayGz.getString(arrayGz.size() - 1);
+                                    } else {
+                                        tvGz.setVisibility(View.GONE);
+                                    }
+                                    if (arrayJg != null) {
+                                        JSONObject list = arrayJg.getJSONObject(arrayJg.size() - 1);
+                                        jgEntity = list.getString("entity");
+                                        jgEntityId = list.getString("entityId");
+                                    } else {
+                                        tvJg.setVisibility(View.GONE);
+                                    }
+
                                     String reportTitle = data.getString("reportTitle");
                                     shareUrl = data.getString("url");
                                     shareTitle = reportTitle;
@@ -412,107 +433,83 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
                                     } else {
                                         tvMainTitle.setText("/");
                                     }
-
-                                    String entryType = data.getString("entryType");
-                                    if (!TextUtils.isEmpty(entryType)) {
-                                        tvType.setText(entryType);
-                                    } else {
-                                        llType.setVisibility(View.GONE);
-                                    }
-
-
                                     String area = data.getString("area");
                                     if (!TextUtils.isEmpty(area)) {
                                         tvMainArea.setText(area);
                                     } else {
                                         tvMainArea.setText("/");
                                     }
-                                    String beginTime = data.getString("beginTime");
-                                    if (!TextUtils.isEmpty(beginTime)) {
-                                        tvMainPubTime.setText(beginTime);
+                                    String sysTime = data.getString("sysTime");
+                                    if (!TextUtils.isEmpty(sysTime)) {
+                                        tvPubTime.setText(sysTime);
                                     } else {
-                                        tvMainPubTime.setText("/");
+                                        tvPubTime.setText("/");
                                     }
-                                    String endTime = data.getString("endTime");
-                                    if (!TextUtils.isEmpty(endTime)) {
-                                        tvMainDeadTime.setText(endTime);
+                                    String deadTime = data.getString("deadTime");
+                                    if (!TextUtils.isEmpty(deadTime)) {
+                                        tvDeadTime.setText(deadTime);
                                     } else {
-                                        tvMainDeadTime.setText("/");
+                                        tvDeadTime.setText("/");
                                     }
-                                    String entryNum = data.getString("entryNum");
-                                    if (!TextUtils.isEmpty(entryNum)) {
-                                        tvPuNum.setText(entryNum);
+                                    String entryName = data.getString("entryName");
+                                    if (!TextUtils.isEmpty(entryName)) {
+                                        tvFbt.setText(entryName);
                                     } else {
-                                        tvPuNum.setText("/");
+                                        tvFbt.setText("");
                                     }
-                                    String one = data.getString("one");
-                                    if (one != null) {
+                                    String squone = data.getString("squone");
+                                    if (!TextUtils.isEmpty(squone)) {
                                         //将所有<*a标签替换成html标签
-                                        one = one.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        one = one.replace("\n", "<br/>");
-                                        tv1.setText(Html.fromHtml(one));
-                                        shareContent = one;
-                                    } else {
-                                        tv1.setText("/");
+                                        squone = squone.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
+                                        squone = squone.replace("\n", "<br/>");
+                                        tv1.setText(Html.fromHtml(squone));
+                                        shareContent = squone;
                                     }
-                                    String two = data.getString("two");
-                                    if (two != null) {
-                                        two = two.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        two = two.replace("\n", "<br/>");
-                                        tv2.setText(Html.fromHtml(two));
-                                    } else {
-                                        tv2.setText("/");
+                                    String squtwo = data.getString("squtwo");
+                                    if (!TextUtils.isEmpty(squtwo)) {
+                                        //将所有<*a标签替换成html标签
+                                        squtwo = squtwo.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
+                                        squtwo = squtwo.replace("\n", "<br/>");
+                                        tv2.setText(Html.fromHtml(squtwo));
                                     }
-                                    String three = data.getString("three");
-                                    if (three != null) {
-                                        three = three.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        three = three.replace("\n", "<br/>");
-                                        tv3.setText(Html.fromHtml(three));
-                                    } else {
-                                        tv3.setText("/");
+                                    String squthree = data.getString("squthree");
+                                    if (!TextUtils.isEmpty(squthree)) {
+                                        //将所有<*a标签替换成html标签
+                                        squthree = squthree.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
+                                        squthree = squthree.replace("\n", "<br/>");
+                                        tv3.setText(Html.fromHtml(squthree));
                                     }
-                                    String four = data.getString("four");
-                                    if (four != null) {
-                                        four = four.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        four = four.replace("\n", "<br/>");
-                                        tv4.setText(Html.fromHtml(four));
-                                    } else {
-                                        tv4.setText("/");
+                                    String squfour = data.getString("squfour");
+                                    if (!TextUtils.isEmpty(squfour)) {
+                                        //将所有<*a标签替换成html标签
+                                        squfour = squfour.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
+                                        squfour = squfour.replace("\n", "<br/>");
+                                        tv4.setText(Html.fromHtml(squfour));
                                     }
-                                    String five = data.getString("five");
-                                    if (five != null) {
-                                        five = five.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        five = five.replace("\n", "<br/>");
-                                        tv5.setText(Html.fromHtml(five));
-                                    } else {
-                                        tv5.setText("/");
+                                    String squfive = data.getString("squfive");
+                                    if (!TextUtils.isEmpty(squfive)) {
+                                        //将所有<*a标签替换成html标签
+                                        squfive = squfive.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
+                                        squfive = squfive.replace("\n", "<br/>");
+                                        tv5.setText(Html.fromHtml(squfive));
                                     }
-                                    String six = data.getString("six");
-                                    if (six != null) {
-                                        six = six.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        six = six.replace("\n", "<br/>");
-                                        tv6.setText(Html.fromHtml(six));
-                                    } else {
-                                        tv6.setText("/");
+                                    String squsix = data.getString("squsix");
+                                    if (!TextUtils.isEmpty(squsix)) {
+                                        //将所有<*a标签替换成html标签
+                                        squsix = squsix.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
+                                        squsix = squsix.replace("\n", "<br/>");
+                                        tv6.setText(Html.fromHtml(squsix));
                                     }
-                                    String seven = data.getString("seven");
-                                    if (seven != null) {
-                                        seven = seven.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        seven = seven.replace("\n", "<br/>");
-                                        tv7.setText(Html.fromHtml(seven));
-                                    } else {
-                                        tv7.setText("/");
+                                    String squseven = data.getString("squseven");
+                                    if (!TextUtils.isEmpty(squseven)) {
+                                        //将所有<*a标签替换成html标签
+                                        squseven = squseven.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
+                                        squseven = squseven.replace("\n", "<br/>");
+                                        tv7.setText(Html.fromHtml(squseven));
                                     }
-                                    String endsam = data.getString("endsam");
-                                    if (endsam != null) {
-                                        endsam = endsam.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
-                                        endsam = endsam.replace("\n", "<br/>");
-                                        endSam.setText(Html.fromHtml(endsam));
-                                    } else {
-                                        endSam.setText("/");
-                                    }
+
                                 } else {
-                                    bxtgdjDetailStatusView.showError();
+                                    indexSggjyDetailStatusView.showError();
                                 }
                             }
                         });
@@ -520,8 +517,8 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
 
         }
 
-
     }
+
 
     private Share mShare = new Share();
     private PromptDialog promptDialog = null;
@@ -622,7 +619,6 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
                     }
 
                     if (myFav == 1) {
-
                         OkGo.<String>post(BiaoXunTongApi.URL_DELEFAV)
                                 .params("entityid", mEntityId)
                                 .params("entity", mEntity)
@@ -645,7 +641,6 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
                                 });
 
                     } else if (myFav == 0) {
-
                         OkGo.<String>post(BiaoXunTongApi.URL_ADDFAV)
                                 .params("entityid", mEntityId)
                                 .params("entity", mEntity)
@@ -671,6 +666,37 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
                 } else {
                     //未登录去登陆
                     startActivity(new Intent(getActivity(), SignInActivity.class));
+                }
+                break;
+            case R.id.tv_yw:
+                Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                intent.putExtra("url", shareUrl);
+                intent.putExtra("title", shareTitle);
+                startActivity(intent);
+                break;
+            case R.id.tv_gzgg:
+                intent = new Intent(getActivity(), BrowserActivity.class);
+                intent.putExtra("url", gzUrl);
+                intent.putExtra("title", "更正公告");
+                startActivity(intent);
+                break;
+            case R.id.tv_jggg:
+                Log.d("HIUASDSABDBSADA", "哈哈哈为：" + jgEntity + "___" + jgEntityId);
+                if ("xjggg".equals(jgEntity) || "sjggg".equals(jgEntity) || "sggjy".equals(jgEntity) || "sggjycgjgtable".equals(jgEntity)) {
+                    intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
+                    intent.putExtra("entityId", Integer.valueOf(jgEntityId));
+                    intent.putExtra("entity", jgEntity);
+                    intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
+                    startActivity(intent);
+
+                } else if ("sggjyzbjg".equals(jgEntity) || "sggjycgjgrow".equals(jgEntity) || "sggjyjgcgtable".equals(jgEntity)) {
+                    intent = new Intent(getActivity(), ResultSggjyzbjgDetailActivity.class);
+                    intent.putExtra("entityId", Integer.valueOf(jgEntityId));
+                    intent.putExtra("entity", jgEntity);
+                    intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
+                    startActivity(intent);
                 }
                 break;
             default:

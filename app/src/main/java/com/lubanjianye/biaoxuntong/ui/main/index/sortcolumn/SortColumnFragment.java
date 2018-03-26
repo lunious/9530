@@ -23,6 +23,7 @@ import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
@@ -66,6 +67,11 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
 
     private int stu = 0;
 
+
+    private String mDiqu = "";
+
+    private PromptDialog promptDialog;
+
     @Override
     public Object setLayout() {
         return R.layout.fragment_column;
@@ -84,6 +90,9 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
     public void initView() {
         //注册EventBus
         EventBus.getDefault().register(this);
+
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
 
         ivClose = getView().findViewById(R.id.iv_close);
         oldColumnRv = getView().findViewById(R.id.old_column_rv);
@@ -328,6 +337,12 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
 
     public void requestData() {
 
+
+        promptDialog.showLoading("请稍后");
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
+            mDiqu = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
+        }
+
         if (!NetUtil.isNetworkConnected(getContext())) {
             ToastUtil.shortToast(getContext(), "网络出错，请检查网络设置！");
         } else {
@@ -340,6 +355,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
 
                 OkGo.<String>post(BiaoXunTongApi.URL_GETALLTAB)
                         .params("userId", userId)
+                        .params("diqu", mDiqu)
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
@@ -388,6 +404,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
             } else {
 
                 OkGo.<String>post(BiaoXunTongApi.URL_GETALLTAB)
+                        .params("diqu", mDiqu)
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
@@ -464,6 +481,15 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
 
 
         mAdapter.notifyDataSetChanged();
+
+        BiaoXunTong.getHandler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (promptDialog != null) {
+                    promptDialog.dismissImmediately();
+                }
+            }
+        }, 1000);
 
     }
 

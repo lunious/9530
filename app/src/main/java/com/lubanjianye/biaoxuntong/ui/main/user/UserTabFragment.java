@@ -23,6 +23,7 @@ import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.company.MyCompanyActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.setting.SettingActivity;
+import com.lubanjianye.biaoxuntong.ui.message.MessageActivity;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
@@ -66,6 +67,8 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     private RelativeLayout rlNoLogin = null;
     private AppCompatTextView tvUserCompany = null;
     private AppCompatTextView tvUserName = null;
+    private AppCompatTextView tvTitle = null;
+    private LinearLayout llMessage = null;
 
 
     long id = 0;
@@ -106,6 +109,9 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     public void initView() {
         //注册EventBus
         EventBus.getDefault().register(this);
+        tvTitle = getView().findViewById(R.id.main_bar_name);
+        llMessage = getView().findViewById(R.id.ll_message);
+        llMessage.setOnClickListener(this);
 
         imgUserAvatar = getView().findViewById(R.id.img_user_avatar);
         imgDefaultAvatar = getView().findViewById(R.id.img_default_avatar);
@@ -134,6 +140,9 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
 
         if (EventMessage.LOGIN_SUCCSS.equals(message.getMessage())) {
             //登陆成功后更新UI
+
+            tvTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText("我的企业");
 
             List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
             for (int i = 0; i < users.size(); i++) {
@@ -176,6 +185,7 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
             rlNoLogin.setVisibility(View.VISIBLE);
             tvUserCompany.setVisibility(View.GONE);
             rlLogin.setVisibility(View.GONE);
+            tvTitle.setVisibility(View.INVISIBLE);
         } else if (EventMessage.BIND_COMPANY_SUCCESS.equals(message.getMessage())) {
             //绑定企业成功后更新UI
             List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
@@ -194,9 +204,16 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void initData() {
+
+        llMessage.setVisibility(View.VISIBLE);
+
         //创建对象
         promptDialog = new PromptDialog(getActivity());
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
+
+            tvTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText("我的企业");
+
             long id = 0;
             String mobile = "";
             String nickName = "";
@@ -241,6 +258,8 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
             tvUserCompany.setVisibility(View.GONE);
             rlLogin.setVisibility(View.GONE);
             rlNoLogin.setVisibility(View.VISIBLE);
+
+            tvTitle.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -306,6 +325,10 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.ll_message:
+                //跳到消息中心
+                startActivity(new Intent(getContext(), MessageActivity.class));
+                break;
             case R.id.img_user_avatar:
                 //跳到个人中心
                 startActivity(new Intent(getContext(), AvaterActivity.class));

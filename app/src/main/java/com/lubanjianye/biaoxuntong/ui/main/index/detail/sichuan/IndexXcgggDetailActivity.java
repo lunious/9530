@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.ui.main.index.detail;
+package com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan;
 
 import android.content.Intent;
 import android.text.TextUtils;
@@ -13,14 +13,13 @@ import com.lzy.okgo.model.Response;
 /**
  * 项目名:   Lunious
  * 包名:     com.lubanjianye.biaoxuntong.ui.main.index.detail
- * 文件名:   IndexBxtgdjDetailActivity
+ * 文件名:   IndexXcgggDetailActivity
  * 创建者:   lunious
- * 创建时间: 2017/12/7  15:12
+ * 创建时间: 2017/12/7  15:36
  * 描述:     TODO
  */
 
-public class IndexBxtgdjDetailActivity extends BaseActivity {
-
+public class IndexXcgggDetailActivity extends BaseActivity {
     private int mEntityId = -1;
     private String mEntity = "";
     private String ajaxType = "";
@@ -36,7 +35,6 @@ public class IndexBxtgdjDetailActivity extends BaseActivity {
             ajaxType = intent.getStringExtra("ajaxlogtype");
             mId = intent.getStringExtra("mId");
         }
-
         if (!TextUtils.isEmpty(mId)) {
 
             OkGo.<String>post(BiaoXunTongApi.URL_GETUITASK)
@@ -48,9 +46,11 @@ public class IndexBxtgdjDetailActivity extends BaseActivity {
 
                         }
                     });
+
         }
 
-        final IndexBxtgdjDetailFragment fragment = IndexBxtgdjDetailFragment.create(mEntityId, mEntity, ajaxType);
+
+        final IndexXcgggDetailFragment fragment = IndexXcgggDetailFragment.create(mEntityId, mEntity, ajaxType);
         return fragment;
     }
 }

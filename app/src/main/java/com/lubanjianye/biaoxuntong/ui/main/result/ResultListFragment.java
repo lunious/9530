@@ -22,8 +22,10 @@ import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.search.ResultSearchActivity;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
@@ -37,6 +39,10 @@ import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -105,21 +111,41 @@ public class ResultListFragment extends BaseFragment {
 
                 Intent intent = null;
 
-                if ("xjggg".equals(entity) || "sjggg".equals(entity) || "sggjy".equals(entity) || "sggjycgjgtable".equals(entity)) {
-                    intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
+                if (mDiqu.equals("四川")){
 
-                } else if ("sggjyzbjg".equals(entity) || "sggjycgjgrow".equals(entity) || "sggjyjgcgtable".equals(entity)) {
-                    intent = new Intent(getActivity(), ResultSggjyzbjgDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
+                    if ("xjggg".equals(entity) || "sjggg".equals(entity) || "sggjy".equals(entity) || "sggjycgjgtable".equals(entity)) {
+                        intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+
+                    } else if ("sggjyzbjg".equals(entity) || "sggjycgjgrow".equals(entity) || "sggjyjgcgtable".equals(entity)) {
+                        intent = new Intent(getActivity(), ResultSggjyzbjgDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    }
+                }else if (mDiqu.equals("重庆")){
+                    if ("cqcggg".equals(entity)){
+                        final String title = data.getEntryName();
+                        intent = new Intent(getActivity(), BrowserDetailActivity.class);
+                        intent.putExtra("api", BiaoXunTongApi.URL_GETRESULTLISTDETAIL);
+                        intent.putExtra("title", title);
+                        intent.putExtra("entity",entity);
+                        intent.putExtra("entityid",entityId);
+                        startActivity(intent);
+                    }else if ("cqsggjyzbjg".equals(entity)){
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), ResultCqsggjyzbjgDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    }
                 }
 
             }
@@ -163,10 +189,32 @@ public class ResultListFragment extends BaseFragment {
 
     @Override
     public void initView() {
+
+        //注册EventBus
+        EventBus.getDefault().register(this);
+
         resultRecycler = getView().findViewById(R.id.result_recycler);
         resultRefresh = getView().findViewById(R.id.result_refresh);
         loadingStatus = getView().findViewById(R.id.result_list_status_view);
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        //取消注册EventBus
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void XXXXXX(EventMessage message) {
+
+        if (EventMessage.LOCA_AREA_CHANGE.equals(message.getMessage())) {
+
+            requestData(true);
+        }
 
     }
 
@@ -223,8 +271,15 @@ public class ResultListFragment extends BaseFragment {
     }
 
 
+
+    private String mDiqu = "";
+
     public void requestData(final boolean isRefresh) {
 
+
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
+            mDiqu = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
+        }
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             //已登录的数据请求
@@ -240,9 +295,10 @@ public class ResultListFragment extends BaseFragment {
                         .params("type", mType)
                         .params("userid", id)
                         .params("page", page)
+                        .params("diqu", mDiqu)
                         .params("size", 10)
                         .params("deviceId", deviceId)
-                        .cacheKey("result_login_cache" + mTitle)
+                        .cacheKey("result_login_cache" + mTitle+mDiqu)
                         .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                         .cacheTime(3600 * 72000)
                         .execute(new StringCallback() {
@@ -302,6 +358,7 @@ public class ResultListFragment extends BaseFragment {
                         .params("type", mType)
                         .params("userid", id)
                         .params("page", page)
+                        .params("diqu", mDiqu)
                         .params("size", 10)
                         .params("deviceId", deviceId)
                         .execute(new StringCallback() {
@@ -339,8 +396,9 @@ public class ResultListFragment extends BaseFragment {
                         .params("type", mType)
                         .params("page", page)
                         .params("size", 10)
+                        .params("diqu", mDiqu)
                         .params("deviceId", deviceId)
-                        .cacheKey("result_no_login_cache" + mTitle)
+                        .cacheKey("result_no_login_cache" + mTitle+mDiqu)
                         .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                         .cacheTime(3600 * 72000)
                         .execute(new StringCallback() {
@@ -395,6 +453,7 @@ public class ResultListFragment extends BaseFragment {
                 OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
                         .params("type", mType)
                         .params("page", page)
+                        .params("diqu", mDiqu)
                         .params("size", 10)
                         .params("deviceId", deviceId)
                         .execute(new StringCallback() {

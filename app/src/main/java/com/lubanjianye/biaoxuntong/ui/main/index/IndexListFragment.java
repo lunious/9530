@@ -22,12 +22,14 @@ import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexBxtgdjDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexScgggDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjyDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgrowDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgtableDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexXcgggDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.chongqing.IndexCqsggjyDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexScgggDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgrowDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgtableDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexXcgggDetailActivity;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.loader.GlideImageLoader;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
@@ -66,6 +68,8 @@ public class IndexListFragment extends BaseFragment {
 
     Banner indexItemBanner = null;
     private String mTitle = null;
+    private static String mDiqu = null;
+
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
 
 
@@ -134,49 +138,69 @@ public class IndexListFragment extends BaseFragment {
                 Log.d("BASJHDHJSADASDA", entity + entityId);
 
                 Intent intent = null;
-                if ("sggjy".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
+                if (mDiqu.equals("四川")) {
+                    if ("sggjy".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
 
-                } else if ("xcggg".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("bxtgdj".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("sggjycgtable".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("sggjycgrow".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgrowDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("scggg".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexScgggDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
+                    } else if ("xcggg".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("bxtgdj".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("sggjycgtable".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("sggjycgrow".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgrowDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("scggg".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexScgggDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    }
+                } else if (mDiqu.equals("重庆")) {
+                    if ("cqcggg".equals(entity)) {
+                        final String title = data.getEntryName();
+                        intent = new Intent(getActivity(), BrowserDetailActivity.class);
+                        intent.putExtra("api", BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL);
+                        intent.putExtra("title", title);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("entityid", entityId);
+                        startActivity(intent);
+                    } else if ("cqsggjy".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexCqsggjyDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    }
+
                 }
             }
         });
@@ -343,7 +367,10 @@ public class IndexListFragment extends BaseFragment {
     public void requestData(final boolean isRefresh,int a) {
 
 
-        Log.d("HBAHBSDSADAA", "我被调用了"+a);
+
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
+            mDiqu = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
+        }
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             //已登录的数据请求
@@ -358,9 +385,10 @@ public class IndexListFragment extends BaseFragment {
                         .params("type", mTitle)
                         .params("userid", id)
                         .params("page", page)
+                        .params("diqu", mDiqu)
                         .params("size", 10)
                         .params("deviceId", deviceId)
-                        .cacheKey("index_list_login_cache" + mTitle)
+                        .cacheKey("index_list_login_cache" + mTitle+mDiqu)
                         .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                         .cacheTime(3600 * 72000)
                         .execute(new StringCallback() {
@@ -436,6 +464,7 @@ public class IndexListFragment extends BaseFragment {
                         .params("type", mTitle)
                         .params("userid", id)
                         .params("page", page)
+                        .params("diqu", mDiqu)
                         .params("size", 10)
                         .params("deviceId", deviceId)
                         .execute(new StringCallback() {
@@ -483,8 +512,9 @@ public class IndexListFragment extends BaseFragment {
                         .params("type", mTitle)
                         .params("page", page)
                         .params("size", 10)
+                        .params("diqu", mDiqu)
                         .params("deviceId", deviceId)
-                        .cacheKey("index_list_no_login_cache" + mTitle)
+                        .cacheKey("index_list_no_login_cache" + mTitle+mDiqu)
                         .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                         .cacheTime(3600 * 72000)
                         .execute(new StringCallback() {
@@ -562,6 +592,7 @@ public class IndexListFragment extends BaseFragment {
                         .params("type", mTitle)
                         .params("page", page)
                         .params("size", 10)
+                        .params("diqu", mDiqu)
                         .params("deviceId", deviceId)
                         .execute(new StringCallback() {
                             @Override

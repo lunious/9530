@@ -96,18 +96,23 @@
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".ui.browser.BrowserDetailActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Main"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".ui.main.user.setting.SettingActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.main.result.detail.ResultXjgggDetailActivity"
+            android:name=".ui.main.result.detail.sichuan.ResultXjgggDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.main.result.detail.ResultSggjyzbjgDetailActivity"
+            android:name=".ui.main.result.detail.sichuan.ResultSggjyzbjgDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
@@ -233,43 +238,57 @@
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.main.index.detail.IndexHyzxDetailActivity"
+            android:name=".ui.main.index.detail.sichuan.IndexHyzxDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.main.index.detail.IndexBxtgdjDetailActivity"
+            android:name=".ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.main.index.detail.IndexSggjycgrowDetailActivity"
+            android:name=".ui.main.index.detail.sichuan.IndexSggjycgrowDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.main.index.detail.IndexSggjycgtableDetailActivity"
+            android:name=".ui.main.index.detail.sichuan.IndexSggjycgtableDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.main.index.detail.IndexSggjyDetailActivity"
+            android:name=".ui.main.index.detail.sichuan.IndexSggjyDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.main.index.detail.IndexXcgggDetailActivity"
+            android:name=".ui.main.index.detail.sichuan.IndexXcgggDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.main.index.detail.IndexScgggDetailActivity"
+            android:name=".ui.main.index.detail.sichuan.IndexScgggDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Main"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".ui.main.index.detail.chongqing.IndexCqsggjyDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Main"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
@@ -295,6 +314,12 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.main.user.opinion.OpinionActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Main"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".ui.message.MessageActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />

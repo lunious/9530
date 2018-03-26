@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -21,15 +22,18 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.chongqing.IndexCqsggjyDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexBxtgdjDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjyDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgrowDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgtableDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexXcgggDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgrowDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgtableDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexXcgggDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
@@ -84,6 +88,9 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
 
 
+    private String mDiqu = "";
+
+
     @Override
     public Object setLayout() {
         return R.layout.fragment_collection_list;
@@ -93,9 +100,14 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void XXXXXX(EventMessage message) {
 
-        if (EventMessage.LOGIN_SUCCSS.equals(message.getMessage()) || EventMessage.CLICK_FAV.equals(message.getMessage())) {
-            //登陆成功后更新UI
+        if (EventMessage.LOGIN_SUCCSS.equals(message.getMessage()) || EventMessage.CLICK_FAV.equals(message.getMessage())
+                || EventMessage.LOCA_AREA_CHANGE.equals(message.getMessage())) {
 
+
+            if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
+                mDiqu = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
+            }
+            //登陆成功后更新UI
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                 if (llShow != null) {
                     llShow.setVisibility(View.GONE);
@@ -109,14 +121,12 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 if (llShow != null) {
                     llShow.setVisibility(View.VISIBLE);
                 }
-                mainBarName.setText("我的收藏");
             }
 
         } else if (EventMessage.LOGIN_OUT.equals(message.getMessage())) {
             if (llShow != null) {
                 llShow.setVisibility(View.VISIBLE);
             }
-            mainBarName.setText("我的收藏");
         }
     }
 
@@ -144,12 +154,18 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         btnToLogin.setOnClickListener(this);
 
 
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
+            mDiqu = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
+        }
+
+
     }
 
     @Override
     public void initData() {
         mainBarName.setVisibility(View.VISIBLE);
         mainBarName.setText("我的收藏");
+
 
     }
 
@@ -259,6 +275,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                         .params("entityid", mEntityId)
                         .params("entity", mEntity)
                         .params("userid", id)
+                        .params("diqu", mDiqu)
                         .params("deviceId", deviceId)
                         .execute(new StringCallback() {
                             @Override
@@ -288,61 +305,89 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
                 Intent intent = null;
 
-                if ("sggjy".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("xcggg".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("bxtgdj".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("sggjycgtable".equals(entity)) {
+                if ("四川".equals(mDiqu)) {
 
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
+                    if ("sggjy".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("xcggg".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("bxtgdj".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("sggjycgtable".equals(entity)) {
 
-                } else if ("xjggg".equals(entity) || "sjggg".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), ResultXjgggDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
 
-                } else if ("sggjyzbjg".equals(entity) || "sggjycgjgrow".equals(entity) || "sggjyjgcgtable".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), ResultSggjyzbjgDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("t_hyzx".equals(entity)) {
+                    } else if ("xjggg".equals(entity) || "sjggg".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), ResultXjgggDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
 
-                } else if ("sggjycgrow".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgrowDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
+                    } else if ("sggjyzbjg".equals(entity) || "sggjycgjgrow".equals(entity) || "sggjyjgcgtable".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), ResultSggjyzbjgDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("t_hyzx".equals(entity)) {
+
+                    } else if ("sggjycgrow".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgrowDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    }
+                } else if ("重庆".equals(mDiqu)) {
+                    if ("cqcggg".equals(entity)) {
+                        final String title = data.getEntryName();
+                        intent = new Intent(getActivity(), BrowserDetailActivity.class);
+                        intent.putExtra("api", BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL);
+                        intent.putExtra("title", title);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("entityid", entityId);
+                        startActivity(intent);
+                    } else if ("cqsggjy".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexCqsggjyDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("cqsggjyzbjg".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), ResultCqsggjyzbjgDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    }
                 }
+
             }
         });
 
@@ -374,6 +419,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
     public void requestData(final boolean isRefresh) {
 
+
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             llShow.setVisibility(View.GONE);
             List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
@@ -386,8 +432,9 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 OkGo.<String>post(BiaoXunTongApi.URL_GETCOLLECTIONLIST)
                         .params("userid", id)
                         .params("page", page)
+                        .params("diqu", mDiqu)
                         .params("size", 10)
-                        .cacheKey("collect_cache" + id)
+                        .cacheKey("collect_cache" + id + mDiqu)
                         .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                         .cacheTime(3600 * 48000)
                         .execute(new StringCallback() {
@@ -402,12 +449,10 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                 if (array.size() > 0) {
                                     page = 2;
                                     setData(isRefresh, array, nextPage);
-                                    mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 } else {
                                     //TODO 内容为空的处理
                                     loadingStatus.showEmpty();
                                     collectRefresh.setEnableRefresh(false);
-                                    mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 }
                             }
 
@@ -423,12 +468,10 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
                                     if (array.size() > 0) {
                                         setData(isRefresh, array, nextPage);
-                                        mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                     } else {
                                         //TODO 内容为空的处理
                                         loadingStatus.showEmpty();
                                         collectRefresh.setEnableRefresh(false);
-                                        mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                     }
                                     isInitCache = true;
 
@@ -440,6 +483,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 OkGo.<String>post(BiaoXunTongApi.URL_GETCOLLECTIONLIST)
                         .params("userid", id)
                         .params("page", page)
+                        .params("diqu", mDiqu)
                         .params("size", 10)
                         .cacheMode(CacheMode.NO_CACHE)
                         .execute(new StringCallback() {
@@ -453,12 +497,10 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
                                 if (array.size() > 0) {
                                     setData(isRefresh, array, nextPage);
-                                    mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 } else {
                                     //TODO 内容为空的处理
                                     loadingStatus.showEmpty();
                                     collectRefresh.setEnableRefresh(false);
-                                    mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 }
                             }
                         });

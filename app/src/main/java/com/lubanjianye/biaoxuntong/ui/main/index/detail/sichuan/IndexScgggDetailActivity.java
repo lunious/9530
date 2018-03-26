@@ -1,11 +1,11 @@
-package com.lubanjianye.biaoxuntong.ui.main.index.detail;
+package com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan;
 
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseActivity;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
-import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -19,7 +19,7 @@ import com.lzy.okgo.model.Response;
  * 描述:     TODO
  */
 
-public class IndexXcgggDetailActivity extends BaseActivity {
+public class IndexScgggDetailActivity extends BaseActivity {
     private int mEntityId = -1;
     private String mEntity = "";
     private String ajaxType = "";
@@ -50,7 +50,7 @@ public class IndexXcgggDetailActivity extends BaseActivity {
         }
 
 
-        final IndexXcgggDetailFragment fragment = IndexXcgggDetailFragment.create(mEntityId, mEntity, ajaxType);
+        final IndexScgggDetailFragment fragment = IndexScgggDetailFragment.create(mEntityId, mEntity, ajaxType);
         return fragment;
     }
 }

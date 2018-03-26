@@ -32,6 +32,7 @@ import com.lubanjianye.biaoxuntong.ui.citypicker.model.HotCity;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.LocateState;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.LocatedCity;
 import com.lubanjianye.biaoxuntong.ui.citypicker.view.SideIndexBar;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -252,9 +253,18 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
 
     @Override
     public void dismiss(int position, City data) {
-        dismiss();
-        if (mOnPickListener != null){
-            mOnPickListener.onPick(position, data);
+        if (position == -1){
+            dismiss();
+        }else {
+            if (mOnPickListener != null) {
+                if ("四川".equals(data.getName()) || "重庆".equals(data.getName())){
+                    mOnPickListener.onPick(position, data);
+                    dismiss();
+                }else {
+                    ToastUtil.shortToast(getContext(),"暂不支持该地区，敬请期待!");
+                }
+
+            }
         }
     }
 

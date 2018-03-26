@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.ui.main.index.detail;
+package com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan;
 
 import android.content.Intent;
 import android.text.TextUtils;

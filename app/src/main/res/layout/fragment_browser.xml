@@ -13,19 +13,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <WebView
-            android:id="@+id/webview"
+        <LinearLayout
+            android:id="@+id/ll_webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:overScrollMode="never"
-            android:scrollbars="none"
-            android:layout_marginBottom="@dimen/d42"/>
-
-        <ProgressBar
-            android:id="@+id/progress"
-            android:layout_width="@dimen/d42"
-            android:layout_height="@dimen/d42"
-            android:layout_centerInParent="true" />
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/d44"
+            android:background="@color/main_status_light_gray"/>
 
 
         <LinearLayout

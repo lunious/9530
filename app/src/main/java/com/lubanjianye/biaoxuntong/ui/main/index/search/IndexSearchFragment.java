@@ -31,13 +31,15 @@ import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.chongqing.IndexCqsggjyDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.ui.main.index.IndexListAdapter;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexBxtgdjDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexScgggDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjyDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgtableDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexXcgggDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexScgggDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgtableDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexXcgggDetailActivity;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
@@ -90,6 +92,9 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
     String mKeyWord = "";
 
 
+    private String mDiqu = "";
+
+
     private SpinerPopWindow<String> mSpinerArea = null;
     private SpinerPopWindow<String> mSpinerType = null;
     private List<String> Arealist = new ArrayList<String>();
@@ -112,6 +117,14 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
         searchRefresh = getView().findViewById(R.id.search_refresh);
 
         llIvBack.setOnClickListener(this);
+
+
+        if (AppSharePreferenceMgr.contains(getContext(),EventMessage.LOCA_AREA)){
+            String area = (String) AppSharePreferenceMgr.get(getContext(),EventMessage.LOCA_AREA,"");
+            mDiqu = area;
+        }else {
+            mDiqu = "四川";
+        }
     }
 
     @Override
@@ -222,44 +235,65 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                 Log.d("BASUHDUSADASDAS", entity + "_____" + entityId);
 
                 Intent intent = null;
-                if ("sggjy".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
+                if ("四川".equals(mDiqu)){
 
-                } else if ("xcggg".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("bxtgdj".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("sggjycgtable".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
+                    if ("sggjy".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
 
-                } else if ("scggg".equals(entity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexScgggDetailActivity.class);
-                    intent.putExtra("entityId", entityId);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
+                    } else if ("xcggg".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("bxtgdj".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("sggjycgtable".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+
+                    } else if ("scggg".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexScgggDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    }
+                }else if ("重庆".equals(mDiqu)){
+                    if ("cqcggg".equals(entity)){
+                        final String title = data.getEntryName();
+                        intent = new Intent(getActivity(), BrowserDetailActivity.class);
+                        intent.putExtra("api", BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL);
+                        intent.putExtra("title", title);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("entityid", entityId);
+                        startActivity(intent);
+                    }else if ("cqsggjy".equals(entity)){
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexCqsggjyDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    }
                 }
+
             }
         });
 
@@ -326,6 +360,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                         .params("area", mArea)
                         .params("type", mType)
                         .params("page", page)
+                        .params("diqu",mDiqu)
                         .params("keyWord", mKeyWord)
                         .params("size", 10)
                         .execute(new StringCallback() {
@@ -368,6 +403,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                         .params("area", mArea)
                         .params("type", mType)
                         .params("page", page)
+                        .params("diqu",mDiqu)
                         .params("keyWord", mKeyWord)
                         .params("size", 10)
                         .execute(new StringCallback() {
@@ -415,6 +451,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                         .params("page", page)
                         .params("area", mArea)
                         .params("type", mType)
+                        .params("diqu",mDiqu)
                         .params("keyWord", mKeyWord)
                         .params("size", 10)
                         .execute(new StringCallback() {
@@ -455,6 +492,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                         .params("page", page)
                         .params("area", mArea)
                         .params("type", mType)
+                        .params("diqu",mDiqu)
                         .params("keyWord", mKeyWord)
                         .params("size", 10)
                         .execute(new StringCallback() {
@@ -571,6 +609,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
     public void loadArea() {
 
         OkGo.<String>post(BiaoXunTongApi.URL_GETALLTAB)
+                .params("diqu",mDiqu)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {

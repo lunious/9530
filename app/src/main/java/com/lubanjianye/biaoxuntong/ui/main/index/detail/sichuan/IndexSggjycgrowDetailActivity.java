@@ -1,8 +1,7 @@
-package com.lubanjianye.biaoxuntong.ui.main.result.detail;
+package com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.lubanjianye.biaoxuntong.base.BaseActivity;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
@@ -12,15 +11,15 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
 /**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.result.detail
- * 文件名:   ResultXjgggDetailActivity
+ * 项目名:   Lunious
+ * 包名:     com.lubanjianye.biaoxuntong.ui.main.index.detail
+ * 文件名:   IndexSggjycgrowDetailActivity
  * 创建者:   lunious
- * 创建时间: 2017/12/12  20:48
+ * 创建时间: 2017/12/7  15:24
  * 描述:     TODO
  */
 
-public class ResultXjgggDetailActivity extends BaseActivity {
+public class IndexSggjycgrowDetailActivity extends BaseActivity {
 
     private int mEntityId = -1;
     private String mEntity = "";
@@ -29,6 +28,7 @@ public class ResultXjgggDetailActivity extends BaseActivity {
 
     @Override
     public BaseFragment setRootFragment() {
+
         Intent intent = getIntent();
         if (intent != null) {
             mEntityId = intent.getIntExtra("entityId", -1);
@@ -36,8 +36,6 @@ public class ResultXjgggDetailActivity extends BaseActivity {
             ajaxType = intent.getStringExtra("ajaxlogtype");
             mId = intent.getStringExtra("mId");
         }
-
-        Log.d("JABNDJBSJDJASDA", mId);
         if (!TextUtils.isEmpty(mId)) {
 
             OkGo.<String>post(BiaoXunTongApi.URL_GETUITASK)
@@ -53,8 +51,7 @@ public class ResultXjgggDetailActivity extends BaseActivity {
         }
 
 
-        final ResultXjgggDetailFragment fragment = ResultXjgggDetailFragment.create(mEntityId, mEntity, ajaxType);
+        final IndexSggjycgrowDetailFragment fragment = IndexSggjycgrowDetailFragment.create(mEntityId, mEntity, ajaxType);
         return fragment;
     }
-
 }

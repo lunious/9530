@@ -9,19 +9,23 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
  * Created by 11645 on 2018/3/22.
  */
 
-public class BrowserActivity extends BaseActivity {
-    private String mUrl = "";
+public class BrowserDetailActivity extends BaseActivity {
+    private String mApi = "";
     private String mTitle = "";
+    private String mEntity = "";
+    private int mEntityid = -1;
 
     @Override
     public BaseFragment setRootFragment() {
         Intent intent = getIntent();
         if (intent != null) {
-            mUrl = intent.getStringExtra("url");
+            mApi = intent.getStringExtra("api");
             mTitle = intent.getStringExtra("title");
+            mEntity = intent.getStringExtra("entity");
+            mEntityid = intent.getIntExtra("entityid", -1);
         }
 
-        final BrowserFragment fragment = BrowserFragment.create(mUrl, mTitle);
+        final BrowserDetailFragment fragment = BrowserDetailFragment.create(mApi, mTitle, mEntity, mEntityid);
         return fragment;
     }
 }

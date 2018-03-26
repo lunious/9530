@@ -1,34 +1,28 @@
-package com.lubanjianye.biaoxuntong.ui.main.index.detail;
+package com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing;
 
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseActivity;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
-import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
 /**
- * 项目名:   Lunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.index.detail
- * 文件名:   IndexSggjycgrowDetailActivity
- * 创建者:   lunious
- * 创建时间: 2017/12/7  15:24
- * 描述:     TODO
+ * Created by 11645 on 2018/3/22.
  */
 
-public class IndexSggjycgrowDetailActivity extends BaseActivity {
-
+public class ResultCqsggjyzbjgDetailActivity extends BaseActivity {
     private int mEntityId = -1;
     private String mEntity = "";
     private String ajaxType = "";
     private String mId = "";
 
+
     @Override
     public BaseFragment setRootFragment() {
-
         Intent intent = getIntent();
         if (intent != null) {
             mEntityId = intent.getIntExtra("entityId", -1);
@@ -51,7 +45,7 @@ public class IndexSggjycgrowDetailActivity extends BaseActivity {
         }
 
 
-        final IndexSggjycgrowDetailFragment fragment = IndexSggjycgrowDetailFragment.create(mEntityId, mEntity, ajaxType);
+        final ResultCqsggjyzbjgDetailFragment fragment = ResultCqsggjyzbjgDetailFragment.create(mEntityId, mEntity, ajaxType);
         return fragment;
     }
 }

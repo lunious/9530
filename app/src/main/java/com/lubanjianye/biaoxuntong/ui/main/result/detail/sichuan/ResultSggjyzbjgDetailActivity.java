@@ -1,33 +1,35 @@
-package com.lubanjianye.biaoxuntong.ui.main.index.detail;
+package com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan;
 
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 
-import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseActivity;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
 /**
- * 项目名:   Lunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.index.detail
- * 文件名:   IndexXcgggDetailActivity
+ * 项目名:   AppLunious
+ * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.result.detail
+ * 文件名:   ResultSggjyzbjgDetailActivity
  * 创建者:   lunious
- * 创建时间: 2017/12/7  15:36
+ * 创建时间: 2017/12/12  21:28
  * 描述:     TODO
  */
 
-public class IndexScgggDetailActivity extends BaseActivity {
+public class ResultSggjyzbjgDetailActivity extends BaseActivity {
+
     private int mEntityId = -1;
     private String mEntity = "";
     private String ajaxType = "";
     private String mId = "";
 
+
     @Override
     public BaseFragment setRootFragment() {
-
         Intent intent = getIntent();
         if (intent != null) {
             mEntityId = intent.getIntExtra("entityId", -1);
@@ -35,6 +37,8 @@ public class IndexScgggDetailActivity extends BaseActivity {
             ajaxType = intent.getStringExtra("ajaxlogtype");
             mId = intent.getStringExtra("mId");
         }
+
+        Log.d("JABNDJBSJDJASDA", mId+mEntityId+mEntity);
         if (!TextUtils.isEmpty(mId)) {
 
             OkGo.<String>post(BiaoXunTongApi.URL_GETUITASK)
@@ -49,8 +53,8 @@ public class IndexScgggDetailActivity extends BaseActivity {
 
         }
 
-
-        final IndexScgggDetailFragment fragment = IndexScgggDetailFragment.create(mEntityId, mEntity, ajaxType);
+        final ResultSggjyzbjgDetailFragment fragment = ResultSggjyzbjgDetailFragment.create(mEntityId, mEntity, ajaxType);
         return fragment;
     }
+
 }
