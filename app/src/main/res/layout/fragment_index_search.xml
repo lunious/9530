@@ -5,6 +5,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/status_bar_height"
+        android:background="@color/main_theme_color" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/d40"
@@ -28,7 +33,7 @@
                 android:layout_height="@dimen/d20"
                 android:layout_gravity="center"
                 android:background="#00ffffff"
-                android:src="@mipmap/white_back" />
+                android:src="@mipmap/btn_back"/>
 
         </LinearLayout>
 
