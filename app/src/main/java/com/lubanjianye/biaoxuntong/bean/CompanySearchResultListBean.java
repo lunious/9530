@@ -18,6 +18,16 @@ public class CompanySearchResultListBean implements Serializable{
     private String entrySign = null;
     private String sfId = null;
 
+    private String provinceCode = null;
+
+    public String getProvinceCode() {
+        return provinceCode;
+    }
+
+    public void setProvinceCode(String provinceCode) {
+        this.provinceCode = provinceCode;
+    }
+
     public String getQy() {
         return qy;
     }

@@ -35,11 +35,24 @@ public class CompanySearchResultListAdapter extends BaseQuickAdapter<CompanySear
         } else {
             helper.setText(R.id.tv_lxr, "暂未添加");
         }
+
+
+        String provinceCode = item.getProvinceCode();
+
         String areaType = item.getEntrySign();
         if ("0".equals(areaType)) {
-            helper.setText(R.id.tv_area_type, "川内");
+            if ("510000".equals(provinceCode)) {
+                helper.setText(R.id.tv_area_type, "川内");
+            } else if ("500000".equals(provinceCode)) {
+                helper.setText(R.id.tv_area_type, "渝内");
+            }
+
         } else if ("1".equals(areaType)) {
-            helper.setText(R.id.tv_area_type, "入川");
+            if ("510000".equals(provinceCode)) {
+                helper.setText(R.id.tv_area_type, "入川");
+            } else if ("500000".equals(provinceCode)) {
+                helper.setText(R.id.tv_area_type, "入渝");
+            }
         } else {
             helper.setText(R.id.tv_area_type, "");
             helper.setVisible(R.id.tv_area_type, false);

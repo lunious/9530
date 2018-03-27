@@ -24,13 +24,13 @@ import com.gongwen.marqueen.MarqueeFactory;
 import com.gongwen.marqueen.SimpleMF;
 import com.gongwen.marqueen.SimpleMarqueeView;
 import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.bean.JsonString;
 import com.lubanjianye.biaoxuntong.bean.QueryBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
@@ -50,6 +50,10 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +89,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
 
     private PromptDialog promptDialog;
-    String provinceCode = "510000";
+    String provinceCode = "";
 
     private long id = 0;
     private String mobile = "";
@@ -195,6 +199,11 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     public void initView() {
+
+        //注册EventBus
+        EventBus.getDefault().register(this);
+
+
         mainBarName = getView().findViewById(R.id.main_bar_name);
         etQuery = getView().findViewById(R.id.et_query);
         tvQuery = getView().findViewById(R.id.tv_query);
@@ -221,6 +230,69 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void XXXXXX(EventMessage message) {
+
+        if (EventMessage.LOCA_AREA_CHANGE.equals(message.getMessage())) {
+
+            if (ids_1.size() > 0) {
+                ids_1.clear();
+            }
+
+            if (ids_2.size() > 0) {
+                ids_2.clear();
+            }
+
+            if (ids_3.size() > 0) {
+                ids_3.clear();
+            }
+
+            mDataList.clear();
+            mAdapter.notifyDataSetChanged();
+
+            if (Qylist.size() > 0){
+                Qylist.clear();
+            }
+
+            //重置后面选项名称
+            tvZzlx.setText("资质类型");
+            tvDl.setText("大类");
+            tvXl.setText("小类");
+            tvZy.setText("专业");
+            tvDj.setText("等级");
+            tvQy.setText("地区范围");
+
+
+            if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)){
+                String area = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA,"");
+
+                if (area.equals("四川")){
+                    provinceCode = "510000";
+                    Qylist.add("川内");
+                    Qylist.add("入川");
+                    Qylist.add("川内+入川");
+                    Qylist.add("全国");
+                }else if (area.equals("重庆")){
+                    provinceCode = "500000";
+                    Qylist.add("渝内");
+                    Qylist.add("入渝");
+                    Qylist.add("渝内+入渝");
+                    Qylist.add("全国");
+                }
+            }else {
+                provinceCode = "510000";
+                Qylist.add("川内");
+                Qylist.add("入川");
+                Qylist.add("川内+入川");
+                Qylist.add("全国");
+            }
+
+
+        }
+
+
+    }
+
     @Override
     public void initData() {
         mainBarName.setVisibility(View.VISIBLE);
@@ -228,6 +300,30 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
         initRecyclerView();
         initAdapter();
+
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)){
+            String area = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA,"");
+
+            if (area.equals("四川")){
+                provinceCode = "510000";
+                Qylist.add("川内");
+                Qylist.add("入川");
+                Qylist.add("川内+入川");
+                Qylist.add("全国");
+            }else if (area.equals("重庆")){
+                provinceCode = "500000";
+                Qylist.add("渝内");
+                Qylist.add("入渝");
+                Qylist.add("渝内+入渝");
+                Qylist.add("全国");
+            }
+        }else {
+            provinceCode = "510000";
+            Qylist.add("川内");
+            Qylist.add("入川");
+            Qylist.add("川内+入川");
+            Qylist.add("全国");
+        }
     }
 
     @Override
@@ -243,9 +339,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
         loadZZLX();
 
-        Qylist.add("川内");
-        Qylist.add("入川");
-        Qylist.add("川内+入川");
 
         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
         for (int i = 0; i < users.size(); i++) {
@@ -378,11 +471,11 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             djId = "4";
         }
 
-        if ("川内+入川".equals(six)) {
+        if ("川内+入川".equals(six) || "渝内+入渝".equals(six)) {
             entrySign = 2;
-        } else if ("川内".equals(six)) {
+        } else if ("川内".equals(six) || "渝内".equals(six)) {
             entrySign = 0;
-        } else if ("入川".equals(six)) {
+        } else if ("入川".equals(six) || "入渝".equals(six)) {
             entrySign = 1;
         } else if ("全国".equals(six)) {
             entrySign = -1;
@@ -428,6 +521,9 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
+        //取消注册EventBus
+        EventBus.getDefault().unregister(this);
 
         if (mDataList.size() > 0) {
             mDataList.clear();

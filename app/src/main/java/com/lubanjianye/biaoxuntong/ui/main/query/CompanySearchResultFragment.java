@@ -17,12 +17,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.bean.CompanySearchResultListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.main.query.detail.CompanyDetailActivity;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
@@ -351,6 +351,7 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
                 bean.setLxr(list.getString("lxr"));
                 bean.setEntrySign(list.getString("entrySign"));
                 bean.setSfId(list.getString("sfId"));
+                bean.setProvinceCode(mProvinceCode);
                 mDataList.add(bean);
             }
             companySearchResultRefresh.finishRefresh(0, true);
@@ -364,6 +365,7 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
                     bean.setLxr(list.getString("lxr"));
                     bean.setEntrySign(list.getString("entrySign"));
                     bean.setSfId(list.getString("sfId"));
+                    bean.setProvinceCode(mProvinceCode);
                     mDataList.add(bean);
                 }
             }
