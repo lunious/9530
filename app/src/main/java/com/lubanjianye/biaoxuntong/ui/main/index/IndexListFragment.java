@@ -20,6 +20,7 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.ui.view.TipView;
 import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
@@ -69,6 +70,8 @@ public class IndexListFragment extends BaseFragment {
     Banner indexItemBanner = null;
     private String mTitle = null;
     private static String mDiqu = null;
+    private TipView mTipView = null;
+
 
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
 
@@ -112,7 +115,7 @@ public class IndexListFragment extends BaseFragment {
                     indexRefresh.finishRefresh(2000, false);
                     mAdapter.setEnableLoadMore(false);
                 } else {
-                    requestData(true,1);
+                    requestData(true, 2);
                 }
             }
         });
@@ -212,8 +215,7 @@ public class IndexListFragment extends BaseFragment {
         mTitle = getArguments().getString("title");
 
 
-
-        Log.d("JABHJSBDASDA","我被调用了="+mTitle);
+        Log.d("JABHJSBDASDA", "我被调用了=" + mTitle);
 
         if ("最新标讯".equals(mTitle)) {
             mAdapter = new IndexListAdapter(R.layout.fragment_index_zxbx_item, mDataList);
@@ -232,7 +234,7 @@ public class IndexListFragment extends BaseFragment {
                 if (!NetUtil.isNetworkConnected(getActivity())) {
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
                 } else {
-                    requestData(false,2);
+                    requestData(false, 0);
                 }
             }
         });
@@ -256,6 +258,7 @@ public class IndexListFragment extends BaseFragment {
         indexRecycler = getView().findViewById(R.id.index_recycler);
         indexRefresh = getView().findViewById(R.id.index_refresh);
         loadingStatus = getView().findViewById(R.id.index_list_status_view);
+        mTipView = getView().findViewById(R.id.tip_view);
 
     }
 
@@ -270,7 +273,7 @@ public class IndexListFragment extends BaseFragment {
     @Override
     public void initEvent() {
 
-        Log.d("NJDASJNDNASDA","我被调用了");
+        Log.d("NJDASJNDNASDA", "我被调用了");
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
@@ -282,7 +285,7 @@ public class IndexListFragment extends BaseFragment {
             BiaoXunTong.getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    requestData(true,3);
+                    requestData(true, 0);
                 }
             }, 500);
         } else {
@@ -290,7 +293,7 @@ public class IndexListFragment extends BaseFragment {
             BiaoXunTong.getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    requestData(true,4);
+                    requestData(true, 1);
                 }
             }, 500);
         }
@@ -364,8 +367,7 @@ public class IndexListFragment extends BaseFragment {
         });
     }
 
-    public void requestData(final boolean isRefresh,int a) {
-
+    public void requestData(final boolean isRefresh, final int n) {
 
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
@@ -388,7 +390,7 @@ public class IndexListFragment extends BaseFragment {
                         .params("diqu", mDiqu)
                         .params("size", 10)
                         .params("deviceId", deviceId)
-                        .cacheKey("index_list_login_cache" + mTitle+mDiqu)
+                        .cacheKey("index_list_login_cache" + mTitle + mDiqu)
                         .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                         .cacheTime(3600 * 72000)
                         .execute(new StringCallback() {
@@ -405,12 +407,10 @@ public class IndexListFragment extends BaseFragment {
                                 final boolean nextPage = data.getBoolean("nextpage");
 
 
-                                Log.d("JUAUISDASDAADA","登录后请求的新数据=="+jiemi);
-
                                 if ("200".equals(status)) {
                                     if (array.size() > 0) {
                                         page = 2;
-                                        setData(isRefresh, array, nextPage);
+                                        setData(isRefresh, array, nextPage, n);
                                     } else {
                                         if (mDataList != null) {
                                             mDataList.clear();
@@ -438,11 +438,9 @@ public class IndexListFragment extends BaseFragment {
                                     final boolean nextPage = data.getBoolean("nextpage");
 
 
-                                    Log.d("JUAUISDASDAADA","登录后缓存的数据=="+jiemi);
-
                                     if ("200".equals(status)) {
                                         if (array.size() > 0) {
-                                            setData(isRefresh, array, nextPage);
+                                            setData(isRefresh, array, nextPage, n);
                                         } else {
                                             if (mDataList != null) {
                                                 mDataList.clear();
@@ -481,11 +479,9 @@ public class IndexListFragment extends BaseFragment {
                                 final boolean nextPage = data.getBoolean("nextpage");
 
 
-                                Log.d("JUAUISDASDAADA","登录后请求的下一页数据=="+jiemi);
-
                                 if ("200".equals(status)) {
                                     if (array.size() > 0) {
-                                        setData(isRefresh, array, nextPage);
+                                        setData(isRefresh, array, nextPage, n);
                                     } else {
                                         if (mDataList != null) {
                                             mDataList.clear();
@@ -514,7 +510,7 @@ public class IndexListFragment extends BaseFragment {
                         .params("size", 10)
                         .params("diqu", mDiqu)
                         .params("deviceId", deviceId)
-                        .cacheKey("index_list_no_login_cache" + mTitle+mDiqu)
+                        .cacheKey("index_list_no_login_cache" + mTitle + mDiqu)
                         .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                         .cacheTime(3600 * 72000)
                         .execute(new StringCallback() {
@@ -530,13 +526,10 @@ public class IndexListFragment extends BaseFragment {
                                 final boolean nextPage = data.getBoolean("nextpage");
 
 
-                                Log.d("JUAUISDASDAADA","未登录时请求的新数据=="+jiemi);
-
-
                                 if ("200".equals(status)) {
                                     if (array.size() > 0) {
                                         page = 2;
-                                        setData(isRefresh, array, nextPage);
+                                        setData(isRefresh, array, nextPage, n);
                                     } else {
                                         if (mDataList != null) {
                                             mDataList.clear();
@@ -565,12 +558,10 @@ public class IndexListFragment extends BaseFragment {
                                     final boolean nextPage = data.getBoolean("nextpage");
 
 
-                                    Log.d("JUAUISDASDAADA","未登录缓存的数据=="+jiemi);
-
                                     if ("200".equals(status)) {
                                         if (array.size() > 0) {
                                             page = 2;
-                                            setData(isRefresh, array, nextPage);
+                                            setData(isRefresh, array, nextPage, n);
                                         } else {
                                             if (mDataList != null) {
                                                 mDataList.clear();
@@ -607,11 +598,9 @@ public class IndexListFragment extends BaseFragment {
                                 final boolean nextPage = data.getBoolean("nextpage");
 
 
-                                Log.d("JUAUISDASDAADA","未登录时请求的下一页数据=="+jiemi);
-
                                 if ("200".equals(status)) {
                                     if (array.size() > 0) {
-                                        setData(isRefresh, array, nextPage);
+                                        setData(isRefresh, array, nextPage, n);
                                     } else {
                                         if (mDataList != null) {
                                             mDataList.clear();
@@ -634,7 +623,7 @@ public class IndexListFragment extends BaseFragment {
 
     }
 
-    private void setData(boolean isRefresh, JSONArray data, boolean nextPage) {
+    private void setData(boolean isRefresh, JSONArray data, boolean nextPage, int n) {
         final int size = data == null ? 0 : data.size();
         if (isRefresh) {
             loadingStatus.showContent();
@@ -690,5 +679,27 @@ public class IndexListFragment extends BaseFragment {
 
         mAdapter.notifyDataSetChanged();
 
+
+        showTip(data, n);
+
+    }
+
+    private void showTip(JSONArray data, int n) {
+        final int a = data.size();
+        if (n == 1) {
+            BiaoXunTong.getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mTipView.show("为你推荐了" + a + "条新标讯");
+                }
+            }, 1000);
+        } else if (n == 2) {
+            BiaoXunTong.getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mTipView.show("已经是最新数据了");
+                }
+            }, 500);
+        }
     }
 }
