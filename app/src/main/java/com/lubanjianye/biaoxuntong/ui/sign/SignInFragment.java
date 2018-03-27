@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.sign;
+package com.lubanjianye.biaoxuntong.ui.sign;
 
 import android.content.Intent;
 import android.support.v4.view.ViewPager;

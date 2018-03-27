@@ -27,12 +27,11 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.citypicker.CityPicker;
 import com.lubanjianye.biaoxuntong.ui.citypicker.adapter.OnPickListener;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.City;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.HotCity;
-import com.lubanjianye.biaoxuntong.ui.citypicker.model.LocateState;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.LocatedCity;
 import com.lubanjianye.biaoxuntong.ui.main.index.search.IndexSearchActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.sortcolumn.SortColumnActivity;
@@ -231,7 +230,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
         String mDiqu = tv_location.getText().toString();
 
-        Log.d("DASBDASDASD", mDiqu);
 
         //保存地区
         AppSharePreferenceMgr.put(getContext(), EventMessage.LOCA_AREA, mDiqu);

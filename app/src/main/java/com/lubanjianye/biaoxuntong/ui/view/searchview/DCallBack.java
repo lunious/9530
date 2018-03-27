@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.searchview;
+package com.lubanjianye.biaoxuntong.ui.view.searchview;
 
 /**
  * 项目名:   LBBXT

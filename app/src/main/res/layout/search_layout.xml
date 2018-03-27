@@ -34,7 +34,7 @@
             android:background="@drawable/bg_index_title_bar">
 
 
-            <com.lubanjianye.biaoxuntong.searchview.EditText_Clear
+            <com.lubanjianye.biaoxuntong.ui.view.searchview.EditText_Clear
                 android:id="@+id/et_search"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.lubanjianye.biaoxuntong.searchview.SearchListView
+            <com.lubanjianye.biaoxuntong.ui.view.searchview.SearchListView
                 android:id="@+id/listView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
                 android:dividerHeight="@dimen/d1"
                 android:paddingLeft="@dimen/d18">
 
-            </com.lubanjianye.biaoxuntong.searchview.SearchListView>
+            </com.lubanjianye.biaoxuntong.ui.view.searchview.SearchListView>
 
             <TextView
                 android:id="@+id/tv_clear"

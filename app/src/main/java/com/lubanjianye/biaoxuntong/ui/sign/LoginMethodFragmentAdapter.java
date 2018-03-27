@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.sign;
+package com.lubanjianye.biaoxuntong.ui.sign;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

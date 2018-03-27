@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.lubanjianye.biaoxuntong.searchview.SearchView
+    <com.lubanjianye.biaoxuntong.ui.view.searchview.SearchView
         android:id="@+id/result_search_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

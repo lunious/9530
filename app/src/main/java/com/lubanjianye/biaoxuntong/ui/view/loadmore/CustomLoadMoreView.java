@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.loadmore;
+package com.lubanjianye.biaoxuntong.ui.view.loadmore;
 
 import com.chad.library.adapter.base.loadmore.LoadMoreView;
 import com.lubanjianye.biaoxuntong.R;

@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.searchview;
+package com.lubanjianye.biaoxuntong.ui.view.searchview;
 
 import android.content.Context;
 import android.content.res.TypedArray;

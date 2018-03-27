@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.sign;
+package com.lubanjianye.biaoxuntong.ui.sign;
 
 import android.annotation.SuppressLint;
 import android.os.CountDownTimer;

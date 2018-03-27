@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -24,7 +23,6 @@ import com.lubanjianye.biaoxuntong.ui.main.collection.CollectionTabFragment;
 import com.lubanjianye.biaoxuntong.ui.update.UpdateAppBean;
 import com.lubanjianye.biaoxuntong.ui.update.UpdateAppManager;
 import com.lubanjianye.biaoxuntong.ui.update.UpdateCallback;
-import com.lubanjianye.biaoxuntong.ui.update.utils.CProgressDialogUtils;
 import com.lubanjianye.biaoxuntong.ui.update.utils.OkGoUpdateHttpUtil;
 import com.lubanjianye.biaoxuntong.ui.view.botton.BottomBar;
 import com.lubanjianye.biaoxuntong.ui.view.botton.BottomBarTab;
