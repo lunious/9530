@@ -35,13 +35,13 @@ public class ToastUtil {
             toast = new Toast(context);
             toast.setDuration(Toast.LENGTH_SHORT);
             View view = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.sys_show_toast, null);
-            TextView textView = (TextView) view.findViewById(R.id.sys_show_toast_txt);
+            TextView textView = view.findViewById(R.id.sys_show_toast_txt);
             textView.setText(message);
             toast.setView(view);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         } else {
-            TextView textView = (TextView) toast.getView().findViewById(R.id.sys_show_toast_txt);
+            TextView textView = toast.getView().findViewById(R.id.sys_show_toast_txt);
             textView.setText(message);
             toast.setDuration(Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
@@ -50,18 +50,19 @@ public class ToastUtil {
     }
 
 
+
     public static void shortBottonToast(final Context context, final String message) {
         if (null == toast) {
             toast = new Toast(context);
             toast.setDuration(Toast.LENGTH_SHORT);
             View view = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.sys_show_toast, null);
-            TextView textView = (TextView) view.findViewById(R.id.sys_show_toast_txt);
+            TextView textView = view.findViewById(R.id.sys_show_toast_txt);
             textView.setText(message);
             toast.setView(view);
             toast.setGravity(Gravity.BOTTOM, 0, 240);
             toast.show();
         } else {
-            TextView textView = (TextView) toast.getView().findViewById(R.id.sys_show_toast_txt);
+            TextView textView = toast.getView().findViewById(R.id.sys_show_toast_txt);
             textView.setText(message);
             toast.setDuration(Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.BOTTOM, 0, 240);

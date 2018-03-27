@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.lubanjianye.biaoxuntong.base.BaseActivity;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
-import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;

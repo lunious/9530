@@ -24,7 +24,7 @@ import com.gongwen.marqueen.MarqueeFactory;
 import com.gongwen.marqueen.SimpleMF;
 import com.gongwen.marqueen.SimpleMarqueeView;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.bean.JsonString;
 import com.lubanjianye.biaoxuntong.bean.QueryBean;

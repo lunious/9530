@@ -21,7 +21,7 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
@@ -64,7 +64,6 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
-    private AppCompatTextView tvFavCount = null;
     private LinearLayout llShare = null;
     private AppCompatTextView tvMainTitle = null;
     private AppCompatTextView tvDataTime = null;
@@ -143,6 +142,8 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
             mEntity = args.getString(ARG_ENTITY);
             ajaxType = args.getString(ARG_AJAXTYPE);
         }
+
+
     }
 
 
@@ -150,8 +151,6 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
     public void initView() {
         llIvBack = getView().findViewById(R.id.ll_iv_back);
         mainBarName = getView().findViewById(R.id.main_bar_name);
-
-        tvFavCount = getView().findViewById(R.id.tv_fav_count);
         llShare = getView().findViewById(R.id.ll_share);
         tvMainTitle = getView().findViewById(R.id.tv_main_title);
         tvDataTime = getView().findViewById(R.id.tv_data_time);
@@ -611,9 +610,7 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                     } else {
                                         tvOwerCompanyPinjia.setText("暂无");
                                     }
-                                    if (sggjyDetailStatusView != null) {
-                                        sggjyDetailStatusView.showContent();
-                                    }
+                                    sggjyDetailStatusView.showContent();
 
                                 } else {
                                     sggjyDetailStatusView.showError();
@@ -627,7 +624,6 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
     }
 
     private Share mShare = new Share();
-    private PromptDialog promptDialog = null;
 
     String provinceCode = "510000";
 

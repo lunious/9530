@@ -3,7 +3,7 @@ package com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseActivity;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lzy.okgo.OkGo;
