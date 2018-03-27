@@ -85,15 +85,14 @@ dependencies {
     compile 'com.github.joyrun.MixPush:client-core:1.2.0' //必填
     compile 'com.github.joyrun.MixPush:client-getui:1.2.0' // 个推
     //easypermissions依赖
-    implementation 'pub.devrel:easypermissions:1.1.1'
+    implementation 'pub.devrel:easypermissions:1.2.0'
     //okhttp-OkGo
     compile 'com.lzy.net:okgo:3.0.4'
     //SmartRefreshLayout
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
     //SwipeRecyclerView
     compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
-    //gif-drawable
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.8'
+    //scale-image
     compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.6.0'
     //ImmersionBar
     compile 'com.gyf.barlibrary:barlibrary:2.3.0'

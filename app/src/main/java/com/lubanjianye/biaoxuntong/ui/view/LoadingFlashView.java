@@ -87,7 +87,7 @@ public class LoadingFlashView extends FrameLayout {
         List<ImageView> imageViewList = Arrays.asList(mLoad1,mLoad2);
         List<Animator> animatorList = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
-            ObjectAnimator loadAnimator = ObjectAnimator.ofFloat(imageViewList.get(i), "alpha", new float[]{1.0F, 0.5F}).setDuration(500L);
+            ObjectAnimator loadAnimator = ObjectAnimator.ofFloat(imageViewList.get(i), "alpha", new float[]{1.0F, 0.6F}).setDuration(800L);
             loadAnimator.setStartDelay(100 * i);
             loadAnimator.setRepeatMode(ObjectAnimator.REVERSE);
             loadAnimator.setRepeatCount(-1);
