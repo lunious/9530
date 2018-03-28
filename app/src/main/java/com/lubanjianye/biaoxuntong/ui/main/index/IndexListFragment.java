@@ -415,7 +415,7 @@ public class IndexListFragment extends BaseFragment {
                         .params("size", 10)
                         .params("deviceId", deviceId)
                         .cacheKey("index_list_login_cache" + mTitle + mDiqu)
-                        .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                        .cacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)
                         .cacheTime(3600 * 72000)
                         .execute(new StringCallback() {
                             @Override
@@ -535,7 +535,7 @@ public class IndexListFragment extends BaseFragment {
                         .params("diqu", mDiqu)
                         .params("deviceId", deviceId)
                         .cacheKey("index_list_no_login_cache" + mTitle + mDiqu)
-                        .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                        .cacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)
                         .cacheTime(3600 * 72000)
                         .execute(new StringCallback() {
                             @Override

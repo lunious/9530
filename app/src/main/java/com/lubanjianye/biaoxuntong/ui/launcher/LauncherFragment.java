@@ -104,6 +104,7 @@ public class LauncherFragment extends BaseFragment {
                                 }
                             }, 1000);
                         }
+
                     });
 
         } else {
@@ -114,6 +115,7 @@ public class LauncherFragment extends BaseFragment {
                 }
             }, 1000);
         }
+
 
     }
 

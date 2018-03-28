@@ -131,7 +131,7 @@ public class App extends Application {
 
         OkGo.getInstance().init(this)
                 .setOkHttpClient(builder.build())
-                .setRetryCount(3);
+                .setRetryCount(2);
     }
 
     @Override
