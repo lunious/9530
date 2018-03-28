@@ -31,7 +31,6 @@ public class SearchHistoryFragment extends BaseFragment {
     private View mBottomView;
 
 
-
     @Override
     public Object setLayout() {
         return R.layout.fragment_search_history;
@@ -46,18 +45,18 @@ public class SearchHistoryFragment extends BaseFragment {
     public void initData() {
         String historyData = AccountPreference.getInstance().getHistoryData();
         if (!StringUtils.isNullOrEmpty(historyData)) {
-            mHistoryData = JsonUtils.decode(historyData, new TypeToken<List<String>>(){}.getType());
+            mHistoryData = JsonUtils.decode(historyData, new TypeToken<List<String>>() {
+            }.getType());
         }
         mAdapter = new SearchHistoryAdapter();
         mBottomView = getBottomView();
         mAdapter.addFooterView(mBottomView);
 
 
-
         mAdapter.setOnItemClickListener(new SearchHistoryAdapter.OnItemClickListener() {
             @Override
             public void onItemClickListener(int position, String info) {
-                RxBus.getInstance().post(GlobalConstant.RxBus.SERACH_HISTORY_CLICK,info);
+                RxBus.getInstance().post(GlobalConstant.RxBus.SERACH_HISTORY_CLICK, info);
                 addHistory(info);
             }
 
@@ -118,34 +117,30 @@ public class SearchHistoryFragment extends BaseFragment {
     }
 
     private View getHeadView() {
-        View headView = LayoutInflater.from(getActivity()).inflate(R.layout.search_history_pic_adapter_head,null);
-        String searchTab = "招标，中标，招标人，投标人，圣弘";
-        if (!StringUtils.isNullOrEmpty(searchTab)) {
-            String[] tabs = new String[]{"招标","中标","圣弘","中标","圣弘","中标","圣弘","中标","圣弘","中标","圣弘","中标","圣弘","中标","圣弘","中标","圣弘",
-                    "中标","圣弘","中标","圣弘","中标","圣弘","中标","圣弘","中标","圣弘","中标","圣弘","中标","圣弘","中标","圣弘"};
-            FlowLayout flowLayout = headView.findViewById(R.id.flowlayout);
-            for (int i = 0; i < tabs.length; i++) {
-                ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, DensityUtil.dip2px(getContext(),24));
-                lp.setMargins(DensityUtil.dip2px(getContext(),5), 0, DensityUtil.dip2px(getContext(),5), 0);
-                TextView tv = new TextView(getActivity());
-                tv.setPadding(DensityUtil.dip2px(getContext(),5), 0, DensityUtil.dip2px(getContext(),5), 0);
-                tv.setTextColor(getResources().getColor(R.color.main_theme_color));
-                tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-                tv.setText(tabs[i]);
-                tv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        RxBus.getInstance().post(GlobalConstant.RxBus.SERACH_HISTORY_CLICK,((TextView)view).getText());
-                    }
-                });
-                tv.setGravity(Gravity.CENTER_VERTICAL);
-                tv.setLines(1);
-                tv.setBackgroundResource(R.drawable.bt_shape_main_color);
-                flowLayout.addView(tv, lp);
-                headView.findViewById(R.id.cv_tab_content).setVisibility(View.VISIBLE);
-            }
-
+        View headView = LayoutInflater.from(getActivity()).inflate(R.layout.search_history_pic_adapter_head, null);
+        String[] tabs = new String[]{"天然气", "地质灾害隐患", "扶贫产业", "搬迁", "污水处理", "隧道", "道路", "整治工程", "基础设施", "绿化"};
+        FlowLayout flowLayout = headView.findViewById(R.id.flowlayout);
+        for (int i = 0; i < tabs.length; i++) {
+            ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, DensityUtil.dip2px(getContext(), 24));
+            lp.setMargins(DensityUtil.dip2px(getContext(), 5), 0, DensityUtil.dip2px(getContext(), 5), 0);
+            TextView tv = new TextView(getActivity());
+            tv.setPadding(DensityUtil.dip2px(getContext(), 5), 0, DensityUtil.dip2px(getContext(), 5), 0);
+            tv.setTextColor(getResources().getColor(R.color.main_theme_color));
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+            tv.setText(tabs[i]);
+            tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    RxBus.getInstance().post(GlobalConstant.RxBus.SERACH_HISTORY_CLICK, ((TextView) view).getText());
+                }
+            });
+            tv.setGravity(Gravity.CENTER_VERTICAL);
+            tv.setLines(1);
+            tv.setBackgroundResource(R.drawable.bt_shape_main_color);
+            flowLayout.addView(tv, lp);
+            headView.findViewById(R.id.cv_tab_content).setVisibility(View.VISIBLE);
         }
+
 
         return headView;
     }
@@ -176,7 +171,7 @@ public class SearchHistoryFragment extends BaseFragment {
 
         //去重
         for (int i = 0; i < mHistoryData.size(); i++) {
-            if(content.equals(mHistoryData.get(i))) {
+            if (content.equals(mHistoryData.get(i))) {
                 mHistoryData.remove(i);
                 break;
             }
@@ -188,9 +183,9 @@ public class SearchHistoryFragment extends BaseFragment {
             saveHistory();
             return;
         }
-        mHistoryData.add(0,content);
+        mHistoryData.add(0, content);
         if (mHistoryData.size() > MAX_HISTORY_AMOUNT) {
-            for (int i = mHistoryData.size()-1; i > MAX_HISTORY_AMOUNT; i--) {
+            for (int i = mHistoryData.size() - 1; i > MAX_HISTORY_AMOUNT; i--) {
                 mHistoryData.remove(i);
             }
         }

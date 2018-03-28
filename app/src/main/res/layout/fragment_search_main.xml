@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,8 +14,9 @@
         android:id="@+id/abl_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/main_theme_color"
-        android:layout_marginTop="@dimen/d4">
+        android:layout_marginTop="@dimen/d4"
+        android:background="@color/main_theme_color">
+
         <LinearLayout
             android:id="@+id/ll_head"
             android:layout_width="match_parent"
@@ -32,37 +32,38 @@
                 <ImageView
                     android:id="@+id/iv_back"
                     android:layout_width="@dimen/d18"
-                    android:layout_weight="0.5"
                     android:layout_height="@dimen/d18"
-                    android:src="@mipmap/btn_back"
-                    android:layout_marginTop="@dimen/d40"/>
+                    android:layout_marginTop="@dimen/d40"
+                    android:layout_weight="0.5"
+                    android:src="@mipmap/btn_back" />
 
                 <RelativeLayout
                     android:layout_width="@dimen/d0"
-                    android:layout_weight="12"
                     android:layout_height="@dimen/d32"
-                    android:layout_marginTop="32dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:padding="5dp"
-                    android:background="@drawable/ed_shape_gray">
+                    android:layout_marginTop="32dp"
+                    android:layout_weight="12"
+                    android:background="@drawable/ed_shape_gray"
+                    android:padding="5dp">
+
                     <com.lubanjianye.biaoxuntong.ui.search.LastInputEditText
                         android:id="@+id/et_search_content"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint="请输入关键字搜索"
-                        android:textColorHint="#c5c5c5"
-                        android:textCursorDrawable="@drawable/editor_cursor_shape"
-                        android:textColor="#808080"
-                        android:maxLines="1"
-                        android:inputType="text"
-                        android:textSize="@dimen/d15"
-                        android:singleLine="true"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="10dp"
+                        android:background="@null"
                         android:drawableLeft="@mipmap/img_search"
                         android:drawablePadding="9dp"
-                        android:background="@null"/>
+                        android:hint="请输入关键字搜索"
+                        android:inputType="text"
+                        android:maxLines="1"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="10dp"
+                        android:singleLine="true"
+                        android:textColor="#808080"
+                        android:textColorHint="#c5c5c5"
+                        android:textCursorDrawable="@drawable/editor_cursor_shape"
+                        android:textSize="@dimen/d15" />
 
                     <ImageView
                         android:id="@+id/iv_search_clear"
@@ -70,51 +71,38 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:visibility="gone"
                         android:padding="2dp"
-                        android:src="@mipmap/search_clear_pressed"/>
+                        android:src="@mipmap/search_clear_pressed"
+                        android:visibility="gone" />
 
                     <View
                         android:id="@+id/view_stop"
                         android:layout_width="match_parent"
+                        android:layout_height="40dp"
                         android:background="@color/transparent"
                         android:clickable="true"
-                        android:visibility="gone"
-                        android:layout_height="40dp"/>
+                        android:visibility="gone" />
                 </RelativeLayout>
 
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/atv_search"
                     android:layout_width="@dimen/d0"
-                    android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:text="搜索"
-                    android:textSize="@dimen/d17"
                     android:layout_marginTop="@dimen/d37"
-                    android:textColor="@color/main_status_white"/>
+                    android:layout_weight="2"
+                    android:text="搜索"
+                    android:textColor="@color/main_status_white"
+                    android:textSize="@dimen/d17" />
 
 
             </LinearLayout>
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                app:tabBackground="@color/main_theme_color"
-                android:textSize="14sp"
-                app:tabIndicatorColor="@color/white"
-                app:tabPaddingBottom="11dp"
-                app:tabPaddingTop="11dp"
-                app:tabTextColor="#7fffffff"
-                app:tabSelectedTextColor="@color/white"
-                android:layout_weight="1">
-            </android.support.design.widget.TabLayout>
             <View
                 android:id="@+id/view_sapce"
                 android:layout_width="match_parent"
                 android:layout_height="16dp"
-                android:background="@color/main_theme_color"/>
+                android:background="@color/main_theme_color" />
         </LinearLayout>
 
     </android.support.design.widget.AppBarLayout>
@@ -128,14 +116,14 @@
     <FrameLayout
         android:id="@+id/fl_history"
         android:layout_width="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.lubanjianye.biaoxuntong.ui.search.MSGView
         android:id="@+id/msg_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:background="@color/white" />
+        android:background="@color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </android.support.constraint.ConstraintLayout>

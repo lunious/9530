@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.util.dimen.DimenUtil;
@@ -33,7 +32,6 @@ import rx.functions.Action1;
 public class SearchMainFragment extends BaseFragment implements View.OnClickListener {
 
 
-    private TabLayout tabs;
     private ViewPager viewPager;
     private AppBarLayout mAppBarLayout;
     private EditText mSerachEt;
@@ -41,10 +39,10 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
     private LinearLayout mHeadLl;
     private FrameLayout mHistoryLayout;
     private View mViewSpace;
-    private  View mStopView;
+    private View mStopView;
     private AppCompatTextView mSearch;
     private ImageView mBack;
-    private  MSGView mMsgView;
+    private MSGView mMsgView;
 
     public RxManager mRxManager;
 
@@ -53,7 +51,6 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
     List<Fragment> mNewsFragmentList = new ArrayList<>();
     LinkedHashMap<String, String> mSearchResult = new LinkedHashMap<>();
     private SearchHistoryFragment mSearchHistoryFragment;
-
 
 
     @Override
@@ -72,14 +69,14 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_back:
                 getActivity().onBackPressed();
                 break;
             case R.id.atv_search:
                 if (StringUtils.isNullOrEmpty(mSerachEt.getText().toString())) {
-                    ToastUtil.shortToast(getContext(),"请输入内容");
-                }else {
+                    ToastUtil.shortToast(getContext(), "请输入内容");
+                } else {
                     search(mSerachEt.getText().toString());
                     if (mSearchHistoryFragment != null) {
                         mSearchHistoryFragment.addHistory(mSerachEt.getText().toString());
@@ -96,8 +93,7 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void initView() {
-        mRxManager=new RxManager();
-        tabs = getView().findViewById(R.id.tabs);
+        mRxManager = new RxManager();
         viewPager = getView().findViewById(R.id.view_pager);
         mAppBarLayout = getView().findViewById(R.id.abl_layout);
         mSerachEt = getView().findViewById(R.id.et_search_content);
@@ -134,7 +130,7 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
             @Override
             public void call(Boolean hideOrShow) {
                 if (hideOrShow) {
-                    RxBus.getInstance().post(GlobalConstant.RxBus.MENU_SHOW_HIDE,true);
+                    RxBus.getInstance().post(GlobalConstant.RxBus.MENU_SHOW_HIDE, true);
                 }
             }
         });
@@ -173,7 +169,7 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
                 if (!StringUtils.isNullOrEmpty(mSerachEt.getText().toString())) {
                     search(mSerachEt.getText().toString());
                 } else {
-                    ToastUtil.shortToast(getContext(),"请输入内容");
+                    ToastUtil.shortToast(getContext(), "请输入内容");
                 }
 
             }
@@ -184,9 +180,9 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
         mSerachEt.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-                if(i == EditorInfo.IME_ACTION_SEARCH || (keyEvent != null && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                if (i == EditorInfo.IME_ACTION_SEARCH || (keyEvent != null && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                     if (StringUtils.isNullOrEmpty(mSerachEt.getText().toString())) {
-                        ToastUtil.shortToast(getContext(),"请输入内容");
+                        ToastUtil.shortToast(getContext(), "请输入内容");
                         return true;
                     }
                     search(mSerachEt.getText().toString());
@@ -237,7 +233,7 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
             }
         });
         mSearchHistoryFragment = SearchHistoryFragment.newInstance();
-        getChildFragmentManager().beginTransaction().add(R.id.fl_history,mSearchHistoryFragment).commit();
+        getChildFragmentManager().beginTransaction().add(R.id.fl_history, mSearchHistoryFragment).commit();
         showHistory(true);
 
     }
@@ -245,8 +241,6 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
     private void showHistory(boolean isShow) {
         mViewSpace.setVisibility(isShow ? View.VISIBLE : View.GONE);
         mHistoryLayout.setVisibility(isShow ? View.VISIBLE : View.GONE);
-        tabs.setVisibility(!isShow ? View.VISIBLE : View.GONE);
-        //fab.setVisibility(!isShow ? View.VISIBLE : View.GONE);
         headIsScroll(!isShow);
         if (isShow) {
             mMsgView.dismiss();
@@ -268,7 +262,7 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
             if (GlobalConstant.SearchResultTitle.SEARCH_PIC_TITLE.equals(entry.getKey())) {
 //                mNewsFragmentList.add(createPicFragment((String) entry.getValue()));
                 continue;
-            } else  if (GlobalConstant.SearchResultTitle.SEARCH_FILM_TITLE.equals(entry.getKey())) {
+            } else if (GlobalConstant.SearchResultTitle.SEARCH_FILM_TITLE.equals(entry.getKey())) {
 //                mNewsFragmentList.add(createVideoFragment((String) entry.getValue()));
                 continue;
             }
@@ -276,10 +270,7 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
         fragmentAdapter = new BaseFragmentStateAdapter(getChildFragmentManager(), mNewsFragmentList, values);
         viewPager.setAdapter(fragmentAdapter);
         viewPager.setVisibility(View.VISIBLE);
-        tabs.setVisibility(View.VISIBLE);
         viewPager.setOffscreenPageLimit(mSearchResult.size());
-        tabs.setupWithViewPager(viewPager);
-        dynamicSetTabLayoutMode(tabs);
     }
 
 //    private Fragment createPicFragment(String result) {
@@ -295,12 +286,13 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
     private void headIsScroll(boolean yes) {
         AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) mHeadLl.getLayoutParams();
         if (yes) {
-            params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS |AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
+            params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS | AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
         } else {
             params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
         }
         mHeadLl.setLayoutParams(params);
     }
+
     private void setSearchRsult(LinkedHashMap<String, SearchResultModel> searchRsultMap) {
         mSearchResult.clear();
         Iterator iter = searchRsultMap.entrySet().iterator();
@@ -320,7 +312,7 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
                     e.printStackTrace();
                     continue;
                 }
-            } else  if (GlobalConstant.SearchResultTitle.SEARCH_FILM_TITLE.equals(entry.getKey())) {
+            } else if (GlobalConstant.SearchResultTitle.SEARCH_FILM_TITLE.equals(entry.getKey())) {
                 if (model != null && model.infos != null && !model.infos.isEmpty()) {
                     allDataIsEmpty = false;
                 } else {
@@ -342,7 +334,7 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
         initFragment();
     }
 
-    public  void dynamicSetTabLayoutMode(TabLayout tabLayout) {
+    public void dynamicSetTabLayoutMode(TabLayout tabLayout) {
         int tabWidth = calculateTabWidth(tabLayout);
         int screenWidth = DimenUtil.getScreenWidth();
 
@@ -352,7 +344,8 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
             tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         }
     }
-    private  int calculateTabWidth(TabLayout tabLayout) {
+
+    private int calculateTabWidth(TabLayout tabLayout) {
         int tabWidth = 0;
         for (int i = 0; i < tabLayout.getChildCount(); i++) {
             final View view = tabLayout.getChildAt(i);
@@ -367,7 +360,6 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
         hideSoftInput();
         mAppBarLayout.setExpanded(true);
         mMsgView.showLoading();
-        tabs.setVisibility(View.GONE);
         QueryInput input = new QueryInput();
         input.search = content;
         input.count = 15;

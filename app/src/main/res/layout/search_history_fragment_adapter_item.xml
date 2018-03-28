@@ -38,5 +38,5 @@
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"
         android:background="#dddddd"
-        android:layout_height="0.5dp"/>
+        android:layout_height="1px"/>
 </LinearLayout>
