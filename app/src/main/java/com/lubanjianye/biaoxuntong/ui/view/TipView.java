@@ -21,9 +21,7 @@ import com.lubanjianye.biaoxuntong.util.dimen.DensityUtil;
 
 
 /**
- * @author ChayChan
- * @description: 顶部提示的View
- * @date 2017/6/23  15:57
+ * 顶部提示的View
  */
 
 public class TipView extends LinearLayout {

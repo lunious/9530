@@ -9,11 +9,11 @@
     <com.lubanjianye.biaoxuntong.ui.view.TipView
         android:id="@+id/tip_view"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="@dimen/d28"
         android:visibility="gone"
-        app:tipBackgroundColor="@color/main_theme_color"
+        app:tipBackgroundColor="#5066bfdc"
         app:tipText="网络错误"
-        app:tipTextColor="@color/main_status_white"
+        app:tipTextColor="@color/main_status_blue"
         app:tipTextSize="13sp" />
 
 
