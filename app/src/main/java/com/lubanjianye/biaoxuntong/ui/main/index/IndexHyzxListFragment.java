@@ -18,6 +18,7 @@ import com.lubanjianye.biaoxuntong.bean.IndexHyzxListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
+import com.lubanjianye.biaoxuntong.ui.view.TipView;
 import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexHyzxDetailActivity;
@@ -31,6 +32,10 @@ import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +54,7 @@ public class IndexHyzxListFragment extends BaseFragment {
     private RecyclerView indexHyzxRecycler = null;
     private SmartRefreshLayout indexHyzxRefresh = null;
     private MultipleStatusView loadingStatus = null;
+    private TipView mTipView = null;
 
 
     private IndexHyzxListAdapter mAdapter;
@@ -67,7 +73,29 @@ public class IndexHyzxListFragment extends BaseFragment {
         indexHyzxRecycler = getView().findViewById(R.id.index_hyzx_recycler);
         indexHyzxRefresh = getView().findViewById(R.id.index_hyzx_refresh);
         loadingStatus = getView().findViewById(R.id.index_hyzx_list_status_view);
+        mTipView = getView().findViewById(R.id.tip_view);
 
+
+        //注册EventBus
+        EventBus.getDefault().register(this);
+
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //取消注册EventBus
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void XXXXXX(EventMessage message) {
+
+        if ("sx".equals(message.getMessage())) {
+            //更新UI
+            indexHyzxRefresh.autoRefresh();
+        }
 
     }
 
@@ -91,7 +119,7 @@ public class IndexHyzxListFragment extends BaseFragment {
             BiaoXunTong.getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    requestData(true);
+                    requestData(true,0);
                 }
             }, 500);
         } else {
@@ -99,7 +127,7 @@ public class IndexHyzxListFragment extends BaseFragment {
             BiaoXunTong.getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    requestData(true);
+                    requestData(true,1);
                 }
             }, 500);
         }
@@ -116,7 +144,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                     indexHyzxRefresh.finishRefresh(2000, false);
                     mAdapter.setEnableLoadMore(false);
                 } else {
-                    requestData(true);
+                    requestData(true,2);
                 }
             }
         });
@@ -159,7 +187,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                 if (!NetUtil.isNetworkConnected(getActivity())) {
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
                 } else {
-                    requestData(false);
+                    requestData(false,0);
                 }
             }
         });
@@ -173,7 +201,7 @@ public class IndexHyzxListFragment extends BaseFragment {
 
     private long id = 0;
 
-    public void requestData(final boolean isRefresh) {
+    public void requestData(final boolean isRefresh,final int n) {
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             //已登录的数据请求
@@ -189,7 +217,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                         .params("userid", id)
                         .params("page", page)
                         .params("size", 10)
-                        .cacheKey("index_htzx_login_cache" + id)
+                        .cacheKey("index_hyzx_login_cache" + id)
                         .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                         .cacheTime(3600 * 72000)
                         .execute(new StringCallback() {
@@ -203,7 +231,7 @@ public class IndexHyzxListFragment extends BaseFragment {
 
                                 if (array.size() > 0) {
                                     page = 2;
-                                    setData(isRefresh, array, nextPage);
+                                    setData(isRefresh, array, nextPage,n);
                                 } else {
                                     if (mDataList != null) {
                                         mDataList.clear();
@@ -227,7 +255,7 @@ public class IndexHyzxListFragment extends BaseFragment {
 
 
                                     if (array.size() > 0) {
-                                        setData(isRefresh, array, nextPage);
+                                        setData(isRefresh, array, nextPage,n);
                                     } else {
                                         if (mDataList != null) {
                                             mDataList.clear();
@@ -257,7 +285,7 @@ public class IndexHyzxListFragment extends BaseFragment {
 
 
                                 if (array.size() > 0) {
-                                    setData(isRefresh, array, nextPage);
+                                    setData(isRefresh, array, nextPage,n);
                                 } else {
                                     if (mDataList != null) {
                                         mDataList.clear();
@@ -280,6 +308,9 @@ public class IndexHyzxListFragment extends BaseFragment {
                 OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXHYZXLIST)
                         .params("page", page)
                         .params("size", 10)
+                        .cacheKey("index_hyzx_no_login_cache" + id)
+                        .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                        .cacheTime(3600 * 72000)
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
@@ -291,7 +322,7 @@ public class IndexHyzxListFragment extends BaseFragment {
 
                                 if (array.size() > 0) {
                                     page = 2;
-                                    setData(isRefresh, array, nextPage);
+                                    setData(isRefresh, array, nextPage,n);
                                 } else {
                                     if (mDataList != null) {
                                         mDataList.clear();
@@ -314,7 +345,7 @@ public class IndexHyzxListFragment extends BaseFragment {
 
                                     if (array.size() > 0) {
                                         page = 2;
-                                        setData(isRefresh, array, nextPage);
+                                        setData(isRefresh, array, nextPage,n);
                                     } else {
                                         if (mDataList != null) {
                                             mDataList.clear();
@@ -344,7 +375,7 @@ public class IndexHyzxListFragment extends BaseFragment {
 
 
                                 if (array.size() > 0) {
-                                    setData(isRefresh, array, nextPage);
+                                    setData(isRefresh, array, nextPage,n);
                                 } else {
                                     if (mDataList != null) {
                                         mDataList.clear();
@@ -364,7 +395,7 @@ public class IndexHyzxListFragment extends BaseFragment {
     }
 
 
-    private void setData(boolean isRefresh, JSONArray data, boolean nextPage) {
+    private void setData(boolean isRefresh, JSONArray data, boolean nextPage,int n) {
         List<Integer> imgs = new ArrayList<>();
         final int size = data == null ? 0 : data.size();
         if (isRefresh) {
@@ -425,5 +456,26 @@ public class IndexHyzxListFragment extends BaseFragment {
 
         mAdapter.notifyDataSetChanged();
 
+        showTip(data, n);
+
+    }
+
+    private void showTip(JSONArray data, int n) {
+        final int a = data.size();
+        if (n == 1) {
+            BiaoXunTong.getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mTipView.show("为你推荐了" + a + "条新标讯");
+                }
+            }, 1000);
+        } else if (n == 2) {
+            BiaoXunTong.getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mTipView.show("已经是最新数据了");
+                }
+            }, 500);
+        }
     }
 }

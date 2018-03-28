@@ -15,6 +15,7 @@ import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.bean.Version;
+import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.ui.main.index.IndexTabFragment;
 import com.lubanjianye.biaoxuntong.ui.main.query.QueryFragment;
 import com.lubanjianye.biaoxuntong.ui.main.user.UserTabFragment;
@@ -29,6 +30,8 @@ import com.lubanjianye.biaoxuntong.ui.view.botton.BottomBarTab;
 import com.lubanjianye.biaoxuntong.util.appinfo.AppApplicationMgr;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.List;
@@ -121,6 +124,9 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
             public void onTabReselected(int position) {
                 // 在FirstPagerFragment,FirstHomeFragment中接收, 因为是嵌套的Fragment
                 // 主要为了交互: 重选tab 如果列表不在顶部则移动到顶部,如果已经在顶部,则刷新
+                if (position == 0) {
+                    EventBus.getDefault().post(new EventMessage("sx"));
+                }
             }
         });
 

@@ -35,7 +35,7 @@ public class TipView extends LinearLayout {
 
 
     //显示所停留的时间
-    private int mStayTime = 2000;
+    private int mStayTime = 1500;
     private boolean isShowing;
     private Handler mHandler = new Handler();
 
@@ -137,7 +137,7 @@ public class TipView extends LinearLayout {
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF
                 , 0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
 
-        hideAnim.setDuration(400);
+        hideAnim.setDuration(500);
         startAnimation(hideAnim);
         hideAnim.setAnimationListener(new Animation.AnimationListener() {
             @Override

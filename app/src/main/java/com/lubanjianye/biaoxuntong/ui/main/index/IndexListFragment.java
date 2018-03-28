@@ -48,6 +48,10 @@ import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -260,6 +264,26 @@ public class IndexListFragment extends BaseFragment {
         loadingStatus = getView().findViewById(R.id.index_list_status_view);
         mTipView = getView().findViewById(R.id.tip_view);
 
+        //注册EventBus
+        EventBus.getDefault().register(this);
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //取消注册EventBus
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void XXXXXX(EventMessage message) {
+
+        if ("sx".equals(message.getMessage())) {
+            //更新UI
+            indexRefresh.autoRefresh();
+        }
+
     }
 
     @Override
@@ -312,7 +336,7 @@ public class IndexListFragment extends BaseFragment {
 
     public View getHeaderView() {
         View view = View.inflate(getContext(), R.layout.index_header_item, null);
-        indexItemBanner = (Banner) view.findViewById(R.id.index_item_banner);
+        indexItemBanner = view.findViewById(R.id.index_item_banner);
         return view;
     }
 
