@@ -74,7 +74,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
     private RecyclerView searchRecycler = null;
     private SmartRefreshLayout searchRefresh = null;
 
-    private com.lubanjianye.biaoxuntong.ui.main.index.IndexListAdapter mAdapter = null;
+    private IndexListAdapter mAdapter = null;
     private ArrayList<IndexListBean> mDataList = new ArrayList<>();
     private View noDataView = null;
 

@@ -21,6 +21,7 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.ui.search.SearchMainActivity;
 import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity;
@@ -264,7 +265,8 @@ public class ResultListFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //点击搜索
-                startActivity(new Intent(getActivity(), ResultSearchActivity.class));
+//                startActivity(new Intent(getActivity(), ResultSearchActivity.class));
+                startActivity(new Intent(getActivity(), SearchMainActivity.class));
             }
         });
         mAdapter.addHeaderView(headView);
