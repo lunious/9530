@@ -36,9 +36,7 @@ public class Configurator {
     }
 
     public final void configure() {
-//        Logger.addLogAdapter(new AndroidLogAdapter());
         LATTE_CONFIGS.put(ConfigKeys.CONFIG_READY, true);
-//        Utils.init((Application) Latte.getApplicationContext());
     }
 
     public final Configurator withApiHost(String host) {

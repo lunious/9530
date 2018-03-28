@@ -1,5 +1,6 @@
 package com.lubanjianye.biaoxuntong.base;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.ContentFrameLayout;
@@ -31,7 +32,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
 
     //用来容纳Fragment的容器
     private void initContainer(@Nullable Bundle savedInstanceState) {
-        final ContentFrameLayout container = new ContentFrameLayout(this);
+        @SuppressLint("RestrictedApi") final ContentFrameLayout container = new ContentFrameLayout(this);
         container.setId(R.id.fragment_container);
         setContentView(container);
         if (savedInstanceState == null) {

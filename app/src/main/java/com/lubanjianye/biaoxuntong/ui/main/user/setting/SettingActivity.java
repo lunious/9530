@@ -1,7 +1,7 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.setting;
 
-        import com.lubanjianye.biaoxuntong.base.BaseActivity;
-        import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseActivity;
+import com.lubanjianye.biaoxuntong.base.BaseFragment;
 
 /**
  * 项目名:   AppLunious

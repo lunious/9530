@@ -714,9 +714,9 @@ public class IndexListFragment extends BaseFragment {
             BiaoXunTong.getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mTipView.show("为你推荐了" + a + "条新标讯");
+                    mTipView.show("为你推荐了" + a + "条标讯");
                 }
-            }, 1000);
+            }, 500);
         } else if (n == 2) {
             BiaoXunTong.getHandler().postDelayed(new Runnable() {
                 @Override

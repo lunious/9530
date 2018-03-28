@@ -135,17 +135,8 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
         }
     }
 
-    /**
-     * start other BrotherFragment
-     */
-    public void startBrotherFragment(BaseFragment targetFragment) {
-        start(targetFragment);
-    }
-
-
     private static final int RC_EXTERNAL_STORAGE = 0x04;//存储权限
 
-    private Version mVersion;
 
     @Override
     public void onPermissionsGranted(int requestCode, List<String> perms) {

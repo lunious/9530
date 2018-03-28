@@ -21,12 +21,6 @@ public abstract class BiaoXunTongApi {
      * 推送列表
      */
     public static final String URL_GETUILIST = BASEURL + "bxtajax/GetuiTask/list";
-
-    /**
-     * 变更公告
-     */
-    public static final String URL_BGGG = BASEURL + "bxtajax/Entrygzajax/getDetailsData";
-
     /**
      * 分享模板
      */
