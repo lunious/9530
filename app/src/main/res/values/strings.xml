@@ -31,6 +31,8 @@
     <string name="state_loading_more">上拉加载更多</string>
     <string name="image_select_opt_done">完成</string>
 
+    <string name="no_content">暂无数据</string>
+
     <!--定位相关-->
     <string name="cp_search_hint_text">请输入城市中文名或拼音</string>
     <string name="cp_cancel">取消</string>

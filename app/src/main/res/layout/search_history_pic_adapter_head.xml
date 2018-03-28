@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
         android:visibility="visible"
-        android:layout_marginTop="@dimen/d50">
+        android:layout_marginTop="@dimen/d60">
 
         <LinearLayout
             android:layout_width="match_parent"

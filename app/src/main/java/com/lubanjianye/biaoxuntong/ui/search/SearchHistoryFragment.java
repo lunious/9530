@@ -81,7 +81,7 @@ public class SearchHistoryFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
         View headView = getHeadView();
-        mNoHistoryTv = (TextView) headView.findViewById(R.id.tv_no_history);
+        mNoHistoryTv = headView.findViewById(R.id.tv_no_history);
         mAdapter.addHeaderView(headView);
         if (mHistoryData == null || mHistoryData.isEmpty()) {
             isShowBottomClearView(false);

@@ -1,7 +1,6 @@
 package com.lubanjianye.biaoxuntong.ui.search;
 
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatTextView;
@@ -16,16 +15,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
-import com.lubanjianye.biaoxuntong.util.dimen.DimenUtil;
+import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import rx.functions.Action1;
 
@@ -134,29 +138,7 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
                 }
             }
         });
-//        mApi = new AppSearchApi(new HttpListener<SearchResultOutput>(){
-//
-//            @Override
-//            public void onSuccess(SearchResultOutput searchResultOutput) {
-//                mMsgView.dismiss();
-//                mStopView.setVisibility(View.GONE);
-//                if (searchResultOutput == null ||searchResultOutput.map == null ||searchResultOutput.map.isEmpty()) {
-//                    mMsgView.showSearchEmpty();
-//                }
-//                setSearchRsult(searchResultOutput.map);
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                mMsgView.showError();
-//                mStopView.setVisibility(View.GONE);
-//            }
-//
-//            @Override
-//            public void onComplete() {
-//                mStopView.setVisibility(View.GONE);
-//            }
-//        },this);
+
     }
 
     @Override
@@ -239,7 +221,7 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
     }
 
     private void showHistory(boolean isShow) {
-        mViewSpace.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        mViewSpace.setVisibility(isShow ? View.VISIBLE : View.VISIBLE);
         mHistoryLayout.setVisibility(isShow ? View.VISIBLE : View.GONE);
         headIsScroll(!isShow);
         if (isShow) {
@@ -247,41 +229,23 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
         }
     }
 
-    private void initFragment() {
-        if (mSearchResult == null || mSearchResult.isEmpty()) {
-            return;
-        }
+    private void initFragment(String content) {
+
         showHistory(false);
         mNewsFragmentList.clear();
         viewPager.setAdapter(null);
         List<String> values = new ArrayList<>();
-        Iterator iter = mSearchResult.entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry entry = (Map.Entry) iter.next();
-            values.add((String) entry.getKey());
-            if (GlobalConstant.SearchResultTitle.SEARCH_PIC_TITLE.equals(entry.getKey())) {
-//                mNewsFragmentList.add(createPicFragment((String) entry.getValue()));
-                continue;
-            } else if (GlobalConstant.SearchResultTitle.SEARCH_FILM_TITLE.equals(entry.getKey())) {
-//                mNewsFragmentList.add(createVideoFragment((String) entry.getValue()));
-                continue;
-            }
-        }
+
+        mNewsFragmentList.add(createSearchFragment(content));
         fragmentAdapter = new BaseFragmentStateAdapter(getChildFragmentManager(), mNewsFragmentList, values);
         viewPager.setAdapter(fragmentAdapter);
         viewPager.setVisibility(View.VISIBLE);
-        viewPager.setOffscreenPageLimit(mSearchResult.size());
     }
 
-//    private Fragment createPicFragment(String result) {
-//        SearchPicFragment searchPic = SearchPicFragment.newInstance(result, mSerachEt.getText().toString());
-//        return searchPic;
-//    }
-//
-//    private Fragment createVideoFragment(String result) {
-//        SearchVideoFragment search = SearchVideoFragment.newInstance(result, mSerachEt.getText().toString());
-//        return search;
-//    }
+    private Fragment createSearchFragment(String content) {
+        SearchListFragment search = SearchListFragment.newInstance(content);
+        return search;
+    }
 
     private void headIsScroll(boolean yes) {
         AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) mHeadLl.getLayoutParams();
@@ -293,77 +257,54 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
         mHeadLl.setLayoutParams(params);
     }
 
-    private void setSearchRsult(LinkedHashMap<String, SearchResultModel> searchRsultMap) {
+    private void setSearchRsult(String content) {
         mSearchResult.clear();
-        Iterator iter = searchRsultMap.entrySet().iterator();
-        boolean allDataIsEmpty = true;
-        while (iter.hasNext()) {
-            Map.Entry entry = (Map.Entry) iter.next();
-            SearchResultModel model = (SearchResultModel) entry.getValue();
-            if (GlobalConstant.SearchResultTitle.SEARCH_PIC_TITLE.equals(entry.getKey())) {
-                if (model != null && model.pics != null && !model.pics.isEmpty()) {
-                    allDataIsEmpty = false;
-                } else {
-                    continue;
-                }
-                try {
-                    mSearchResult.put((String) entry.getKey(), JsonUtils.encode(model));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    continue;
-                }
-            } else if (GlobalConstant.SearchResultTitle.SEARCH_FILM_TITLE.equals(entry.getKey())) {
-                if (model != null && model.infos != null && !model.infos.isEmpty()) {
-                    allDataIsEmpty = false;
-                } else {
-                    continue;
-                }
-                try {
-                    mSearchResult.put((String) entry.getKey(), JsonUtils.encode(model));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    continue;
-                }
-            }
 
+        if (content != null) {
+            initFragment(content);
         }
-        if (allDataIsEmpty) {
-            mMsgView.showSearchEmpty();
-            return;
-        }
-        initFragment();
+
     }
 
-    public void dynamicSetTabLayoutMode(TabLayout tabLayout) {
-        int tabWidth = calculateTabWidth(tabLayout);
-        int screenWidth = DimenUtil.getScreenWidth();
 
-        if (tabWidth <= screenWidth) {
-            tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        } else {
-            tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-        }
-    }
-
-    private int calculateTabWidth(TabLayout tabLayout) {
-        int tabWidth = 0;
-        for (int i = 0; i < tabLayout.getChildCount(); i++) {
-            final View view = tabLayout.getChildAt(i);
-            view.measure(0, 0); // 通知父view测量，以便于能够保证获取到宽高
-            tabWidth += view.getMeasuredWidth();
-        }
-        return tabWidth;
-    }
-
-    private void search(String content) {
+    private void search(final String content) {
         mStopView.setVisibility(View.VISIBLE);
         hideSoftInput();
         mAppBarLayout.setExpanded(true);
         mMsgView.showLoading();
-        QueryInput input = new QueryInput();
-        input.search = content;
-        input.count = 15;
-//        mApi.doHttp(input);
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
+                .params("keyWord", content)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        mMsgView.dismiss();
+                        mStopView.setVisibility(View.GONE);
+
+                        String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+
+                        final JSONObject object = JSON.parseObject(jiemi);
+                        final JSONObject data = object.getJSONObject("data");
+                        final JSONArray array = data.getJSONArray("list");
+
+                        if (array.size() > 0) {
+                            setSearchRsult(content);
+                        } else {
+                            mMsgView.showSearchEmpty();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Response<String> response) {
+                        mMsgView.showError();
+                        mStopView.setVisibility(View.GONE);
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        mStopView.setVisibility(View.GONE);
+                    }
+                });
     }
 
     private class SearchResultWatcher implements TextWatcher {

@@ -1,10 +1,9 @@
-package com.lubanjianye.biaoxuntong.ui.main.result.search;
+package com.lubanjianye.biaoxuntong.ui.search;
 
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -16,27 +15,21 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.bean.ResultListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.ui.view.searchview.DCallBack;
-import com.lubanjianye.biaoxuntong.ui.view.searchview.ICallBack;
-import com.lubanjianye.biaoxuntong.ui.view.searchview.SCallBack;
-import com.lubanjianye.biaoxuntong.ui.view.searchview.SearchView;
-import com.lubanjianye.biaoxuntong.ui.view.searchview.bCallBack;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity;
-import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.main.result.ResultListAdapter;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultXjgggDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -45,17 +38,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.result.search
- * 文件名:   ResultSearchFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/19  10:47
- * 描述:     TODO
+ * Created by lunious on 2018/3/28.
+ * Desc:
  */
+public class SearchListFragment extends BaseFragment {
 
-public class ResultSearchFragment extends BaseFragment {
 
-    private SearchView searchView = null;
 
     private RecyclerView resultRecycler = null;
     private SwipeRefreshLayout resultRefresh = null;
@@ -70,6 +58,16 @@ public class ResultSearchFragment extends BaseFragment {
     private String mKeyword = "";
 
     private String mDiqu = "";
+
+    private static String keyWorld = "";
+
+
+
+    public static SearchListFragment newInstance(String contentt) {
+        SearchListFragment fragment = new SearchListFragment();
+        keyWorld = contentt;
+        return fragment;
+    }
 
     private void initRefreshLayout() {
 
@@ -88,7 +86,6 @@ public class ResultSearchFragment extends BaseFragment {
             }
         });
     }
-
 
     private void initRecyclerView() {
         resultRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -126,7 +123,7 @@ public class ResultSearchFragment extends BaseFragment {
                     if ("cqcggg".equals(entity)){
                         final String title = data.getEntryName();
                         intent = new Intent(getActivity(), BrowserDetailActivity.class);
-                        intent.putExtra("api",BiaoXunTongApi.URL_GETRESULTLISTDETAIL);
+                        intent.putExtra("api", BiaoXunTongApi.URL_GETRESULTLISTDETAIL);
                         intent.putExtra("title", title);
                         intent.putExtra("entity",entity);
                         intent.putExtra("entityid",entityId);
@@ -165,30 +162,31 @@ public class ResultSearchFragment extends BaseFragment {
 
     }
 
+
+
     @Override
     public Object setLayout() {
-        return R.layout.fragment_result_search;
+        return R.layout.fragment_search_list;
     }
 
     @Override
     public void initView() {
-        searchView = getView().findViewById(R.id.result_search_view);
         resultRecycler = getView().findViewById(R.id.result_search_recycler);
         resultRefresh = getView().findViewById(R.id.result_search_refresh);
         loadingStatus = getView().findViewById(R.id.result_search_list_status_view);
 
-        if (AppSharePreferenceMgr.contains(getContext(),EventMessage.LOCA_AREA)){
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)){
             String area = (String) AppSharePreferenceMgr.get(getContext(),EventMessage.LOCA_AREA,"");
 
             mDiqu = area;
         }else {
             mDiqu = "四川";
         }
+
     }
 
     @Override
     public void initData() {
-        initSearchView();
         initRecyclerView();
         initAdapter();
         initRefreshLayout();
@@ -198,55 +196,7 @@ public class ResultSearchFragment extends BaseFragment {
 
     @Override
     public void initEvent() {
-
-    }
-
-    private void initSearchView() {
-        searchView.setOnClickBack(new bCallBack() {
-            @Override
-            public void BackAciton() {
-                getActivity().onBackPressed();
-            }
-        });
-
-        searchView.setOnClickSearch(new ICallBack() {
-            @Override
-            public void SearchAciton(String string) {
-                mKeyword = string;
-                if (TextUtils.isEmpty(string)) {
-                    ToastUtil.shortToast(getContext(), "请输入关键字");
-                } else {
-                    resultRefresh.setVisibility(View.VISIBLE);
-                    requestData(0, string);
-
-                    hideSoftInput();
-                }
-            }
-        });
-
-        searchView.setOnClickDele(new DCallBack() {
-            @Override
-            public void DeleAciton() {
-                resultRefresh.setVisibility(View.GONE);
-                resultRefresh.setEnabled(false);
-
-            }
-        });
-
-        searchView.setOnClickStartSearch(new SCallBack() {
-            @Override
-            public void StartSearch(String string) {
-                if (TextUtils.isEmpty(string)) {
-                    ToastUtil.shortToast(getContext(), "请输入关键字");
-                } else {
-                    resultRefresh.setVisibility(View.VISIBLE);
-                    requestData(0, string);
-
-                    hideSoftInput();
-                }
-            }
-        });
-
+        requestData(1,keyWorld);
     }
 
     private long id = 0;
@@ -272,6 +222,8 @@ public class ResultSearchFragment extends BaseFragment {
                     id = users.get(0).getId();
                 }
 
+
+                Log.d("AUISBDBASBDJSADASD","key==="+keyword);
 
                 OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
                         .params("keyWord", keyword)
@@ -383,11 +335,5 @@ public class ResultSearchFragment extends BaseFragment {
         }
 
 
-    }
-
-    @Override
-    public void onSupportInvisible() {
-        super.onSupportInvisible();
-        hideSoftInput();
     }
 }

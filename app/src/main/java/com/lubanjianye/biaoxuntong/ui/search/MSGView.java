@@ -92,7 +92,7 @@ public class MSGView extends FrameLayout {
     }
 
     public void showSearchEmpty() {
-        showEmpty(getResources().getString(R.string.app_name));
+        showEmpty(getResources().getString(R.string.no_content));
 
     }
 
