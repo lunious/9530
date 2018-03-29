@@ -124,7 +124,7 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
         tvUserName = getView().findViewById(R.id.tv_user_name);
         rlLogin = getView().findViewById(R.id.rl_login);
         rlNoLogin = getView().findViewById(R.id.rl_no_login);
-        imgUserAvatar.setOnClickListener(this);
+        rlLogin.setOnClickListener(this);
         imgDefaultAvatar.setOnClickListener(this);
         llCompany.setOnClickListener(this);
         llHelper.setOnClickListener(this);
@@ -202,6 +202,9 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
         }
     }
 
+
+    private String imgUrl = "";
+
     @Override
     public void initData() {
 
@@ -229,6 +232,8 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
                 comid = users.get(0).getComid();
                 imageUrl = users.get(0).getImageUrl();
                 companyName = users.get(0).getCompanyName();
+
+                imgUrl = imageUrl;
 
             }
 
@@ -329,7 +334,7 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
                 //跳到消息中心
                 startActivity(new Intent(getContext(), MessageActivity.class));
                 break;
-            case R.id.img_user_avatar:
+            case R.id.rl_login:
                 //跳到个人中心
                 startActivity(new Intent(getContext(), AvaterActivity.class));
                 break;

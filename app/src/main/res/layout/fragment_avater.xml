@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -14,10 +15,42 @@
         android:paddingRight="@dimen/d12"
         android:paddingStart="@dimen/d12">
 
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/d40"
+            android:layout_height="@dimen/d58"
+            android:orientation="horizontal">
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="头      像"
+                android:textSize="@dimen/d16" />
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_user_avatar"
+                android:layout_width="@dimen/d72"
+                android:layout_height="@dimen/d72"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/d4"
+                android:src="@mipmap/widget_default_face" />
+
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d1"
+            android:layout_marginTop="@dimen/d8"
+            android:background="#f9eeeeee" />
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d48"
             android:orientation="horizontal">
 
 
@@ -30,28 +63,90 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_user_name"
-                android:layout_width="@dimen/d0"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_alignParentRight="true"
                 android:gravity="center"
+                android:paddingRight="@dimen/d10"
                 android:text=""
                 android:textColor="@color/main_text_color"
                 android:textSize="@dimen/d16" />
 
 
-        </LinearLayout>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d1"
+            android:layout_marginTop="@dimen/d8"
+            android:background="#f9eeeeee" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d48"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="性      别"
+                android:textSize="@dimen/d16" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_user_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:paddingRight="@dimen/d10"
+                android:text=""
+                android:textColor="@color/main_status_blue"
+                android:textSize="@dimen/d16" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d1"
+            android:layout_marginTop="@dimen/d8"
+            android:background="#f9eeeeee" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d48"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="地      区"
+                android:textSize="@dimen/d16" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_user_area"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:paddingRight="@dimen/d10"
+                android:text=""
+                android:textColor="@color/main_status_blue"
+                android:textSize="@dimen/d16" />
+
+        </RelativeLayout>
 
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/d6"
-            android:layout_marginTop="@dimen/d4"
+            android:layout_height="@dimen/d1"
+            android:layout_marginTop="@dimen/d8"
             android:background="#f9eeeeee" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/d40"
-            android:layout_marginTop="@dimen/d20"
+            android:layout_height="@dimen/d48"
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatTextView
@@ -63,26 +158,26 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_user_mobile"
-                android:layout_width="@dimen/d0"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_alignParentRight="true"
                 android:gravity="center"
+                android:paddingRight="@dimen/d10"
                 android:text=""
                 android:textColor="@color/main_status_blue"
                 android:textSize="@dimen/d16" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/d6"
-            android:layout_marginTop="@dimen/d4"
+            android:layout_height="@dimen/d1"
+            android:layout_marginTop="@dimen/d8"
             android:background="#f9eeeeee" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/d40"
-            android:layout_marginTop="@dimen/d20"
+            android:layout_height="@dimen/d48"
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatTextView
@@ -94,20 +189,21 @@
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_user_company"
-                android:layout_width="@dimen/d0"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_alignParentRight="true"
                 android:gravity="center"
+                android:paddingRight="@dimen/d10"
                 android:text=""
                 android:textColor="@color/main_status_blue"
                 android:textSize="@dimen/d16" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/d6"
-            android:layout_marginTop="@dimen/d4"
+            android:layout_height="@dimen/d1"
+            android:layout_marginTop="@dimen/d8"
             android:background="#f9eeeeee" />
 
         <RelativeLayout
