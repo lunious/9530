@@ -29,8 +29,16 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageListBean,BaseVie
     protected void convert(BaseViewHolder helper, MessageListBean item) {
         helper.setText(R.id.tv_item_title, item.getEntityName());
 
-        String time = DataTimeUtil.stampToDate(item.getCreateTime());
-        helper.setText(R.id.tv_item_time, time.substring(0, 10));
+
+        String getTime = item.getCreateTime();
+
+        if (getTime.contains("-")){
+            helper.setText(R.id.tv_item_time, getTime.substring(0, 10));
+        }else {
+            String time = DataTimeUtil.stampToDate(item.getCreateTime());
+            helper.setText(R.id.tv_item_time, time.substring(0, 10));
+        }
+
 
     }
 }
