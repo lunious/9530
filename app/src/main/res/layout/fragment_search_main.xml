@@ -43,7 +43,7 @@
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="32dp"
                     android:layout_weight="12"
-                    android:background="@drawable/ed_shape_gray"
+                    android:background="@drawable/bg_search"
                     android:padding="4dp">
 
                     <com.lubanjianye.biaoxuntong.ui.search.LastInputEditText

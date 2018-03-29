@@ -99,7 +99,7 @@
                     android:layout_gravity="center"
                     android:layout_marginEnd="@dimen/d10"
                     android:layout_marginStart="@dimen/d10"
-                    android:src="@mipmap/search" />
+                    android:src="@mipmap/img_search" />
 
                 <EditText
                     android:id="@+id/et_query"

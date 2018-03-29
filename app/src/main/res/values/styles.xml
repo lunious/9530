@@ -15,9 +15,11 @@
     </style>
 
     <!-- 闪页主题 -->
-    <style name="AppTheme.Launcher">
+    <style name="AppTheme.Launcher" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowBackground">@mipmap/home</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <!-- 主页主题 -->

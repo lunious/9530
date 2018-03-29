@@ -29,10 +29,10 @@
         <LinearLayout
             android:id="@+id/ll_search"
             android:layout_width="@dimen/d0"
-            android:layout_height="@dimen/d24"
-            android:layout_gravity="center"
             android:layout_weight="4"
-            android:background="@drawable/bg_index_title_bar">
+            android:layout_height="@dimen/d26"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_search">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,18 +40,20 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:layout_width="@dimen/d13"
-                    android:layout_height="@dimen/d13"
-                    android:src="@mipmap/search" />
+                    android:layout_width="@dimen/d12"
+                    android:layout_height="@dimen/d12"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/img_search" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:paddingStart="@dimen/d2"
+                    android:maxLines="1"
                     android:text="输入你感兴趣的招标公告名称"
                     android:textColor="#9d9d9d"
-                    android:textSize="@dimen/d12" />
+                    android:textSize="@dimen/d13" />
             </LinearLayout>
 
 

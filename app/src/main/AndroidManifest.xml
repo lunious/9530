@@ -314,12 +314,6 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".ui.main.result.search.ResultSearchActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.Main"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".ui.main.user.opinion.OpinionActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"

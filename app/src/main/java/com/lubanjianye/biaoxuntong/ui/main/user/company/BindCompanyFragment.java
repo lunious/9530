@@ -111,7 +111,7 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
         //根据id-search_mag_icon获取ImageView
         ImageView searchButton = (ImageView) viewSearcher.findViewById(R.id.search_mag_icon);
 
-        searchButton.setImageResource(R.mipmap.search);
+        searchButton.setImageResource(R.mipmap.img_search);
 
     }
 

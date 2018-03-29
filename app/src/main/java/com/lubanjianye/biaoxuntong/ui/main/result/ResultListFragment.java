@@ -27,7 +27,6 @@ import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultXjgggDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.result.search.ResultSearchActivity;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
@@ -265,7 +264,6 @@ public class ResultListFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //点击搜索
-//                startActivity(new Intent(getActivity(), ResultSearchActivity.class));
                 startActivity(new Intent(getActivity(), SearchMainActivity.class));
             }
         });
