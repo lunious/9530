@@ -163,7 +163,7 @@
 
 
         <activity
-            android:name=".ui.search.SearchMainActivity"
+            android:name=".ui.search.activity.SearchActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
@@ -296,12 +296,6 @@
 
         <activity
             android:name=".ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.Main"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.main.index.search.IndexSearchActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"

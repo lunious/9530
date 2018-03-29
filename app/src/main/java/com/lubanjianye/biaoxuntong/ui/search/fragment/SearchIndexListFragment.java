@@ -1,19 +1,12 @@
-package com.lubanjianye.biaoxuntong.ui.main.index.search;
+package com.lubanjianye.biaoxuntong.ui.search.fragment;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.text.TextUtils;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -24,22 +17,22 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.bean.IndexListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.chongqing.IndexCqsggjyDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.ui.main.index.IndexListAdapter;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.chongqing.IndexCqsggjyDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexScgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgtableDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexXcgggDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
@@ -54,23 +47,12 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.index.search
- * 文件名:   IndexSearchFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/16  18:06
- * 描述:     TODO
- */
+public class SearchIndexListFragment extends BaseFragment {
 
-public class IndexSearchFragment extends BaseFragment implements View.OnClickListener {
 
     private TextView tvArea = null;
     private TextView tvType = null;
     private View view = null;
-    private SearchView viewSearcher = null;
-    private TextView tvSearch = null;
-    private LinearLayout llIvBack = null;
     private RecyclerView searchRecycler = null;
     private SmartRefreshLayout searchRefresh = null;
 
@@ -81,16 +63,9 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
     private int page = 1;
 
     private long id = 0;
-    private String nickName = "";
-    private String token = "";
-    private String comid = "";
-    private String imageUrl = "";
-
 
     String mArea = "";
     String mType = "";
-    String mKeyWord = "";
-
 
     private String mDiqu = "";
 
@@ -99,6 +74,16 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
     private SpinerPopWindow<String> mSpinerType = null;
     private List<String> Arealist = new ArrayList<String>();
     private List<String> Typelist = new ArrayList<String>();
+
+
+
+    private static String keyWorld = "";
+
+    public static SearchIndexListFragment newInstance(String contentt) {
+        SearchIndexListFragment fragment = new SearchIndexListFragment();
+        keyWorld = contentt;
+        return fragment;
+    }
 
     @Override
     public Object setLayout() {
@@ -110,16 +95,11 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
         tvArea = getView().findViewById(R.id.tv_area);
         tvType = getView().findViewById(R.id.tv_type);
         view = getView().findViewById(R.id.view);
-        viewSearcher = getView().findViewById(R.id.view_searcher);
-        tvSearch = getView().findViewById(R.id.tv_search);
-        llIvBack = getView().findViewById(R.id.ll_iv_back);
         searchRecycler = getView().findViewById(R.id.search_recycler);
         searchRefresh = getView().findViewById(R.id.search_refresh);
 
-        llIvBack.setOnClickListener(this);
 
-
-        if (AppSharePreferenceMgr.contains(getContext(),EventMessage.LOCA_AREA)){
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)){
             String area = (String) AppSharePreferenceMgr.get(getContext(),EventMessage.LOCA_AREA,"");
             mDiqu = area;
         }else {
@@ -133,53 +113,6 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
         Arealist.add("全部");
         loadArea();
         loadType();
-
-        //根据id-search_src_text获取TextView
-        SearchView.SearchAutoComplete searchText = (SearchView.SearchAutoComplete) viewSearcher.findViewById(R.id.search_src_text);
-        //修改字体大小
-        searchText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
-        //重新布局，使其居中
-
-        //修改字体颜色
-        searchText.setTextColor(ContextCompat.getColor(getContext(), R.color.main_theme_color));
-        searchText.setHintTextColor(ContextCompat.getColor(getContext(), R.color.search_hint));
-
-        //根据id-search_mag_icon获取ImageView
-        ImageView searchButton = (ImageView) viewSearcher.findViewById(R.id.search_mag_icon);
-
-        searchButton.setImageResource(R.mipmap.img_search);
-        searchButton.setMaxHeight(R.dimen.d12);
-        searchButton.setMaxWidth(R.dimen.d12);
-
-
-        //搜索功能
-        viewSearcher.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-
-                if (TextUtils.isEmpty(query.trim())) {
-                    ToastUtil.shortToast(getContext(), "请输入要查询的内容！");
-                    return false;
-                } else {
-                    mKeyWord = query.trim();
-                    requestData(true);
-
-                }
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if (TextUtils.isEmpty(newText.trim())) {
-                    mKeyWord = "";
-                    requestData(true);
-                } else {
-                    mKeyWord = newText.trim();
-                    requestData(true);
-                }
-                return true;
-            }
-        });
     }
 
     @Override
@@ -215,7 +148,6 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
             }
         });
 
-
 //        indexRefresh.autoRefresh();
 
     }
@@ -232,7 +164,6 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                 final int entityId = data.getEntityId();
                 final String entity = data.getEntity();
 
-                Log.d("BASUHDUSADASDAS", entity + "_____" + entityId);
 
                 Intent intent = null;
                 if ("四川".equals(mDiqu)){
@@ -347,10 +278,6 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
             List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
             for (int i = 0; i < users.size(); i++) {
                 id = users.get(0).getId();
-                nickName = users.get(0).getNickName();
-                token = users.get(0).getToken();
-                comid = users.get(0).getComid();
-                imageUrl = users.get(0).getImageUrl();
             }
 
             if (isRefresh) {
@@ -361,7 +288,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                         .params("type", mType)
                         .params("page", page)
                         .params("diqu",mDiqu)
-                        .params("keyWord", mKeyWord)
+                        .params("keyWord", keyWorld)
                         .params("size", 10)
                         .execute(new StringCallback() {
                             @Override
@@ -404,7 +331,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                         .params("type", mType)
                         .params("page", page)
                         .params("diqu",mDiqu)
-                        .params("keyWord", mKeyWord)
+                        .params("keyWord", keyWorld)
                         .params("size", 10)
                         .execute(new StringCallback() {
                             @Override
@@ -452,7 +379,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                         .params("area", mArea)
                         .params("type", mType)
                         .params("diqu",mDiqu)
-                        .params("keyWord", mKeyWord)
+                        .params("keyWord", keyWorld)
                         .params("size", 10)
                         .execute(new StringCallback() {
                             @Override
@@ -493,7 +420,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                         .params("area", mArea)
                         .params("type", mType)
                         .params("diqu",mDiqu)
-                        .params("keyWord", mKeyWord)
+                        .params("keyWord", keyWorld)
                         .params("size", 10)
                         .execute(new StringCallback() {
                             @Override
@@ -723,22 +650,5 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                     }
                 });
 
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.ll_iv_back:
-                getActivity().onBackPressed();
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onSupportInvisible() {
-        super.onSupportInvisible();
-        hideSoftInput();
     }
 }

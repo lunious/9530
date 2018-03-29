@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.ui.search;
+package com.lubanjianye.biaoxuntong.ui.search.util;
 
 import android.text.Spannable;
 import android.text.SpannableString;

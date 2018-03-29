@@ -12,58 +12,6 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d40"
-        android:background="@color/main_theme_color"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="@dimen/d6"
-        android:paddingLeft="@dimen/d2"
-        android:paddingRight="@dimen/d6"
-        android:paddingTop="@dimen/d6">
-
-        <LinearLayout
-            android:id="@+id/ll_iv_back"
-            android:layout_width="@dimen/d0"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <ImageView
-                android:layout_width="@dimen/d20"
-                android:layout_height="@dimen/d20"
-                android:layout_gravity="center"
-                android:background="#00ffffff"
-                android:src="@mipmap/btn_back"/>
-
-        </LinearLayout>
-
-        <android.support.v7.widget.SearchView
-            android:id="@+id/view_searcher"
-            android:layout_width="@dimen/d0"
-            android:layout_height="wrap_content"
-            android:layout_weight="8"
-            android:background="@drawable/shape_search_view"
-            android:gravity="center"
-            app:closeIcon="@null"
-            app:defaultQueryHint="输入关键字搜索"
-            app:iconifiedByDefault="false"
-            app:queryBackground="@null" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/tv_search"
-            android:layout_width="@dimen/d0"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/d8"
-            android:layout_marginStart="@dimen/d8"
-            android:layout_weight="1"
-            android:text="搜索"
-            android:textColor="@color/main_status_white"
-            android:textSize="@dimen/d16"
-            android:visibility="gone" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/main_status_white"
         android:orientation="vertical">
@@ -71,7 +19,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/d34"
+            android:layout_height="@dimen/d36"
+            android:layout_marginTop="@dimen/d4"
             android:orientation="horizontal">
 
             <LinearLayout

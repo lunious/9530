@@ -1,5 +1,8 @@
-package com.lubanjianye.biaoxuntong.ui.search;
+package com.lubanjianye.biaoxuntong.ui.search.fragment;
 
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -21,6 +24,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailFragment;
+import com.lubanjianye.biaoxuntong.ui.search.adapter.BaseFragmentStateAdapter;
+import com.lubanjianye.biaoxuntong.ui.search.rx.RxBus;
+import com.lubanjianye.biaoxuntong.ui.search.rx.RxManager;
+import com.lubanjianye.biaoxuntong.ui.search.util.GlobalConstant;
+import com.lubanjianye.biaoxuntong.ui.search.util.StringUtils;
+import com.lubanjianye.biaoxuntong.ui.search.view.MSGView;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
@@ -33,7 +43,7 @@ import java.util.List;
 
 import rx.functions.Action1;
 
-public class SearchMainFragment extends BaseFragment implements View.OnClickListener {
+public class SearchFragment extends BaseFragment implements View.OnClickListener {
 
 
     private ViewPager viewPager;
@@ -50,6 +60,9 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
 
     public RxManager mRxManager;
 
+    private static final String SEARCH_TYPE = "SEARCH_TYPE";
+
+    private int searchType = -1;
 
     private BaseFragmentStateAdapter fragmentAdapter;
     List<Fragment> mNewsFragmentList = new ArrayList<>();
@@ -60,6 +73,24 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
     @Override
     public Object setLayout() {
         return R.layout.fragment_search_main;
+    }
+
+
+    public static SearchFragment create(@NonNull int searchTye) {
+        final Bundle args = new Bundle();
+        args.putInt(SEARCH_TYPE, searchTye);
+        final SearchFragment fragment = new SearchFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        final Bundle args = getArguments();
+        if (args != null) {
+            searchType = args.getInt(SEARCH_TYPE);
+        }
     }
 
     @Override
@@ -79,7 +110,7 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
                 break;
             case R.id.atv_search:
                 if (StringUtils.isNullOrEmpty(mSerachEt.getText().toString())) {
-                    ToastUtil.shortToast(getContext(), "请输入内容");
+                    ToastUtil.shortToast(getContext(), "请输入关键字搜索");
                 } else {
                     search(mSerachEt.getText().toString());
                     if (mSearchHistoryFragment != null) {
@@ -151,7 +182,7 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
                 if (!StringUtils.isNullOrEmpty(mSerachEt.getText().toString())) {
                     search(mSerachEt.getText().toString());
                 } else {
-                    ToastUtil.shortToast(getContext(), "请输入内容");
+                    ToastUtil.shortToast(getContext(), "请输入关键字搜索");
                 }
 
             }
@@ -164,7 +195,7 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
                 if (i == EditorInfo.IME_ACTION_SEARCH || (keyEvent != null && keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
                     if (StringUtils.isNullOrEmpty(mSerachEt.getText().toString())) {
-                        ToastUtil.shortToast(getContext(), "请输入内容");
+                        ToastUtil.shortToast(getContext(), "请输入关键字搜索");
                         return true;
                     }
                     search(mSerachEt.getText().toString());
@@ -176,44 +207,7 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
                 return false;
             }
         });
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                mAppBarLayout.setExpanded(true);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-        mRxManager.on(GlobalConstant.RxBus.TOP_SHOW_HIDE, new Action1<Boolean>() {
-
-            @Override
-            public void call(Boolean hideOrShow) {
-                if (hideOrShow) {
-                    //fab.setVisibility(View.VISIBLE);
-                }
-            }
-        });
-
-        mRxManager.on(GlobalConstant.RxBus.SERACH_MAIN_HEAD_EXPLAND, new Action1<Boolean>() {
-
-            @Override
-            public void call(Boolean hideOrShow) {
-                if (hideOrShow) {
-
-                } else {
-
-                }
-                headIsScroll(hideOrShow);
-            }
-        });
         mSearchHistoryFragment = SearchHistoryFragment.newInstance();
         getChildFragmentManager().beginTransaction().add(R.id.fl_history, mSearchHistoryFragment).commit();
         showHistory(true);
@@ -223,45 +217,43 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
     private void showHistory(boolean isShow) {
         mViewSpace.setVisibility(isShow ? View.VISIBLE : View.VISIBLE);
         mHistoryLayout.setVisibility(isShow ? View.VISIBLE : View.GONE);
-        headIsScroll(!isShow);
         if (isShow) {
             mMsgView.dismiss();
         }
     }
 
-    private void initFragment(String content) {
-
+    private void initResultFragment(String content) {
         showHistory(false);
         mNewsFragmentList.clear();
         viewPager.setAdapter(null);
         List<String> values = new ArrayList<>();
 
-        mNewsFragmentList.add(createSearchFragment(content));
+        mNewsFragmentList.add(SearchResultListFragment.newInstance(content));
         fragmentAdapter = new BaseFragmentStateAdapter(getChildFragmentManager(), mNewsFragmentList, values);
         viewPager.setAdapter(fragmentAdapter);
         viewPager.setVisibility(View.VISIBLE);
     }
 
-    private Fragment createSearchFragment(String content) {
-        SearchListFragment search = SearchListFragment.newInstance(content);
-        return search;
+    private void initIndexFragment(String content) {
+        showHistory(false);
+        mNewsFragmentList.clear();
+        viewPager.setAdapter(null);
+        List<String> values = new ArrayList<>();
+
+        mNewsFragmentList.add(SearchIndexListFragment.newInstance(content));
+        fragmentAdapter = new BaseFragmentStateAdapter(getChildFragmentManager(), mNewsFragmentList, values);
+        viewPager.setAdapter(fragmentAdapter);
+        viewPager.setVisibility(View.VISIBLE);
     }
 
-    private void headIsScroll(boolean yes) {
-        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) mHeadLl.getLayoutParams();
-        if (yes) {
-            params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS | AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
-        } else {
-            params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
-        }
-        mHeadLl.setLayoutParams(params);
-    }
-
-    private void setSearchRsult(String content) {
+    private void setSearchRsult(String content,int searchType) {
         mSearchResult.clear();
-
         if (content != null) {
-            initFragment(content);
+            if (searchType == 1){
+                initIndexFragment(content);
+            }else if (searchType == 2){
+                initResultFragment(content);
+            }
         }
 
     }
@@ -273,38 +265,75 @@ public class SearchMainFragment extends BaseFragment implements View.OnClickList
         mAppBarLayout.setExpanded(true);
         mMsgView.showLoading();
 
-        OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
-                .params("keyWord", content)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        mMsgView.dismiss();
-                        mStopView.setVisibility(View.GONE);
 
-                        String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+        if (searchType == 1){
+            OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
+                    .params("keyWord", content)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            mMsgView.dismiss();
+                            mStopView.setVisibility(View.GONE);
 
-                        final JSONObject object = JSON.parseObject(jiemi);
-                        final JSONObject data = object.getJSONObject("data");
-                        final JSONArray array = data.getJSONArray("list");
+                            String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
-                        if (array.size() > 0) {
-                            setSearchRsult(content);
-                        } else {
-                            mMsgView.showSearchEmpty();
+                            final JSONObject object = JSON.parseObject(jiemi);
+                            final JSONObject data = object.getJSONObject("data");
+                            final JSONArray array = data.getJSONArray("list");
+
+                            if (array.size() > 0) {
+                                setSearchRsult(content,1);
+                            } else {
+                                mMsgView.showSearchEmpty();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onError(Response<String> response) {
-                        mMsgView.showError();
-                        mStopView.setVisibility(View.GONE);
-                    }
+                        @Override
+                        public void onError(Response<String> response) {
+                            mMsgView.showError();
+                            mStopView.setVisibility(View.GONE);
+                        }
 
-                    @Override
-                    public void onFinish() {
-                        mStopView.setVisibility(View.GONE);
-                    }
-                });
+                        @Override
+                        public void onFinish() {
+                            mStopView.setVisibility(View.GONE);
+                        }
+                    });
+        }else if (searchType == 2){
+            OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
+                    .params("keyWord", content)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            mMsgView.dismiss();
+                            mStopView.setVisibility(View.GONE);
+
+                            String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+
+                            final JSONObject object = JSON.parseObject(jiemi);
+                            final JSONObject data = object.getJSONObject("data");
+                            final JSONArray array = data.getJSONArray("list");
+
+                            if (array.size() > 0) {
+                                setSearchRsult(content,2);
+                            } else {
+                                mMsgView.showSearchEmpty();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Response<String> response) {
+                            mMsgView.showError();
+                            mStopView.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            mStopView.setVisibility(View.GONE);
+                        }
+                    });
+        }
+
     }
 
     private class SearchResultWatcher implements TextWatcher {

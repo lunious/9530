@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.ui.search;
+package com.lubanjianye.biaoxuntong.ui.search.adapter;
 
 import android.view.View;
 import android.widget.ImageView;

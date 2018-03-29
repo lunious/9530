@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.ui.search;
+package com.lubanjianye.biaoxuntong.ui.search.rx;
 
 import android.support.annotation.NonNull;
 

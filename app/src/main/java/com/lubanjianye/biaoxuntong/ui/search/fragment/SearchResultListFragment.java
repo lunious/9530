@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.ui.search;
+package com.lubanjianye.biaoxuntong.ui.search.fragment;
 
 import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -41,7 +41,7 @@ import java.util.List;
  * Created by lunious on 2018/3/28.
  * Desc:
  */
-public class SearchListFragment extends BaseFragment {
+public class SearchResultListFragment extends BaseFragment {
 
 
 
@@ -53,7 +53,6 @@ public class SearchListFragment extends BaseFragment {
     private ArrayList<ResultListBean> mDataList = new ArrayList<>();
 
     private int page = 1;
-    private int pageSize = 20;
 
     private String mKeyword = "";
 
@@ -63,8 +62,8 @@ public class SearchListFragment extends BaseFragment {
 
 
 
-    public static SearchListFragment newInstance(String contentt) {
-        SearchListFragment fragment = new SearchListFragment();
+    public static SearchResultListFragment newInstance(String contentt) {
+        SearchResultListFragment fragment = new SearchResultListFragment();
         keyWorld = contentt;
         return fragment;
     }

@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.ui.search;
+package com.lubanjianye.biaoxuntong.ui.search.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -13,6 +13,7 @@ import com.github.ybq.android.spinkit.SpinKitView;
 import com.github.ybq.android.spinkit.sprite.Sprite;
 import com.github.ybq.android.spinkit.style.Wave;
 import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.ui.search.util.StringUtils;
 
 public class MSGView extends FrameLayout {
 
@@ -44,22 +45,17 @@ public class MSGView extends FrameLayout {
 
     private void init(Context context) {
         mRootView = LayoutInflater.from(this.getContext()).inflate(R.layout.app_view_msg_layout, this);
-        mEmptyTipTv = (TextView) mRootView.findViewById(R.id.tv_empty_tip);
-        mLoadingLayout = (LinearLayout) mRootView.findViewById(R.id.ll_loading);
-        mEmptyLayout = (LinearLayout) mRootView.findViewById(R.id.ll_empty);
-        mErrorLayout = (LinearLayout) mRootView.findViewById(R.id.ll_error);
-        mSpinKitView = (SpinKitView) mRootView.findViewById(R.id.spin_loading);
+        mEmptyTipTv = mRootView.findViewById(R.id.tv_empty_tip);
+        mLoadingLayout = mRootView.findViewById(R.id.ll_loading);
+        mEmptyLayout = mRootView.findViewById(R.id.ll_empty);
+        mErrorLayout = mRootView.findViewById(R.id.ll_error);
+        mSpinKitView = mRootView.findViewById(R.id.spin_loading);
         if (null != mSpinKitView) {
             mSpinKitView.setColor(this.getContext().getResources().getColor(R.color.main_theme_color));
             mSpinKitView.setIndeterminateDrawable(new Wave());
         }
     }
 
-    public void setSpinKitViewType(Sprite sprite) {
-        if (null != mSpinKitView && null != sprite) {
-            mSpinKitView.setIndeterminateDrawable(sprite);
-        }
-    }
 
     public void dismiss(){
         this.setVisibility(View.INVISIBLE);

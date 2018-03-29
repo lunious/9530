@@ -27,13 +27,14 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.search.activity.SearchActivity;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.citypicker.CityPicker;
 import com.lubanjianye.biaoxuntong.ui.citypicker.adapter.OnPickListener;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.City;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.HotCity;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.LocatedCity;
-import com.lubanjianye.biaoxuntong.ui.main.index.search.IndexSearchActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.sortcolumn.SortColumnActivity;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
@@ -526,7 +527,10 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_search:
-                startActivity(new Intent(getActivity(), IndexSearchActivity.class));
+                //点击搜素
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                intent.putExtra("searchTye", 1);
+                startActivity(intent);
                 break;
             case R.id.iv_add:
                 startActivity(new Intent(getActivity(), SortColumnActivity.class));

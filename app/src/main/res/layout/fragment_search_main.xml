@@ -46,7 +46,7 @@
                     android:background="@drawable/bg_search"
                     android:padding="4dp">
 
-                    <com.lubanjianye.biaoxuntong.ui.search.LastInputEditText
+                    <com.lubanjianye.biaoxuntong.ui.search.view.LastInputEditText
                         android:id="@+id/et_search_content"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -118,7 +118,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <com.lubanjianye.biaoxuntong.ui.search.MSGView
+    <com.lubanjianye.biaoxuntong.ui.search.view.MSGView
         android:id="@+id/msg_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

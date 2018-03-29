@@ -1,4 +1,6 @@
-package com.lubanjianye.biaoxuntong.ui.search;
+package com.lubanjianye.biaoxuntong.ui.search.rx;
+
+import com.lubanjianye.biaoxuntong.ui.search.rx.RxBus;
 
 import java.util.HashMap;
 import java.util.Map;

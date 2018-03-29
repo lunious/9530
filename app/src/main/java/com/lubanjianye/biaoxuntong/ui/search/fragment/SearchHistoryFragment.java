@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.ui.search;
+package com.lubanjianye.biaoxuntong.ui.search.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,8 +12,13 @@ import android.widget.TextView;
 import com.google.gson.reflect.TypeToken;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.ui.search.adapter.SearchHistoryAdapter;
+import com.lubanjianye.biaoxuntong.ui.search.rx.RxBus;
+import com.lubanjianye.biaoxuntong.ui.search.util.AccountPreference;
+import com.lubanjianye.biaoxuntong.ui.search.util.GlobalConstant;
+import com.lubanjianye.biaoxuntong.ui.search.util.JsonUtils;
+import com.lubanjianye.biaoxuntong.ui.search.util.StringUtils;
 import com.lubanjianye.biaoxuntong.util.dimen.DensityUtil;
-import com.sina.weibo.sdk.utils.UIUtils;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.ui.search;
+package com.lubanjianye.biaoxuntong.ui.search.view;
 
 import android.content.Context;
 import android.support.v7.widget.AppCompatEditText;

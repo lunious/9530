@@ -13,7 +13,6 @@ import java.util.List;
 /**
  * 项目名:   LBBXT
  * 包名:     com.lubanjianye.biaoxuntong.ui.main.index
- * 文件名:   IndexListAdapter
  * 创建者:   lunious
  * 创建时间: 2017/12/16  10:07
  * 描述:     TODO
