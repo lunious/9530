@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.bean.MessageListBean;
+import com.lubanjianye.biaoxuntong.util.DataTimeUtil;
 
 import java.util.List;
 
@@ -27,8 +28,9 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageListBean,BaseVie
     @Override
     protected void convert(BaseViewHolder helper, MessageListBean item) {
         helper.setText(R.id.tv_item_title, item.getEntityName());
-//        helper.setText(R.id.tv_item_time, item.getSysTime().substring(0, 10));
-        helper.setText(R.id.tv_item_time, item.getCreateTime());
+
+        String time = DataTimeUtil.stampToDate(item.getCreateTime());
+        helper.setText(R.id.tv_item_time, time.substring(0, 10));
 
     }
 }

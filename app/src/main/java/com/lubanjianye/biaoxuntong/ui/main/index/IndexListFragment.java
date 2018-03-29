@@ -142,8 +142,6 @@ public class IndexListFragment extends BaseFragment {
                 final int entityId = data.getEntityId();
                 final String entity = data.getEntity();
 
-                Log.d("BASJHDHJSADASDA", entity + entityId);
-
                 Intent intent = null;
                 if (mDiqu.equals("四川")) {
                     if ("sggjy".equals(entity)) {
@@ -217,9 +215,6 @@ public class IndexListFragment extends BaseFragment {
     private void initAdapter() {
 
         mTitle = getArguments().getString("title");
-
-
-        Log.d("JABHJSBDASDA", "我被调用了=" + mTitle);
 
         if ("最新标讯".equals(mTitle)) {
             mAdapter = new IndexListAdapter(R.layout.fragment_index_zxbx_item, mDataList);
@@ -296,8 +291,6 @@ public class IndexListFragment extends BaseFragment {
 
     @Override
     public void initEvent() {
-
-        Log.d("NJDASJNDNASDA", "我被调用了");
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");

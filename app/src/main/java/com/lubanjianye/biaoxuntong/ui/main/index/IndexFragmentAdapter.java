@@ -131,10 +131,6 @@ public class IndexFragmentAdapter extends FragmentPagerAdapter {
         super.setPrimaryItem(container, position, object);
     }
 
-    public Fragment getCurrentFragment() {
-        return mCurrentFragment;
-    }
-
 
 }
 

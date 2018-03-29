@@ -443,7 +443,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                 final JSONObject object = JSON.parseObject(response.body());
                                 final JSONObject data = object.getJSONObject("data");
                                 final JSONArray array = data.getJSONArray("list");
-                                final int count = data.getInteger("count");
                                 final boolean nextPage = data.getBoolean("nextpage");
 
                                 if (array.size() > 0) {
@@ -463,7 +462,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                     final JSONObject object = JSON.parseObject(response.body());
                                     final JSONObject data = object.getJSONObject("data");
                                     final JSONArray array = data.getJSONArray("list");
-                                    final int count = data.getInteger("count");
                                     final boolean nextPage = data.getBoolean("nextpage");
 
                                     if (array.size() > 0) {

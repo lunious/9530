@@ -70,8 +70,6 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
 
     private String mDiqu = "";
 
-    private PromptDialog promptDialog;
-
     @Override
     public Object setLayout() {
         return R.layout.fragment_column;
@@ -90,9 +88,6 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
     public void initView() {
         //注册EventBus
         EventBus.getDefault().register(this);
-
-        //创建对象
-        promptDialog = new PromptDialog(getActivity());
 
         ivClose = getView().findViewById(R.id.iv_close);
         oldColumnRv = getView().findViewById(R.id.old_column_rv);
@@ -337,8 +332,6 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
 
     public void requestData() {
 
-
-        promptDialog.showLoading("请稍后");
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
             mDiqu = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
         }
@@ -482,15 +475,6 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
 
         mAdapter.notifyDataSetChanged();
 
-        BiaoXunTong.getHandler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (promptDialog != null) {
-                    promptDialog.dismissImmediately();
-                }
-            }
-        }, 1000);
-
     }
 
     private void setData1(JSONArray data) {
@@ -499,7 +483,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
             SortColumnBean bean = new SortColumnBean();
             JSONObject list = data.getJSONObject(i);
             bean.setId(list.getInteger("id"));
-            bean.setName(list.getString("name"));
+            bean.setName("+"+list.getString("name"));
             bean.setShowDele(false);
             bean.setChangeColo(false);
             mData1.add(bean);
@@ -514,7 +498,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
             SortColumnBean bean = new SortColumnBean();
             JSONObject list = data.getJSONObject(i);
             bean.setId(list.getInteger("id"));
-            bean.setName(list.getString("name"));
+            bean.setName("+"+list.getString("name"));
             bean.setShowDele(false);
             bean.setChangeColo(false);
             mData2.add(bean);

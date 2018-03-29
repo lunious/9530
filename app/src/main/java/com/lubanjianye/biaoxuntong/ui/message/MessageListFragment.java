@@ -354,8 +354,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
 
     public void requestData(final boolean isRefresh) {
 
-        Log.d("JBAUSJDASDADA",mType+"");
-
         if (mType == 1){
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                 llShow.setVisibility(View.GONE);
@@ -384,12 +382,9 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
 
                                     final JSONObject object = JSON.parseObject(response.body());
                                     final JSONObject data = object.getJSONObject("data");
-
                                     final String status = object.getString("status");
                                     final String message = object.getString("message");
 
-
-                                    Log.d("JBDASJBDBASDA",response.body());
 
                                     if ("200".equals(status)){
                                         final JSONArray array = data.getJSONArray("list");
@@ -415,7 +410,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                 @Override
                                 public void onCacheSuccess(Response<String> response) {
                                     if (!isInitCache) {
-
                                         final JSONObject object = JSON.parseObject(response.body());
                                         final JSONObject data = object.getJSONObject("data");
                                         final String status = object.getString("status");
@@ -425,7 +419,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                             final JSONArray array = data.getJSONArray("list");
                                             final boolean nextPage = data.getBoolean("nextpage");
                                             if (array.size() > 0) {
-                                                page = 2;
                                                 setData(isRefresh, array, nextPage);
                                             } else {
                                                 if (mDataList != null) {
@@ -467,7 +460,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                         final JSONArray array = data.getJSONArray("list");
                                         final boolean nextPage = data.getBoolean("nextpage");
                                         if (array.size() > 0) {
-                                            page = 2;
                                             setData(isRefresh, array, nextPage);
                                         } else {
                                             if (mDataList != null) {
@@ -615,8 +607,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                     final String message = object.getString("message");
 
 
-                                    Log.d("JBDASJBDBASDA",response.body());
-
                                     if ("200".equals(status)){
                                         final JSONArray array = data.getJSONArray("list");
                                         final boolean nextPage = data.getBoolean("nextpage");
@@ -651,7 +641,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                             final JSONArray array = data.getJSONArray("list");
                                             final boolean nextPage = data.getBoolean("nextpage");
                                             if (array.size() > 0) {
-                                                page = 2;
                                                 setData(isRefresh, array, nextPage);
                                             } else {
                                                 if (mDataList != null) {
@@ -693,7 +682,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                         final JSONArray array = data.getJSONArray("list");
                                         final boolean nextPage = data.getBoolean("nextpage");
                                         if (array.size() > 0) {
-                                            page = 2;
                                             setData(isRefresh, array, nextPage);
                                         } else {
                                             if (mDataList != null) {

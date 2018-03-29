@@ -27,7 +27,6 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.search.activity.SearchActivity;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.citypicker.CityPicker;
@@ -704,14 +703,11 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-        Log.d("AJSNBDASDA", "同意");
         mLocationClient.start();
     }
 
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-        Log.d("AJSNBDASDA", "拒绝");
 
-        Log.d("HBDAHUBSDASDA", "requestCode==" + requestCode + "\n" + "perms==" + perms.size());
     }
 }
