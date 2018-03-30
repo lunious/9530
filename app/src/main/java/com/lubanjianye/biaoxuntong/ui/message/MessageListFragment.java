@@ -122,8 +122,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                 final int entityId = data.getEntityId();
                 final String entity = data.getEntity();
 
-                Log.d("JASBHDBHSABDSADSAD", entityId + "___" + entity);
-
                 Intent intent = null;
 
                 if ("四川".equals(mDiqu)) {
@@ -308,11 +306,10 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void initData() {
-        Log.d("HBASHDASDA",mTitle);
-        if ("普通消息".equals(mTitle)) {
-            mType = 1;
-        } else if ("关注推送".equals(mTitle)) {
+        if ("告知消息".equals(mTitle)) {
             mType = 2;
+        } else if ("历史推送".equals(mTitle)) {
+            mType = 1;
         }
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {

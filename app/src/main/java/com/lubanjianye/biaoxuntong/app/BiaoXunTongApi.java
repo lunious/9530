@@ -52,6 +52,14 @@ public abstract class BiaoXunTongApi {
      */
     public static final String URL_GETCODE = BASEURL + "bxtajax/UserAjax/sendcode";
     /**
+     * 获取用户个人资料
+     */
+    public static final String URL_GETUSERINFO = BASEURL + "bxtajax/UserAjax/getUserById";
+    /**
+     * 修改用户个人资料
+     */
+    public static final String URL_CHANGEUSER = BASEURL + "bxtajax/UserAjax/updateUserById";
+    /**
      * 注册
      */
     public static final String URL_REGISTER = BASEURL + "bxtajax/UserAjax/register";

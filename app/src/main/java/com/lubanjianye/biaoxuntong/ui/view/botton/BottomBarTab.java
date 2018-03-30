@@ -73,17 +73,17 @@ public class BottomBarTab extends FrameLayout {
 
         addView(lLContainer);
 
-        int min = dip2px(context, 20);
-        int padding = dip2px(context, 6);
+        int min = dip2px(context, 8);
+        int padding = dip2px(context, 0);
         mTvUnreadCount = new TextView(context);
-        mTvUnreadCount.setBackgroundResource(R.drawable.bg_msg_bubble);
+        mTvUnreadCount.setBackgroundResource(R.drawable.ic_red_dot);
         mTvUnreadCount.setMinWidth(min);
         mTvUnreadCount.setTextColor(Color.WHITE);
         mTvUnreadCount.setPadding(padding, 0, padding, 0);
         mTvUnreadCount.setGravity(Gravity.CENTER);
-        FrameLayout.LayoutParams tvUnReadParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, min);
+        FrameLayout.LayoutParams tvUnReadParams = new FrameLayout.LayoutParams(min, min);
         tvUnReadParams.gravity = Gravity.CENTER;
-        tvUnReadParams.leftMargin = dip2px(context, 18);
+        tvUnReadParams.leftMargin = dip2px(context, 14);
         tvUnReadParams.bottomMargin = dip2px(context, 14);
         mTvUnreadCount.setLayoutParams(tvUnReadParams);
         mTvUnreadCount.setVisibility(GONE);
@@ -118,10 +118,13 @@ public class BottomBarTab extends FrameLayout {
      * 设置未读数量
      */
     public void setUnreadCount(int num) {
-        if (num <= 0) {
-            mTvUnreadCount.setText(String.valueOf(0));
+        if (num == -1) {
+            mTvUnreadCount.setText("");
             mTvUnreadCount.setVisibility(GONE);
-        } else {
+        } else if (num == 0){
+            mTvUnreadCount.setText("");
+            mTvUnreadCount.setVisibility(VISIBLE);
+        }else {
             mTvUnreadCount.setVisibility(VISIBLE);
             if (num > 99) {
                 mTvUnreadCount.setText("99+");

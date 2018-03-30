@@ -1,18 +1,26 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.avater;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.ui.main.user.company.BindCompanyActivity;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -36,6 +44,9 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
     private AppCompatTextView tvUserName = null;
     private AppCompatTextView tvUserCompany = null;
     private AppCompatTextView tvUserMobile = null;
+    private AppCompatTextView tvUserSex = null;
+    private AppCompatTextView tvUserArea = null;
+
 
     private long id = 0;
     private String mobile = "";
@@ -43,6 +54,9 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
     private String token = "";
     private String comid = "";
     private String companyName = "";
+    private String headUrl = "";
+    private String sex = "";
+    private String diqu = "";
 
 
     @Override
@@ -71,6 +85,10 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
         tvUserName = getView().findViewById(R.id.tv_user_name);
         tvUserCompany = getView().findViewById(R.id.tv_user_company);
         tvUserMobile = getView().findViewById(R.id.tv_user_mobile);
+        tvUserSex = getView().findViewById(R.id.tv_user_sex);
+        tvUserArea = getView().findViewById(R.id.tv_user_area);
+        tvUserArea.setOnClickListener(this);
+        tvUserSex.setOnClickListener(this);
         llIvBack.setOnClickListener(this);
         tvUserCompany.setOnClickListener(this);
         tvUserMobile.setOnClickListener(this);
@@ -103,7 +121,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
             if (!TextUtils.isEmpty(companyName)) {
                 tvUserCompany.setText(companyName);
             } else {
-                tvUserCompany.setText("未绑定企业");
+                tvUserCompany.setText("点击绑定企业");
             }
         }
     }
@@ -122,6 +140,49 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tv_user_sex:
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                String[] strarr = {"男","女"};
+                builder.setItems(strarr, new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+
+                        String sex = "";
+                        if (arg1 == 0) {
+                            //男
+                            sex = "男";
+                        }else {
+                            //女
+                            sex = "女";
+                        }
+
+                        OkGo.<String>post(BiaoXunTongApi.URL_CHANGEUSER)
+                                .params("Id",id)
+                                .params("sex",sex)
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onSuccess(Response<String> response) {
+                                        final JSONObject userInfo = JSON.parseObject(response.body());
+                                        final String status = userInfo.getString("status");
+                                        final String message = userInfo.getString("message");
+
+                                        if ("200".equals(status)){
+                                            requestData();
+                                            ToastUtil.shortBottonToast(getContext(),"修改成功");
+                                        }else {
+                                            ToastUtil.shortBottonToast(getContext(),message);
+                                        }
+                                    }
+                                });
+                    }
+                });
+                builder.show();
+                break;
+            case R.id.tv_user_area:
+
+                break;
             case R.id.ll_iv_back:
                 getActivity().onBackPressed();
                 break;
@@ -133,11 +194,11 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                         //进入绑定企业界面
                         startActivity(new Intent(getActivity(), BindCompanyActivity.class));
                     } else {
-                        ToastUtil.shortToast(getContext(), "请先绑定手机号！");
+                        ToastUtil.shortBottonToast(getContext(), "请先绑定手机号！");
                     }
 
                 } else {
-                    //TODO
+                    ToastUtil.shortBottonToast(getContext(),"暂不支持修改已绑定企业");
                 }
                 break;
             case R.id.tv_user_mobile:
@@ -146,7 +207,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                     startActivity(new Intent(getActivity(), BindMobileActivity.class));
                     getActivity().onBackPressed();
                 } else {
-                    //TODO
+                    ToastUtil.shortBottonToast(getContext(),"暂不支持修改已绑定手机号");
                 }
                 break;
             default:
@@ -158,35 +219,64 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
     public void requestData() {
 
         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
-
         for (int i = 0; i < users.size(); i++) {
             id = users.get(0).getId();
-            mobile = users.get(0).getMobile();
-            nickName = users.get(0).getNickName();
-            token = users.get(0).getToken();
-            comid = users.get(0).getComid();
-            companyName = users.get(0).getCompanyName();
 
         }
 
-        if (!TextUtils.isEmpty(nickName)) {
-            tvUserName.setText(nickName);
-        } else {
-            tvUserName.setText(mobile);
-        }
-
-        if (!TextUtils.isEmpty(mobile)) {
-            tvUserMobile.setText(mobile);
-        } else {
-            tvUserMobile.setText("点击绑定手机号");
-        }
+        OkGo.<String>post(BiaoXunTongApi.URL_GETUSERINFO)
+                .params("Id",id)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject userInfo = JSON.parseObject(response.body());
+                        final String status = userInfo.getString("status");
+                        final String message = userInfo.getString("message");
 
 
-        if (!TextUtils.isEmpty(companyName)) {
-            tvUserCompany.setText(companyName);
-        } else {
-            tvUserCompany.setText("点击绑定企业");
-        }
+                        if ("200".equals(status)){
+                            final JSONObject data = userInfo.getJSONObject("data");
+                            final JSONObject qy = data.getJSONObject("qy");
+                            final JSONObject user = data.getJSONObject("user");
+
+                            companyName = qy.getString("qy");
+                            if (!TextUtils.isEmpty(companyName)) {
+                                tvUserCompany.setText(companyName);
+                            } else {
+                                tvUserCompany.setText("点击绑定企业");
+                            }
+                            mobile = user.getString("mobile");
+                            if (!TextUtils.isEmpty(mobile)) {
+                                tvUserMobile.setText(mobile);
+                            } else {
+                                tvUserMobile.setText("点击绑定手机号");
+                            }
+                            nickName = user.getString("nickName");
+                            if (!TextUtils.isEmpty(nickName)) {
+                                tvUserName.setText(nickName);
+                            } else {
+                                tvUserName.setText("点击设置");
+                            }
+                            sex = user.getString("sex");
+                            if (!TextUtils.isEmpty(sex)) {
+                                tvUserSex.setText(sex);
+                            } else {
+                                tvUserSex.setText("点击设置");
+                            }
+                            diqu = user.getString("diqu");
+                            if (!TextUtils.isEmpty(diqu)) {
+                                tvUserArea.setText(diqu);
+                            } else {
+                                tvUserArea.setText("点击设置");
+                            }
+
+                            headUrl = user.getString("headUrl");
+
+                        }else {
+                            ToastUtil.shortToast(getContext(),message);
+                        }
+                    }
+                });
 
 
     }

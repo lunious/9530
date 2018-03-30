@@ -101,38 +101,7 @@
                 android:gravity="center"
                 android:paddingRight="@dimen/d10"
                 android:text=""
-                android:textColor="@color/main_status_blue"
-                android:textSize="@dimen/d16" />
-
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/d1"
-            android:layout_marginTop="@dimen/d8"
-            android:background="#f9eeeeee" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/d48"
-            android:orientation="horizontal">
-
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="地      区"
-                android:textSize="@dimen/d16" />
-
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tv_user_area"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:gravity="center"
-                android:paddingRight="@dimen/d10"
-                android:text=""
-                android:textColor="@color/main_status_blue"
+                android:textColor="@color/main_text_color"
                 android:textSize="@dimen/d16" />
 
         </RelativeLayout>
@@ -164,7 +133,7 @@
                 android:gravity="center"
                 android:paddingRight="@dimen/d10"
                 android:text=""
-                android:textColor="@color/main_status_blue"
+                android:textColor="@color/main_text_color"
                 android:textSize="@dimen/d16" />
 
         </RelativeLayout>
@@ -195,7 +164,38 @@
                 android:gravity="center"
                 android:paddingRight="@dimen/d10"
                 android:text=""
-                android:textColor="@color/main_status_blue"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/d16" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d1"
+            android:layout_marginTop="@dimen/d8"
+            android:background="#f9eeeeee" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d48"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="常在地区"
+                android:textSize="@dimen/d16" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_user_area"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:paddingRight="@dimen/d10"
+                android:text=""
+                android:textColor="@color/main_text_color"
                 android:textSize="@dimen/d16" />
 
         </RelativeLayout>

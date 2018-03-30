@@ -50,8 +50,8 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
         llIvBack.setVisibility(View.VISIBLE);
         mainBarName.setText("消息中心");
 
-        mList.add("普通消息");
-        mList.add("关注推送");
+        mList.add("告知消息");
+        mList.add("历史推送");
 
     }
 
@@ -60,6 +60,9 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
         mAdapter = new MessageAdapter(mList, getFragmentManager());
         resultVp.setAdapter(mAdapter);
         resulttStlTab.setViewPager(resultVp);
+
+        resulttStlTab.showMsg(1,14);
+
     }
 
     @Override

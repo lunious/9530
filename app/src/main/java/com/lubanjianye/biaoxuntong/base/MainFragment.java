@@ -113,6 +113,10 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
             @Override
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
+
+                if (position == 4){
+                    mBottomBar.getItem(4).setUnreadCount(-1);
+                }
             }
 
             @Override
@@ -133,6 +137,10 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
         if (NetUtil.isNetworkConnected(getActivity())) {
             updateDiy();
         }
+
+        mBottomBar.getItem(4).setUnreadCount(0);
+
+
     }
 
     private static final int RC_EXTERNAL_STORAGE = 0x04;//存储权限

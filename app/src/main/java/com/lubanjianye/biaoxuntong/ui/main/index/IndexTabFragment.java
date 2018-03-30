@@ -165,6 +165,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
             //更新UI
             if (indexStlTab != null) {
                 indexStlTab.setCurrentTab(0);
+                indexVp.setCurrentItem(0);
                 indexStlTab.setViewPager(indexVp);
                 indexStlTab.notifyDataSetChanged();
             }

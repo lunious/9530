@@ -75,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|top"
-                    android:layout_marginLeft="@dimen/d22"
+                    android:layout_marginLeft="@dimen/d24"
                     android:background="@drawable/ic_red_dot"
                     android:gravity="center"
                     android:maxLines="1"
@@ -83,7 +83,7 @@
                     android:text="14"
                     android:textColor="@color/main_status_white"
                     android:textSize="@dimen/d8"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
             </FrameLayout>
 
 

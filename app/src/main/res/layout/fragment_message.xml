@@ -7,20 +7,31 @@
     <include layout="@layout/fragment_detail_bar" />
 
 
-    <com.flyco.tablayout.SlidingTabLayout
-        android:id="@+id/message_stl_tab"
+
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d36"
-        android:background="@color/main_status_white"
-        tl:tl_indicator_color="@color/main_theme_color"
-        tl:tl_indicator_height="@dimen/d2"
-        tl:tl_indicator_width_equal_title="true"
-        tl:tl_tab_padding="@dimen/d6"
-        tl:tl_tab_space_equal="true"
-        tl:tl_textAllCaps="true"
-        tl:tl_textSelectColor="@color/main_theme_color"
-        tl:tl_textUnselectColor="#6c6c6c"
-        tl:tl_textsize="@dimen/d15" />
+        android:layout_height="wrap_content"
+        android:background="@color/main_status_white">
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/message_stl_tab"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/d36"
+            android:layout_centerInParent="true"
+            android:background="@color/main_status_white"
+            tl:tl_indicator_color="@color/main_theme_color"
+            tl:tl_tab_padding="@dimen/d50"
+            tl:tl_indicator_height="@dimen/d2"
+            tl:tl_indicator_width_equal_title="true"
+            tl:tl_textSelectColor="@color/main_theme_color"
+            tl:tl_textUnselectColor="#6c6c6c"
+            tl:tl_textsize="@dimen/d15" />
+
+    </RelativeLayout>
+
+
+
+
 
     <View
         android:layout_width="match_parent"
