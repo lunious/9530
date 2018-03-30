@@ -166,6 +166,7 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                                         DatabaseManager.getInstance().getDao().deleteAll();
                                         AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
                                         EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
+                                        AppSharePreferenceMgr.remove(getContext(), EventMessage.TOKEN_FALSE);
                                         ToastUtil.shortBottonToast(getContext(), "退出成功");
                                     }
                                 });

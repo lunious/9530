@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.Glide;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
@@ -27,6 +28,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * 项目名:   LBBXT
@@ -46,6 +49,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
     private AppCompatTextView tvUserMobile = null;
     private AppCompatTextView tvUserSex = null;
     private AppCompatTextView tvUserArea = null;
+    private CircleImageView imgUserAvatar = null;
 
 
     private long id = 0;
@@ -87,11 +91,13 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
         tvUserMobile = getView().findViewById(R.id.tv_user_mobile);
         tvUserSex = getView().findViewById(R.id.tv_user_sex);
         tvUserArea = getView().findViewById(R.id.tv_user_area);
+        imgUserAvatar = getView().findViewById(R.id.img_user_avatar);
         tvUserArea.setOnClickListener(this);
         tvUserSex.setOnClickListener(this);
         llIvBack.setOnClickListener(this);
         tvUserCompany.setOnClickListener(this);
         tvUserMobile.setOnClickListener(this);
+        imgUserAvatar.setOnClickListener(this);
 
     }
 
@@ -140,8 +146,10 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.img_user_avatar:
+                ToastUtil.shortToast(getContext(),"更换头像");
+                break;
             case R.id.tv_user_sex:
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 String[] strarr = {"男","女"};
                 builder.setItems(strarr, new DialogInterface.OnClickListener()
@@ -221,6 +229,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
         for (int i = 0; i < users.size(); i++) {
             id = users.get(0).getId();
+            headUrl = users.get(0).getImageUrl();
 
         }
 
@@ -270,7 +279,14 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                                 tvUserArea.setText("点击设置");
                             }
 
-                            headUrl = user.getString("headUrl");
+                            String newHeardUrl = user.getString("headUrl");
+                            if (!TextUtils.isEmpty(newHeardUrl)){
+                                Glide.with(getActivity()).load(newHeardUrl).into(imgUserAvatar);
+                            }else if (!TextUtils.isEmpty(headUrl)){
+                                Glide.with(getActivity()).load(headUrl).into(imgUserAvatar);
+                            }else {
+                                imgUserAvatar.setImageResource(R.mipmap.moren_touxiang);
+                            }
 
                         }else {
                             ToastUtil.shortToast(getContext(),message);
