@@ -18,6 +18,7 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.ui.main.user.company.BindCompanyActivity;
+import com.lubanjianye.biaoxuntong.util.rx.RxDialogEditSureCancel;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -98,6 +99,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
         tvUserCompany.setOnClickListener(this);
         tvUserMobile.setOnClickListener(this);
         imgUserAvatar.setOnClickListener(this);
+        tvUserName.setOnClickListener(this);
 
     }
 
@@ -149,6 +151,47 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
             case R.id.img_user_avatar:
                 ToastUtil.shortToast(getContext(),"更换头像");
                 break;
+            case R.id.tv_user_name:
+                final RxDialogEditSureCancel rxDialogEditSureCancel = new RxDialogEditSureCancel(getContext());
+                rxDialogEditSureCancel.getTitleView().setText("请输入想要要设置的昵称");
+                rxDialogEditSureCancel.getSureView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String nick = rxDialogEditSureCancel.getEditText().getText().toString();
+                        if (!TextUtils.isEmpty(nick)){
+                            OkGo.<String>post(BiaoXunTongApi.URL_CHANGEUSER)
+                                    .params("Id",id)
+                                    .params("nickName",nick)
+                                    .execute(new StringCallback() {
+                                        @Override
+                                        public void onSuccess(Response<String> response) {
+                                            final JSONObject userInfo = JSON.parseObject(response.body());
+                                            final String status = userInfo.getString("status");
+                                            final String message = userInfo.getString("message");
+
+                                            if ("200".equals(status)){
+                                                requestData();
+                                                ToastUtil.shortBottonToast(getContext(),"修改成功");
+                                            }else {
+                                                ToastUtil.shortBottonToast(getContext(),message);
+                                            }
+                                        }
+                                    });
+                            rxDialogEditSureCancel.cancel();
+                        }else {
+                            ToastUtil.shortBottonToast(getContext(),"内容不能为空");
+                        }
+
+                    }
+                });
+                rxDialogEditSureCancel.getCancelView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        rxDialogEditSureCancel.cancel();
+                    }
+                });
+                rxDialogEditSureCancel.show();
+                break;
             case R.id.tv_user_sex:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 String[] strarr = {"男","女"};
@@ -189,7 +232,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                 builder.show();
                 break;
             case R.id.tv_user_area:
-
+                ToastUtil.shortToast(getContext(),"地区");
                 break;
             case R.id.ll_iv_back:
                 getActivity().onBackPressed();
