@@ -247,22 +247,22 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                 picker.setCycleDisable(false);//不禁用循环
                 picker.setTopBackgroundColor(0xFFEEEEEE);
                 picker.setTopHeight(42);
-                picker.setTopLineColor(0xFFEE0000);
+                picker.setTopLineColor(0xFFEEEEEE);
                 picker.setTopLineHeight(1);
                 picker.setTitleText("请选择地区");
                 picker.setTitleTextColor(0xFF999999);
-                picker.setTitleTextSize(12);
-                picker.setCancelTextColor(0xFFEE0000);
-                picker.setCancelTextSize(13);
-                picker.setSubmitTextColor(0xFFEE0000);
-                picker.setSubmitTextSize(13);
-                picker.setTextColor(0xFFEE0000, 0xFF999999);
+                picker.setTitleTextSize(14);
+                picker.setCancelTextColor(getResources().getColor(R.color.main_theme_color));
+                picker.setCancelTextSize(15);
+                picker.setSubmitTextColor(getResources().getColor(R.color.main_theme_color));
+                picker.setSubmitTextSize(15);
+                picker.setTextColor(getResources().getColor(R.color.main_theme_color), 0xFF999999);
                 WheelView.DividerConfig config = new WheelView.DividerConfig();
-                config.setColor(0xFFEE0000);//线颜色
+                config.setColor(getResources().getColor(R.color.main_theme_color));//线颜色
                 config.setAlpha(140);//线透明度
                 config.setRatio((float) (1.0 / 8.0));//线比率
                 picker.setDividerConfig(config);
-                picker.setBackgroundColor(0xFFE1E1E1);
+                picker.setBackgroundColor(getResources().getColor(R.color.main_status_white));
                 picker.setSelectedIndex(7);
                 picker.setCanceledOnTouchOutside(true);
                 picker.setOnItemPickListener(new SinglePicker.OnItemPickListener<Area>() {
