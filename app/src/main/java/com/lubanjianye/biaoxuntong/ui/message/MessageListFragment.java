@@ -721,6 +721,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                 bean.setEntityType(list.getString("entityType"));
                 bean.setEntityId(list.getInteger("entityId"));
                 bean.setEntity(list.getString("entity"));
+                bean.setIsRead(list.getString("isRead"));
                 mDataList.add(bean);
             }
 
@@ -739,6 +740,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                     bean.setEntityType(list.getString("entityType"));
                     bean.setEntityId(list.getInteger("entityId"));
                     bean.setEntity(list.getString("entity"));
+                    bean.setIsRead(list.getString("isRead"));
                     mDataList.add(bean);
                 }
             }

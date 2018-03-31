@@ -19,7 +19,7 @@ import java.util.List;
  * 描述:     TODO
  */
 
-public class MessageListAdapter extends BaseQuickAdapter<MessageListBean,BaseViewHolder> {
+public class MessageListAdapter extends BaseQuickAdapter<MessageListBean, BaseViewHolder> {
 
     public MessageListAdapter(int layoutResId, @Nullable List<MessageListBean> data) {
         super(layoutResId, data);
@@ -27,14 +27,20 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageListBean,BaseVie
 
     @Override
     protected void convert(BaseViewHolder helper, MessageListBean item) {
-        helper.setText(R.id.tv_item_title, item.getEntityName());
 
+        //是否显示红点
+        String isRead = item.getIsRead();
+        if ("0".equals(isRead)) {
+            helper.setVisible(R.id.message_red, true);
+        }
+
+        helper.setText(R.id.tv_item_title, item.getEntityName());
 
         String getTime = item.getCreateTime();
 
-        if (getTime.contains("-")){
+        if (getTime.contains("-")) {
             helper.setText(R.id.tv_item_time, getTime.substring(0, 10));
-        }else {
+        } else {
             String time = DataTimeUtil.stampToDate(item.getCreateTime());
             helper.setText(R.id.tv_item_time, time.substring(0, 10));
         }

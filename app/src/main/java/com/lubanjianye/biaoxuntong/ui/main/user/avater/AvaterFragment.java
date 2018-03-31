@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -18,6 +19,9 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.ui.main.user.company.BindCompanyActivity;
+import com.lubanjianye.biaoxuntong.util.picker.Area;
+import com.lubanjianye.biaoxuntong.util.picker.SinglePicker;
+import com.lubanjianye.biaoxuntong.util.picker.WheelView;
 import com.lubanjianye.biaoxuntong.util.rx.RxDialogEditSureCancel;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
@@ -28,6 +32,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -149,7 +154,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_user_avatar:
-                ToastUtil.shortToast(getContext(),"更换头像");
+                ToastUtil.shortToast(getContext(), "更换头像");
                 break;
             case R.id.tv_user_name:
                 final RxDialogEditSureCancel rxDialogEditSureCancel = new RxDialogEditSureCancel(getContext());
@@ -158,10 +163,10 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                     @Override
                     public void onClick(View v) {
                         String nick = rxDialogEditSureCancel.getEditText().getText().toString();
-                        if (!TextUtils.isEmpty(nick)){
+                        if (!TextUtils.isEmpty(nick)) {
                             OkGo.<String>post(BiaoXunTongApi.URL_CHANGEUSER)
-                                    .params("Id",id)
-                                    .params("nickName",nick)
+                                    .params("Id", id)
+                                    .params("nickName", nick)
                                     .execute(new StringCallback() {
                                         @Override
                                         public void onSuccess(Response<String> response) {
@@ -169,17 +174,17 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                                             final String status = userInfo.getString("status");
                                             final String message = userInfo.getString("message");
 
-                                            if ("200".equals(status)){
+                                            if ("200".equals(status)) {
                                                 requestData();
-                                                ToastUtil.shortBottonToast(getContext(),"修改成功");
-                                            }else {
-                                                ToastUtil.shortBottonToast(getContext(),message);
+                                                ToastUtil.shortBottonToast(getContext(), "修改成功");
+                                            } else {
+                                                ToastUtil.shortBottonToast(getContext(), message);
                                             }
                                         }
                                     });
                             rxDialogEditSureCancel.cancel();
-                        }else {
-                            ToastUtil.shortBottonToast(getContext(),"内容不能为空");
+                        } else {
+                            ToastUtil.shortBottonToast(getContext(), "内容不能为空");
                         }
 
                     }
@@ -194,9 +199,8 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                 break;
             case R.id.tv_user_sex:
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                String[] strarr = {"男","女"};
-                builder.setItems(strarr, new DialogInterface.OnClickListener()
-                {
+                String[] strarr = {"男", "女"};
+                builder.setItems(strarr, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
 
@@ -204,14 +208,14 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                         if (arg1 == 0) {
                             //男
                             sex = "男";
-                        }else {
+                        } else {
                             //女
                             sex = "女";
                         }
 
                         OkGo.<String>post(BiaoXunTongApi.URL_CHANGEUSER)
-                                .params("Id",id)
-                                .params("sex",sex)
+                                .params("Id", id)
+                                .params("sex", sex)
                                 .execute(new StringCallback() {
                                     @Override
                                     public void onSuccess(Response<String> response) {
@@ -219,11 +223,11 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                                         final String status = userInfo.getString("status");
                                         final String message = userInfo.getString("message");
 
-                                        if ("200".equals(status)){
+                                        if ("200".equals(status)) {
                                             requestData();
-                                            ToastUtil.shortBottonToast(getContext(),"修改成功");
-                                        }else {
-                                            ToastUtil.shortBottonToast(getContext(),message);
+                                            ToastUtil.shortBottonToast(getContext(), "修改成功");
+                                        } else {
+                                            ToastUtil.shortBottonToast(getContext(), message);
                                         }
                                     }
                                 });
@@ -232,7 +236,63 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                 builder.show();
                 break;
             case R.id.tv_user_area:
-                ToastUtil.shortToast(getContext(),"地区");
+                List<Area> data = new ArrayList<>();
+                data.add(new Area(1, "北京"));
+                data.add(new Area(2, "上海"));
+                data.add(new Area(3, "广东"));
+                data.add(new Area(4, "贵州"));
+                data.add(new Area(5, "四川"));
+                data.add(new Area(6, "云南"));
+                SinglePicker picker = new SinglePicker<>(getActivity(), data);
+                picker.setCycleDisable(false);//不禁用循环
+                picker.setTopBackgroundColor(0xFFEEEEEE);
+                picker.setTopHeight(42);
+                picker.setTopLineColor(0xFFEE0000);
+                picker.setTopLineHeight(1);
+                picker.setTitleText("请选择地区");
+                picker.setTitleTextColor(0xFF999999);
+                picker.setTitleTextSize(12);
+                picker.setCancelTextColor(0xFFEE0000);
+                picker.setCancelTextSize(13);
+                picker.setSubmitTextColor(0xFFEE0000);
+                picker.setSubmitTextSize(13);
+                picker.setTextColor(0xFFEE0000, 0xFF999999);
+                WheelView.DividerConfig config = new WheelView.DividerConfig();
+                config.setColor(0xFFEE0000);//线颜色
+                config.setAlpha(140);//线透明度
+                config.setRatio((float) (1.0 / 8.0));//线比率
+                picker.setDividerConfig(config);
+                picker.setBackgroundColor(0xFFE1E1E1);
+                picker.setSelectedIndex(7);
+                picker.setCanceledOnTouchOutside(true);
+                picker.setOnItemPickListener(new SinglePicker.OnItemPickListener<Area>() {
+                    @Override
+                    public void onItemPicked(int index, Area item) {
+
+
+                        String diqu = item.getName();
+
+                        OkGo.<String>post(BiaoXunTongApi.URL_CHANGEUSER)
+                                .params("Id", id)
+                                .params("diqu", diqu)
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onSuccess(Response<String> response) {
+                                        final JSONObject userInfo = JSON.parseObject(response.body());
+                                        final String status = userInfo.getString("status");
+                                        final String message = userInfo.getString("message");
+
+                                        if ("200".equals(status)) {
+                                            requestData();
+                                            ToastUtil.shortBottonToast(getContext(), "修改成功");
+                                        } else {
+                                            ToastUtil.shortBottonToast(getContext(), message);
+                                        }
+                                    }
+                                });
+                    }
+                });
+                picker.show();
                 break;
             case R.id.ll_iv_back:
                 getActivity().onBackPressed();
@@ -249,7 +309,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                     }
 
                 } else {
-                    ToastUtil.shortBottonToast(getContext(),"暂不支持修改已绑定企业");
+                    ToastUtil.shortBottonToast(getContext(), "暂不支持修改已绑定企业");
                 }
                 break;
             case R.id.tv_user_mobile:
@@ -258,7 +318,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                     startActivity(new Intent(getActivity(), BindMobileActivity.class));
                     getActivity().onBackPressed();
                 } else {
-                    ToastUtil.shortBottonToast(getContext(),"暂不支持修改已绑定手机号");
+                    ToastUtil.shortBottonToast(getContext(), "暂不支持修改已绑定手机号");
                 }
                 break;
             default:
@@ -277,7 +337,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
         }
 
         OkGo.<String>post(BiaoXunTongApi.URL_GETUSERINFO)
-                .params("Id",id)
+                .params("Id", id)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -286,7 +346,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                         final String message = userInfo.getString("message");
 
 
-                        if ("200".equals(status)){
+                        if ("200".equals(status)) {
                             final JSONObject data = userInfo.getJSONObject("data");
                             final JSONObject qy = data.getJSONObject("qy");
                             final JSONObject user = data.getJSONObject("user");
@@ -323,16 +383,16 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                             }
 
                             String newHeardUrl = user.getString("headUrl");
-                            if (!TextUtils.isEmpty(newHeardUrl)){
+                            if (!TextUtils.isEmpty(newHeardUrl)) {
                                 Glide.with(getActivity()).load(newHeardUrl).into(imgUserAvatar);
-                            }else if (!TextUtils.isEmpty(headUrl)){
+                            } else if (!TextUtils.isEmpty(headUrl)) {
                                 Glide.with(getActivity()).load(headUrl).into(imgUserAvatar);
-                            }else {
+                            } else {
                                 imgUserAvatar.setImageResource(R.mipmap.moren_touxiang);
                             }
 
-                        }else {
-                            ToastUtil.shortToast(getContext(),message);
+                        } else {
+                            ToastUtil.shortToast(getContext(), message);
                         }
                     }
                 });

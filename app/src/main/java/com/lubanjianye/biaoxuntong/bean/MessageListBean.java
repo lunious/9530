@@ -19,7 +19,15 @@ public class MessageListBean implements Serializable {
     private String entity = null;
     private int entityId = 0;
     private String createTime = null;
+    private String isRead = null;
 
+    public String getIsRead() {
+        return isRead;
+    }
+
+    public void setIsRead(String isRead) {
+        this.isRead = isRead;
+    }
 
     public int getId() {
         return id;

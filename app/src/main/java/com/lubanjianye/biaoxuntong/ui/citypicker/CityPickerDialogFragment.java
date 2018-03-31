@@ -1,5 +1,6 @@
 package com.lubanjianye.biaoxuntong.ui.citypicker;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -133,6 +134,7 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         }
     }
 
+    @SuppressLint("ResourceType")
     public void setAnimationStyle(@StyleRes int style){
         this.mAnimStyle = style <= 0 ? R.style.DefaultCityPickerAnimation : style;
     }
