@@ -1,5 +1,6 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.opinion;
 
+import android.content.Intent;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,9 +13,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
-import com.lubanjianye.biaoxuntong.ui.media.SelectImageActivity;
-import com.lubanjianye.biaoxuntong.ui.media.SelectOptions;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.vondear.rxtools.RxPhotoTool;
 
 /**
  * Created by 11645 on 2018/1/25.
@@ -71,6 +71,23 @@ public class OpinionFragment extends BaseFragment implements View.OnClickListene
         rbError.setChecked(true);
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case RxPhotoTool.GET_IMAGE_FROM_PHONE://选择相册之后的处理
+                if (resultCode == RESULT_OK) {
+                    mFilePath = data.getDataString();
+                    getImageLoader().load(mFilePath).into(ivAdd);
+                    ivClear.setVisibility(View.VISIBLE);
+                }
+                break;
+            default:
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -78,7 +95,7 @@ public class OpinionFragment extends BaseFragment implements View.OnClickListene
                 getActivity().onBackPressed();
                 break;
             case R.id.iv_add:
-                openImageSelector();
+                RxPhotoTool.openLocalImage(this);
                 break;
             case R.id.iv_clear_img:
                 ivAdd.setImageResource(R.mipmap.ic_tweet_add);
@@ -108,18 +125,5 @@ public class OpinionFragment extends BaseFragment implements View.OnClickListene
         return mImageLoader;
     }
 
-    public void openImageSelector() {
-        SelectImageActivity.show(getContext(), new SelectOptions.Builder()
-                .setHasCam(false)
-                .setSelectCount(1)
-                .setCallback(new SelectOptions.Callback() {
-                    @Override
-                    public void doSelected(String[] images) {
-                        mFilePath = images[0];
-                        getImageLoader().load(mFilePath).into(ivAdd);
-                        ivClear.setVisibility(View.VISIBLE);
-                    }
-                }).build());
-    }
 
 }

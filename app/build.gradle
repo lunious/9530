@@ -92,8 +92,6 @@ dependencies {
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
     //SwipeRecyclerView
     compile 'com.yanzhenjie:recyclerview-swipe:1.1.4'
-    //scale-image
-    compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.6.0'
     //ImmersionBar
     compile 'com.gyf.barlibrary:barlibrary:2.3.0'
     //AgentWeb
@@ -104,5 +102,9 @@ dependencies {
     compile 'cn.lankton:flowlayout:3.1.0'
     //SpinKit
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
+    //RxTools
+    compile 'com.github.vondear:RxTools:v1.7.7.3'
+    //uCrop
+    compile 'com.github.yalantis:ucrop:2.2.1'
 
 }

@@ -3,6 +3,8 @@ package com.lubanjianye.biaoxuntong.ui.main.user.avater;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,6 +21,9 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.ui.main.user.company.BindCompanyActivity;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.picker.Area;
 import com.lubanjianye.biaoxuntong.util.picker.SinglePicker;
 import com.lubanjianye.biaoxuntong.util.picker.WheelView;
@@ -27,11 +32,14 @@ import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.vondear.rxtools.RxPhotoTool;
+import com.vondear.rxtools.RxPictureTool;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +75,8 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
     private String headUrl = "";
     private String sex = "";
     private String diqu = "";
+
+    private PromptDialog promptDialog = null;
 
 
     @Override
@@ -105,6 +115,12 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
         tvUserMobile.setOnClickListener(this);
         imgUserAvatar.setOnClickListener(this);
         tvUserName.setOnClickListener(this);
+
+
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
 
     }
 
@@ -151,10 +167,54 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
     }
 
     @Override
+    public void onSupportInvisible() {
+        super.onSupportInvisible();
+        if (promptDialog != null) {
+            promptDialog.dismissImmediately();
+        }
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case RxPhotoTool.GET_IMAGE_FROM_PHONE://选择相册之后的处理
+                if (resultCode == RESULT_OK) {
+
+                }
+                break;
+            default:
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_user_avatar:
-                ToastUtil.shortToast(getContext(), "更换头像");
+                PromptButton cancle = new PromptButton("取消", null);
+                cancle.setTextColor(Color.parseColor("#6c6c6c"));
+                cancle.setTextSize(16);
+
+                PromptButton xzryzz = new PromptButton("照相机", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton promptButton) {
+                        RxPhotoTool.openLocalImage(AvaterFragment.this);
+                    }
+                });
+                xzryzz.setTextColor(Color.parseColor("#FF6666"));
+                xzryzz.setTextSize(16);
+                PromptButton xzqyzz = new PromptButton("相册", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton promptButton) {
+                        RxPhotoTool.openLocalImage(AvaterFragment.this);
+                    }
+                });
+                xzqyzz.setTextColor(Color.parseColor("#3399ff"));
+                xzqyzz.setTextSize(16);
+                //跳转到选择页面
+                promptDialog.showAlertSheet("", true, cancle, xzqyzz, xzryzz);
                 break;
             case R.id.tv_user_name:
                 final RxDialogEditSureCancel rxDialogEditSureCancel = new RxDialogEditSureCancel(getContext());
@@ -236,6 +296,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                 builder.show();
                 break;
             case R.id.tv_user_area:
+
                 List<Area> data = new ArrayList<>();
                 data.add(new Area(1, "北京"));
                 data.add(new Area(2, "上海"));
@@ -311,6 +372,8 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                 } else {
                     ToastUtil.shortBottonToast(getContext(), "暂不支持修改已绑定企业");
                 }
+
+
                 break;
             case R.id.tv_user_mobile:
                 if ("点击绑定手机号".equals(tvUserMobile.getText().toString().trim())) {

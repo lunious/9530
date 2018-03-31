@@ -34,6 +34,10 @@ public abstract class BiaoXunTongApi {
      */
     public static final String URL_GETALLTAB = BASEURL + "bxtajax/key/jytype";
     /**
+     * 上传头像
+     */
+    public static final String URL_UPTOUXIANG = BASEURL + "bxtajax/img/upload";
+    /**
      * 设置标签顺序
      */
     public static final String URL_TABLINE = BASEURL + "bxtajax/key/setLabelSort";
