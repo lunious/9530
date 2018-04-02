@@ -102,5 +102,7 @@ dependencies {
     compile 'cn.lankton:flowlayout:3.1.0'
     //SpinKit
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
+    //subsampling-scale-image-view
+    compile 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
 
 }

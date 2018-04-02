@@ -114,9 +114,6 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
 
-                if (position == 4){
-                    mBottomBar.getItem(4).setUnreadCount(-1);
-                }
             }
 
             @Override

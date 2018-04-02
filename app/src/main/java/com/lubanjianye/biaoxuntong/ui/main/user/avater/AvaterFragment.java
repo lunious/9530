@@ -4,12 +4,16 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.lubanjianye.biaoxuntong.R;
@@ -19,6 +23,9 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.ui.main.user.company.BindCompanyActivity;
+import com.lubanjianye.biaoxuntong.ui.media.SelectImageActivity;
+import com.lubanjianye.biaoxuntong.ui.media.config.SelectOptions;
+import com.lubanjianye.biaoxuntong.ui.media.util.ImageUtils;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
@@ -36,10 +43,12 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import pub.devrel.easypermissions.EasyPermissions;
 
 /**
  * 项目名:   LBBXT
@@ -50,7 +59,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * 描述:     TODO
  */
 
-public class AvaterFragment extends BaseFragment implements View.OnClickListener {
+public class AvaterFragment extends BaseFragment implements View.OnClickListener,EasyPermissions.PermissionCallbacks {
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
@@ -171,12 +180,74 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
 
     }
 
+    /**
+     * update the new picture
+     */
+    private void uploadNewPhoto(File file) {
+        // 获取头像缩略图
+        if (file == null || !file.exists() || file.length() == 0) {
+            ToastUtil.shortBottonToast(getContext(),"图像不存在，上传失败");
+        } else {
+            OkGo.<String>post(BiaoXunTongApi.URL_UPTOUXIANG)
+                    .params("userId",id)
+                    .params("file",file)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject userPhoto = JSON.parseObject(response.body());
+                            final String status = userPhoto.getString("status");
+                            final String message = userPhoto.getString("message");
+
+                            if ("200".equals(status)){
+                                final JSONObject data = userPhoto.getJSONObject("data");
+                                final JSONArray urls = data.getJSONArray("urls");
+                                String url = urls.get(0).toString();
+
+                                OkGo.<String>post(BiaoXunTongApi.URL_CHANGEUSER)
+                                        .params("Id", id)
+                                        .params("headUrl", "http://api.lubanjianye.com/bxtajax/"+url)
+                                        .execute(new StringCallback() {
+                                            @Override
+                                            public void onSuccess(Response<String> response) {
+                                                final JSONObject userInfo = JSON.parseObject(response.body());
+                                                final String status = userInfo.getString("status");
+                                                final String message = userInfo.getString("message");
+
+                                                if ("200".equals(status)) {
+                                                    requestData();
+                                                    ToastUtil.shortBottonToast(getContext(), "修改成功");
+                                                } else {
+                                                    ToastUtil.shortBottonToast(getContext(), message);
+                                                }
+                                            }
+                                        });
+                            }else {
+                                ToastUtil.shortBottonToast(getContext(),message);
+                            }
+
+                        }
+
+                    });
+        }
+
+    }
+
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_user_avatar:
-
+                SelectImageActivity.show(getContext(), new SelectOptions.Builder()
+                        .setSelectCount(1)
+                        .setHasCam(true)
+                        .setCrop(680, 680)
+                        .setCallback(new SelectOptions.Callback() {
+                            @Override
+                            public void doSelected(String[] images) {
+                                String path = images[0];
+                                uploadNewPhoto(new File(path));
+                            }
+                        }).build());
                 break;
             case R.id.tv_user_name:
                 final RxDialogEditSureCancel rxDialogEditSureCancel = new RxDialogEditSureCancel(getContext());
@@ -261,13 +332,41 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
 
                 List<Area> data = new ArrayList<>();
                 data.add(new Area(1, "北京"));
-                data.add(new Area(2, "上海"));
-                data.add(new Area(3, "广东"));
-                data.add(new Area(4, "贵州"));
-                data.add(new Area(5, "四川"));
-                data.add(new Area(6, "云南"));
+                data.add(new Area(2, "天津"));
+                data.add(new Area(3, "河北"));
+                data.add(new Area(4, "山西"));
+                data.add(new Area(5, "内蒙古"));
+                data.add(new Area(6, "辽宁"));
+                data.add(new Area(7, "吉林"));
+                data.add(new Area(8, "黑龙江"));
+                data.add(new Area(9, "上海"));
+                data.add(new Area(10, "江苏"));
+                data.add(new Area(11, "浙江"));
+                data.add(new Area(12, "安徽"));
+                data.add(new Area(13, "福建"));
+                data.add(new Area(14, "江西"));
+                data.add(new Area(15, "山东"));
+                data.add(new Area(16, "广东"));
+                data.add(new Area(17, "广西"));
+                data.add(new Area(18, "海南"));
+                data.add(new Area(19, "河南"));
+                data.add(new Area(20, "湖北"));
+                data.add(new Area(21, "湖南"));
+                data.add(new Area(22, "重庆"));
+                data.add(new Area(23, "四川"));
+                data.add(new Area(24, "贵州"));
+                data.add(new Area(25, "云南"));
+                data.add(new Area(26, "西藏"));
+                data.add(new Area(27, "陕西"));
+                data.add(new Area(28, "甘肃"));
+                data.add(new Area(29, "青海"));
+                data.add(new Area(30, "宁夏"));
+                data.add(new Area(31, "新疆"));
+                data.add(new Area(32, "香港"));
+                data.add(new Area(33, "澳门"));
+                data.add(new Area(34, "台湾"));
                 SinglePicker picker = new SinglePicker<>(getActivity(), data);
-                picker.setCycleDisable(false);//不禁用循环
+                picker.setCycleDisable(true);//不禁用循环
                 picker.setTopBackgroundColor(0xFFEEEEEE);
                 picker.setTopHeight(42);
                 picker.setTopLineColor(0xFFEEEEEE);
@@ -423,5 +522,35 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                 });
 
 
+    }
+
+    /**
+     * take photo
+     */
+    private void startTakePhoto() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent,
+                ImageUtils.REQUEST_CODE_GETIMAGE_BYCAMERA);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        try {
+            startTakePhoto();
+        } catch (Exception e) {
+            Toast.makeText(this.getContext(), R.string.permissions_camera_error, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        Toast.makeText(this.getContext(), R.string.permissions_camera_error, Toast.LENGTH_LONG).show();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions
+            , @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 }

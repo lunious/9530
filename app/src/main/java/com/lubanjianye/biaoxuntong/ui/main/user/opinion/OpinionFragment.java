@@ -12,6 +12,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.ui.media.SelectImageActivity;
+import com.lubanjianye.biaoxuntong.ui.media.config.SelectOptions;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 /**
@@ -78,7 +80,7 @@ public class OpinionFragment extends BaseFragment implements View.OnClickListene
                 getActivity().onBackPressed();
                 break;
             case R.id.iv_add:
-
+                openImageSelector();
                 break;
             case R.id.iv_clear_img:
                 ivAdd.setImageResource(R.mipmap.ic_tweet_add);
@@ -106,6 +108,20 @@ public class OpinionFragment extends BaseFragment implements View.OnClickListene
             mImageLoader = Glide.with(this);
         }
         return mImageLoader;
+    }
+
+    public void openImageSelector() {
+        SelectImageActivity.show(getContext(), new SelectOptions.Builder()
+                .setHasCam(false)
+                .setSelectCount(1)
+                .setCallback(new SelectOptions.Callback() {
+                    @Override
+                    public void doSelected(String[] images) {
+                        mFilePath = images[0];
+                        getImageLoader().load(mFilePath).into(ivAdd);
+                        ivClear.setVisibility(View.VISIBLE);
+                    }
+                }).build());
     }
 
 

@@ -40,4 +40,5 @@
     <string name="cp_locate_failed">定位失败</string>
     <string name="cp_locating">正在定位…</string>
     <string name="rationale_location">为了得到更好的服务，请允许定位服务</string>
+    <string name="permissions_camera_error">相机无法完成初始化,请正确授权。</string>
 </resources>
