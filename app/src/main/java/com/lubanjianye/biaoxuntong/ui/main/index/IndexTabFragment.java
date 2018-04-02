@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -242,7 +241,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                 userId = users.get(0).getId();
             }
 
-            if (isRefresh){
+            if (isRefresh) {
                 OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
                         .params("userId", userId)
                         .params("clientId", clientID)
@@ -305,7 +304,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                 }
                             }
                         });
-            }else {
+            } else {
 
                 OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
                         .params("userId", userId)
@@ -372,10 +371,9 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
             }
 
 
-
         } else {
 
-            if (isRefresh){
+            if (isRefresh) {
                 OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
                         .params("clientId", clientID)
                         .params("diqu", mDiqu)
@@ -435,7 +433,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                 }
                             }
                         });
-            }else {
+            } else {
                 OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
                         .params("clientId", clientID)
                         .params("diqu", mDiqu)
@@ -662,42 +660,42 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
         String area = tv_location.getText().toString();
 
-        if (!area.equals(locationArea)) {
-            //是否切换地区
-            final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
-                @Override
-                public void onClick(PromptButton button) {
-
-                }
-            });
-            cancel.setTextColor(getResources().getColor(R.color.main_status_yellow));
-            cancel.setTextSize(16);
-
-            final PromptButton sure = new PromptButton("切      换", new PromptButtonListener() {
-                @Override
-                public void onClick(PromptButton button) {
-                    //确认切换地区，刷新数据
-                    tv_location.setText(locationArea);
-
-                    //更新UI
-                    if (indexStlTab != null) {
-                        indexStlTab.setCurrentTab(0);
-                        indexStlTab.setViewPager(indexVp);
-                        indexStlTab.notifyDataSetChanged();
-                    }
-
-                    promptDialog.showLoading("请稍后");
-                    requestData(true);
-
-                    EventBus.getDefault().post(new EventMessage(EventMessage.LOCA_AREA_CHANGE));
-                }
-            });
-            sure.setTextColor(getResources().getColor(R.color.main_status_blue));
-            sure.setTextSize(16);
-            promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
-                    .round(8).loadingDuration(200);
-            promptDialog.showWarnAlert("当前定位为" + locationArea + "," + "是否切换到" + locationArea + "?", cancel, sure, true);
-        }
+//        if (!area.equals(locationArea)) {
+//            //是否切换地区
+//            final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
+//                @Override
+//                public void onClick(PromptButton button) {
+//
+//                }
+//            });
+//            cancel.setTextColor(getResources().getColor(R.color.main_status_yellow));
+//            cancel.setTextSize(16);
+//
+//            final PromptButton sure = new PromptButton("切      换", new PromptButtonListener() {
+//                @Override
+//                public void onClick(PromptButton button) {
+//                    //确认切换地区，刷新数据
+//                    tv_location.setText(locationArea);
+//
+//                    //更新UI
+//                    if (indexStlTab != null) {
+//                        indexStlTab.setCurrentTab(0);
+//                        indexStlTab.setViewPager(indexVp);
+//                        indexStlTab.notifyDataSetChanged();
+//                    }
+//
+//                    promptDialog.showLoading("请稍后");
+//                    requestData(true);
+//
+//                    EventBus.getDefault().post(new EventMessage(EventMessage.LOCA_AREA_CHANGE));
+//                }
+//            });
+//            sure.setTextColor(getResources().getColor(R.color.main_status_blue));
+//            sure.setTextSize(16);
+//            promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
+//                    .round(8).loadingDuration(200);
+//            promptDialog.showWarnAlert("当前定位为" + locationArea + "," + "是否切换到" + locationArea + "?", cancel, sure, true);
+//    }
 
 
     }

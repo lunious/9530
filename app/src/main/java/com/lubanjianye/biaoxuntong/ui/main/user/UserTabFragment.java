@@ -69,6 +69,7 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     private AppCompatTextView tvUserName = null;
     private AppCompatTextView tvTitle = null;
     private LinearLayout llMessage = null;
+    private AppCompatTextView messageNum = null;
 
 
     long id = 0;
@@ -124,6 +125,7 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
         tvUserName = getView().findViewById(R.id.tv_user_name);
         rlLogin = getView().findViewById(R.id.rl_login);
         rlNoLogin = getView().findViewById(R.id.rl_no_login);
+        messageNum = getView().findViewById(R.id.message_num);
         rlLogin.setOnClickListener(this);
         imgDefaultAvatar.setOnClickListener(this);
         llCompany.setOnClickListener(this);
@@ -151,6 +153,9 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
             tvUserCompany.setVisibility(View.GONE);
             rlLogin.setVisibility(View.GONE);
             tvTitle.setVisibility(View.INVISIBLE);
+        } else if (EventMessage.READ_STATUS.equals(message.getMessage())) {
+            messageNum.setText("");
+            showMessageCount();
         }
     }
 
@@ -274,6 +279,8 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
 
             tvTitle.setVisibility(View.INVISIBLE);
         }
+
+        showMessageCount();
     }
 
 
@@ -355,5 +362,36 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
             default:
                 break;
         }
+    }
+
+    private void showMessageCount() {
+        List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+        for (int i = 0; i < users.size(); i++) {
+            id = users.get(0).getId();
+        }
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETUSERINFO)
+                .params("Id", id)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject userInfo = JSON.parseObject(response.body());
+                        final String status = userInfo.getString("status");
+                        final String message = userInfo.getString("message");
+
+                        if ("200".equals(status)) {
+                            final JSONObject data = userInfo.getJSONObject("data");
+                            final int messNum = data.getInteger("mesCount");
+                            if (messNum > 0) {
+                                messageNum.setVisibility(View.VISIBLE);
+                                messageNum.setText(messNum + "");
+                            } else {
+                                messageNum.setVisibility(View.INVISIBLE);
+                            }
+                        } else {
+                            messageNum.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                });
     }
 }

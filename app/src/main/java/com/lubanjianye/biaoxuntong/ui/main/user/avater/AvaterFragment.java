@@ -463,6 +463,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
+
                         final JSONObject userInfo = JSON.parseObject(response.body());
                         final String status = userInfo.getString("status");
                         final String message = userInfo.getString("message");

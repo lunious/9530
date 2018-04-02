@@ -5,9 +5,17 @@ import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.database.DatabaseManager;
+import com.lubanjianye.biaoxuntong.database.UserProfile;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,18 +69,50 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
         resultVp.setAdapter(mAdapter);
         resulttStlTab.setViewPager(resultVp);
 
-        resulttStlTab.showMsg(1,14);
 
+        showMessageCount();
+
+    }
+
+
+    private long id = 0;
+
+    private void showMessageCount() {
+        List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+        for (int i = 0; i < users.size(); i++) {
+            id = users.get(0).getId();
+        }
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETUSERINFO)
+                .params("Id", id)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject userInfo = JSON.parseObject(response.body());
+                        final String status = userInfo.getString("status");
+                        final String message = userInfo.getString("message");
+
+                        if ("200".equals(status)) {
+                            final JSONObject data = userInfo.getJSONObject("data");
+                            final int messNum = data.getInteger("mesCount");
+                            if (messNum > 0) {
+                                resulttStlTab.showDot(1);
+                            }
+                        } else {
+
+                        }
+                    }
+                });
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.ll_iv_back:
                 getActivity().finish();
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 }

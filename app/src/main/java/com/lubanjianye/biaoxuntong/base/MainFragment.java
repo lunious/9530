@@ -8,13 +8,15 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
-import com.lubanjianye.biaoxuntong.bean.Version;
+import com.lubanjianye.biaoxuntong.database.DatabaseManager;
+import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.ui.main.index.IndexTabFragment;
 import com.lubanjianye.biaoxuntong.ui.main.query.QueryFragment;
@@ -30,8 +32,14 @@ import com.lubanjianye.biaoxuntong.ui.view.botton.BottomBarTab;
 import com.lubanjianye.biaoxuntong.util.appinfo.AppApplicationMgr;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
+import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -99,7 +107,30 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        //取消注册EventBus
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void XXXXXX(EventMessage message) {
+
+        if (EventMessage.READ_STATUS.equals(message.getMessage()) || EventMessage.LOGIN_SUCCSS.equals(message.getMessage()) || EventMessage.LOGIN_OUT.equals(message.getMessage())) {
+            showMessageCount();
+        }
+
+    }
+
+
+    @Override
     public void initView() {
+
+        //注册EventBus
+        EventBus.getDefault().register(this);
+
+
         mBottomBar = getView().findViewById(R.id.bottomBar);
         mBottomBar
                 .addItem(new BottomBarTab(_mActivity, R.mipmap.main_index_tab, getString(R.string.first)))
@@ -135,9 +166,43 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
             updateDiy();
         }
 
-        mBottomBar.getItem(4).setUnreadCount(0);
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
+            showMessageCount();
+        }
 
 
+    }
+
+    private long id = 0;
+
+    private void showMessageCount() {
+        List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+        for (int i = 0; i < users.size(); i++) {
+            id = users.get(0).getId();
+        }
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETUSERINFO)
+                .params("Id", id)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject userInfo = JSON.parseObject(response.body());
+                        final String status = userInfo.getString("status");
+                        final String message = userInfo.getString("message");
+
+                        if ("200".equals(status)) {
+                            final JSONObject data = userInfo.getJSONObject("data");
+                            final int messNum = data.getInteger("mesCount");
+                            if (messNum > 0) {
+                                mBottomBar.getItem(4).setUnreadCount(messNum);
+                            } else {
+                                mBottomBar.getItem(4).setUnreadCount(-1);
+                            }
+                        } else {
+                            mBottomBar.getItem(4).setUnreadCount(-1);
+                        }
+                    }
+                });
     }
 
     private static final int RC_EXTERNAL_STORAGE = 0x04;//存储权限

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -88,7 +87,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
         sf.mTitle = title;
         return sf;
     }
-
 
 
     private void initRefreshLayout() {
@@ -207,7 +205,8 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                     }
                 }
 
-
+                //改变已读未读状态
+                EventBus.getDefault().post(new EventMessage(EventMessage.READ_STATUS));
 
             }
         });
@@ -261,6 +260,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
 
 
     }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -299,6 +299,8 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
             if (llShow != null) {
                 llShow.setVisibility(View.VISIBLE);
             }
+        } else if (EventMessage.READ_STATUS.equals(message.getMessage())) {
+
         }
 
     }
@@ -351,7 +353,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
 
     public void requestData(final boolean isRefresh) {
 
-        if (mType == 1){
+        if (mType == 1) {
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                 llShow.setVisibility(View.GONE);
                 //已登录的数据请求
@@ -367,7 +369,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                             .params("type", mType)
                             .params("userId", id)
                             .params("page", page)
-                            .params("diqu", mDiqu)
                             .params("size", 10)
                             .params("deviceId", deviceId)
                             .cacheKey("message_login_cache" + mTitle + mDiqu)
@@ -383,7 +384,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                     final String message = object.getString("message");
 
 
-                                    if ("200".equals(status)){
+                                    if ("200".equals(status)) {
                                         final JSONArray array = data.getJSONArray("list");
                                         final boolean nextPage = data.getBoolean("nextpage");
                                         if (array.size() > 0) {
@@ -398,7 +399,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                             loadingStatus.showEmpty();
                                             messageRefresh.setEnableRefresh(false);
                                         }
-                                    }else {
+                                    } else {
                                         ToastUtil.shortToast(getContext(), message);
                                     }
 
@@ -412,7 +413,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                         final String status = object.getString("status");
                                         final String message = object.getString("message");
 
-                                        if ("200".equals(status)){
+                                        if ("200".equals(status)) {
                                             final JSONArray array = data.getJSONArray("list");
                                             final boolean nextPage = data.getBoolean("nextpage");
                                             if (array.size() > 0) {
@@ -426,7 +427,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                                 loadingStatus.showEmpty();
                                                 messageRefresh.setEnableRefresh(false);
                                             }
-                                        }else {
+                                        } else {
                                             ToastUtil.shortToast(getContext(), message);
                                         }
 
@@ -441,7 +442,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                             .params("type", mType)
                             .params("userId", id)
                             .params("page", page)
-                            .params("diqu", mDiqu)
                             .params("size", 10)
                             .params("deviceId", deviceId)
                             .execute(new StringCallback() {
@@ -453,7 +453,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                     final String status = object.getString("status");
                                     final String message = object.getString("message");
 
-                                    if ("200".equals(status)){
+                                    if ("200".equals(status)) {
                                         final JSONArray array = data.getJSONArray("list");
                                         final boolean nextPage = data.getBoolean("nextpage");
                                         if (array.size() > 0) {
@@ -467,7 +467,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                             loadingStatus.showEmpty();
                                             messageRefresh.setEnableRefresh(false);
                                         }
-                                    }else {
+                                    } else {
                                         ToastUtil.shortToast(getContext(), message);
                                     }
 
@@ -483,7 +483,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                     OkGo.<String>post(BiaoXunTongApi.URL_GETUILIST)
                             .params("type", mType)
                             .params("page", page)
-                            .params("diqu", mDiqu)
                             .params("size", 10)
                             .params("deviceId", deviceId)
                             .cacheKey("message_login_cache" + mTitle + mDiqu)
@@ -543,7 +542,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                     OkGo.<String>post(BiaoXunTongApi.URL_GETUILIST)
                             .params("type", mType)
                             .params("page", page)
-                            .params("diqu", mDiqu)
                             .params("size", 10)
                             .params("deviceId", deviceId)
                             .execute(new StringCallback() {
@@ -571,7 +569,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                             });
                 }
             }
-        }else if (mType == 2){
+        } else if (mType == 2) {
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                 llShow.setVisibility(View.GONE);
                 //已登录的数据请求
@@ -587,7 +585,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                             .params("type", mType)
                             .params("userId", id)
                             .params("page", page)
-                            .params("diqu", mDiqu)
                             .params("size", 10)
                             .params("deviceId", deviceId)
                             .cacheKey("message_login_cache" + mTitle + mDiqu)
@@ -604,7 +601,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                     final String message = object.getString("message");
 
 
-                                    if ("200".equals(status)){
+                                    if ("200".equals(status)) {
                                         final JSONArray array = data.getJSONArray("list");
                                         final boolean nextPage = data.getBoolean("nextpage");
                                         if (array.size() > 0) {
@@ -619,7 +616,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                             loadingStatus.showEmpty();
                                             messageRefresh.setEnableRefresh(false);
                                         }
-                                    }else {
+                                    } else {
                                         ToastUtil.shortToast(getContext(), message);
                                     }
 
@@ -634,7 +631,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                         final String status = object.getString("status");
                                         final String message = object.getString("message");
 
-                                        if ("200".equals(status)){
+                                        if ("200".equals(status)) {
                                             final JSONArray array = data.getJSONArray("list");
                                             final boolean nextPage = data.getBoolean("nextpage");
                                             if (array.size() > 0) {
@@ -648,7 +645,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                                 loadingStatus.showEmpty();
                                                 messageRefresh.setEnableRefresh(false);
                                             }
-                                        }else {
+                                        } else {
                                             ToastUtil.shortToast(getContext(), message);
                                         }
 
@@ -663,7 +660,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                             .params("type", mType)
                             .params("userId", id)
                             .params("page", page)
-                            .params("diqu", mDiqu)
                             .params("size", 10)
                             .params("deviceId", deviceId)
                             .execute(new StringCallback() {
@@ -675,7 +671,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                     final String status = object.getString("status");
                                     final String message = object.getString("message");
 
-                                    if ("200".equals(status)){
+                                    if ("200".equals(status)) {
                                         final JSONArray array = data.getJSONArray("list");
                                         final boolean nextPage = data.getBoolean("nextpage");
                                         if (array.size() > 0) {
@@ -689,7 +685,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                                             loadingStatus.showEmpty();
                                             messageRefresh.setEnableRefresh(false);
                                         }
-                                    }else {
+                                    } else {
                                         ToastUtil.shortToast(getContext(), message);
                                     }
 
