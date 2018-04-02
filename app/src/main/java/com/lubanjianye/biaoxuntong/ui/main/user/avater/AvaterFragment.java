@@ -3,11 +3,9 @@ package com.lubanjianye.biaoxuntong.ui.main.user.avater;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -32,14 +30,12 @@ import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.vondear.rxtools.RxPhotoTool;
-import com.vondear.rxtools.RxPictureTool;
+
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -175,46 +171,12 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
 
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case RxPhotoTool.GET_IMAGE_FROM_PHONE://选择相册之后的处理
-                if (resultCode == RESULT_OK) {
-
-                }
-                break;
-            default:
-                break;
-        }
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_user_avatar:
-                PromptButton cancle = new PromptButton("取消", null);
-                cancle.setTextColor(Color.parseColor("#6c6c6c"));
-                cancle.setTextSize(16);
 
-                PromptButton xzryzz = new PromptButton("照相机", new PromptButtonListener() {
-                    @Override
-                    public void onClick(PromptButton promptButton) {
-                        RxPhotoTool.openLocalImage(AvaterFragment.this);
-                    }
-                });
-                xzryzz.setTextColor(Color.parseColor("#FF6666"));
-                xzryzz.setTextSize(16);
-                PromptButton xzqyzz = new PromptButton("相册", new PromptButtonListener() {
-                    @Override
-                    public void onClick(PromptButton promptButton) {
-                        RxPhotoTool.openLocalImage(AvaterFragment.this);
-                    }
-                });
-                xzqyzz.setTextColor(Color.parseColor("#3399ff"));
-                xzqyzz.setTextSize(16);
-                //跳转到选择页面
-                promptDialog.showAlertSheet("", true, cancle, xzqyzz, xzryzz);
                 break;
             case R.id.tv_user_name:
                 final RxDialogEditSureCancel rxDialogEditSureCancel = new RxDialogEditSureCancel(getContext());

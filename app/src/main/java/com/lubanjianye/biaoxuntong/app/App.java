@@ -10,7 +10,6 @@ import com.lzy.okgo.OkGo;
 import com.mixpush.client.core.MixPushClient;
 import com.mixpush.client.core.MixPushManager;
 import com.mixpush.client.getui.GeTuiManager;
-import com.vondear.rxtools.RxTool;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -48,8 +47,6 @@ public class App extends Application {
         initShareUtil();
         //初始化okgo
         okgo();
-        //初始化RxTool
-        RxTool.init(this);
 
     }
 

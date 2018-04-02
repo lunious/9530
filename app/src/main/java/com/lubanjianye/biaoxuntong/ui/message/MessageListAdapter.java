@@ -32,6 +32,8 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageListBean, BaseVi
         String isRead = item.getIsRead();
         if ("0".equals(isRead)) {
             helper.setVisible(R.id.message_red, true);
+        }else {
+            helper.setVisible(R.id.message_red, false);
         }
 
         helper.setText(R.id.tv_item_title, item.getEntityName());

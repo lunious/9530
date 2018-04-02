@@ -97,14 +97,10 @@ dependencies {
     //AgentWeb
     compile 'com.just.agentweb:agentweb:4.0.2' // (必选)
     //GSON
-    compile 'com.squareup.retrofit2:converter-gson:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.4.0'
     //flowlayout
     compile 'cn.lankton:flowlayout:3.1.0'
     //SpinKit
     compile 'com.github.ybq:Android-SpinKit:1.1.0'
-    //RxTools
-    compile 'com.github.vondear:RxTools:v1.7.7.3'
-    //uCrop
-    compile 'com.github.yalantis:ucrop:2.2.1'
 
 }

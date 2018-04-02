@@ -770,4 +770,5 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                 break;
         }
     }
+
 }
