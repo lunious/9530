@@ -155,46 +155,12 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                             final JSONObject userInfo = JSON.parseObject(response.body()).getJSONObject("data");
                                             id = userInfo.getLong("id");
                                             token = response.headers().get("token");
-                                            mobile = userInfo.getString("mobile");
                                             comid = userInfo.getString("comid");
 
-                                            Log.d("IUGASUIDGUISADUIGYS", id + "");
 
-                                            if (!"0".equals(comid)) {
+                                            getUserInfo(id);
 
-                                                OkGo.<String>post(BiaoXunTongApi.URL_GETCOMPANYNAME)
-                                                        .params("userId", id)
-                                                        .params("comId", comid)
-                                                        .execute(new StringCallback() {
-                                                            @Override
-                                                            public void onSuccess(Response<String> response) {
-                                                                final JSONObject profileCompany = JSON.parseObject(response.body());
-                                                                final String status = profileCompany.getString("status");
-                                                                final JSONObject data = profileCompany.getJSONObject("data");
-                                                                if ("200".equals(status)) {
-                                                                    companyName = data.getString("qy");
-                                                                } else {
-                                                                    companyName = null;
-                                                                }
-                                                                final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
-                                                                DatabaseManager.getInstance().getDao().insert(profile);
-                                                                AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
-                                                                EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
-                                                                getActivity().onBackPressed();
-                                                                ToastUtil.shortBottonToast(getContext(), "登陆成功");
-                                                            }
-                                                        });
-
-
-                                            } else {
-                                                final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
-                                                DatabaseManager.getInstance().getDao().insert(profile);
-                                                AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
-                                                EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
-                                                getActivity().onBackPressed();
-                                                ToastUtil.shortBottonToast(getContext(), "登陆成功");
-                                            }
-
+                                            promptDialog.dismissImmediately();
 
                                         } else {
                                             promptDialog.dismissImmediately();
@@ -227,44 +193,10 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                             id = userInfo.getLong("id");
                                             token = response.headers().get("token");
                                             comid = userInfo.getString("comid");
-                                            mobile = userInfo.getString("mobile");
-                                            companyName = null;
 
-                                            if (!"0".equals(comid)) {
-                                                OkGo.<String>post(BiaoXunTongApi.URL_GETCOMPANYNAME)
-                                                        .params("userId", id)
-                                                        .params("comId", comid)
-                                                        .execute(new StringCallback() {
-                                                            @Override
-                                                            public void onSuccess(Response<String> response) {
-                                                                final JSONObject profileCompany = JSON.parseObject(response.body());
-                                                                final String status = profileCompany.getString("status");
-                                                                final JSONObject data = profileCompany.getJSONObject("data");
+                                            getUserInfo(id);
 
-                                                                if ("200".equals(status)) {
-                                                                    companyName = data.getString("qy");
-                                                                } else {
-                                                                    companyName = null;
-                                                                }
-                                                                final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
-                                                                DatabaseManager.getInstance().getDao().insert(profile);
-                                                                AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
-                                                                EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
-                                                                getActivity().onBackPressed();
-                                                                ToastUtil.shortBottonToast(getContext(), "登陆成功");
-                                                            }
-                                                        });
-
-                                            } else {
-                                                final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
-                                                DatabaseManager.getInstance().getDao().insert(profile);
-                                                AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
-                                                EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
-                                                getActivity().onBackPressed();
-                                                ToastUtil.shortBottonToast(getContext(), "登陆成功");
-
-                                            }
-
+                                            promptDialog.dismissImmediately();
                                         } else {
                                             promptDialog.dismissImmediately();
                                             ToastUtil.shortToast(getContext(), message);
@@ -291,6 +223,46 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                 ToastUtil.shortBottonToast(getContext(), "登录取消");
             }
         };
+    }
+
+    public void getUserInfo(long userId) {
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETUSERINFO)
+                .params("Id", userId)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject userInfo = JSON.parseObject(response.body());
+                        final String status = userInfo.getString("status");
+                        final String message = userInfo.getString("message");
+
+                        if ("200".equals(status)) {
+                            final JSONObject data = userInfo.getJSONObject("data");
+                            final JSONObject qy = data.getJSONObject("qy");
+                            final JSONObject user = data.getJSONObject("user");
+
+                            nickName = user.getString("nickName");
+                            companyName = qy.getString("qy");
+                            mobile = user.getString("mobile");
+                            String headUrl = user.getString("headUrl");
+                            if (!headUrl.isEmpty()) {
+                                imageUrl = headUrl;
+                            }
+
+                            final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
+                            DatabaseManager.getInstance().getDao().insert(profile);
+                            AppSharePreferenceMgr.put(BiaoXunTong.getApplicationContext(), EventMessage.LOGIN_SUCCSS, true);
+                            EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
+                            getActivity().onBackPressed();
+                            ToastUtil.shortBottonToast(getContext(), "登陆成功");
+
+                        } else {
+                            ToastUtil.shortToast(getContext(), message);
+                        }
+                    }
+                });
+
+
     }
 
 

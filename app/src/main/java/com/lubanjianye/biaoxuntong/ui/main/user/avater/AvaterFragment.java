@@ -30,7 +30,6 @@ import com.lubanjianye.biaoxuntong.util.picker.Area;
 import com.lubanjianye.biaoxuntong.util.picker.SinglePicker;
 import com.lubanjianye.biaoxuntong.util.picker.WheelView;
 import com.lubanjianye.biaoxuntong.util.rx.RxDialogEditSureCancel;
-import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;

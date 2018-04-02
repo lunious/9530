@@ -138,7 +138,8 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void XXXXXX(EventMessage message) {
 
-        if (EventMessage.LOGIN_SUCCSS.equals(message.getMessage())) {
+        if (EventMessage.LOGIN_SUCCSS.equals(message.getMessage()) || EventMessage.BIND_COMPANY_SUCCESS.equals(message.getMessage()) ||
+                EventMessage.USER_INFO_CHANGE.equals(message.getMessage())) {
             //登陆成功后更新UI
             showUserInfo();
 
@@ -146,27 +147,10 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
             if (imgUserAvatar != null) {
                 imgUserAvatar.setImageResource(R.mipmap.widget_default_face);
             }
-
             rlNoLogin.setVisibility(View.VISIBLE);
             tvUserCompany.setVisibility(View.GONE);
             rlLogin.setVisibility(View.GONE);
             tvTitle.setVisibility(View.INVISIBLE);
-        } else if (EventMessage.BIND_COMPANY_SUCCESS.equals(message.getMessage())) {
-            //绑定企业成功后更新UI
-            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
-            for (int i = 0; i < users.size(); i++) {
-                companyName = users.get(0).getCompanyName();
-            }
-
-            if (!TextUtils.isEmpty(companyName)) {
-                tvUserCompany.setText(companyName);
-            } else {
-                tvUserCompany.setText("未绑定企业");
-            }
-
-        }else if (EventMessage.USER_INFO_CHANGE.equals(message.getMessage())){
-            //个人信息改变后更新UI
-            showUserInfo();
         }
     }
 
@@ -242,12 +226,12 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     }
 
 
-    public void showUserInfo(){
+    public void showUserInfo() {
+
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
 
             tvTitle.setVisibility(View.VISIBLE);
             tvTitle.setText("我的企业");
-
 
             List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
             for (int i = 0; i < users.size(); i++) {

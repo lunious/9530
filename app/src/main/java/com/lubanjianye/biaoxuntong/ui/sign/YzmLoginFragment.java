@@ -224,7 +224,7 @@ public class YzmLoginFragment extends BaseFragment implements View.OnClickListen
 
         if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(username)) {
             //登录
-
+            promptDialog.showLoading("正在登陆");
             OkGo.<String>post(BiaoXunTongApi.URL_FASTLOGIN)
                     .params("mobile", username)
                     .params("code", username + "_" + password)
@@ -239,42 +239,17 @@ public class YzmLoginFragment extends BaseFragment implements View.OnClickListen
                                     mTimer.onFinish();
                                     mTimer.cancel();
                                 }
+
                                 final JSONObject userInfo = JSON.parseObject(response.body()).getJSONObject("data");
                                 id = userInfo.getLong("id");
-                                mobile = userInfo.getString("mobile");
-                                token = response.headers().get("token");
+                                token = userInfo.getString("token");
                                 comid = userInfo.getString("comid");
-                                nickName = userInfo.getString("nickName");
-                                imageUrl = null;
 
-                                if (comid != null) {
-                                    OkGo.<String>post(BiaoXunTongApi.URL_GETCOMPANYNAME)
-                                            .params("userId", id)
-                                            .params("comId", comid)
-                                            .execute(new StringCallback() {
-                                                @Override
-                                                public void onSuccess(Response<String> response) {
-                                                    final JSONObject profileCompany = JSON.parseObject(response.body());
-                                                    final String status = profileCompany.getString("status");
-                                                    final JSONObject data = profileCompany.getJSONObject("data");
-
-                                                    if ("200".equals(status)) {
-                                                        companyName = data.getString("qy");
-                                                    } else {
-                                                        companyName = null;
-                                                    }
-                                                }
-                                            });
-
-                                }
-
-                                final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
-                                DatabaseManager.getInstance().getDao().insert(profile);
-                                AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
-                                EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
+                                //登录成功，获取用户信息
+                                getUserInfo(id);
                                 promptDialog.dismissImmediately();
-                                getActivity().onBackPressed();
                             } else {
+                                promptDialog.dismissImmediately();
                                 ToastUtil.shortBottonToast(getContext(), message);
 
                             }
@@ -284,6 +259,43 @@ public class YzmLoginFragment extends BaseFragment implements View.OnClickListen
         } else {
             ToastUtil.shortBottonToast(getContext(), "手机号或验证码有误");
         }
+
+    }
+
+    public void getUserInfo(long userId) {
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETUSERINFO)
+                .params("Id", userId)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject userInfo = JSON.parseObject(response.body());
+                        final String status = userInfo.getString("status");
+                        final String message = userInfo.getString("message");
+
+                        if ("200".equals(status)) {
+                            promptDialog.dismissImmediately();
+                            final JSONObject data = userInfo.getJSONObject("data");
+                            final JSONObject qy = data.getJSONObject("qy");
+                            final JSONObject user = data.getJSONObject("user");
+
+                            nickName = user.getString("nickName");
+                            companyName = qy.getString("qy");
+                            mobile = user.getString("mobile");
+                            imageUrl = user.getString("headUrl");
+                            final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
+                            DatabaseManager.getInstance().getDao().insert(profile);
+                            AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
+                            EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
+                            getActivity().onBackPressed();
+                            ToastUtil.shortBottonToast(getContext(), "登陆成功");
+
+                        } else {
+                            ToastUtil.shortToast(getContext(), message);
+                        }
+                    }
+                });
+
 
     }
 

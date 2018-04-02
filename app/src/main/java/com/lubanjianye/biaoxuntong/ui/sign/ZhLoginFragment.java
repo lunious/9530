@@ -5,12 +5,10 @@ import android.support.v7.widget.AppCompatTextView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.bumptech.glide.Glide;
 import com.igexin.sdk.PushManager;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
@@ -28,7 +26,6 @@ import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.List;
 
 /**
  * Created by 11645 on 2018/1/15.
@@ -172,7 +169,6 @@ public class ZhLoginFragment extends BaseFragment implements View.OnClickListene
                             final String status = profileJson.getString("status");
                             final String message = profileJson.getString("message");
 
-
                             if ("200".equals(status)) {
                                 promptDialog.dismissImmediately();
                                 final JSONObject userInfo = JSON.parseObject(response.body()).getJSONObject("data");
@@ -182,6 +178,7 @@ public class ZhLoginFragment extends BaseFragment implements View.OnClickListene
 
                                 //登录成功，获取用户信息
                                 getUserInfo(id);
+                                promptDialog.dismissImmediately();
 
                             } else {
                                 promptDialog.dismissImmediately();
@@ -218,11 +215,10 @@ public class ZhLoginFragment extends BaseFragment implements View.OnClickListene
                             companyName = qy.getString("qy");
                             mobile = user.getString("mobile");
                             imageUrl = user.getString("headUrl");
-                            promptDialog.dismissImmediately();
                             final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
                             DatabaseManager.getInstance().getDao().insert(profile);
                             holdAccount();
-                            AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
+                            AppSharePreferenceMgr.put(BiaoXunTong.getApplicationContext(), EventMessage.LOGIN_SUCCSS, true);
                             EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                             getActivity().onBackPressed();
                             ToastUtil.shortBottonToast(getContext(), "登陆成功");

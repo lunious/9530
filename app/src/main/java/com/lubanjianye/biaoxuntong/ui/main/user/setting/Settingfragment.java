@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.LinearLayout;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
@@ -164,9 +165,9 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                                             llCancel.setVisibility(View.INVISIBLE);
                                         }
                                         DatabaseManager.getInstance().getDao().deleteAll();
-                                        AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
+                                        AppSharePreferenceMgr.remove(BiaoXunTong.getApplicationContext(), EventMessage.LOGIN_SUCCSS);
                                         EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
-                                        AppSharePreferenceMgr.remove(getContext(), EventMessage.TOKEN_FALSE);
+                                        AppSharePreferenceMgr.remove(BiaoXunTong.getApplicationContext(), EventMessage.TOKEN_FALSE);
                                         ToastUtil.shortBottonToast(getContext(), "退出成功");
                                     }
                                 });
@@ -305,7 +306,7 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                      */
                     @Override
                     public void onBefore() {
-                        CProgressDialogUtils.showProgressDialog(getActivity(),"检查新版本...");
+                        CProgressDialogUtils.showProgressDialog(getActivity(), "检查新版本...");
                     }
 
                     /**
