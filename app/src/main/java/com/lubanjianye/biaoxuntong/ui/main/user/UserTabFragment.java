@@ -140,42 +140,7 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
 
         if (EventMessage.LOGIN_SUCCSS.equals(message.getMessage())) {
             //登陆成功后更新UI
-
-            tvTitle.setVisibility(View.VISIBLE);
-            tvTitle.setText("我的企业");
-
-            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
-            for (int i = 0; i < users.size(); i++) {
-                id = users.get(0).getId();
-                mobile = users.get(0).getMobile();
-                nickName = users.get(0).getNickName();
-                comid = users.get(0).getComid();
-                imageUrl = users.get(0).getImageUrl();
-                companyName = users.get(0).getCompanyName();
-
-            }
-
-            if (TextUtils.isEmpty(imageUrl)) {
-                imgUserAvatar.setImageResource(R.mipmap.moren_touxiang);
-            } else {
-                Glide.with(getActivity()).load(imageUrl).into(imgUserAvatar);
-            }
-
-            rlNoLogin.setVisibility(View.GONE);
-            tvUserCompany.setVisibility(View.VISIBLE);
-            rlLogin.setVisibility(View.VISIBLE);
-
-            if (!TextUtils.isEmpty(nickName)) {
-                tvUserName.setText(nickName);
-            } else {
-                tvUserName.setText(mobile);
-            }
-
-            if (!TextUtils.isEmpty(companyName)) {
-                tvUserCompany.setText(companyName);
-            } else {
-                tvUserCompany.setText("未绑定企业");
-            }
+            showUserInfo();
 
         } else if (EventMessage.LOGIN_OUT.equals(message.getMessage())) {
             if (imgUserAvatar != null) {
@@ -199,11 +164,12 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
                 tvUserCompany.setText("未绑定企业");
             }
 
+        }else if (EventMessage.USER_INFO_CHANGE.equals(message.getMessage())){
+            //个人信息改变后更新UI
+            showUserInfo();
         }
     }
 
-
-    private String imgUrl = "";
 
     @Override
     public void initData() {
@@ -212,60 +178,9 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
 
         //创建对象
         promptDialog = new PromptDialog(getActivity());
-        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
 
-            tvTitle.setVisibility(View.VISIBLE);
-            tvTitle.setText("我的企业");
+        showUserInfo();
 
-            long id = 0;
-            String mobile = "";
-            String nickName = "";
-            String comid = "";
-            String imageUrl = "";
-            String companyName = "";
-
-            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
-            for (int i = 0; i < users.size(); i++) {
-                id = users.get(0).getId();
-                nickName = users.get(0).getNickName();
-                mobile = users.get(0).getMobile();
-                comid = users.get(0).getComid();
-                imageUrl = users.get(0).getImageUrl();
-                companyName = users.get(0).getCompanyName();
-
-                imgUrl = imageUrl;
-
-            }
-
-            if (TextUtils.isEmpty(imageUrl)) {
-                imgUserAvatar.setImageResource(R.mipmap.moren_touxiang);
-            } else {
-                Glide.with(getActivity()).load(imageUrl).into(imgUserAvatar);
-            }
-
-            rlNoLogin.setVisibility(View.GONE);
-            tvUserCompany.setVisibility(View.VISIBLE);
-            rlLogin.setVisibility(View.VISIBLE);
-
-            if (!TextUtils.isEmpty(nickName)) {
-                tvUserName.setText(nickName);
-            } else {
-                tvUserName.setText(mobile);
-            }
-
-            if (!TextUtils.isEmpty(companyName)) {
-                tvUserCompany.setText(companyName);
-            } else {
-                tvUserCompany.setText("未绑定企业");
-            }
-        } else {
-            imgUserAvatar.setImageResource(R.mipmap.widget_default_face);
-            tvUserCompany.setVisibility(View.GONE);
-            rlLogin.setVisibility(View.GONE);
-            rlNoLogin.setVisibility(View.VISIBLE);
-
-            tvTitle.setVisibility(View.INVISIBLE);
-        }
     }
 
     @Override
@@ -324,6 +239,57 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
         });
 
 
+    }
+
+
+    public void showUserInfo(){
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
+
+            tvTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText("我的企业");
+
+
+            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+            for (int i = 0; i < users.size(); i++) {
+                id = users.get(0).getId();
+                nickName = users.get(0).getNickName();
+                mobile = users.get(0).getMobile();
+                token = users.get(0).getToken();
+                comid = users.get(0).getComid();
+                imageUrl = users.get(0).getImageUrl();
+                companyName = users.get(0).getCompanyName();
+
+            }
+
+            if (!TextUtils.isEmpty(imageUrl)) {
+                Glide.with(getActivity()).load(imageUrl).into(imgUserAvatar);
+            } else {
+                imgUserAvatar.setImageResource(R.mipmap.moren_touxiang);
+            }
+
+            rlNoLogin.setVisibility(View.GONE);
+            tvUserCompany.setVisibility(View.VISIBLE);
+            rlLogin.setVisibility(View.VISIBLE);
+
+            if (!TextUtils.isEmpty(nickName)) {
+                tvUserName.setText(nickName);
+            } else {
+                tvUserName.setText(mobile);
+            }
+
+            if (!TextUtils.isEmpty(companyName)) {
+                tvUserCompany.setText(companyName);
+            } else {
+                tvUserCompany.setText("未绑定企业");
+            }
+        } else {
+            imgUserAvatar.setImageResource(R.mipmap.widget_default_face);
+            tvUserCompany.setVisibility(View.GONE);
+            rlLogin.setVisibility(View.GONE);
+            rlNoLogin.setVisibility(View.VISIBLE);
+
+            tvTitle.setVisibility(View.INVISIBLE);
+        }
     }
 
 

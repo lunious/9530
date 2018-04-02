@@ -3,7 +3,6 @@ package com.lubanjianye.biaoxuntong.ui.main.user.avater;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
@@ -26,13 +25,12 @@ import com.lubanjianye.biaoxuntong.ui.main.user.company.BindCompanyActivity;
 import com.lubanjianye.biaoxuntong.ui.media.SelectImageActivity;
 import com.lubanjianye.biaoxuntong.ui.media.config.SelectOptions;
 import com.lubanjianye.biaoxuntong.ui.media.util.ImageUtils;
-import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
-import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.picker.Area;
 import com.lubanjianye.biaoxuntong.util.picker.SinglePicker;
 import com.lubanjianye.biaoxuntong.util.picker.WheelView;
 import com.lubanjianye.biaoxuntong.util.rx.RxDialogEditSureCancel;
+import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -77,7 +75,8 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
     private String token = "";
     private String comid = "";
     private String companyName = "";
-    private String headUrl = "";
+    private String imageUrl = "";
+
     private String sex = "";
     private String diqu = "";
 
@@ -366,7 +365,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                 data.add(new Area(33, "澳门"));
                 data.add(new Area(34, "台湾"));
                 SinglePicker picker = new SinglePicker<>(getActivity(), data);
-                picker.setCycleDisable(true);//不禁用循环
+                picker.setCycleDisable(true);
                 picker.setTopBackgroundColor(0xFFEEEEEE);
                 picker.setTopHeight(42);
                 picker.setTopLineColor(0xFFEEEEEE);
@@ -380,9 +379,9 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                 picker.setSubmitTextSize(15);
                 picker.setTextColor(getResources().getColor(R.color.main_theme_color), 0xFF999999);
                 WheelView.DividerConfig config = new WheelView.DividerConfig();
-                config.setColor(getResources().getColor(R.color.main_theme_color));//线颜色
-                config.setAlpha(140);//线透明度
-                config.setRatio((float) (1.0 / 8.0));//线比率
+                config.setColor(getResources().getColor(R.color.main_theme_color));
+                config.setAlpha(140);
+                config.setRatio((float) (1.0 / 8.0));
                 picker.setDividerConfig(config);
                 picker.setBackgroundColor(getResources().getColor(R.color.main_status_white));
                 picker.setSelectedIndex(7);
@@ -456,7 +455,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
         for (int i = 0; i < users.size(); i++) {
             id = users.get(0).getId();
-            headUrl = users.get(0).getImageUrl();
+            imageUrl = users.get(0).getImageUrl();
 
         }
 
@@ -471,6 +470,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
 
 
                         if ("200".equals(status)) {
+
                             final JSONObject data = userInfo.getJSONObject("data");
                             final JSONObject qy = data.getJSONObject("qy");
                             final JSONObject user = data.getJSONObject("user");
@@ -508,12 +508,20 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
 
                             String newHeardUrl = user.getString("headUrl");
                             if (!TextUtils.isEmpty(newHeardUrl)) {
-                                Glide.with(getActivity()).load(newHeardUrl).into(imgUserAvatar);
-                            } else if (!TextUtils.isEmpty(headUrl)) {
-                                Glide.with(getActivity()).load(headUrl).into(imgUserAvatar);
+                                imageUrl = newHeardUrl;
+                                Glide.with(getActivity()).load(imageUrl).into(imgUserAvatar);
+                            } else if (!TextUtils.isEmpty(imageUrl)) {
+                                Glide.with(getActivity()).load(imageUrl).into(imgUserAvatar);
                             } else {
                                 imgUserAvatar.setImageResource(R.mipmap.moren_touxiang);
                             }
+
+
+                            final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
+                            DatabaseManager.getInstance().getDao().update(profile);
+
+                            EventBus.getDefault().post(new EventMessage(EventMessage.USER_INFO_CHANGE));
+
 
                         } else {
                             ToastUtil.shortToast(getContext(), message);

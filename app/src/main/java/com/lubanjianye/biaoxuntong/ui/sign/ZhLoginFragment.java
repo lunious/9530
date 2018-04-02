@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.Glide;
 import com.igexin.sdk.PushManager;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
@@ -26,6 +27,8 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.List;
 
 /**
  * Created by 11645 on 2018/1/15.
@@ -170,62 +173,15 @@ public class ZhLoginFragment extends BaseFragment implements View.OnClickListene
                             final String message = profileJson.getString("message");
 
 
-                            Log.d("JBAJHBSDASDAS", response.body());
-
                             if ("200".equals(status)) {
                                 promptDialog.dismissImmediately();
                                 final JSONObject userInfo = JSON.parseObject(response.body()).getJSONObject("data");
                                 id = userInfo.getLong("id");
-                                nickName = userInfo.getString("nickName");
                                 token = userInfo.getString("token");
                                 comid = userInfo.getString("comid");
-                                mobile = userInfo.getString("mobile");
-                                imageUrl = null;
 
-                                Log.d("IUGASUIDGUISADUIGYS", id + "");
-
-                                if (!"0".equals(comid)) {
-
-                                    OkGo.<String>post(BiaoXunTongApi.URL_GETCOMPANYNAME)
-                                            .params("userId", id)
-                                            .params("comId", comid)
-                                            .execute(new StringCallback() {
-                                                @Override
-                                                public void onSuccess(Response<String> response) {
-                                                    final JSONObject profileCompany = JSON.parseObject(response.body());
-                                                    final String status = profileCompany.getString("status");
-                                                    final JSONObject data = profileCompany.getJSONObject("data");
-
-                                                    if ("200".equals(status)) {
-                                                        companyName = data.getString("qy");
-                                                    } else {
-                                                        companyName = null;
-                                                    }
-
-                                                    promptDialog.dismissImmediately();
-                                                    final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
-                                                    DatabaseManager.getInstance().getDao().insert(profile);
-                                                    holdAccount();
-                                                    AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
-                                                    EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
-
-                                                    getActivity().onBackPressed();
-                                                    ToastUtil.shortBottonToast(getContext(), "登陆成功");
-                                                }
-                                            });
-
-                                } else {
-
-                                    promptDialog.dismissImmediately();
-                                    final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
-                                    DatabaseManager.getInstance().getDao().insert(profile);
-                                    holdAccount();
-                                    AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
-                                    EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
-                                    getActivity().onBackPressed();
-                                    ToastUtil.shortBottonToast(getContext(), "登陆成功");
-                                }
-
+                                //登录成功，获取用户信息
+                                getUserInfo(id);
 
                             } else {
                                 promptDialog.dismissImmediately();
@@ -242,6 +198,44 @@ public class ZhLoginFragment extends BaseFragment implements View.OnClickListene
 
     }
 
+    public void getUserInfo(long userId) {
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETUSERINFO)
+                .params("Id", userId)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject userInfo = JSON.parseObject(response.body());
+                        final String status = userInfo.getString("status");
+                        final String message = userInfo.getString("message");
+
+                        if ("200".equals(status)) {
+                            final JSONObject data = userInfo.getJSONObject("data");
+                            final JSONObject qy = data.getJSONObject("qy");
+                            final JSONObject user = data.getJSONObject("user");
+
+                            nickName = user.getString("nickName");
+                            companyName = qy.getString("qy");
+                            mobile = user.getString("mobile");
+                            imageUrl = user.getString("headUrl");
+                            promptDialog.dismissImmediately();
+                            final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
+                            DatabaseManager.getInstance().getDao().insert(profile);
+                            holdAccount();
+                            AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
+                            EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
+                            getActivity().onBackPressed();
+                            ToastUtil.shortBottonToast(getContext(), "登陆成功");
+
+                        } else {
+                            ToastUtil.shortToast(getContext(), message);
+                        }
+                    }
+                });
+
+
+    }
+
     //保存账号信息
     private void holdAccount() {
         String username = etLoginUsername.getText().toString().trim();
@@ -252,4 +246,5 @@ public class ZhLoginFragment extends BaseFragment implements View.OnClickListene
             AppSharePreferenceMgr.put(getContext(), "username", username);
         }
     }
+
 }
