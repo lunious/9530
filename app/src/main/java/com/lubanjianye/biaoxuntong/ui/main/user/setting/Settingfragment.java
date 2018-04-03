@@ -169,6 +169,7 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                                         EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
                                         AppSharePreferenceMgr.remove(getContext(), EventMessage.TOKEN_FALSE);
                                         AppSharePreferenceMgr.remove(getContext(),EventMessage.NO_CHANGE_AREA);
+                                        AppSharePreferenceMgr.remove(getContext(),EventMessage.IF_ASK_LOCATION);
                                         ToastUtil.shortBottonToast(getContext(), "退出成功");
                                     }
                                 });
@@ -178,6 +179,7 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.ll_update:
                 //更新界面
+                requestExternalStorage();
                 updateDiy();
                 break;
             default:

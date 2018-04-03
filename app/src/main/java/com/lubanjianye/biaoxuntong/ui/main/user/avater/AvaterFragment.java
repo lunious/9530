@@ -249,7 +249,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                 break;
             case R.id.tv_user_name:
                 final RxDialogEditSureCancel rxDialogEditSureCancel = new RxDialogEditSureCancel(getContext());
-                rxDialogEditSureCancel.getTitleView().setText("请输入想要要设置的昵称");
+                rxDialogEditSureCancel.getTitleView().setText("请输入想要设置的昵称");
                 rxDialogEditSureCancel.getSureView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

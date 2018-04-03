@@ -108,6 +108,7 @@ public class SelectImageActivity extends SwipeBackActivity implements EasyPermis
 
     @Override
     public void onPermissionsDenied(int requestCode, List<String> perms) {
+
         if (requestCode == RC_EXTERNAL_STORAGE) {
             removeView();
 

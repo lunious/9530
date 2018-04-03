@@ -4,8 +4,6 @@ import android.support.annotation.StyleRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-
-
 import com.lubanjianye.biaoxuntong.ui.citypicker.adapter.OnPickListener;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.HotCity;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.LocateState;

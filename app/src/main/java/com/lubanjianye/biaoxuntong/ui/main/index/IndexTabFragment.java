@@ -1,11 +1,14 @@
 package com.lubanjianye.biaoxuntong.ui.main.index;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +29,7 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.ui.citypicker.model.LocateState;
 import com.lubanjianye.biaoxuntong.ui.search.activity.SearchActivity;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.citypicker.CityPicker;
@@ -34,6 +38,7 @@ import com.lubanjianye.biaoxuntong.ui.citypicker.model.City;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.HotCity;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.LocatedCity;
 import com.lubanjianye.biaoxuntong.ui.main.index.sortcolumn.SortColumnActivity;
+import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
@@ -157,8 +162,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void XXXXXX(EventMessage message) {
-
-
         if (EventMessage.LOGIN_SUCCSS.equals(message.getMessage()) || EventMessage.LOGIN_OUT.equals(message.getMessage())
                 || EventMessage.TAB_CHANGE.equals(message.getMessage())) {
             //更新UI
@@ -170,7 +173,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
             }
             requestData(true);
         }
-
 
     }
 
@@ -571,10 +573,13 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
                                 @Override
                                 public void onLocate() {
+                                    AppSharePreferenceMgr.remove(getContext(),EventMessage.IF_ASK_LOCATION);
                                     //开始定位，这里模拟一下定位
+                                    setArea = true;
                                     locationTask();
 
                                 }
+
                             })
                             .show();
                 } else {
@@ -611,6 +616,8 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                 @Override
                                 public void onLocate() {
                                     //开始定位，这里模拟一下定位
+                                    AppSharePreferenceMgr.remove(getContext(),EventMessage.IF_ASK_LOCATION);
+                                    setArea = true;
                                     locationTask();
 
                                 }
@@ -627,7 +634,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
     @AfterPermissionGranted(RC_LOCATION_PERM)
     public void locationTask() {
-        if (EasyPermissions.hasPermissions(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+        if (EasyPermissions.hasPermissions(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)) {
             // Have permission, do the thing!
             //开始定位
             mLocationClient.start();
@@ -653,11 +660,12 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
     }
 
 
+    private boolean setArea = false;
+
     @Override
     public void onReceiveLocation(BDLocation bdLocation) {
         String province = bdLocation.getProvince();
         locationArea = province.substring(0, province.length() - 1);
-
 
         if (!AppSharePreferenceMgr.contains(getApplicationContext(),EventMessage.NO_CHANGE_AREA)){
             String area = tv_location.getText().toString();
@@ -699,16 +707,37 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
             }
         }
 
+        if (setArea){
+            CityPicker.getInstance().locateComplete(new LocatedCity(locationArea,"",""),locationArea == null?LocateState.FAILURE:LocateState.SUCCESS);
+        }
 
     }
 
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
         mLocationClient.start();
-    }
+}
 
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+
+
+        if (!AppSharePreferenceMgr.contains(getContext(),EventMessage.IF_ASK_LOCATION)){
+            if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)){
+                DialogHelper.getConfirmDialog(getContext(), "温馨提示", "你已多次拒绝定位权限，为了得到更好的服务，请到设置中开启定位权限", "去设置", "取消", false, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(Settings.ACTION_APPLICATION_SETTINGS));
+                    }
+                }, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AppSharePreferenceMgr.put(getContext(),EventMessage.IF_ASK_LOCATION,"no_location");
+                    }
+                }).show();
+            }
+        }
+
 
     }
 }

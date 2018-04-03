@@ -26,6 +26,7 @@ public class EventMessage {
     public static final String USER_INFO_CHANGE = "user_info_change";
     public static final String READ_STATUS = "read_status";
     public static final String NO_CHANGE_AREA = "no_change_area";
+    public static final String IF_ASK_LOCATION = "if_ask_location";
 
 
 
