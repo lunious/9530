@@ -123,7 +123,7 @@ public class SearchHistoryFragment extends BaseFragment {
 
     private View getHeadView() {
         View headView = LayoutInflater.from(getActivity()).inflate(R.layout.search_history_pic_adapter_head, null);
-        String[] tabs = new String[]{"天然气", "地质灾害隐患", "扶贫产业", "搬迁", "污水处理", "隧道", "道路", "整治工程", "基础设施", "绿化"};
+        String[] tabs = new String[]{"天然气", "道路", "基础设施","服务器", "扶贫产业", "搬迁", "污水处理", "隧道","地质灾害隐患", "绿化","整治工程","疫苗"};
         FlowLayout flowLayout = headView.findViewById(R.id.flowlayout);
         for (int i = 0; i < tabs.length; i++) {
             ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, DensityUtil.dip2px(getContext(), 24));

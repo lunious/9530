@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -30,6 +29,7 @@ import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -68,23 +68,6 @@ public class SearchResultListFragment extends BaseFragment {
         return fragment;
     }
 
-    private void initRefreshLayout() {
-
-        resultRefresh.setColorSchemeResources(
-                R.color.main_theme_color,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
-        );
-
-        resultRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                //TODO 刷新数据
-                mAdapter.setEnableLoadMore(false);
-                requestData(1, mKeyword);
-            }
-        });
-    }
 
     private void initRecyclerView() {
         resultRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -188,14 +171,20 @@ public class SearchResultListFragment extends BaseFragment {
     public void initData() {
         initRecyclerView();
         initAdapter();
-        initRefreshLayout();
         resultRefresh.setRefreshing(false);
         resultRefresh.setEnabled(false);
     }
 
     @Override
     public void initEvent() {
-        requestData(1,keyWorld);
+
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+            mAdapter.setEnableLoadMore(false);
+            requestData(1,keyWorld);
+        } else {
+            requestData(0,keyWorld);
+        }
     }
 
     private long id = 0;
@@ -221,15 +210,12 @@ public class SearchResultListFragment extends BaseFragment {
                     id = users.get(0).getId();
                 }
 
-
-                Log.d("AUISBDBASBDJSADASD","key==="+keyword);
-
                 OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
                         .params("keyWord", keyword)
                         .params("userid", id)
                         .params("page", page)
                         .params("diqu",mDiqu)
-                        .params("size", 20)
+                        .params("size", 10)
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
@@ -261,7 +247,7 @@ public class SearchResultListFragment extends BaseFragment {
                         .params("keyWord", keyword)
                         .params("page", page)
                         .params("diqu",mDiqu)
-                        .params("size", 20)
+                        .params("size", 10)
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {

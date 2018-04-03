@@ -82,30 +82,33 @@
 
     </LinearLayout>
 
-
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/search_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/main_status_white">
+        android:background="@color/main_status_white"
+        android:orientation="vertical">
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/d60"
-            app:srlDrawableProgressSize="@dimen/d15"
-            app:srlDrawableSize="@dimen/d15"
-            app:srlTextSizeTime="@dimen/d12"
-            app:srlTextSizeTitle="@dimen/d15" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/search_recycler"
+        <com.classic.common.MultipleStatusView
+            android:id="@+id/result_search_list_status_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/main_status_white"
-            android:overScrollMode="never"
-            android:scrollbars="none" />
+            app:emptyView="@layout/custom_empty_view"
+            app:errorView="@layout/custom_error_view"
+            app:loadingView="@layout/custom_loading_index_list"
+            app:noNetworkView="@layout/custom_no_network_view">
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/search_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/main_status_white"
+                android:overScrollMode="never"
+                android:scrollbars="none"/>
+        </com.classic.common.MultipleStatusView>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 
 </LinearLayout>
