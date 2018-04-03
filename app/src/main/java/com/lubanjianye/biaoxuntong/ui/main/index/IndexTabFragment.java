@@ -200,7 +200,8 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
             });
             toLogin.setTextColor(Color.parseColor("#00bfdc"));
             toLogin.setTextSize(16);
-            promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false);
+            promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false)
+                    .round(6).loadingDuration(800);
             promptDialog.showWarnAlert("账号登陆过期、请重新登录!", toLogin, cancel, false);
         }
 
@@ -658,44 +659,45 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
         locationArea = province.substring(0, province.length() - 1);
 
 
-        String area = tv_location.getText().toString();
+        if (!AppSharePreferenceMgr.contains(getApplicationContext(),EventMessage.NO_CHANGE_AREA)){
+            String area = tv_location.getText().toString();
+            if (!area.equals(locationArea)) {
+                //是否切换地区
+                final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                        AppSharePreferenceMgr.put(getApplicationContext(),EventMessage.NO_CHANGE_AREA,"no_change_area");
+                    }
+                });
+                cancel.setTextColor(getResources().getColor(R.color.main_status_yellow));
+                cancel.setTextSize(16);
 
-//        if (!area.equals(locationArea)) {
-//            //是否切换地区
-//            final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
-//                @Override
-//                public void onClick(PromptButton button) {
-//
-//                }
-//            });
-//            cancel.setTextColor(getResources().getColor(R.color.main_status_yellow));
-//            cancel.setTextSize(16);
-//
-//            final PromptButton sure = new PromptButton("切      换", new PromptButtonListener() {
-//                @Override
-//                public void onClick(PromptButton button) {
-//                    //确认切换地区，刷新数据
-//                    tv_location.setText(locationArea);
-//
-//                    //更新UI
-//                    if (indexStlTab != null) {
-//                        indexStlTab.setCurrentTab(0);
-//                        indexStlTab.setViewPager(indexVp);
-//                        indexStlTab.notifyDataSetChanged();
-//                    }
-//
-//                    promptDialog.showLoading("请稍后");
-//                    requestData(true);
-//
-//                    EventBus.getDefault().post(new EventMessage(EventMessage.LOCA_AREA_CHANGE));
-//                }
-//            });
-//            sure.setTextColor(getResources().getColor(R.color.main_status_blue));
-//            sure.setTextSize(16);
-//            promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
-//                    .round(8).loadingDuration(200);
-//            promptDialog.showWarnAlert("当前定位为" + locationArea + "," + "是否切换到" + locationArea + "?", cancel, sure, true);
-//    }
+                final PromptButton sure = new PromptButton("切      换", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                        //确认切换地区，刷新数据
+                        tv_location.setText(locationArea);
+
+                        //更新UI
+                        if (indexStlTab != null) {
+                            indexStlTab.setCurrentTab(0);
+                            indexStlTab.setViewPager(indexVp);
+                            indexStlTab.notifyDataSetChanged();
+                        }
+
+                        promptDialog.showLoading("请稍后");
+                        requestData(true);
+
+                        EventBus.getDefault().post(new EventMessage(EventMessage.LOCA_AREA_CHANGE));
+                    }
+                });
+                sure.setTextColor(getResources().getColor(R.color.main_status_blue));
+                sure.setTextSize(16);
+                promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false)
+                        .round(6).loadingDuration(800);
+                promptDialog.showWarnAlert("当前定位为" + locationArea + "," + "是否切换到" + locationArea + "?", cancel, sure, true);
+            }
+        }
 
 
     }

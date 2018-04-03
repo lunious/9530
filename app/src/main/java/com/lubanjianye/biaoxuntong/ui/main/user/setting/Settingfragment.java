@@ -165,9 +165,10 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                                             llCancel.setVisibility(View.INVISIBLE);
                                         }
                                         DatabaseManager.getInstance().getDao().deleteAll();
-                                        AppSharePreferenceMgr.remove(BiaoXunTong.getApplicationContext(), EventMessage.LOGIN_SUCCSS);
+                                        AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
                                         EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
-                                        AppSharePreferenceMgr.remove(BiaoXunTong.getApplicationContext(), EventMessage.TOKEN_FALSE);
+                                        AppSharePreferenceMgr.remove(getContext(), EventMessage.TOKEN_FALSE);
+                                        AppSharePreferenceMgr.remove(getContext(),EventMessage.NO_CHANGE_AREA);
                                         ToastUtil.shortBottonToast(getContext(), "退出成功");
                                     }
                                 });

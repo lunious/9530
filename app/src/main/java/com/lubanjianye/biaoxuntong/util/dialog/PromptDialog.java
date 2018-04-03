@@ -5,7 +5,6 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -23,7 +22,6 @@ import com.lubanjianye.biaoxuntong.R;
  */
 
 public class PromptDialog {
-    private final String TAG = "PromptDialog";
 
     private InputMethodManager inputmanger;
     private Animation outAnim;
@@ -33,7 +31,7 @@ public class PromptDialog {
     private ValueAnimator dissmissAnim;
     private boolean dissmissAnimCancle;
     private boolean outAnimRunning;
-    public static long viewAnimDuration = 200;
+    public static long viewAnimDuration = 300;
     private boolean isShowing;
     private AnimationSet inSheetAnim;
     private AlphaAnimation outSheetAnim;
@@ -49,7 +47,7 @@ public class PromptDialog {
      * @param viewAnimDuration 毫秒
      */
     public void setViewAnimDuration(long viewAnimDuration) {
-        this.viewAnimDuration = viewAnimDuration;
+        PromptDialog.viewAnimDuration = viewAnimDuration;
     }
 
     public long getViewAnimDuration() {

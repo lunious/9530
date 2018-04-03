@@ -70,7 +70,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
     private String mTitle = null;
     private int mType = -1;
 
-    private String mDiqu = "";
 
 
     private MessageListAdapter mAdapter;
@@ -121,8 +120,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                 final String entity = data.getEntity();
 
                 Intent intent = null;
-
-                if ("四川".equals(mDiqu)) {
 
                     if ("sggjy".equals(entity)) {
                         intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
@@ -178,9 +175,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                         intent.putExtra("ajaxlogtype", "0");
                         intent.putExtra("mId", "");
                         startActivity(intent);
-                    }
-                } else if ("重庆".equals(mDiqu)) {
-                    if ("cqcggg".equals(entity)) {
+                    }else if ("cqcggg".equals(entity)) {
                         final String title = data.getEntityName();
                         intent = new Intent(getActivity(), BrowserDetailActivity.class);
                         intent.putExtra("api", BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL);
@@ -203,7 +198,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                         intent.putExtra("mId", "");
                         startActivity(intent);
                     }
-                }
 
                 //改变已读未读状态
                 EventBus.getDefault().post(new EventMessage(EventMessage.READ_STATUS));
@@ -275,10 +269,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
         if (EventMessage.LOGIN_SUCCSS.equals(message.getMessage()) || EventMessage.CLICK_FAV.equals(message.getMessage())
                 || EventMessage.LOCA_AREA_CHANGE.equals(message.getMessage())) {
 
-
-            if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
-                mDiqu = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
-            }
             //登陆成功后更新UI
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                 if (llShow != null) {
@@ -312,10 +302,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
             mType = 2;
         } else if ("历史推送".equals(mTitle)) {
             mType = 1;
-        }
-
-        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
-            mDiqu = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
         }
 
     }
@@ -371,7 +357,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                             .params("page", page)
                             .params("size", 10)
                             .params("deviceId", deviceId)
-                            .cacheKey("message_login_cache" + mTitle + mDiqu)
+                            .cacheKey("message_login_cache" + mTitle + id)
                             .cacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)
                             .cacheTime(3600 * 72000)
                             .execute(new StringCallback() {
@@ -485,7 +471,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                             .params("page", page)
                             .params("size", 10)
                             .params("deviceId", deviceId)
-                            .cacheKey("message_login_cache" + mTitle + mDiqu)
+                            .cacheKey("message_login_cache" + mTitle + id)
                             .cacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)
                             .cacheTime(3600 * 72000)
                             .execute(new StringCallback() {
@@ -587,7 +573,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                             .params("page", page)
                             .params("size", 10)
                             .params("deviceId", deviceId)
-                            .cacheKey("message_login_cache" + mTitle + mDiqu)
+                            .cacheKey("message_login_cache" + mTitle + id)
                             .cacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)
                             .cacheTime(3600 * 72000)
                             .execute(new StringCallback() {
