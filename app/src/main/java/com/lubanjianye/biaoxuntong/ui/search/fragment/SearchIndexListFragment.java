@@ -361,8 +361,8 @@ public class SearchIndexListFragment extends BaseFragment {
                 bean.setDeadTime(list.getString("deadTime"));
                 bean.setAddress(list.getString("address"));
                 bean.setSignstauts(list.getString("signstauts"));
-                bean.setIsResult(list.getInteger("isResult"));
-                bean.setIsCorrections(list.getInteger("isCorrections"));
+                bean.setIsResult(list.getString("isResult"));
+                bean.setIsCorrections(list.getString("isCorrections"));
                 mDataList.add(bean);
             }
             resultRefresh.setRefreshing(false);
@@ -381,8 +381,8 @@ public class SearchIndexListFragment extends BaseFragment {
                     bean.setDeadTime(list.getString("deadTime"));
                     bean.setAddress(list.getString("address"));
                     bean.setSignstauts(list.getString("signstauts"));
-                    bean.setIsResult(list.getInteger("isResult"));
-                    bean.setIsCorrections(list.getInteger("isCorrections"));
+                    bean.setIsResult(list.getString("isResult"));
+                    bean.setIsCorrections(list.getString("isCorrections"));
                     mDataList.add(bean);
                 }
                 mAdapter.notifyDataSetChanged();

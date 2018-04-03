@@ -117,7 +117,7 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
     public void XXXXXX(EventMessage message) {
 
         if (EventMessage.READ_STATUS.equals(message.getMessage()) || EventMessage.LOGIN_SUCCSS.equals(message.getMessage()) || EventMessage.LOGIN_OUT.equals(message.getMessage())) {
-//            showMessageCount();
+            showMessageCount();
         }
 
     }
@@ -166,7 +166,7 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
         }
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
-//            showMessageCount();
+            showMessageCount();
         }
 
 

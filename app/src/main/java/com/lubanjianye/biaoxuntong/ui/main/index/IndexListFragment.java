@@ -661,8 +661,8 @@ public class IndexListFragment extends BaseFragment {
                     bean.setType(list.getString("type"));
                 }
                 bean.setSignstauts(list.getString("signstauts"));
-                bean.setIsResult(list.getInteger("isResult"));
-                bean.setIsCorrections(list.getInteger("isCorrections"));
+                bean.setIsResult(list.getString("isResult"));
+                bean.setIsCorrections(list.getString("isCorrections"));
                 mDataList.add(bean);
             }
             indexRefresh.finishRefresh(0, true);
@@ -685,8 +685,8 @@ public class IndexListFragment extends BaseFragment {
                         bean.setType(list.getString("type"));
                     }
                     bean.setSignstauts(list.getString("signstauts"));
-                    bean.setIsResult(list.getInteger("isResult"));
-                    bean.setIsCorrections(list.getInteger("isCorrections"));
+                    bean.setIsResult(list.getString("isResult"));
+                    bean.setIsCorrections(list.getString("isCorrections"));
                     mDataList.add(bean);
                 }
 

@@ -23,22 +23,23 @@ public class IndexListBean implements Serializable{
     private String signstauts = null;
     private String address = null;
 
-    private int isResult = -1;
-    private int isCorrections = -1;
+    private String isResult = null;
+    private String isCorrections = null;
 
-    public int getIsResult() {
+
+    public String getIsResult() {
         return isResult;
     }
 
-    public void setIsResult(int isResult) {
+    public void setIsResult(String isResult) {
         this.isResult = isResult;
     }
 
-    public int getIsCorrections() {
+    public String getIsCorrections() {
         return isCorrections;
     }
 
-    public void setIsCorrections(int isCorrections) {
+    public void setIsCorrections(String isCorrections) {
         this.isCorrections = isCorrections;
     }
 

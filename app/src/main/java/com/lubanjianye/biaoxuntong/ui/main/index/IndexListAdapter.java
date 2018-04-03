@@ -28,18 +28,18 @@ public class IndexListAdapter extends BaseQuickAdapter<IndexListBean, BaseViewHo
     protected void convert(BaseViewHolder helper, IndexListBean item) {
 
         //是否有结果更正
-        int isResult = item.getIsResult();
-        int isCorrections = item.getIsCorrections();
+        String isResult = item.getIsResult();
+        String isCorrections = item.getIsCorrections();
 
-        if (isResult != 0 && isCorrections != 0){
+        if (!"0".equals(isCorrections) && !"0".equals(isResult)){
             helper.setVisible(R.id.iv_gz_jg,true);
             helper.setVisible(R.id.iv_jg,false);
             helper.setVisible(R.id.iv_gz,false);
-        }else if (isResult != 0){
+        }else if (!"0".equals(isResult)){
             helper.setVisible(R.id.iv_jg,true);
             helper.setVisible(R.id.iv_gz_jg,false);
             helper.setVisible(R.id.iv_gz,false);
-        }else if (isCorrections != 0){
+        }else if (!"0".equals(isCorrections)){
             helper.setVisible(R.id.iv_gz,true);
             helper.setVisible(R.id.iv_jg,false);
             helper.setVisible(R.id.iv_gz_jg,false);
