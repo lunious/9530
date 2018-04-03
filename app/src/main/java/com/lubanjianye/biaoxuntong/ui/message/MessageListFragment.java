@@ -199,8 +199,15 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                         startActivity(intent);
                     }
 
-                //改变已读未读状态
-                EventBus.getDefault().post(new EventMessage(EventMessage.READ_STATUS));
+                    if ("0".equals(data.getIsRead())){
+                        BiaoXunTong.getHandler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                //改变已读未读状态
+                                EventBus.getDefault().post(new EventMessage(EventMessage.READ_STATUS));
+                            }
+                        }, 1000);
+                    }
 
             }
         });
@@ -290,7 +297,7 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
                 llShow.setVisibility(View.VISIBLE);
             }
         } else if (EventMessage.READ_STATUS.equals(message.getMessage())) {
-
+            requestData(true);
         }
 
     }

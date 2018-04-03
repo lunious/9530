@@ -26,6 +26,7 @@ public class IndexHyzxListAdapter extends BaseQuickAdapter<IndexHyzxListBean,Bas
 
     @Override
     protected void convert(BaseViewHolder helper, IndexHyzxListBean item) {
+
         helper.setText(R.id.tv_index_hyzx_title, item.getTitle());
         helper.setText(R.id.tv_index_hyzx_time, item.getCreate_time().substring(0, 10));
         String imgUrl = item.getMobile_img();

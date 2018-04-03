@@ -69,7 +69,6 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
         resultVp.setAdapter(mAdapter);
         resulttStlTab.setViewPager(resultVp);
 
-
         showMessageCount();
 
     }

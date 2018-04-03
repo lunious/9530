@@ -142,6 +142,9 @@ public class IndexListFragment extends BaseFragment {
                 final int entityId = data.getEntityId();
                 final String entity = data.getEntity();
 
+
+                Log.d("UBHDASBDSADAS",entityId+"---"+entity);
+
                 Intent intent = null;
                 if (mDiqu.equals("四川")) {
                     if ("sggjy".equals(entity)) {
@@ -658,6 +661,8 @@ public class IndexListFragment extends BaseFragment {
                     bean.setType(list.getString("type"));
                 }
                 bean.setSignstauts(list.getString("signstauts"));
+                bean.setIsResult(list.getInteger("isResult"));
+                bean.setIsCorrections(list.getInteger("isCorrections"));
                 mDataList.add(bean);
             }
             indexRefresh.finishRefresh(0, true);
@@ -680,6 +685,8 @@ public class IndexListFragment extends BaseFragment {
                         bean.setType(list.getString("type"));
                     }
                     bean.setSignstauts(list.getString("signstauts"));
+                    bean.setIsResult(list.getInteger("isResult"));
+                    bean.setIsCorrections(list.getInteger("isCorrections"));
                     mDataList.add(bean);
                 }
 

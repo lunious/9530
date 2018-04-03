@@ -7,8 +7,6 @@
     <include layout="@layout/fragment_detail_bar" />
 
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,8 +26,6 @@
             tl:tl_textsize="@dimen/d15" />
 
     </RelativeLayout>
-
-
 
 
 
