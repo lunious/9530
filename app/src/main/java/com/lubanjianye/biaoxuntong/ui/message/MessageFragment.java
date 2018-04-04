@@ -69,39 +69,6 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
         resultVp.setAdapter(mAdapter);
         resulttStlTab.setViewPager(resultVp);
 
-        showMessageCount();
-
-    }
-
-
-    private long id = 0;
-
-    private void showMessageCount() {
-        List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
-        for (int i = 0; i < users.size(); i++) {
-            id = users.get(0).getId();
-        }
-
-        OkGo.<String>post(BiaoXunTongApi.URL_GETUSERINFO)
-                .params("Id", id)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        final JSONObject userInfo = JSON.parseObject(response.body());
-                        final String status = userInfo.getString("status");
-                        final String message = userInfo.getString("message");
-
-                        if ("200".equals(status)) {
-                            final JSONObject data = userInfo.getJSONObject("data");
-                            final int messNum = data.getInteger("mesCount");
-                            if (messNum > 0) {
-                                resulttStlTab.showDot(1);
-                            }
-                        } else {
-
-                        }
-                    }
-                });
     }
 
     @Override

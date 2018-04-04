@@ -193,7 +193,7 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
                             final JSONObject data = userInfo.getJSONObject("data");
                             final int messNum = data.getInteger("mesCount");
                             if (messNum > 0) {
-                                mBottomBar.getItem(4).setUnreadCount(messNum);
+                                mBottomBar.getItem(4).setUnreadCount(0);
                             } else {
                                 mBottomBar.getItem(4).setUnreadCount(-1);
                             }

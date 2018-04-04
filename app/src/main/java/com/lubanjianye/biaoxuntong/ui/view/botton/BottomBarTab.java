@@ -73,6 +73,7 @@ public class BottomBarTab extends FrameLayout {
 
         addView(lLContainer);
 
+        int min = dip2px(context,8);
         int padding = dip2px(context, 3);
         mTvUnreadCount = new TextView(context);
         mTvUnreadCount.setBackgroundResource(R.drawable.ic_red_dot);
@@ -80,10 +81,10 @@ public class BottomBarTab extends FrameLayout {
         mTvUnreadCount.setTextColor(Color.WHITE);
         mTvUnreadCount.setPadding(padding, 0, padding, 0);
         mTvUnreadCount.setGravity(Gravity.CENTER);
-        FrameLayout.LayoutParams tvUnReadParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        FrameLayout.LayoutParams tvUnReadParams = new FrameLayout.LayoutParams(min,min);
         tvUnReadParams.gravity = Gravity.CENTER;
-        tvUnReadParams.leftMargin = dip2px(context, 14);
-        tvUnReadParams.bottomMargin = dip2px(context, 12);
+        tvUnReadParams.leftMargin = dip2px(context, 10);
+        tvUnReadParams.bottomMargin = dip2px(context, 14);
         mTvUnreadCount.setLayoutParams(tvUnReadParams);
         mTvUnreadCount.setVisibility(GONE);
 
