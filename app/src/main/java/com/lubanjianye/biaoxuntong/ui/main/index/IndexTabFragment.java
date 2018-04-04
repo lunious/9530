@@ -158,10 +158,13 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
         }
 
 
+
     }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void XXXXXX(EventMessage message) {
+
         if (EventMessage.LOGIN_SUCCSS.equals(message.getMessage()) || EventMessage.LOGIN_OUT.equals(message.getMessage())
                 || EventMessage.TAB_CHANGE.equals(message.getMessage())) {
             //更新UI
@@ -173,39 +176,12 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
             }
             requestData(true);
         }
-
     }
 
     @Override
     public void initData() {
 
         requestData(false);
-
-
-        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.TOKEN_FALSE)) {
-
-            final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
-                @Override
-                public void onClick(PromptButton button) {
-                    AppSharePreferenceMgr.remove(getContext(), EventMessage.TOKEN_FALSE);
-                }
-            });
-            cancel.setTextColor(Color.parseColor("#cccc33"));
-            cancel.setTextSize(16);
-
-            final PromptButton toLogin = new PromptButton("重新登陆", new PromptButtonListener() {
-                @Override
-                public void onClick(PromptButton button) {
-                    AppSharePreferenceMgr.remove(getContext(), EventMessage.TOKEN_FALSE);
-                    startActivity(new Intent(getActivity(), SignInActivity.class));
-                }
-            });
-            toLogin.setTextColor(Color.parseColor("#00bfdc"));
-            toLogin.setTextSize(16);
-            promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false)
-                    .round(6).loadingDuration(800);
-            promptDialog.showWarnAlert("账号登陆过期、请重新登录!", toLogin, cancel, false);
-        }
 
     }
 
@@ -223,8 +199,34 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                 //检查定位
                 locationTask();
             }
-        }, 4000);
+        }, 5000);
 
+
+        if (AppSharePreferenceMgr.contains(getContext(),EventMessage.TOKEN_FALSE)){
+
+            //token失效，需要重新登录
+            final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
+                @Override
+                public void onClick(PromptButton button) {
+                    AppSharePreferenceMgr.remove(getContext(),EventMessage.TOKEN_FALSE);
+                }
+            });
+            cancel.setTextColor(Color.parseColor("#cccc33"));
+            cancel.setTextSize(16);
+
+            final PromptButton toLogin = new PromptButton("重新登陆", new PromptButtonListener() {
+                @Override
+                public void onClick(PromptButton button) {
+                    AppSharePreferenceMgr.remove(getContext(),EventMessage.TOKEN_FALSE);
+                    startActivity(new Intent(getActivity(), SignInActivity.class));
+                }
+            });
+            toLogin.setTextColor(Color.parseColor("#00bfdc"));
+            toLogin.setTextSize(16);
+            promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false)
+                    .round(6).loadingDuration(800);
+            promptDialog.showWarnAlert("账号登陆过期、请重新登录!", toLogin, cancel, false);
+        }
 
     }
 
@@ -510,17 +512,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
         indexStlTab.setViewPager(indexVp);
         mAdapter.notifyDataSetChanged();
 
-
-        BiaoXunTong.getHandler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (promptDialog != null) {
-                    promptDialog.dismissImmediately();
-                }
-            }
-        }, 1000);
-
-
     }
 
 
@@ -558,7 +549,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                 indexStlTab.setViewPager(indexVp);
                                                 indexStlTab.notifyDataSetChanged();
                                             }
-                                            promptDialog.showLoading("请稍后");
                                             requestData(true);
                                             EventBus.getDefault().post(new EventMessage(EventMessage.LOCA_AREA_CHANGE));
                                         }
@@ -601,7 +591,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                 indexStlTab.setViewPager(indexVp);
                                                 indexStlTab.notifyDataSetChanged();
                                             }
-                                            promptDialog.showLoading("请稍后");
                                             requestData(true);
                                             EventBus.getDefault().post(new EventMessage(EventMessage.LOCA_AREA_CHANGE));
                                         }
@@ -693,7 +682,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                             indexStlTab.notifyDataSetChanged();
                         }
 
-                        promptDialog.showLoading("请稍后");
                         requestData(true);
 
                         EventBus.getDefault().post(new EventMessage(EventMessage.LOCA_AREA_CHANGE));

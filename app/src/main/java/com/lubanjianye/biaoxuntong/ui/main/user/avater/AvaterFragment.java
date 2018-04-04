@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -34,12 +33,9 @@ import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,12 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import pub.devrel.easypermissions.EasyPermissions;
 
 /**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.user.avater
- * 文件名:   AvaterFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/15  13:05
- * 描述:     TODO
+ * 个人中心
  */
 
 public class AvaterFragment extends BaseFragment implements View.OnClickListener,EasyPermissions.PermissionCallbacks {
@@ -102,7 +93,6 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
 
         //注册EventBus
         EventBus.getDefault().register(this);
-
         llIvBack = getView().findViewById(R.id.ll_iv_back);
         mainBarName = getView().findViewById(R.id.main_bar_name);
         tvUserName = getView().findViewById(R.id.tv_user_name);
@@ -168,6 +158,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
     public void initEvent() {
         requestData();
     }
+
 
     @Override
     public void onSupportInvisible() {
@@ -383,7 +374,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                 config.setRatio((float) (1.0 / 8.0));
                 picker.setDividerConfig(config);
                 picker.setBackgroundColor(getResources().getColor(R.color.main_status_white));
-                picker.setSelectedIndex(7);
+                picker.setSelectedIndex(22);
                 picker.setCanceledOnTouchOutside(true);
                 picker.setOnItemPickListener(new SinglePicker.OnItemPickListener<Area>() {
                     @Override
@@ -419,28 +410,28 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                 break;
             case R.id.tv_user_company:
 
-                if ("点击绑定企业".equals(tvUserCompany.getText().toString().trim())) {
+                if ("点击绑定".equals(tvUserCompany.getText().toString().trim())) {
 
                     if (!TextUtils.isEmpty(mobile)) {
                         //进入绑定企业界面
                         startActivity(new Intent(getActivity(), BindCompanyActivity.class));
                     } else {
-                        ToastUtil.shortBottonToast(getContext(), "请先绑定手机号！");
+                        ToastUtil.shortBottonToast(getContext(), "请先认证手机号！");
                     }
 
                 } else {
-                    ToastUtil.shortBottonToast(getContext(), "暂不支持修改已绑定企业");
+                    ToastUtil.shortBottonToast(getContext(), "已绑定企业，暂不支持修改");
                 }
 
 
                 break;
             case R.id.tv_user_mobile:
-                if ("点击绑定手机号".equals(tvUserMobile.getText().toString().trim())) {
+                if ("点击认证".equals(tvUserMobile.getText().toString().trim())) {
                     //进入绑定手机号界面
                     startActivity(new Intent(getActivity(), BindMobileActivity.class));
                     getActivity().onBackPressed();
                 } else {
-                    ToastUtil.shortBottonToast(getContext(), "暂不支持修改已绑定手机号");
+                    ToastUtil.shortBottonToast(getContext(), "已认证手机，暂不支持修改");
                 }
                 break;
             default:
@@ -479,13 +470,13 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                             if (!TextUtils.isEmpty(companyName)) {
                                 tvUserCompany.setText(companyName);
                             } else {
-                                tvUserCompany.setText("点击绑定企业");
+                                tvUserCompany.setText("点击绑定");
                             }
                             mobile = user.getString("mobile");
                             if (!TextUtils.isEmpty(mobile)) {
                                 tvUserMobile.setText(mobile);
                             } else {
-                                tvUserMobile.setText("点击绑定手机号");
+                                tvUserMobile.setText("点击认证");
                             }
                             nickName = user.getString("nickName");
                             if (!TextUtils.isEmpty(nickName)) {

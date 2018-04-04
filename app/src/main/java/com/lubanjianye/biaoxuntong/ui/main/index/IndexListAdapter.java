@@ -10,13 +10,6 @@ import com.lubanjianye.biaoxuntong.bean.IndexListBean;
 
 import java.util.List;
 
-/**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.index
- * 创建者:   lunious
- * 创建时间: 2017/12/16  10:07
- * 描述:     TODO
- */
 
 public class IndexListAdapter extends BaseQuickAdapter<IndexListBean, BaseViewHolder> {
 
@@ -30,6 +23,7 @@ public class IndexListAdapter extends BaseQuickAdapter<IndexListBean, BaseViewHo
         //是否有结果更正
         String isResult = item.getIsResult();
         String isCorrections = item.getIsCorrections();
+
 
         if (!"0".equals(isCorrections) && !"0".equals(isResult)){
             helper.setVisible(R.id.iv_gz_jg,true);

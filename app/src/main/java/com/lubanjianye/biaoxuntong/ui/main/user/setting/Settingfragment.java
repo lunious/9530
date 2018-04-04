@@ -166,10 +166,10 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                                         }
                                         DatabaseManager.getInstance().getDao().deleteAll();
                                         AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
-                                        EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
-                                        AppSharePreferenceMgr.remove(getContext(), EventMessage.TOKEN_FALSE);
                                         AppSharePreferenceMgr.remove(getContext(),EventMessage.NO_CHANGE_AREA);
                                         AppSharePreferenceMgr.remove(getContext(),EventMessage.IF_ASK_LOCATION);
+                                        AppSharePreferenceMgr.remove(getContext(),EventMessage.TOKEN_FALSE);
+                                        EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
                                         ToastUtil.shortBottonToast(getContext(), "退出成功");
                                     }
                                 });

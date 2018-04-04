@@ -21,15 +21,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.launcher
- * 文件名:   LauncherFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/9  15:59
- * 描述:     TODO
- */
-
 public class LauncherFragment extends BaseFragment {
 
     private long userId = 0;
@@ -69,9 +60,9 @@ public class LauncherFragment extends BaseFragment {
                     .execute(new StringCallback() {
                         @Override
                         public void onSuccess(Response<String> response) {
+
                             if ("200".equals(response.body()) || "400".equals(response.body())) {
                                 //token有效
-
                                 BiaoXunTong.getHandler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
@@ -80,12 +71,10 @@ public class LauncherFragment extends BaseFragment {
                                 }, 1000);
 
                             } else {
-                                EventBus.getDefault().post(new EventMessage(EventMessage.TOKEN_FALSE));
-
                                 //清除登录信息
                                 DatabaseManager.getInstance().getDao().deleteAll();
                                 AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
-                                AppSharePreferenceMgr.put(getContext(), EventMessage.TOKEN_FALSE, true);
+                                AppSharePreferenceMgr.put(getContext(),EventMessage.TOKEN_FALSE,"true");
                                 BiaoXunTong.getHandler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
@@ -139,7 +128,6 @@ public class LauncherFragment extends BaseFragment {
             if (getActivity() != null) {
                 getActivity().finish();
             }
-
         }
 
 

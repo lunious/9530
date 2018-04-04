@@ -9,14 +9,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/d20"
+        android:layout_marginTop="@dimen/d12"
         android:orientation="vertical"
         android:paddingRight="@dimen/d12"
         android:paddingStart="@dimen/d12">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/d70"
+            android:layout_height="@dimen/d72"
             android:orientation="horizontal">
 
 
@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="头      像"
+                android:text="头        像"
                 android:textSize="@dimen/d16" />
 
 
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="昵      称"
+                android:text="昵        称"
                 android:textSize="@dimen/d16" />
 
 
@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingRight="@dimen/d4"
+                    android:paddingRight="@dimen/d2"
                     android:text=""
                     android:textColor="@color/main_text_color"
                     android:textSize="@dimen/d16" />
@@ -102,7 +102,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="性      别"
+                android:text="性        别"
                 android:textSize="@dimen/d16" />
 
 
@@ -117,7 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingRight="@dimen/d4"
+                    android:paddingRight="@dimen/d2"
                     android:text=""
                     android:textColor="@color/main_text_color"
                     android:textSize="@dimen/d16" />
@@ -149,8 +149,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="关联手机"
-                android:textSize="@dimen/d16" />
+                android:text="认证手机"
+                android:textSize="@dimen/d16"
+                android:textColor="@color/main_status_red"/>
 
 
 
@@ -165,7 +166,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingRight="@dimen/d4"
+                    android:paddingRight="@dimen/d2"
                     android:text=""
                     android:textColor="@color/main_text_color"
                     android:textSize="@dimen/d16" />
@@ -209,7 +210,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingRight="@dimen/d4"
+                    android:paddingRight="@dimen/d2"
                     android:text=""
                     android:textColor="@color/main_text_color"
                     android:textSize="@dimen/d16" />
@@ -253,7 +254,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingRight="@dimen/d4"
+                    android:paddingRight="@dimen/d2"
                     android:text=""
                     android:textColor="@color/main_text_color"
                     android:textSize="@dimen/d16" />
@@ -303,7 +304,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/d14"
                     android:paddingTop="@dimen/d10"
-                    android:text="        通过第三方登录的用户，只有绑定手机后才能查看企业信息和绑定企业！"
+                    android:text="        通过第三方登录的用户，只有认证手机后才能查看企业信息和绑定企业！"
                     android:textSize="@dimen/d12" />
             </LinearLayout>
 

@@ -88,8 +88,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
 
 
-    private String mDiqu = "";
-
 
     @Override
     public Object setLayout() {
@@ -103,10 +101,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         if (EventMessage.LOGIN_SUCCSS.equals(message.getMessage()) || EventMessage.CLICK_FAV.equals(message.getMessage())
                 || EventMessage.LOCA_AREA_CHANGE.equals(message.getMessage())) {
 
-
-            if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
-                mDiqu = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
-            }
             //登陆成功后更新UI
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                 if (llShow != null) {
@@ -152,11 +146,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         loadingStatus = getView().findViewById(R.id.collection_list_status_view);
 
         btnToLogin.setOnClickListener(this);
-
-
-        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
-            mDiqu = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
-        }
 
 
     }
@@ -275,7 +264,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                         .params("entityid", mEntityId)
                         .params("entity", mEntity)
                         .params("userid", id)
-                        .params("diqu", mDiqu)
                         .params("deviceId", deviceId)
                         .execute(new StringCallback() {
                             @Override
@@ -304,8 +292,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 final String entity = data.getEntity();
 
                 Intent intent = null;
-
-                if ("四川".equals(mDiqu)) {
 
                     if ("sggjy".equals(entity)) {
                         intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
@@ -361,9 +347,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                         intent.putExtra("ajaxlogtype", "0");
                         intent.putExtra("mId", "");
                         startActivity(intent);
-                    }
-                } else if ("重庆".equals(mDiqu)) {
-                    if ("cqcggg".equals(entity)) {
+                    }else if ("cqcggg".equals(entity)) {
                         final String title = data.getEntryName();
                         intent = new Intent(getActivity(), BrowserDetailActivity.class);
                         intent.putExtra("api", BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL);
@@ -388,7 +372,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                     }
                 }
 
-            }
         });
 
     }
@@ -432,9 +415,8 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 OkGo.<String>post(BiaoXunTongApi.URL_GETCOLLECTIONLIST)
                         .params("userid", id)
                         .params("page", page)
-                        .params("diqu", mDiqu)
                         .params("size", 10)
-                        .cacheKey("collect_cache" + id + mDiqu)
+                        .cacheKey("collect_cache" + id)
                         .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                         .cacheTime(3600 * 48000)
                         .execute(new StringCallback() {
@@ -481,7 +463,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 OkGo.<String>post(BiaoXunTongApi.URL_GETCOLLECTIONLIST)
                         .params("userid", id)
                         .params("page", page)
-                        .params("diqu", mDiqu)
                         .params("size", 10)
                         .cacheMode(CacheMode.NO_CACHE)
                         .execute(new StringCallback() {

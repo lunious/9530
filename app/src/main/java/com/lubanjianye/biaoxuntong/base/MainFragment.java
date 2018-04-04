@@ -120,6 +120,7 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
             showMessageCount();
         }
 
+
     }
 
 
