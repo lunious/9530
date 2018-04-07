@@ -203,6 +203,9 @@ public class IndexHyzxListFragment extends BaseFragment {
 
     public void requestData(final boolean isRefresh,final int n) {
 
+
+        int size = 10 + (int) (Math.random() * 10);
+
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             //已登录的数据请求
             List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
@@ -216,7 +219,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                 OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXHYZXLIST)
                         .params("userid", id)
                         .params("page", page)
-                        .params("size", 10)
+                        .params("size", size)
                         .cacheKey("index_hyzx_login_cache" + id)
                         .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                         .cacheTime(3600 * 72000)
@@ -274,7 +277,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                 OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXHYZXLIST)
                         .params("userid", id)
                         .params("page", page)
-                        .params("size", 10)
+                        .params("size", size)
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
@@ -307,7 +310,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                 page = 1;
                 OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXHYZXLIST)
                         .params("page", page)
-                        .params("size", 10)
+                        .params("size", size)
                         .cacheKey("index_hyzx_no_login_cache" + id)
                         .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                         .cacheTime(3600 * 72000)
@@ -364,7 +367,7 @@ public class IndexHyzxListFragment extends BaseFragment {
             } else {
                 OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXHYZXLIST)
                         .params("page", page)
-                        .params("size", 10)
+                        .params("size", size)
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {

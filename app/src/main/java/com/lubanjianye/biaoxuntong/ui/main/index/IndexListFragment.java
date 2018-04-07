@@ -55,7 +55,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class IndexListFragment extends BaseFragment {
+public class    IndexListFragment extends BaseFragment {
 
     private RecyclerView indexRecycler = null;
     private SmartRefreshLayout indexRefresh = null;
@@ -381,6 +381,8 @@ public class IndexListFragment extends BaseFragment {
     public void requestData(final boolean isRefresh, final int n) {
 
 
+        int size = 10 + (int) (Math.random() * 10);
+
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
             mDiqu = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
         }
@@ -399,7 +401,7 @@ public class IndexListFragment extends BaseFragment {
                         .params("userid", id)
                         .params("page", page)
                         .params("diqu", mDiqu)
-                        .params("size", 10)
+                        .params("size", size)
                         .params("deviceId", deviceId)
                         .cacheKey("index_list_login_cache" + mTitle + mDiqu)
                         .cacheMode(CacheMode.REQUEST_FAILED_READ_CACHE)
@@ -474,7 +476,7 @@ public class IndexListFragment extends BaseFragment {
                         .params("userid", id)
                         .params("page", page)
                         .params("diqu", mDiqu)
-                        .params("size", 10)
+                        .params("size", size)
                         .params("deviceId", deviceId)
                         .execute(new StringCallback() {
                             @Override
@@ -518,7 +520,7 @@ public class IndexListFragment extends BaseFragment {
                 OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
                         .params("type", mTitle)
                         .params("page", page)
-                        .params("size", 10)
+                        .params("size", size)
                         .params("diqu", mDiqu)
                         .params("deviceId", deviceId)
                         .cacheKey("index_list_no_login_cache" + mTitle + mDiqu)
@@ -593,7 +595,7 @@ public class IndexListFragment extends BaseFragment {
                 OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
                         .params("type", mTitle)
                         .params("page", page)
-                        .params("size", 10)
+                        .params("size", size)
                         .params("diqu", mDiqu)
                         .params("deviceId", deviceId)
                         .execute(new StringCallback() {

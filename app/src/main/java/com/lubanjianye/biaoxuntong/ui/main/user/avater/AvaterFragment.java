@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -33,9 +34,11 @@ import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +50,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * 个人中心
  */
 
-public class AvaterFragment extends BaseFragment implements View.OnClickListener,EasyPermissions.PermissionCallbacks {
+public class AvaterFragment extends BaseFragment implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
@@ -175,11 +178,11 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
     private void uploadNewPhoto(File file) {
         // 获取头像缩略图
         if (file == null || !file.exists() || file.length() == 0) {
-            ToastUtil.shortBottonToast(getContext(),"图像不存在，上传失败");
+            ToastUtil.shortBottonToast(getContext(), "图像不存在，上传失败");
         } else {
             OkGo.<String>post(BiaoXunTongApi.URL_UPTOUXIANG)
-                    .params("userId",id)
-                    .params("file",file)
+                    .params("userId", id)
+                    .params("file", file)
                     .execute(new StringCallback() {
                         @Override
                         public void onSuccess(Response<String> response) {
@@ -187,14 +190,14 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                             final String status = userPhoto.getString("status");
                             final String message = userPhoto.getString("message");
 
-                            if ("200".equals(status)){
+                            if ("200".equals(status)) {
                                 final JSONObject data = userPhoto.getJSONObject("data");
                                 final JSONArray urls = data.getJSONArray("urls");
                                 String url = urls.get(0).toString();
 
                                 OkGo.<String>post(BiaoXunTongApi.URL_CHANGEUSER)
                                         .params("Id", id)
-                                        .params("headUrl", "http://api.lubanjianye.com/bxtajax/"+url)
+                                        .params("headUrl", "http://api.lubanjianye.com/bxtajax/" + url)
                                         .execute(new StringCallback() {
                                             @Override
                                             public void onSuccess(Response<String> response) {
@@ -210,8 +213,8 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                                                 }
                                             }
                                         });
-                            }else {
-                                ToastUtil.shortBottonToast(getContext(),message);
+                            } else {
+                                ToastUtil.shortBottonToast(getContext(), message);
                             }
 
                         }
@@ -466,7 +469,10 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                             final JSONObject qy = data.getJSONObject("qy");
                             final JSONObject user = data.getJSONObject("user");
 
-                            companyName = qy.getString("qy");
+
+                            if (qy != null) {
+                                companyName = qy.getString("qy");
+                            }
                             if (!TextUtils.isEmpty(companyName)) {
                                 tvUserCompany.setText(companyName);
                             } else {
@@ -545,6 +551,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
         Toast.makeText(this.getContext(), R.string.permissions_camera_error, Toast.LENGTH_LONG).show();
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions
             , @NonNull int[] grantResults) {

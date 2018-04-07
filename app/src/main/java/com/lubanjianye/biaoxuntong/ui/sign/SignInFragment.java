@@ -241,9 +241,22 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                             final JSONObject qy = data.getJSONObject("qy");
                             final JSONObject user = data.getJSONObject("user");
 
-                            nickName = user.getString("nickName");
-                            companyName = qy.getString("qy");
-                            mobile = user.getString("mobile");
+
+                            String name = user.getString("nickName");
+                            if (!name.isEmpty()) {
+                                nickName = name;
+                            }
+
+                            if (qy != null) {
+                                String mQy = qy.getString("qy");
+                                if (!mQy.isEmpty()) {
+                                    companyName = mQy;
+                                }
+                            }
+                            String phone = user.getString("mobile");
+                            if (!phone.isEmpty()) {
+                                mobile = phone;
+                            }
                             String headUrl = user.getString("headUrl");
                             if (!headUrl.isEmpty()) {
                                 imageUrl = headUrl;
