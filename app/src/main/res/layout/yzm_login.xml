@@ -15,8 +15,8 @@
 
 
         <ImageView
-            android:layout_width="@dimen/d20"
-            android:layout_height="@dimen/d20"
+            android:layout_width="@dimen/d22"
+            android:layout_height="@dimen/d22"
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/d4"
             android:src="@mipmap/phone_num" />
@@ -35,7 +35,7 @@
             android:textColor="#000000"
             android:textColorHint="#c9c9c9"
             android:textCursorDrawable="@null"
-            android:textSize="@dimen/d15" />
+            android:textSize="@dimen/d16" />
 
 
     </LinearLayout>
@@ -72,7 +72,7 @@
             android:textColor="#000000"
             android:textColorHint="#c9c9c9"
             android:textCursorDrawable="@null"
-            android:textSize="@dimen/d15" />
+            android:textSize="@dimen/d16" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/retrieve_sms_call"

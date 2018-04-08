@@ -21,6 +21,25 @@ public class CollectionListBean implements Serializable {
     private String sysTime = null;
     private String address = null;
 
+    private String isResult = null;
+    private String isCorrections = null;
+
+    public String getIsResult() {
+        return isResult;
+    }
+
+    public void setIsResult(String isResult) {
+        this.isResult = isResult;
+    }
+
+    public String getIsCorrections() {
+        return isCorrections;
+    }
+
+    public void setIsCorrections(String isCorrections) {
+        this.isCorrections = isCorrections;
+    }
+
     public String getAddress() {
         return address;
     }

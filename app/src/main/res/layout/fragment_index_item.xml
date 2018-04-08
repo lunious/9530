@@ -20,39 +20,23 @@
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_index_title"
                 android:layout_width="@dimen/d0"
-                android:layout_weight="9"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/d6"
                 android:layout_marginRight="@dimen/d4"
+                android:layout_weight="9"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:text="大英县隆盛镇五龙寨村农田水利项目"
                 android:textColor="#ff434343"
                 android:textSize="@dimen/d15" />
 
-            <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageView
-                    android:id="@+id/iv_jg"
-                    android:layout_width="@dimen/d26"
-                    android:layout_height="@dimen/d26"
-                    android:src="@mipmap/aaaaa"
-                    android:visibility="invisible"/>
-                <ImageView
-                    android:id="@+id/iv_gz"
-                    android:layout_width="@dimen/d26"
-                    android:layout_height="@dimen/d26"
-                    android:src="@mipmap/bbbbb"
-                    android:visibility="invisible"/>
-                <ImageView
-                    android:id="@+id/iv_gz_jg"
-                    android:layout_width="@dimen/d26"
-                    android:layout_height="@dimen/d26"
-                    android:src="@mipmap/ddddd"
-                    android:visibility="invisible"/>
 
-            </FrameLayout>
+            <ImageView
+                android:id="@+id/iv_status"
+                android:layout_width="@dimen/d26"
+                android:layout_height="@dimen/d26"
+                android:visibility="gone"/>
+
 
         </LinearLayout>
 
@@ -177,8 +161,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:layout_marginTop="@dimen/d6"
             android:layout_marginLeft="@dimen/d6"
+            android:layout_marginTop="@dimen/d6"
             android:background="@color/dark_view" />
 
     </LinearLayout>

@@ -506,6 +506,8 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 bean.setSysTime(list.getString("sysTime"));
                 bean.setEntityId(list.getInteger("entityId"));
                 bean.setEntity(list.getString("entity"));
+                bean.setIsResult(list.getString("isResult"));
+                bean.setIsCorrections(list.getString("isCorrections"));
                 mDataList.add(bean);
             }
 
@@ -524,6 +526,8 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                     bean.setSysTime(list.getString("sysTime"));
                     bean.setEntityId(list.getInteger("entityId"));
                     bean.setEntity(list.getString("entity"));
+                    bean.setIsResult(list.getString("isResult"));
+                    bean.setIsCorrections(list.getString("isCorrections"));
                     mDataList.add(bean);
                 }
 

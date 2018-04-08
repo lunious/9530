@@ -27,6 +27,23 @@ public class CollectionListAdapter extends BaseQuickAdapter<CollectionListBean, 
 
     @Override
     protected void convert(BaseViewHolder helper, CollectionListBean item) {
+
+        //是否有结果更正
+        String isResult = item.getIsResult();
+        String isCorrections = item.getIsCorrections();
+
+        if (!"0".equals(isCorrections) && !"0".equals(isResult)) {
+            helper.setVisible(R.id.iv_status,true);
+            helper.setImageResource(R.id.iv_status, R.mipmap.ddddd);
+        } else if (!"0".equals(isResult) && "0".equals(isCorrections)) {
+            helper.setVisible(R.id.iv_status,true);
+            helper.setImageResource(R.id.iv_status, R.mipmap.aaaaa);
+        } else if (!"0".equals(isCorrections) && "0".equals(isResult)) {
+            helper.setVisible(R.id.iv_status,true);
+            helper.setImageResource(R.id.iv_status, R.mipmap.bbbbb);
+        }
+
+
         helper.setText(R.id.tv_item_title, item.getEntryName());
         helper.setText(R.id.tv_item_area, item.getAddress());
         helper.setText(R.id.tv_item_type, item.getType());
