@@ -1,6 +1,7 @@
 package com.lubanjianye.biaoxuntong.ui.launcher;
 
 import android.content.Intent;
+import android.util.Log;
 
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
@@ -59,6 +60,9 @@ public class LauncherFragment extends BaseFragment {
                         @Override
                         public void onSuccess(Response<String> response) {
 
+
+                            Log.d("UASDBBASDASDA", response.body());
+
                             if ("200".equals(response.body()) || "400".equals(response.body())) {
                                 //token有效
                                 BiaoXunTong.getHandler().postDelayed(new Runnable() {
@@ -72,7 +76,7 @@ public class LauncherFragment extends BaseFragment {
                                 //清除登录信息
                                 DatabaseManager.getInstance().getDao().deleteAll();
                                 AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
-                                AppSharePreferenceMgr.put(getContext(),EventMessage.TOKEN_FALSE,"true");
+                                AppSharePreferenceMgr.put(getContext(), EventMessage.TOKEN_FALSE, "true");
                                 BiaoXunTong.getHandler().postDelayed(new Runnable() {
                                     @Override
                                     public void run() {
@@ -98,6 +102,7 @@ public class LauncherFragment extends BaseFragment {
             BiaoXunTong.getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    AppSharePreferenceMgr.remove(getContext(), EventMessage.TOKEN_FALSE);
                     checkIsShowScroll();
                 }
             }, 1000);
