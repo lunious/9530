@@ -16,8 +16,6 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.List;
 
 

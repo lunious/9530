@@ -61,7 +61,6 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
     private AppCompatTextView tvUserArea = null;
     private CircleImageView imgUserAvatar = null;
 
-
     private long id = 0;
     private String mobile = "";
     private String nickName = "";
@@ -132,7 +131,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
             if (!TextUtils.isEmpty(mobile)) {
                 tvUserMobile.setText(mobile);
             } else {
-                tvUserMobile.setText("点击绑定手机号");
+                tvUserMobile.setText("点击认证");
             }
 
         }
@@ -146,7 +145,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
             if (!TextUtils.isEmpty(companyName)) {
                 tvUserCompany.setText(companyName);
             } else {
-                tvUserCompany.setText("点击绑定企业");
+                tvUserCompany.setText("点击绑定");
             }
         }
     }
@@ -419,7 +418,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                         //进入绑定企业界面
                         startActivity(new Intent(getActivity(), BindCompanyActivity.class));
                     } else {
-                        ToastUtil.shortBottonToast(getContext(), "请先认证手机号！");
+                        ToastUtil.shortBottonToast(getContext(), "请先认证手机");
                     }
 
                 } else {
@@ -478,27 +477,34 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                             } else {
                                 tvUserCompany.setText("点击绑定");
                             }
-                            mobile = user.getString("mobile");
-                            if (!TextUtils.isEmpty(mobile)) {
-                                tvUserMobile.setText(mobile);
+
+                            String phone = user.getString("mobile");
+                            if (!TextUtils.isEmpty(phone)) {
+                                mobile = phone;
+                                tvUserMobile.setText(phone);
                             } else {
                                 tvUserMobile.setText("点击认证");
                             }
-                            nickName = user.getString("nickName");
-                            if (!TextUtils.isEmpty(nickName)) {
-                                tvUserName.setText(nickName);
+
+                            String name = user.getString("nickName");
+                            if (!TextUtils.isEmpty(name)) {
+                                nickName = name;
+                                tvUserName.setText(name);
                             } else {
                                 tvUserName.setText("点击设置");
                             }
-                            sex = user.getString("sex");
-                            if (!TextUtils.isEmpty(sex)) {
-                                tvUserSex.setText(sex);
+
+                            String xingbie = user.getString("sex");
+                            if (!TextUtils.isEmpty(xingbie)) {
+                                sex = xingbie;
+                                tvUserSex.setText(xingbie);
                             } else {
                                 tvUserSex.setText("点击设置");
                             }
-                            diqu = user.getString("diqu");
-                            if (!TextUtils.isEmpty(diqu)) {
-                                tvUserArea.setText(diqu);
+                            String area = user.getString("diqu");
+                            if (!TextUtils.isEmpty(area)) {
+                                diqu = area;
+                                tvUserArea.setText(area);
                             } else {
                                 tvUserArea.setText("点击设置");
                             }
@@ -512,7 +518,6 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                             } else {
                                 imgUserAvatar.setImageResource(R.mipmap.moren_touxiang);
                             }
-
 
                             final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
                             DatabaseManager.getInstance().getDao().update(profile);

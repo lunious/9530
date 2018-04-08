@@ -3,10 +3,8 @@ package com.lubanjianye.biaoxuntong.ui.sign;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -24,12 +22,9 @@ import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-
 import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import me.shaohui.shareutil.LoginUtil;
 import me.shaohui.shareutil.login.LoginListener;
 import me.shaohui.shareutil.login.LoginPlatform;
@@ -39,14 +34,6 @@ import me.shaohui.shareutil.login.result.QQUser;
 import me.shaohui.shareutil.login.result.WxToken;
 import me.shaohui.shareutil.login.result.WxUser;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.sign
- * 文件名:   SignInFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/13  0:40
- * 描述:     TODO
- */
 
 public class SignInFragment extends BaseFragment implements View.OnClickListener {
 
@@ -82,7 +69,6 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void initView() {
-
         llIvBack = getView().findViewById(R.id.ll_iv_back);
         mainBarName = getView().findViewById(R.id.main_bar_name);
         tvLoginForgetPwd = getView().findViewById(R.id.tv_login_forget_pwd);
@@ -91,13 +77,11 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
         ivLoginQq = getView().findViewById(R.id.ll_login_qq);
         resulttStlTab = getView().findViewById(R.id.login_stl_tab);
         resultVp = getView().findViewById(R.id.result_vp);
-
         llIvBack.setOnClickListener(this);
         tvLoginForgetPwd.setOnClickListener(this);
         btLoginRegister.setOnClickListener(this);
         ivLoginWx.setOnClickListener(this);
         ivLoginQq.setOnClickListener(this);
-
 
     }
 
@@ -123,6 +107,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
 
     @Override
     public void initEvent() {
+
         mLoginListener = new LoginListener() {
 
             @Override
@@ -151,12 +136,10 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                         final String message = profileJson.getString("message");
 
                                         if ("200".equals(status)) {
-                                            promptDialog.dismissImmediately();
                                             final JSONObject userInfo = JSON.parseObject(response.body()).getJSONObject("data");
                                             id = userInfo.getLong("id");
                                             token = response.headers().get("token");
                                             comid = userInfo.getString("comid");
-
 
                                             getUserInfo(id);
 
@@ -188,7 +171,6 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                         final String status = profileJson.getString("status");
                                         final String message = profileJson.getString("message");
                                         if ("200".equals(status)) {
-                                            promptDialog.dismissImmediately();
                                             final JSONObject userInfo = JSON.parseObject(response.body()).getJSONObject("data");
                                             id = userInfo.getLong("id");
                                             token = response.headers().get("token");
@@ -246,7 +228,6 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                             if (!name.isEmpty()) {
                                 nickName = name;
                             }
-
                             if (qy != null) {
                                 String mQy = qy.getString("qy");
                                 if (!mQy.isEmpty()) {

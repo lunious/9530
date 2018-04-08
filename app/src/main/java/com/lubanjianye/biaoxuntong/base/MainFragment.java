@@ -47,14 +47,6 @@ import java.util.Map;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.app
- * 文件名:   MainFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/9  0:13
- * 描述:     TODO
- */
 
 public class MainFragment extends MainTabFragment implements EasyPermissions.PermissionCallbacks {
 
@@ -116,10 +108,11 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void XXXXXX(EventMessage message) {
 
-        if (EventMessage.READ_STATUS.equals(message.getMessage()) || EventMessage.LOGIN_SUCCSS.equals(message.getMessage()) || EventMessage.LOGIN_OUT.equals(message.getMessage())) {
+        if (EventMessage.READ_STATUS.equals(message.getMessage()) || EventMessage.LOGIN_SUCCSS.equals(message.getMessage())) {
             showMessageCount();
+        } else if (EventMessage.LOGIN_OUT.equals(message.getMessage())) {
+            mBottomBar.getItem(4).setUnreadCount(-1);
         }
-
 
     }
 

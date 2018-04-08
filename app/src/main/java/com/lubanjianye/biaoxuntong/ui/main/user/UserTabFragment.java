@@ -45,17 +45,8 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.fragment
- * 文件名:   IndexTabFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/9  0:33
- * 描述:     TODO
- */
 
 public class UserTabFragment extends BaseFragment implements View.OnClickListener {
-
 
     private CircleImageView imgUserAvatar = null;
     private CircleImageView imgDefaultAvatar = null;
@@ -70,7 +61,6 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     private AppCompatTextView tvTitle = null;
     private LinearLayout llMessage = null;
     private AppCompatTextView messageNum = null;
-
 
     long id = 0;
     String mobile = "";
@@ -153,6 +143,9 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
             tvUserCompany.setVisibility(View.GONE);
             rlLogin.setVisibility(View.GONE);
             tvTitle.setVisibility(View.INVISIBLE);
+
+            messageNum.setText("");
+            messageNum.setVisibility(View.INVISIBLE);
         } else if (EventMessage.READ_STATUS.equals(message.getMessage())) {
             messageNum.setText("");
             showMessageCount();
@@ -168,14 +161,13 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
         //创建对象
         promptDialog = new PromptDialog(getActivity());
 
-        showUserInfo();
 
     }
 
     @Override
     public void initEvent() {
 
-
+        showUserInfo();
     }
 
     public void initBanner() {

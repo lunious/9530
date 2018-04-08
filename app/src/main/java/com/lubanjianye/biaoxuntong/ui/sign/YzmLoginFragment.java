@@ -28,9 +28,6 @@ import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
 
-/**
- * Created by 11645 on 2018/1/15.
- */
 
 public class YzmLoginFragment extends BaseFragment implements View.OnClickListener {
 
@@ -279,10 +276,25 @@ public class YzmLoginFragment extends BaseFragment implements View.OnClickListen
                             final JSONObject qy = data.getJSONObject("qy");
                             final JSONObject user = data.getJSONObject("user");
 
-                            nickName = user.getString("nickName");
-                            companyName = qy.getString("qy");
-                            mobile = user.getString("mobile");
-                            imageUrl = user.getString("headUrl");
+                            String name = user.getString("nickName");
+                            if (!name.isEmpty()) {
+                                nickName = name;
+                            }
+                            if (qy != null) {
+                                String mQy = qy.getString("qy");
+                                if (!mQy.isEmpty()) {
+                                    companyName = mQy;
+                                }
+                            }
+                            String phone = user.getString("mobile");
+                            if (!phone.isEmpty()) {
+                                mobile = phone;
+                            }
+                            String headUrl = user.getString("headUrl");
+                            if (!headUrl.isEmpty()) {
+                                imageUrl = headUrl;
+                            }
+
                             final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
                             DatabaseManager.getInstance().getDao().insert(profile);
                             AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
