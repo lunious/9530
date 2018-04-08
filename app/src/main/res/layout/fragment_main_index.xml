@@ -68,8 +68,8 @@
 
 
             <ImageView
-                android:layout_width="@dimen/d15"
-                android:layout_height="@dimen/d15"
+                android:layout_width="@dimen/d16"
+                android:layout_height="@dimen/d16"
                 android:layout_gravity="center"
                 android:paddingLeft="@dimen/d2"
                 android:paddingTop="@dimen/d1"
@@ -84,7 +84,7 @@
                 android:paddingLeft="@dimen/d2"
                 android:text="四川"
                 android:textColor="@color/main_status_white"
-                android:textSize="@dimen/d14" />
+                android:textSize="@dimen/d15" />
 
         </LinearLayout>
 

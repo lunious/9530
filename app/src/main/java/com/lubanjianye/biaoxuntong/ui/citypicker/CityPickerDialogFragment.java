@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StyleRes;
 import android.support.v7.app.AppCompatDialogFragment;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -67,12 +68,15 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     private int locateState;
     private OnPickListener mOnPickListener;
 
+    private AppCompatTextView mainBarName = null;
+
     /**
      * 获取实例
+     *
      * @param enable 是否启用动画效果
      * @return
      */
-    public static CityPickerDialogFragment newInstance(boolean enable){
+    public static CityPickerDialogFragment newInstance(boolean enable) {
         final CityPickerDialogFragment fragment = new CityPickerDialogFragment();
         Bundle args = new Bundle();
         args.putBoolean("cp_enable_anim", enable);
@@ -101,10 +105,10 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     }
 
     private void initLocatedCity() {
-        if (mLocatedCity == null){
+        if (mLocatedCity == null) {
             mLocatedCity = new LocatedCity("定位失败", "未知", "0");
             locateState = LocateState.FAILURE;
-        }else{
+        } else {
             locateState = LocateState.SUCCESS;
         }
     }
@@ -124,24 +128,25 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         }
     }
 
-    public void setLocatedCity(LocatedCity location){
+    public void setLocatedCity(LocatedCity location) {
         mLocatedCity = location;
     }
 
-    public void setHotCities(List<HotCity> data){
-        if (data != null && !data.isEmpty()){
+    public void setHotCities(List<HotCity> data) {
+        if (data != null && !data.isEmpty()) {
             this.mHotCities = data;
         }
     }
 
     @SuppressLint("ResourceType")
-    public void setAnimationStyle(@StyleRes int style){
+    public void setAnimationStyle(@StyleRes int style) {
         this.mAnimStyle = style <= 0 ? R.style.DefaultCityPickerAnimation : style;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         mContentView = inflater.inflate(R.layout.cp_dialog_city_picker, container, false);
 
         mRecyclerView = mContentView.findViewById(R.id.cp_city_recyclerview);
@@ -169,6 +174,10 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         mCancelBtn.setOnClickListener(this);
         mClearAllBtn.setOnClickListener(this);
 
+        mainBarName = mContentView.findViewById(R.id.main_bar_name);
+        mainBarName.setVisibility(View.VISIBLE);
+        mainBarName.setText("地区选择");
+
         return mContentView;
     }
 
@@ -177,7 +186,7 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         Window window = dialog.getWindow();
-        if(window != null) {
+        if (window != null) {
             window.getDecorView().setPadding(0, 0, 0, 0);
             window.setBackgroundDrawableResource(android.R.color.transparent);
             window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
@@ -188,30 +197,34 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         return dialog;
     }
 
-    /** 搜索框监听 */
+    /**
+     * 搜索框监听
+     */
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
 
     @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+    }
 
     @Override
     public void afterTextChanged(Editable s) {
         String keyword = s.toString();
-        if (TextUtils.isEmpty(keyword)){
+        if (TextUtils.isEmpty(keyword)) {
             mClearAllBtn.setVisibility(View.GONE);
             mEmptyView.setVisibility(View.GONE);
             mResults = mAllCities;
-            ((SectionItemDecoration)(mRecyclerView.getItemDecorationAt(0))).setData(mResults);
+            ((SectionItemDecoration) (mRecyclerView.getItemDecorationAt(0))).setData(mResults);
             mAdapter.updateData(mResults);
-        }else {
+        } else {
             mClearAllBtn.setVisibility(View.VISIBLE);
             //开始数据库查找
             mResults = dbManager.searchCity(keyword);
-            ((SectionItemDecoration)(mRecyclerView.getItemDecorationAt(0))).setData(mResults);
-            if (mResults == null || mResults.isEmpty()){
+            ((SectionItemDecoration) (mRecyclerView.getItemDecorationAt(0))).setData(mResults);
+            if (mResults == null || mResults.isEmpty()) {
                 mEmptyView.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 mEmptyView.setVisibility(View.GONE);
                 mAdapter.updateData(mResults);
             }
@@ -224,7 +237,7 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         int id = v.getId();
         if (id == R.id.cp_cancel) {
             dismiss(-1, null);
-        }else if(id == R.id.cp_clear_all){
+        } else if (id == R.id.cp_clear_all) {
             mSearchBox.setText("");
         }
     }
@@ -232,16 +245,16 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     @Override
     public void onIndexChanged(String index, int position) {
         //滚动RecyclerView到索引位置
-        if (mResults == null || mResults.isEmpty()){
+        if (mResults == null || mResults.isEmpty()) {
             return;
         }
-        if (TextUtils.isEmpty(index)){
+        if (TextUtils.isEmpty(index)) {
             return;
         }
         int size = mResults.size();
         for (int i = 0; i < size; i++) {
-            if (TextUtils.equals(index.substring(0, 1), mResults.get(i).getSection().substring(0, 1))){
-                if (mLayoutManager != null){
+            if (TextUtils.equals(index.substring(0, 1), mResults.get(i).getSection().substring(0, 1))) {
+                if (mLayoutManager != null) {
                     mLayoutManager.scrollToPositionWithOffset(i, 0);
                     return;
                 }
@@ -249,21 +262,21 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         }
     }
 
-    public void locationChanged(LocatedCity location, int state){
+    public void locationChanged(LocatedCity location, int state) {
         mAdapter.updateLocateState(location, state);
     }
 
     @Override
     public void dismiss(int position, City data) {
-        if (position == -1){
+        if (position == -1) {
             dismiss();
-        }else {
+        } else {
             if (mOnPickListener != null) {
-                if ("四川".equals(data.getName()) || "重庆".equals(data.getName())){
+                if ("四川".equals(data.getName()) || "重庆".equals(data.getName())) {
                     mOnPickListener.onPick(position, data);
                     dismiss();
-                }else {
-                    ToastUtil.shortToast(getContext(),"暂不支持该地区，敬请期待!");
+                } else {
+                    ToastUtil.shortToast(getContext(), "暂不支持该地区，敬请期待!");
                 }
 
             }
@@ -271,13 +284,13 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
     }
 
     @Override
-    public void locate(){
-        if (mOnPickListener != null){
+    public void locate() {
+        if (mOnPickListener != null) {
             mOnPickListener.onLocate();
         }
     }
 
-    public void setOnPickListener(OnPickListener listener){
+    public void setOnPickListener(OnPickListener listener) {
         this.mOnPickListener = listener;
     }
 }

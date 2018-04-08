@@ -65,7 +65,8 @@
 
 
     <style name="App.Theme.Dialog.Alert" parent="ThemeOverlay.AppCompat.Dialog.Alert">
-        <item name="android:textColorPrimary">#f0000000</item>
+        <item name="android:textColorPrimary">#7c7c7c</item>
+
     </style>
 
 
@@ -142,9 +143,10 @@
         <!--是否浮现在activity之上-->
         <item name="android:windowIsFloating">false</item>
         <!--背景颜色-->
-        <item name="android:windowBackground">@color/main_status_blue</item>
+        <item name="android:windowBackground">@color/main_theme_color</item>
         <!--是否模糊-->
         <item name="android:backgroundDimEnabled">true</item>
+
     </style>
 
     <style name="DefaultCityPickerAnimation" parent="@android:style/Animation">

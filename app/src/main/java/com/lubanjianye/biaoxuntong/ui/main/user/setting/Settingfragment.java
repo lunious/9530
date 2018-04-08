@@ -44,6 +44,14 @@ import java.util.Map;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
+/**
+ * 项目名:   AppLunious
+ * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.user.setting
+ * 文件名:   Settingfragment
+ * 创建者:   lunious
+ * 创建时间: 2017/12/11  23:13
+ * 描述:     TODO
+ */
 
 public class Settingfragment extends BaseFragment implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
 
@@ -114,16 +122,9 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                 getActivity().onBackPressed();
                 break;
             case R.id.ll_cache_size:
-                DialogHelper.getConfirmDialog(getActivity(), "是否清空缓存?", new DialogInterface.OnClickListener
-                        () {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        AppCleanMgr.cleanInternalCache(getContext());
-                        tvCacheSize.setText("");
-                        ToastUtil.shortBottonToast(getContext(), "缓存清理成功");
-                    }
-                }).show();
+                AppCleanMgr.cleanInternalCache(getContext());
+                tvCacheSize.setText("");
+                ToastUtil.shortBottonToast(getContext(), "缓存清理成功");
                 break;
             case R.id.ll_opinion:
                 //意见反馈界面
@@ -137,12 +138,9 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.ll_cancel:
 
-                DialogHelper.getConfirmDialog(getActivity(), "你确定要退出登录吗？", new DialogInterface.OnClickListener
-                        () {
-                    @SuppressLint("SetTextI18n")
+                DialogHelper.getConfirmDialog(getActivity(), "退出确认", "退出当前账号，将不能同步收藏和查看公司详情", "确认退出", "取消", false, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
+                    public void onClick(DialogInterface dialog, int which) {
                         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
                         long id = 0;
                         for (int j = 0; j < users.size(); j++) {
@@ -158,15 +156,15 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                                         }
                                         DatabaseManager.getInstance().getDao().deleteAll();
                                         AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
-                                        AppSharePreferenceMgr.remove(getContext(),EventMessage.NO_CHANGE_AREA);
-                                        AppSharePreferenceMgr.remove(getContext(),EventMessage.IF_ASK_LOCATION);
-                                        AppSharePreferenceMgr.remove(getContext(),EventMessage.TOKEN_FALSE);
+                                        AppSharePreferenceMgr.remove(getContext(), EventMessage.NO_CHANGE_AREA);
+                                        AppSharePreferenceMgr.remove(getContext(), EventMessage.IF_ASK_LOCATION);
+                                        AppSharePreferenceMgr.remove(getContext(), EventMessage.TOKEN_FALSE);
                                         EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
                                         ToastUtil.shortBottonToast(getContext(), "退出成功");
                                     }
                                 });
                     }
-                }).show();
+                }, null).show();
 
                 break;
             case R.id.ll_update:

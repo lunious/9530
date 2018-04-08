@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -55,7 +56,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class    IndexListFragment extends BaseFragment {
+public class IndexListFragment extends BaseFragment {
 
     private RecyclerView indexRecycler = null;
     private SmartRefreshLayout indexRefresh = null;
@@ -134,7 +135,7 @@ public class    IndexListFragment extends BaseFragment {
                 final String entity = data.getEntity();
 
 
-                Log.d("UBHDASBDSADAS",entityId+"---"+entity);
+                Log.d("UBHDASBDSADAS", entityId + "---" + entity);
 
                 Intent intent = null;
                 if (mDiqu.equals("四川")) {
