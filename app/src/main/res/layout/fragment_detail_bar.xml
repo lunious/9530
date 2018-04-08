@@ -22,7 +22,7 @@
             android:id="@+id/ll_iv_back"
             android:layout_width="@dimen/d0"
             android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_weight="1"
             android:gravity="center"
             android:visibility="visible">
 

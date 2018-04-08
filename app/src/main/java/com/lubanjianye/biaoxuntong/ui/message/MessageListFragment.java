@@ -319,7 +319,6 @@ public class MessageListFragment extends BaseFragment implements View.OnClickLis
         initAdapter();
         initRefreshLayout();
 
-
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
             mAdapter.setEnableLoadMore(false);

@@ -17,6 +17,11 @@ public abstract class BiaoXunTongApi {
     public static final String BASEURL = "http://api.lubanjianye.com/";
 //    public static final String BASEURL = "http://192.168.0.50:8080/";
     /**
+     * 一键已读
+     */
+    public static final String URL_YJYD = BASEURL + "bxtajax/GetuiTask/setState";
+
+    /**
      * 推送列表
      */
     public static final String URL_GETUILIST = BASEURL + "bxtajax/GetuiTask/list";
