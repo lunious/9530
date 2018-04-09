@@ -6,7 +6,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -76,7 +75,6 @@ public class SearchIndexListFragment extends BaseFragment {
     private List<String> Typelist = new ArrayList<String>();
 
 
-
     private static String keyWorld = "";
 
     public static SearchIndexListFragment newInstance(String contentt) {
@@ -100,10 +98,10 @@ public class SearchIndexListFragment extends BaseFragment {
         loadingStatus = getView().findViewById(R.id.result_search_list_status_view);
 
 
-        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)){
-            String area = (String) AppSharePreferenceMgr.get(getContext(),EventMessage.LOCA_AREA,"");
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
+            String area = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
             mDiqu = area;
-        }else {
+        } else {
             mDiqu = "四川";
         }
     }
@@ -147,7 +145,7 @@ public class SearchIndexListFragment extends BaseFragment {
 
 
                 Intent intent = null;
-                if ("四川".equals(mDiqu)){
+                if ("四川".equals(mDiqu)) {
 
                     if ("sggjy".equals(entity)) {
                         intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
@@ -187,8 +185,8 @@ public class SearchIndexListFragment extends BaseFragment {
                         intent.putExtra("mId", "");
                         startActivity(intent);
                     }
-                }else if ("重庆".equals(mDiqu)){
-                    if ("cqcggg".equals(entity)){
+                } else if ("重庆".equals(mDiqu)) {
+                    if ("cqcggg".equals(entity)) {
                         final String title = data.getEntryName();
                         intent = new Intent(getActivity(), BrowserDetailActivity.class);
                         intent.putExtra("api", BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL);
@@ -196,7 +194,7 @@ public class SearchIndexListFragment extends BaseFragment {
                         intent.putExtra("entity", entity);
                         intent.putExtra("entityid", entityId);
                         startActivity(intent);
-                    }else if ("cqsggjy".equals(entity)){
+                    } else if ("cqsggjy".equals(entity)) {
                         intent = new Intent(BiaoXunTong.getApplicationContext(), IndexCqsggjyDetailActivity.class);
                         intent.putExtra("entityId", entityId);
                         intent.putExtra("entity", entity);
@@ -260,85 +258,85 @@ public class SearchIndexListFragment extends BaseFragment {
                 id = users.get(0).getId();
             }
 
-                OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
-                        .params("userid", id)
-                        .params("area", mArea)
-                        .params("type", mType)
-                        .params("page", page)
-                        .params("diqu",mDiqu)
-                        .params("keyWord", keyWorld)
-                        .params("size", 10)
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onSuccess(Response<String> response) {
+            OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
+                    .params("userid", id)
+                    .params("area", mArea)
+                    .params("type", mType)
+                    .params("page", page)
+                    .params("diqu", mDiqu)
+                    .params("keyWord", keyWorld)
+                    .params("size", 10)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
 
-                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+                            String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
-                                final JSONObject object = JSON.parseObject(jiemi);
-                                final JSONObject data = object.getJSONObject("data");
-                                final String status = object.getString("status");
-                                final String message = object.getString("message");
-                                final JSONArray array = data.getJSONArray("list");
-                                final boolean nextPage = data.getBoolean("nextpage");
+                            final JSONObject object = JSON.parseObject(jiemi);
+                            final JSONObject data = object.getJSONObject("data");
+                            final String status = object.getString("status");
+                            final String message = object.getString("message");
+                            final JSONArray array = data.getJSONArray("list");
+                            final boolean nextPage = data.getBoolean("nextpage");
 
-                                if ("200".equals(status)) {
-                                    if (array.size() > 0) {
-                                        setData(isRefresh, array, nextPage);
-                                    } else {
-                                        if (mDataList != null) {
-                                            mDataList.clear();
-                                            mAdapter.notifyDataSetChanged();
-                                        }
-                                        //TODO 内容为空的处理
-                                        loadingStatus.showEmpty();
-                                        resultRefresh.setEnabled(false);
-                                    }
+                            if ("200".equals(status)) {
+                                if (array.size() > 0) {
+                                    setData(isRefresh, array, nextPage);
                                 } else {
-                                    ToastUtil.shortToast(getContext(), message);
-
+                                    if (mDataList != null) {
+                                        mDataList.clear();
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                    //TODO 内容为空的处理
+                                    loadingStatus.showEmpty();
+                                    resultRefresh.setEnabled(false);
                                 }
+                            } else {
+                                ToastUtil.shortToast(getContext(), message);
+
                             }
-                        });
+                        }
+                    });
 
         } else {
             //未登录的数据请求
-                OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
-                        .params("page", page)
-                        .params("area", mArea)
-                        .params("type", mType)
-                        .params("diqu",mDiqu)
-                        .params("keyWord", keyWorld)
-                        .params("size", 10)
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onSuccess(Response<String> response) {
-                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+            OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
+                    .params("page", page)
+                    .params("area", mArea)
+                    .params("type", mType)
+                    .params("diqu", mDiqu)
+                    .params("keyWord", keyWorld)
+                    .params("size", 10)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
-                                final JSONObject object = JSON.parseObject(jiemi);
-                                final JSONObject data = object.getJSONObject("data");
-                                final String status = object.getString("status");
-                                final String message = object.getString("message");
-                                final JSONArray array = data.getJSONArray("list");
-                                final boolean nextPage = data.getBoolean("nextpage");
+                            final JSONObject object = JSON.parseObject(jiemi);
+                            final JSONObject data = object.getJSONObject("data");
+                            final String status = object.getString("status");
+                            final String message = object.getString("message");
+                            final JSONArray array = data.getJSONArray("list");
+                            final boolean nextPage = data.getBoolean("nextpage");
 
-                                if ("200".equals(status)) {
-                                    if (array.size() > 0) {
-                                        setData(isRefresh, array, nextPage);
-                                    } else {
-                                        if (mDataList != null) {
-                                            mDataList.clear();
-                                            mAdapter.notifyDataSetChanged();
-                                        }
-                                        //TODO 内容为空的处理
-                                        loadingStatus.showEmpty();
-                                        resultRefresh.setEnabled(false);
-                                    }
+                            if ("200".equals(status)) {
+                                if (array.size() > 0) {
+                                    setData(isRefresh, array, nextPage);
                                 } else {
-                                    ToastUtil.shortToast(getContext(), message);
+                                    if (mDataList != null) {
+                                        mDataList.clear();
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                    //TODO 内容为空的处理
+                                    loadingStatus.showEmpty();
+                                    resultRefresh.setEnabled(false);
                                 }
-
+                            } else {
+                                ToastUtil.shortToast(getContext(), message);
                             }
-                        });
+
+                        }
+                    });
 
         }
 
@@ -426,7 +424,7 @@ public class SearchIndexListFragment extends BaseFragment {
     public void loadArea() {
 
         OkGo.<String>post(BiaoXunTongApi.URL_GETALLTAB)
-                .params("diqu",mDiqu)
+                .params("diqu", mDiqu)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {

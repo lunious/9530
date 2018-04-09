@@ -12,14 +12,6 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.fragment
- * 文件名:   IndexTabFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/9  0:33
- * 描述:     TODO
- */
 
 public class ResultTabFragment extends BaseFragment {
 

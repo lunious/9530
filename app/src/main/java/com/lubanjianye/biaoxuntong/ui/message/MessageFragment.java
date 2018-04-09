@@ -2,12 +2,10 @@ package com.lubanjianye.biaoxuntong.ui.message;
 
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.lubanjianye.biaoxuntong.R;
@@ -36,10 +34,8 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
     private AppCompatTextView mainBarName = null;
     private AppCompatTextView atv_yjyd = null;
 
-
     private SlidingTabLayout resulttStlTab = null;
     private ViewPager resultVp = null;
-
 
     private final List<String> mList = new ArrayList<String>();
     private MessageAdapter mAdapter;

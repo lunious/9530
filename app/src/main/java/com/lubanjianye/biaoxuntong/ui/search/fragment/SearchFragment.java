@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -17,14 +18,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
-import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailFragment;
 import com.lubanjianye.biaoxuntong.ui.search.adapter.BaseFragmentStateAdapter;
 import com.lubanjianye.biaoxuntong.ui.search.rx.RxBus;
 import com.lubanjianye.biaoxuntong.ui.search.rx.RxManager;
@@ -36,7 +35,6 @@ import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -246,12 +244,12 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
         viewPager.setVisibility(View.VISIBLE);
     }
 
-    private void setSearchRsult(String content,int searchType) {
+    private void setSearchRsult(String content, int searchType) {
         mSearchResult.clear();
         if (content != null) {
-            if (searchType == 1){
+            if (searchType == 1) {
                 initIndexFragment(content);
-            }else if (searchType == 2){
+            } else if (searchType == 2) {
                 initResultFragment(content);
             }
         }
@@ -266,7 +264,7 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
         mMsgView.showLoading();
 
 
-        if (searchType == 1){
+        if (searchType == 1) {
             OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
                     .params("keyWord", content)
                     .execute(new StringCallback() {
@@ -277,15 +275,26 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
 
                             String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
-                            final JSONObject object = JSON.parseObject(jiemi);
-                            final JSONObject data = object.getJSONObject("data");
-                            final JSONArray array = data.getJSONArray("list");
 
-                            if (array.size() > 0) {
-                                setSearchRsult(content,1);
+                            Log.d("JADBSHBJDASDASDA", jiemi);
+
+                            final JSONObject object = JSON.parseObject(jiemi);
+                            final String status = object.getString("status");
+                            final String message = object.getString("message");
+
+                            if ("200".equals(status)) {
+                                final JSONObject data = object.getJSONObject("data");
+                                final JSONArray array = data.getJSONArray("list");
+                                if (array.size() > 0) {
+                                    setSearchRsult(content, 1);
+                                } else {
+                                    mMsgView.showSearchEmpty();
+                                }
                             } else {
-                                mMsgView.showSearchEmpty();
+                                ToastUtil.shortToast(getContext(), message);
                             }
+
+
                         }
 
                         @Override
@@ -299,7 +308,7 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
                             mStopView.setVisibility(View.GONE);
                         }
                     });
-        }else if (searchType == 2){
+        } else if (searchType == 2) {
             OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
                     .params("keyWord", content)
                     .execute(new StringCallback() {
@@ -311,13 +320,19 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
                             String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                             final JSONObject object = JSON.parseObject(jiemi);
-                            final JSONObject data = object.getJSONObject("data");
-                            final JSONArray array = data.getJSONArray("list");
+                            final String status = object.getString("status");
+                            final String message = object.getString("message");
 
-                            if (array.size() > 0) {
-                                setSearchRsult(content,2);
+                            if ("200".equals(status)) {
+                                final JSONObject data = object.getJSONObject("data");
+                                final JSONArray array = data.getJSONArray("list");
+                                if (array.size() > 0) {
+                                    setSearchRsult(content, 1);
+                                } else {
+                                    mMsgView.showSearchEmpty();
+                                }
                             } else {
-                                mMsgView.showSearchEmpty();
+                                ToastUtil.shortToast(getContext(), message);
                             }
                         }
 
