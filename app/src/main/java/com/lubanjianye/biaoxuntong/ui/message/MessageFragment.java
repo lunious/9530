@@ -14,6 +14,7 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
+import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -84,34 +85,37 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
                 getActivity().onBackPressed();
                 break;
             case R.id.atv_yjyd:
-                String type = resulttStlTab.getCurrentTab() + 1 + "";
 
-                List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+                if (AppSharePreferenceMgr.contains(getContext(),EventMessage.LOGIN_SUCCSS)){
+                    String type = resulttStlTab.getCurrentTab() + 1 + "";
 
-                for (int i = 0; i < users.size(); i++) {
-                    id = users.get(0).getId();
-                }
-                OkGo.<String>post(BiaoXunTongApi.URL_YJYD)
-                        .params("type", type)
-                        .params("userId", id)
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onSuccess(Response<String> response) {
+                    List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
 
-                                final JSONObject object = JSON.parseObject(response.body());
-                                final String status = object.getString("status");
-                                final String message = object.getString("message");
+                    for (int i = 0; i < users.size(); i++) {
+                        id = users.get(0).getId();
+                    }
+                    OkGo.<String>post(BiaoXunTongApi.URL_YJYD)
+                            .params("type", type)
+                            .params("userId", id)
+                            .execute(new StringCallback() {
+                                @Override
+                                public void onSuccess(Response<String> response) {
 
-                                if ("200".equals(status)) {
-                                    ToastUtil.shortBottonToast(getContext(), message);
-                                    //改变已读未读状态
-                                    EventBus.getDefault().post(new EventMessage(EventMessage.READ_STATUS));
-                                } else {
-                                    ToastUtil.shortBottonToast(getContext(), message);
+                                    final JSONObject object = JSON.parseObject(response.body());
+                                    final String status = object.getString("status");
+                                    final String message = object.getString("message");
+
+                                    if ("200".equals(status)) {
+                                        ToastUtil.shortBottonToast(getContext(), message);
+                                        //改变已读未读状态
+                                        EventBus.getDefault().post(new EventMessage(EventMessage.READ_STATUS));
+                                    } else {
+                                        ToastUtil.shortBottonToast(getContext(), message);
+                                    }
+
                                 }
-
-                            }
-                        });
+                            });
+                }
                 break;
             default:
                 break;

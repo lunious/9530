@@ -44,6 +44,7 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
     protected EditText etRegisterCode = null;
     protected TextView tvRegisterSmsCall = null;
     protected EditText etRegisterPwd = null;
+    protected EditText etRegisterPwdSure = null;
     protected AppCompatTextView btRegisterSubmit = null;
     protected TextView tvZhucexieyi = null;
 
@@ -64,6 +65,7 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         etRegisterCode = getView().findViewById(R.id.et_register_code);
         tvRegisterSmsCall = getView().findViewById(R.id.tv_register_sms_call);
         etRegisterPwd = getView().findViewById(R.id.et_register_pwd);
+        etRegisterPwdSure = getView().findViewById(R.id.et_register_pwd_sure);
         btRegisterSubmit = getView().findViewById(R.id.bt_register_submit);
         tvZhucexieyi = getView().findViewById(R.id.tv_zhucexieyi);
         llIvBack.setOnClickListener(this);
@@ -144,8 +146,6 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
             @SuppressWarnings("deprecation")
             @Override
             public void afterTextChanged(Editable s) {
-                int length = s.length();
-                String pwd = etRegisterPwd.getText().toString().trim();
 
             }
         });
@@ -255,6 +255,7 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         final String mobile = etRegisterUsername.getText().toString().trim();
         final String code = etRegisterCode.getText().toString().trim();
         final String pass = etRegisterPwd.getText().toString().trim();
+        final String pass_sure = etRegisterPwdSure.getText().toString().trim();
         if (TextUtils.isEmpty(mobile)) {
             ToastUtil.shortBottonToast(getContext(), "请输入手机号");
 
@@ -265,8 +266,13 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
 
             return;
         }
-        if (TextUtils.isEmpty(pass)) {
+        if (TextUtils.isEmpty(pass) || pass.length() < 5 || pass.length() > 12) {
             ToastUtil.shortBottonToast(getContext(), "密码格式不对");
+            return;
+        }
+
+        if (!pass.equals(pass_sure)) {
+            ToastUtil.shortBottonToast(getContext(), "两次输入密码不一致");
             return;
         }
 

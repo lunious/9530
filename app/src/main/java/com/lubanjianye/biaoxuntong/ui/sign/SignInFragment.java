@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.LinearLayout;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -22,9 +23,12 @@ import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+
 import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import me.shaohui.shareutil.LoginUtil;
 import me.shaohui.shareutil.login.LoginListener;
 import me.shaohui.shareutil.login.LoginPlatform;

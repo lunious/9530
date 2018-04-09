@@ -49,8 +49,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/result_vp"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/d200"
-            android:background="@color/main_status_white" />
+            android:layout_height="@dimen/d200" />
 
 
         <RelativeLayout
@@ -72,7 +71,7 @@
                 android:paddingTop="@dimen/d2"
                 android:text="立即注册>>"
                 android:textColor="@color/main_theme_color"
-                android:textSize="@dimen/d14" />
+                android:textSize="@dimen/d15" />
 
 
             <android.support.v7.widget.AppCompatTextView
@@ -86,7 +85,7 @@
                 android:paddingTop="@dimen/d2"
                 android:text="忘记密码？"
                 android:textColor="@color/search_hint"
-                android:textSize="@dimen/d14" />
+                android:textSize="@dimen/d15" />
         </RelativeLayout>
 
 

@@ -13,7 +13,7 @@
         android:layout_height="@dimen/d48"
         android:layout_marginLeft="@dimen/d30"
         android:layout_marginRight="@dimen/d30"
-        android:layout_marginTop="@dimen/d32"
+        android:layout_marginTop="@dimen/d28"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -48,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/d48"
         android:layout_marginLeft="@dimen/d30"
-        android:layout_marginRight="@dimen/d30"
+        android:layout_marginRight="@dimen/d20"
         android:layout_marginTop="@dimen/d14"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -116,7 +116,45 @@
             android:layout_marginRight="@dimen/d16"
             android:layout_weight="1"
             android:background="@null"
-            android:hint="密码由6~12位数字或字母组成"
+            android:hint="设置密码（6~12位数字或字母组成）"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingLeft="@dimen/d4"
+            android:paddingRight="@dimen/d4"
+            android:textColor="#000000"
+            android:textColorHint="#c9c9c9"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/d16" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="6px"
+        android:layout_marginLeft="@dimen/d30"
+        android:layout_marginRight="@dimen/d30"
+        android:background="#f9eeeeee" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d48"
+        android:layout_marginLeft="@dimen/d30"
+        android:layout_marginRight="@dimen/d30"
+        android:layout_marginTop="@dimen/d16"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <EditText
+            android:id="@+id/et_register_pwd_sure"
+            android:layout_width="@dimen/d0"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/d16"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="确认密码"
             android:inputType="textPassword"
             android:maxLines="1"
             android:minLines="1"
