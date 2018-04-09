@@ -635,7 +635,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
     @AfterPermissionGranted(RC_STORAGE_AND_LOCATION)
     public void requestStorage_location() {
-        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION};
+        String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.READ_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(getContext(), perms)) {
             // 检查更新
             if (NetUtil.isNetworkConnected(getActivity())) {
@@ -718,7 +718,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-
 
         if (!AppSharePreferenceMgr.contains(getContext(), EventMessage.IF_ASK_LOCATION)) {
             if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
