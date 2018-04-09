@@ -448,6 +448,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
         for (int i = 0; i < users.size(); i++) {
             id = users.get(0).getId();
             imageUrl = users.get(0).getImageUrl();
+            token = users.get(0).getToken();
 
         }
 

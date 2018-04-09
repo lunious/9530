@@ -1,5 +1,6 @@
 package com.lubanjianye.biaoxuntong.ui.main.index;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -37,10 +38,17 @@ import com.lubanjianye.biaoxuntong.ui.citypicker.model.City;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.HotCity;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.LocatedCity;
 import com.lubanjianye.biaoxuntong.ui.main.index.sortcolumn.SortColumnActivity;
+import com.lubanjianye.biaoxuntong.ui.update.UpdateAppBean;
+import com.lubanjianye.biaoxuntong.ui.update.UpdateAppManager;
+import com.lubanjianye.biaoxuntong.ui.update.UpdateCallback;
+import com.lubanjianye.biaoxuntong.ui.update.utils.OkGoUpdateHttpUtil;
+import com.lubanjianye.biaoxuntong.util.appinfo.AppApplicationMgr;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
+import com.lubanjianye.biaoxuntong.util.rx.RxPermissionsTool;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
@@ -53,7 +61,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
@@ -149,7 +159,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
         }
 
 
-
     }
 
 
@@ -184,22 +193,16 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
         hotCities.add(new HotCity("重庆", "重庆", null));
 
 
-        BiaoXunTong.getHandler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //检查定位
-                locationTask();
-            }
-        }, 5000);
+        requestStorage_location();
 
 
-        if (AppSharePreferenceMgr.contains(getContext(),EventMessage.TOKEN_FALSE)){
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.TOKEN_FALSE)) {
 
             //token失效，需要重新登录
             final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
                 @Override
                 public void onClick(PromptButton button) {
-                    AppSharePreferenceMgr.remove(getContext(),EventMessage.TOKEN_FALSE);
+                    AppSharePreferenceMgr.remove(getContext(), EventMessage.TOKEN_FALSE);
                 }
             });
             cancel.setTextColor(Color.parseColor("#cccc33"));
@@ -208,7 +211,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
             final PromptButton toLogin = new PromptButton("重新登陆", new PromptButtonListener() {
                 @Override
                 public void onClick(PromptButton button) {
-                    AppSharePreferenceMgr.remove(getContext(),EventMessage.TOKEN_FALSE);
+                    AppSharePreferenceMgr.remove(getContext(), EventMessage.TOKEN_FALSE);
                     startActivity(new Intent(getActivity(), SignInActivity.class));
                 }
             });
@@ -554,7 +557,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
                                 @Override
                                 public void onLocate() {
-                                    AppSharePreferenceMgr.remove(getContext(),EventMessage.IF_ASK_LOCATION);
+                                    AppSharePreferenceMgr.remove(getContext(), EventMessage.IF_ASK_LOCATION);
                                     //开始定位，这里模拟一下定位
                                     setArea = true;
                                     locationTask();
@@ -596,7 +599,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                 @Override
                                 public void onLocate() {
                                     //开始定位，这里模拟一下定位
-                                    AppSharePreferenceMgr.remove(getContext(),EventMessage.IF_ASK_LOCATION);
+                                    AppSharePreferenceMgr.remove(getContext(), EventMessage.IF_ASK_LOCATION);
                                     setArea = true;
                                     locationTask();
 
@@ -619,16 +622,32 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
             //开始定位
             mLocationClient.start();
         } else {
-            // Ask for one permission
-            EasyPermissions.requestPermissions(
-                    this,
-                    getString(R.string.rationale_location),
-                    RC_LOCATION_PERM,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION);
+            // 没有权限
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_location),
+                    RC_LOCATION_PERM, android.Manifest.permission.ACCESS_FINE_LOCATION);
 
         }
 
+    }
 
+    //定位和存储权限
+    private static final int RC_STORAGE_AND_LOCATION = 0x01;
+
+    @AfterPermissionGranted(RC_STORAGE_AND_LOCATION)
+    public void requestStorage_location() {
+        String[] perms = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION};
+        if (EasyPermissions.hasPermissions(getContext(), perms)) {
+            // 检查更新
+            if (NetUtil.isNetworkConnected(getActivity())) {
+                updateDiy();
+            }
+            //开始定位
+            mLocationClient.start();
+        } else {
+            // 没有权限
+            EasyPermissions.requestPermissions(this, getString(R.string.rationale_storage_location),
+                    RC_STORAGE_AND_LOCATION, perms);
+        }
     }
 
     @Override
@@ -647,14 +666,14 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
         String province = bdLocation.getProvince();
         locationArea = province.substring(0, province.length() - 1);
 
-        if (!AppSharePreferenceMgr.contains(getApplicationContext(),EventMessage.NO_CHANGE_AREA)){
+        if (!AppSharePreferenceMgr.contains(getApplicationContext(), EventMessage.NO_CHANGE_AREA)) {
             String area = tv_location.getText().toString();
             if (!area.equals(locationArea)) {
                 //是否切换地区
                 final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
                     @Override
                     public void onClick(PromptButton button) {
-                        AppSharePreferenceMgr.put(getApplicationContext(),EventMessage.NO_CHANGE_AREA,"no_change_area");
+                        AppSharePreferenceMgr.put(getApplicationContext(), EventMessage.NO_CHANGE_AREA, "no_change_area");
                     }
                 });
                 cancel.setTextColor(getResources().getColor(R.color.main_status_yellow));
@@ -686,8 +705,8 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
             }
         }
 
-        if (setArea){
-            CityPicker.getInstance().locateComplete(new LocatedCity(locationArea,"",""),locationArea == null?LocateState.FAILURE:LocateState.SUCCESS);
+        if (setArea) {
+            CityPicker.getInstance().locateComplete(new LocatedCity(locationArea, "", ""), locationArea == null ? LocateState.FAILURE : LocateState.SUCCESS);
         }
 
     }
@@ -695,14 +714,14 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
         mLocationClient.start();
-}
+    }
 
     @Override
     public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
 
 
-        if (!AppSharePreferenceMgr.contains(getContext(),EventMessage.IF_ASK_LOCATION)){
-            if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)){
+        if (!AppSharePreferenceMgr.contains(getContext(), EventMessage.IF_ASK_LOCATION)) {
+            if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
                 DialogHelper.getConfirmDialog(getContext(), "温馨提示", "你已多次拒绝定位权限，为了得到更好的服务，请到设置中开启定位权限", "去设置", "取消", false, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -711,12 +730,122 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                 }, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        AppSharePreferenceMgr.put(getContext(),EventMessage.IF_ASK_LOCATION,"no_location");
+                        AppSharePreferenceMgr.put(getContext(), EventMessage.IF_ASK_LOCATION, "no_location");
                     }
                 }).show();
             }
         }
 
+
+    }
+
+    /**
+     * 自定义接口协议
+     */
+    public void updateDiy() {
+
+        int versionCode = AppApplicationMgr.getVersionCode(BiaoXunTong.getApplicationContext());
+
+        Map<String, String> params = new HashMap<String, String>();
+
+        params.put("versionCode", String.valueOf(versionCode));
+
+
+        new UpdateAppManager
+                .Builder()
+                //必须设置，当前Activity
+                .setActivity(getActivity())
+                //必须设置，实现httpManager接口的对象
+                .setHttpManager(new OkGoUpdateHttpUtil())
+                //必须设置，更新地址
+                .setUpdateUrl(BiaoXunTongApi.URL_UPDATE)
+
+                //以下设置，都是可选
+                //设置请求方式，默认get
+                .setPost(true)
+                //不显示通知栏进度条
+//                .dismissNotificationProgress()
+                //是否忽略版本
+//                .showIgnoreVersion()
+                //添加自定义参数，默认version=1.0.0（app的versionName）；apkKey=唯一表示（在AndroidManifest.xml配置）
+                .setParams(params)
+                //设置点击升级后，消失对话框，默认点击升级后，对话框显示下载进度
+                .hideDialogOnDownloading(false)
+                //设置头部，不设置显示默认的图片，设置图片后自动识别主色调，然后为按钮，进度条设置颜色
+//                .setTopPic(R.mipmap.top_8)
+                //为按钮，进度条设置颜色。
+                .setThemeColor(0xffffac5d)
+                //设置apk下砸路径，默认是在下载到sd卡下/Download/1.0.0/test.apk
+//                .setTargetPath(path)
+                //设置appKey，默认从AndroidManifest.xml获取，如果，使用自定义参数，则此项无效
+//                .setAppKey("ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f")
+
+                .build()
+                //检测是否有新版本
+                .checkNewApp(new UpdateCallback() {
+                    /**
+                     * 解析json,自定义协议
+                     *
+                     * @param json 服务器返回的json
+                     * @return UpdateAppBean
+                     */
+                    @Override
+                    protected UpdateAppBean parseJson(String json) {
+                        final JSONObject object = JSON.parseObject(json);
+                        String status = object.getString("status");
+                        UpdateAppBean updateAppBean = new UpdateAppBean();
+
+                        if ("200".equals(status)) {
+                            final JSONObject data = object.getJSONObject("data");
+                            String name = data.getString("name");
+                            String content = data.getString("content");
+                            String url = data.getString("downloadUrl");
+
+
+                            String doUrl = "http://openbox.mobilem.360.cn/index/d/sid/3958155";
+
+                            updateAppBean
+                                    //（必须）是否更新Yes,No
+                                    .setUpdate("Yes")
+                                    //（必须）新版本号，
+                                    .setNewVersion(name)
+                                    //（必须）下载地址
+                                    .setApkFileUrl(doUrl)
+                                    //（必须）更新内容
+                                    .setUpdateLog(content)
+                                    //是否强制更新，可以不设置
+                                    .setConstraint(false);
+
+                        }
+                        return updateAppBean;
+                    }
+
+                    @Override
+                    protected void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
+                        updateAppManager.showDialogFragment();
+                    }
+
+                    /**
+                     * 网络请求之前
+                     */
+                    @Override
+                    public void onBefore() {
+                    }
+
+                    /**
+                     * 网路请求之后
+                     */
+                    @Override
+                    public void onAfter() {
+                    }
+
+                    /**
+                     * 没有新版本
+                     */
+                    @Override
+                    public void noNewApp() {
+                    }
+                });
 
     }
 }

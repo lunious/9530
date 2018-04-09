@@ -3,6 +3,7 @@ package com.lubanjianye.biaoxuntong.ui.sign;
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -127,6 +128,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                         nickName = user.getNickname();
                         String openid = mToken.getOpenid();
                         imageUrl = user.getqZoneHeadImageLarge();
+
 
                         OkGo.<String>post(BiaoXunTongApi.URL_QQLOGIN)
                                 .params("Source", "3")

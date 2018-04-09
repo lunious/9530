@@ -53,6 +53,9 @@ public class LauncherFragment extends BaseFragment {
                 userId = users.get(0).getId();
                 token = users.get(0).getToken();
             }
+
+
+
             OkGo.<String>post(BiaoXunTongApi.URL_CHECKTOKEN)
                     .params("userId", userId)
                     .params("token", token)
@@ -60,8 +63,6 @@ public class LauncherFragment extends BaseFragment {
                         @Override
                         public void onSuccess(Response<String> response) {
 
-
-                            Log.d("UASDBBASDASDA", response.body());
 
                             if ("200".equals(response.body()) || "400".equals(response.body())) {
                                 //token有效
