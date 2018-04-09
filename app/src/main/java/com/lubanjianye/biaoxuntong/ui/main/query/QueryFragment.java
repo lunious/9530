@@ -16,13 +16,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.gongwen.marqueen.MarqueeFactory;
-import com.gongwen.marqueen.SimpleMF;
-import com.gongwen.marqueen.SimpleMarqueeView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
@@ -38,6 +34,7 @@ import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
+import com.lubanjianye.biaoxuntong.util.rx.RxTextViewVertical;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
@@ -58,14 +55,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.fragment
- * 文件名:   IndexTabFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/9  0:33
- * 描述:     TODO
- */
 
 public class QueryFragment extends BaseFragment implements View.OnClickListener {
 
@@ -82,7 +71,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     private View view = null;
     private LinearLayout ll = null;
     private AppCompatTextView btnStartSearch = null;
-    private SimpleMarqueeView scrollView = null;
+    private RxTextViewVertical mRxVText = null;
     private AppCompatTextView vipDetail = null;
     private LinearLayout llSearch = null;
     private SwipeMenuRecyclerView rlv_query = null;
@@ -138,25 +127,37 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     private ArrayList<QueryBean> mDataList = new ArrayList<>();
 
     //跑马灯相关
-    private List<String> datas = null;
+    private ArrayList<String> titleList = new ArrayList<String>();
 
-    private void initMarqueeView() {
-        SimpleMF<String> marqueeFactory = new SimpleMF(getContext());
-        marqueeFactory.setData(datas);
-        scrollView.setMarqueeFactory(marqueeFactory);
-        scrollView.startFlipping();
-        marqueeFactory.setOnItemClickListener(new MarqueeFactory.OnItemClickListener<TextView, String>() {
+
+    private void initRunText() {
+        mRxVText.setTextList(titleList);
+        //设置属性
+        mRxVText.setText(14, 4, 0xff9e9e9e);
+        //设置停留时长间隔
+        mRxVText.setTextStillTime(4000);
+        //设置进入和退出的时间间隔
+        mRxVText.setAnimTime(400);
+        mRxVText.setOnItemClickListener(new RxTextViewVertical.OnItemClickListener() {
             @Override
-            public void onItemClickListener(MarqueeFactory.ViewHolder<TextView, String> holder) {
-                etQuery.setText(holder.data);
-                etQuery.setSelection(holder.data.length());
+            public void onItemClick(int position) {
+                etQuery.setText(titleList.get(position));
+                etQuery.setSelection(titleList.get(position).length());
                 llSearch.setVisibility(View.VISIBLE);
             }
         });
+
+        mRxVText.startAutoScroll();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mRxVText.stopAutoScroll();
     }
 
     private void getScrollViewData() {
-        datas = new ArrayList<>();
 
         OkGo.<String>post("http://www.lubanjianye.com/query/vipNames")
                 .cacheMode(CacheMode.IF_NONE_CACHE_REQUEST)
@@ -170,9 +171,9 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
                         if (array != null) {
                             for (int j = 0; j < array.size(); j++) {
-                                datas.add(array.get(j).toString());
+                                titleList.add(array.get(j).toString());
                             }
-                            initMarqueeView();
+                            initRunText();
                         }
                     }
 
@@ -183,9 +184,9 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
                         if (array != null) {
                             for (int j = 0; j < array.size(); j++) {
-                                datas.add(array.get(j).toString());
+                                titleList.add(array.get(j).toString());
                             }
-                            initMarqueeView();
+                            initRunText();
                         }
                     }
                 });
@@ -203,7 +204,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
         //注册EventBus
         EventBus.getDefault().register(this);
 
-
         mainBarName = getView().findViewById(R.id.main_bar_name);
         etQuery = getView().findViewById(R.id.et_query);
         tvQuery = getView().findViewById(R.id.tv_query);
@@ -217,7 +217,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
         view = getView().findViewById(R.id.view);
         ll = getView().findViewById(R.id.ll);
         btnStartSearch = getView().findViewById(R.id.btn_start_search);
-        scrollView = getView().findViewById(R.id.scroll_view);
+        mRxVText = getView().findViewById(R.id.scroll_view);
         vipDetail = getView().findViewById(R.id.vip_detail);
         llSearch = getView().findViewById(R.id.ll_search);
         rlv_query = getView().findViewById(R.id.rlv_query);
@@ -250,7 +250,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             mDataList.clear();
             mAdapter.notifyDataSetChanged();
 
-            if (Qylist.size() > 0){
+            if (Qylist.size() > 0) {
                 Qylist.clear();
             }
 
@@ -263,23 +263,23 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             tvQy.setText("地区范围");
 
 
-            if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)){
-                String area = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA,"");
+            if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
+                String area = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
 
-                if (area.equals("四川")){
+                if (area.equals("四川")) {
                     provinceCode = "510000";
                     Qylist.add("川内");
                     Qylist.add("入川");
                     Qylist.add("川内+入川");
                     Qylist.add("全国");
-                }else if (area.equals("重庆")){
+                } else if (area.equals("重庆")) {
                     provinceCode = "500000";
                     Qylist.add("渝内");
                     Qylist.add("入渝");
                     Qylist.add("渝内+入渝");
                     Qylist.add("全国");
                 }
-            }else {
+            } else {
                 provinceCode = "510000";
                 Qylist.add("川内");
                 Qylist.add("入川");
@@ -301,23 +301,23 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
         initRecyclerView();
         initAdapter();
 
-        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)){
-            String area = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA,"");
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
+            String area = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
 
-            if (area.equals("四川")){
+            if (area.equals("四川")) {
                 provinceCode = "510000";
                 Qylist.add("川内");
                 Qylist.add("入川");
                 Qylist.add("川内+入川");
                 Qylist.add("全国");
-            }else if (area.equals("重庆")){
+            } else if (area.equals("重庆")) {
                 provinceCode = "500000";
                 Qylist.add("渝内");
                 Qylist.add("入渝");
                 Qylist.add("渝内+入渝");
                 Qylist.add("全国");
             }
-        }else {
+        } else {
             provinceCode = "510000";
             Qylist.add("川内");
             Qylist.add("入川");

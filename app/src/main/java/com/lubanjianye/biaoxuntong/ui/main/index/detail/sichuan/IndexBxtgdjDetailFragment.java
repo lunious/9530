@@ -41,14 +41,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-/**
- * 项目名:   Lunioussky
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.index.detail
- * 文件名:   IndexBxtgdjDetailFragment
- * 创建者:   lunious
- * 创建时间: 2017/10/26  23:10
- * 描述:     TODO
- */
 
 public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
 
