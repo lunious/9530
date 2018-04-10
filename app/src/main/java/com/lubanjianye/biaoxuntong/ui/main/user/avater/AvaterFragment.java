@@ -496,7 +496,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                                 nickName = name;
                                 tvUserName.setText(name);
                             } else {
-                                tvUserName.setText("点击设置");
+                                tvUserName.setText(nickName);
                             }
 
                             String xingbie = user.getString("sex");
