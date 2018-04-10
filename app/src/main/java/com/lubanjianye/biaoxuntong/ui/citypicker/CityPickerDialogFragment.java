@@ -39,10 +39,6 @@ import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @Author: Bro0cL
- * @Date: 2018/2/6 20:50
- */
 public class CityPickerDialogFragment extends AppCompatDialogFragment implements TextWatcher,
         View.OnClickListener, SideIndexBar.OnIndexTouchedChangedListener, InnerListener {
     private View mContentView;
@@ -276,7 +272,7 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
                     mOnPickListener.onPick(position, data);
                     dismiss();
                 } else {
-                    ToastUtil.shortToast(getContext(), "暂不支持该地区，敬请期待!");
+                    ToastUtil.shortToast(getContext(), "数据上线中，敬请期待!");
                 }
 
             }

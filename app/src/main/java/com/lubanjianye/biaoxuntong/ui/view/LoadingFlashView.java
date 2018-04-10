@@ -16,9 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * Created by Administrator on 2017/4/19 0019.
- */
 
 public class LoadingFlashView extends FrameLayout {
 
@@ -87,7 +84,7 @@ public class LoadingFlashView extends FrameLayout {
         List<ImageView> imageViewList = Arrays.asList(mLoad1,mLoad2);
         List<Animator> animatorList = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
-            ObjectAnimator loadAnimator = ObjectAnimator.ofFloat(imageViewList.get(i), "alpha", new float[]{1.0F, 0.4F}).setDuration(600L);
+            ObjectAnimator loadAnimator = ObjectAnimator.ofFloat(imageViewList.get(i), "alpha", new float[]{1.0F, 0.5F}).setDuration(500L);
             loadAnimator.setStartDelay(100 * i);
             loadAnimator.setRepeatMode(ObjectAnimator.REVERSE);
             loadAnimator.setRepeatCount(-1);

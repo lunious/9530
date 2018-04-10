@@ -86,9 +86,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingEnd="@dimen/d8"
-            android:paddingStart="@dimen/d8">
+            android:orientation="vertical">
 
 
             <LinearLayout
@@ -98,12 +96,14 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginBottom="@dimen/d14"
                 android:layout_marginTop="@dimen/d14"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/d8"
+                android:paddingStart="@dimen/d8">
 
 
                 <ImageView
-                    android:layout_width="@dimen/d20"
-                    android:layout_height="@dimen/d20"
+                    android:layout_width="@dimen/d26"
+                    android:layout_height="@dimen/d26"
                     android:layout_gravity="center_vertical"
                     android:src="@mipmap/qyzz" />
 
@@ -113,7 +113,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/d8"
                     android:text="企业名称"
-                    android:textColor="#ff434343"
+                    android:textColor="#6c6c6c"
                     android:textSize="@dimen/d16" />
 
                 <RelativeLayout
@@ -127,10 +127,11 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:gravity="center"
+                        android:maxLines="1"
                         android:paddingRight="@dimen/d10"
-                        android:text="未来科技有限公司"
+                        android:text=""
                         android:textColor="#9c9c9c"
-                        android:textSize="@dimen/d15" />
+                        android:textSize="@dimen/d16" />
 
                 </RelativeLayout>
 
@@ -140,7 +141,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/d10"
+                android:layout_height="@dimen/d20"
                 android:layout_marginBottom="@dimen/d14"
                 android:background="#eeeeee" />
 
@@ -153,7 +154,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/d32"
-                    android:background="@mipmap/myqyzz"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:layout_marginRight="@dimen/d10"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -164,8 +166,8 @@
                         android:layout_weight="4"
                         android:gravity="center"
                         android:text="企业资质"
-                        android:textColor="@color/main_status_white"
-                        android:textSize="@dimen/d16" />
+                        android:textColor="@color/main_text_color"
+                        android:textSize="@dimen/d18" />
 
 
                 </LinearLayout>
@@ -229,7 +231,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/d8"
+                    android:layout_height="@dimen/d16"
                     android:layout_marginBottom="@dimen/d14"
                     android:layout_marginTop="@dimen/d14"
                     android:background="#eeeeee" />
@@ -238,7 +240,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/d32"
-                    android:background="@mipmap/myqyzz"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:layout_marginRight="@dimen/d10"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -249,8 +252,8 @@
                         android:layout_weight="4"
                         android:gravity="center"
                         android:text="人员资格"
-                        android:textColor="@color/main_status_white"
-                        android:textSize="@dimen/d16" />
+                        android:textColor="@color/main_text_color"
+                        android:textSize="@dimen/d18" />
 
 
                 </LinearLayout>
@@ -316,7 +319,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/d8"
+                    android:layout_height="@dimen/d16"
                     android:layout_marginBottom="@dimen/d14"
                     android:layout_marginTop="@dimen/d14"
                     android:background="#eeeeee" />
@@ -325,7 +328,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/d32"
-                    android:background="@mipmap/myqyzz"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:layout_marginRight="@dimen/d10"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -336,8 +340,8 @@
                         android:layout_weight="4"
                         android:gravity="center"
                         android:text="企业业绩"
-                        android:textColor="@color/main_status_white"
-                        android:textSize="@dimen/d16" />
+                        android:textColor="@color/main_text_color"
+                        android:textSize="@dimen/d18" />
 
 
                 </LinearLayout>

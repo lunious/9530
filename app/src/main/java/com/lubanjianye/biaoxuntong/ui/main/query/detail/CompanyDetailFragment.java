@@ -31,14 +31,6 @@ import com.lzy.okgo.model.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.query.detail
- * 文件名:   CompanyDetailFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/15  23:37
- * 描述:     TODO
- */
 
 public class CompanyDetailFragment extends BaseFragment implements View.OnClickListener {
 
@@ -189,7 +181,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
     @Override
     public void initData() {
         llIvBack.setVisibility(View.VISIBLE);
-        mainBarName.setText("公司详情");
+        mainBarName.setText("企业详情");
         companyDetailStatusView.setOnRetryClickListener(mRetryClickListener);
     }
 

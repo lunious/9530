@@ -32,14 +32,6 @@ import com.lzy.okgo.model.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.user.company
- * 文件名:   MyCompanyFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/15  14:22
- * 描述:     TODO
- */
 
 public class MyCompanyFragment extends BaseFragment implements View.OnClickListener {
 
