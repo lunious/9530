@@ -86,7 +86,7 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.atv_yjyd:
 
-                if (AppSharePreferenceMgr.contains(getContext(),EventMessage.LOGIN_SUCCSS)){
+                if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                     String type = resulttStlTab.getCurrentTab() + 1 + "";
 
                     List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
@@ -115,6 +115,8 @@ public class MessageFragment extends BaseFragment implements View.OnClickListene
 
                                 }
                             });
+                } else {
+                    ToastUtil.shortToast(getContext(), "暂无未读标讯");
                 }
                 break;
             default:

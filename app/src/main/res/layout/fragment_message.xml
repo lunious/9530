@@ -66,6 +66,7 @@
                 android:layout_gravity="center"
                 android:background="#00ffffff"
                 android:text="一键已读"
+                android:layout_marginRight="@dimen/d4"
                 android:textColor="@color/main_status_white"
                 android:textSize="@dimen/d13" />
 

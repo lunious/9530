@@ -96,7 +96,7 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         dbManager = new DBManager(getContext());
         mAllCities = dbManager.getAllCities();
         mAllCities.add(0, mLocatedCity);
-        mAllCities.add(1, new HotCity("热门城市", "未知", "0"));
+        mAllCities.add(1, new HotCity("热门地区", "未知", "0"));
         mResults = mAllCities;
     }
 
