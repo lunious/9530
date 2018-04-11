@@ -150,8 +150,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="认证手机"
-                android:textSize="@dimen/d16"
-                android:textColor="@color/main_status_red"/>
+                android:textSize="@dimen/d16" />
 
 
 

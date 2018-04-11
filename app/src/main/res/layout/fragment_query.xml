@@ -364,7 +364,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/d0"
-            android:layout_marginBottom="@dimen/d8"
+            android:layout_marginBottom="@dimen/d2"
             android:layout_marginLeft="@dimen/d8"
             android:layout_marginRight="@dimen/d8"
             android:layout_marginTop="@dimen/d4"
