@@ -46,10 +46,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 
 
-/**
- * Created by 11645 on 2018/3/22.
- */
-
 public class IndexCqsggjyDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
@@ -244,6 +240,13 @@ public class IndexCqsggjyDetailFragment extends BaseFragment implements View.OnC
     private String jgEntityId = "";
 
     private void requestData() {
+
+
+        if ("1".equals(ajaxlogtype)) {
+            //改变已读未读状态
+            EventBus.getDefault().post(new EventMessage(EventMessage.READ_STATUS));
+        }
+
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             indexSggjyDetailStatusView.showNoNetwork();

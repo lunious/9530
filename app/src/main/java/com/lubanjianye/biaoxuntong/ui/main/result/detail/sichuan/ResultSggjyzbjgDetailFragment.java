@@ -247,6 +247,11 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
 
     private void requestData() {
 
+        if ("1".equals(ajaxType)) {
+            //改变已读未读状态
+            EventBus.getDefault().post(new EventMessage(EventMessage.READ_STATUS));
+        }
+
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             sggjyDetailStatusView.showNoNetwork();

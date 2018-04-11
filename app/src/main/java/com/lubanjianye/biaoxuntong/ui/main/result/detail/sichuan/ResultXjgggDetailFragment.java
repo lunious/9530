@@ -49,14 +49,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.result.detail
- * 文件名:   ResultXjgggDetailFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/12  20:49
- * 描述:     TODO
- */
+
 
 public class ResultXjgggDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
 
@@ -244,6 +237,11 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
     };
 
     private void requestData() {
+
+        if ("1".equals(ajaxType)) {
+            //改变已读未读状态
+            EventBus.getDefault().post(new EventMessage(EventMessage.READ_STATUS));
+        }
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             xjgggDetailStatusView.showNoNetwork();

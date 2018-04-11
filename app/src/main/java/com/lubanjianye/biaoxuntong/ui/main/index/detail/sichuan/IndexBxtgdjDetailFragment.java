@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
@@ -216,13 +217,16 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
 
     private void requestData() {
 
+        if ("1".equals(ajaxType)) {
+            //改变已读未读状态
+            EventBus.getDefault().post(new EventMessage(EventMessage.READ_STATUS));
+        }
+
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             bxtgdjDetailStatusView.showNoNetwork();
         } else {
             bxtgdjDetailStatusView.showLoading();
-
-
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                 List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
 

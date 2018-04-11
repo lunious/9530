@@ -40,14 +40,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-/**
- * 项目名:   Lunioussky
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.index.detail
- * 文件名:   IndexSggjycgrowDetailFragment
- * 创建者:   lunious
- * 创建时间: 2017/11/14  9:39
- * 描述:     TODO
- */
 
 public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
 
@@ -211,6 +203,13 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
     private long id = 0;
 
     private void requestData() {
+
+
+        if ("1".equals(ajaxlogtype)) {
+            //改变已读未读状态
+            EventBus.getDefault().post(new EventMessage(EventMessage.READ_STATUS));
+        }
+
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             sggjycgrowDetailStatusView.showNoNetwork();

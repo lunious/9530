@@ -9,7 +9,6 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -22,7 +21,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
 import com.just.agentweb.AgentWebConfig;
 import com.just.agentweb.AgentWebUtils;
-import com.just.agentweb.LogUtils;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
@@ -53,9 +51,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-/**
- * Created by 11645 on 2018/3/22.
- */
 
 public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
 
@@ -299,6 +294,10 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
 
     private void requestData() {
 
+        if ("1".equals(ajaxType)) {
+            //改变已读未读状态
+            EventBus.getDefault().post(new EventMessage(EventMessage.READ_STATUS));
+        }
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             sggjyDetailStatusView.showNoNetwork();
@@ -325,8 +324,6 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
                             public void onSuccess(Response<String> response) {
                                 String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
-
-                                Log.d("JADUISBDUBASDASDA", jiemi);
 
                                 //判断是否收藏过
                                 final JSONObject object = JSON.parseObject(jiemi);

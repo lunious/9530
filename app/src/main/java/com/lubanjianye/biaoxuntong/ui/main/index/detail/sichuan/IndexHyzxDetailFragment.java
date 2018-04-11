@@ -13,14 +13,6 @@ import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 
-/**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.index.detail
- * 文件名:   IndexHyzxDetailFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/16  10:35
- * 描述:     TODO
- */
 
 public class IndexHyzxDetailFragment extends BaseFragment implements View.OnClickListener {
 
@@ -133,6 +125,7 @@ public class IndexHyzxDetailFragment extends BaseFragment implements View.OnClic
 
 
     private void requestData() {
+
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             hyzxDetailStatusView.showNoNetwork();
