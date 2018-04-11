@@ -70,7 +70,7 @@
                             android:paddingTop="@dimen/d2"
                             android:text="未绑定企业"
                             android:textColor="@color/main_status_white"
-                            android:textSize="@dimen/d15" />
+                            android:textSize="@dimen/d16" />
                     </LinearLayout>
 
 
@@ -108,7 +108,7 @@
                 android:layout_marginTop="@dimen/d8"
                 android:text="点击头像登陆"
                 android:textColor="@android:color/white"
-                android:textSize="@dimen/d14" />
+                android:textSize="@dimen/d16" />
 
         </RelativeLayout>
     </FrameLayout>
@@ -168,7 +168,7 @@
                     android:padding="@dimen/d12">
 
                     <ImageView
-                        android:layout_width="@dimen/d16"
+                        android:layout_width="@dimen/d18"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/d8"
                         android:src="@mipmap/my_aptitude" />
@@ -179,7 +179,7 @@
                         android:layout_weight="1"
                         android:text="我的资质"
                         android:textColor="@color/main_text_color"
-                        android:textSize="@dimen/d14" />
+                        android:textSize="@dimen/d15" />
 
                     <ImageView
                         android:layout_width="@dimen/d16"
@@ -208,7 +208,7 @@
                     android:padding="@dimen/d12">
 
                     <ImageView
-                        android:layout_width="@dimen/d16"
+                        android:layout_width="@dimen/d18"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/d8"
                         android:src="@mipmap/official_service" />
@@ -219,13 +219,14 @@
                         android:layout_weight="1"
                         android:text="客服"
                         android:textColor="@color/main_text_color"
-                        android:textSize="@dimen/d14" />
+                        android:textSize="@dimen/d15" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/d6"
-                        android:text="400-028-9997" />
+                        android:text="400-028-9997"
+                        android:textSize="@dimen/d15"/>
 
                     <ImageView
                         android:layout_width="@dimen/d16"
@@ -269,7 +270,7 @@
                         android:padding="@dimen/d12">
 
                         <ImageView
-                            android:layout_width="@dimen/d16"
+                            android:layout_width="@dimen/d18"
                             android:layout_height="match_parent"
                             android:layout_marginEnd="@dimen/d8"
                             android:src="@mipmap/system_setting" />
@@ -280,7 +281,7 @@
                             android:layout_weight="1"
                             android:text="设置"
                             android:textColor="@color/main_text_color"
-                            android:textSize="@dimen/d14" />
+                            android:textSize="@dimen/d15" />
 
                         <ImageView
                             android:id="@+id/tv_all_account_arrow"
@@ -309,7 +310,7 @@
                     android:padding="@dimen/d12">
 
                     <ImageView
-                        android:layout_width="@dimen/d16"
+                        android:layout_width="@dimen/d18"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/d8"
                         android:src="@mipmap/nomal_question" />
@@ -320,7 +321,7 @@
                         android:layout_weight="1"
                         android:text="关于我们"
                         android:textColor="@color/main_text_color"
-                        android:textSize="@dimen/d14" />
+                        android:textSize="@dimen/d15" />
 
                     <ImageView
                         android:layout_width="@dimen/d16"

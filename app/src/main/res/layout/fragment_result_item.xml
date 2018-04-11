@@ -22,7 +22,7 @@
             android:maxLines="2"
             android:text="This is main title."
             android:textColor="#ff434343"
-            android:textSize="@dimen/d15" />
+            android:textSize="@dimen/d16" />
 
         <LinearLayout
             android:id="@+id/linear_temp"
@@ -39,7 +39,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="#ff999999"
-                android:textSize="@dimen/d13" />
+                android:textSize="@dimen/d14" />
         </LinearLayout>
 
 
@@ -58,8 +58,8 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="@dimen/d13"
-                    android:layout_height="@dimen/d13"
+                    android:layout_width="@dimen/d14"
+                    android:layout_height="@dimen/d14"
                     android:paddingTop="@dimen/d1"
                     android:src="@mipmap/search_icon" />
 

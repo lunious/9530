@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
+import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
@@ -20,6 +21,8 @@ import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultXjgggDeta
 import com.lubanjianye.biaoxuntong.util.notify.NotifyUtil;
 import com.mixpush.client.core.MixPushIntentService;
 import com.mixpush.client.core.MixPushMessage;
+
+import org.greenrobot.eventbus.EventBus;
 
 
 /**
@@ -147,6 +150,7 @@ public class PushService extends MixPushIntentService {
         notify.notify_biaoxuntong(pIntent, smallIcon, largeIcon, ticker,
                 title, content, true, true, false);
         currentNotify = notify;
+
     }
 
 }

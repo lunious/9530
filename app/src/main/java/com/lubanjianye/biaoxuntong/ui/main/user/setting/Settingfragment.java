@@ -44,14 +44,6 @@ import java.util.Map;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.user.setting
- * 文件名:   Settingfragment
- * 创建者:   lunious
- * 创建时间: 2017/12/11  23:13
- * 描述:     TODO
- */
 
 public class Settingfragment extends BaseFragment implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
 

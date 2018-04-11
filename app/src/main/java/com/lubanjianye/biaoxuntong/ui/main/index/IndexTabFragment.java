@@ -676,7 +676,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                         AppSharePreferenceMgr.put(getApplicationContext(), EventMessage.NO_CHANGE_AREA, "no_change_area");
                     }
                 });
-                cancel.setTextColor(getResources().getColor(R.color.main_status_yellow));
+                cancel.setTextColor(getResources().getColor(R.color.status_text_color));
                 cancel.setTextSize(16);
 
                 final PromptButton sure = new PromptButton("切      换", new PromptButtonListener() {

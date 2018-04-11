@@ -262,7 +262,7 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
 
                                     }
                                 });
-                                cancel.setTextColor(getResources().getColor(R.color.main_status_yellow));
+                                cancel.setTextColor(getResources().getColor(R.color.status_text_color));
                                 cancel.setTextSize(16);
 
                                 final PromptButton sure = new PromptButton("账号登录", new PromptButtonListener() {

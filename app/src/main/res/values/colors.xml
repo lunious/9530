@@ -21,9 +21,7 @@
     <color name="transparent">#00000000</color>
     <color name="search_hint">#9d9d9d</color>
     <color name="status_text_color">#6c6c6c</color>
-
     <color name="main_status_blue">#3399ff</color>
-    <color name="main_status_yellow">#ddcc33</color>
     <color name="main_status_red">#FF6666</color>
     <color name="main_status_light_gray">#fefefe</color>
     <color name="main_status_gray">#eeeeee</color>

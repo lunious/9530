@@ -1,14 +1,18 @@
 package com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
-import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -16,6 +20,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
+import com.just.agentweb.AgentWebConfig;
+import com.just.agentweb.AgentWebUtils;
+import com.just.agentweb.LogUtils;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
@@ -59,7 +66,6 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
     private LinearLayout llShare = null;
     private AppCompatTextView tvMainTitle = null;
     private AppCompatTextView tvDataTime = null;
-    private AppCompatTextView tv_content = null;
     private AppCompatTextView tvOwerDiyi = null;
     private AppCompatTextView tvOwerDier = null;
     private AppCompatTextView tvOwerDisan = null;
@@ -68,6 +74,7 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
     private MultipleStatusView sggjyDetailStatusView = null;
     private NestedScrollView detailNsv = null;
     private AppCompatTextView tvOwerZhaobiaodaili = null;
+    private WebView webView = null;
 
 
     private LinearLayout llWeiBoShare = null;
@@ -135,7 +142,6 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
         llShare = getView().findViewById(R.id.ll_share);
         tvMainTitle = getView().findViewById(R.id.tv_main_title);
         tvDataTime = getView().findViewById(R.id.tv_data_time);
-        tv_content = getView().findViewById(R.id.tv_content);
         tvOwerDiyi = getView().findViewById(R.id.tv_ower_diyi);
         tvOwerDier = getView().findViewById(R.id.tv_ower_dier);
         tvOwerDisan = getView().findViewById(R.id.tv_ower_disan);
@@ -149,6 +155,8 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
         llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
         llPyqShare = getView().findViewById(R.id.ll_pyq_share);
         tvOwerZhaobiaodaili = getView().findViewById(R.id.tv_ower_zhaobiaodaili);
+        webView = getView().findViewById(R.id.wv_content);
+
 
         llIvBack.setOnClickListener(this);
         llShare.setOnClickListener(this);
@@ -174,11 +182,76 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
 
     }
 
+    private void setWebView() {
+        WebSettings mWebSettings = webView.getSettings();
+        mWebSettings = webView.getSettings();
+        mWebSettings.setJavaScriptEnabled(true);
+        mWebSettings.setSupportZoom(true);
+        mWebSettings.setBuiltInZoomControls(false);
+        mWebSettings.setSavePassword(false);
+        if (AgentWebUtils.checkNetwork(webView.getContext())) {
+            //根据cache-control获取数据。
+            mWebSettings.setCacheMode(android.webkit.WebSettings.LOAD_DEFAULT);
+        } else {
+            //没网，则从本地获取，即离线加载
+            mWebSettings.setCacheMode(android.webkit.WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //适配5.0不允许http和https混合使用情况
+            mWebSettings.setMixedContentMode(android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
+
+        mWebSettings.setTextZoom(100);
+        mWebSettings.setDatabaseEnabled(true);
+        mWebSettings.setAppCacheEnabled(true);
+        mWebSettings.setLoadsImagesAutomatically(true);
+        mWebSettings.setSupportMultipleWindows(false);
+        mWebSettings.setBlockNetworkImage(false);//是否阻塞加载网络图片  协议http or https
+        mWebSettings.setAllowFileAccess(true); //允许加载本地文件html  file协议
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mWebSettings.setAllowFileAccessFromFileURLs(false); //通过 file url 加载的 Javascript 读取其他的本地文件 .建议关闭
+            mWebSettings.setAllowUniversalAccessFromFileURLs(false);//允许通过 file url 加载的 Javascript 可以访问其他的源，包括其他的文件和 http，https 等其他的源
+        }
+        mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+
+            mWebSettings.setLayoutAlgorithm(android.webkit.WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        } else {
+            mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+        }
+        mWebSettings.setLoadWithOverviewMode(true);
+        mWebSettings.setUseWideViewPort(true);
+        mWebSettings.setDomStorageEnabled(true);
+        mWebSettings.setNeedInitialFocus(true);
+        mWebSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
+        mWebSettings.setDefaultFontSize(16);
+        mWebSettings.setMinimumFontSize(12);//设置 WebView 支持的最小字体大小，默认为 8
+        mWebSettings.setGeolocationEnabled(true);
+        //
+        String dir = AgentWebConfig.getCachePath(webView.getContext());
+
+        //设置数据库路径  api19 已经废弃,这里只针对 webkit 起作用
+        mWebSettings.setGeolocationDatabasePath(dir);
+        mWebSettings.setDatabasePath(dir);
+        mWebSettings.setAppCachePath(dir);
+
+        //缓存文件最大值
+        mWebSettings.setAppCacheMaxSize(Long.MAX_VALUE);
+    }
+
     @Override
     public void initData() {
         llIvBack.setVisibility(View.VISIBLE);
         mainBarName.setText("工程招标中标公示详情");
         sggjyDetailStatusView.setOnRetryClickListener(mRetryClickListener);
+
+        setWebView();
 
     }
 
@@ -252,6 +325,9 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
                             public void onSuccess(Response<String> response) {
                                 String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
+
+                                Log.d("JADUISBDUBASDASDA", jiemi);
+
                                 //判断是否收藏过
                                 final JSONObject object = JSON.parseObject(jiemi);
                                 String status = object.getString("status");
@@ -295,9 +371,8 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
 
                                     String html = data.getString("html");
                                     if (!TextUtils.isEmpty(html)) {
-                                        tv_content.setText(Html.fromHtml(html));
+                                        webView.loadData(html, "text/html", "UTF-8");
                                     } else {
-                                        tv_content.setText("暂无");
                                     }
 
                                     String zbdlqy = data.getString("zbdlqy");
@@ -383,9 +458,8 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
 
                                     String html = data.getString("html");
                                     if (!TextUtils.isEmpty(html)) {
-                                        tv_content.setText(Html.fromHtml(html));
+                                        webView.loadData(html, "text/html", "UTF-8");
                                     } else {
-                                        tv_content.setText("暂无");
                                     }
                                     String zbdlqy = data.getString("zbdlqy");
                                     if (!TextUtils.isEmpty(zbdlqy)) {
