@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -36,7 +37,6 @@ import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
-import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
@@ -51,14 +51,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.result.detail
- * 文件名:   ResultSggjyzbjgDetailFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/12  21:29
- * 描述:     TODO
- */
 
 public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
 
@@ -398,20 +390,36 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                         tvOwerToubiaoxianjia.setText("暂无");
                                     }
                                     String oneTree = data.getString("oneTree");
+
                                     if (!TextUtils.isEmpty(oneTree)) {
-                                        tvOwerDiyi.setText(oneTree.substring(0, oneTree.indexOf("_")));
+                                        String s1 = oneTree.substring(0, oneTree.indexOf("_"));
+                                        if (oneTree.contains("/")) {
+                                            tvOwerDiyi.setText(s1.substring(0, s1.indexOf("/")));
+                                        } else {
+                                            tvOwerDiyi.setText(s1);
+                                        }
                                     } else {
                                         tvOwerDiyi.setText("暂无");
                                     }
                                     String twoTree = data.getString("twoTree");
                                     if (!TextUtils.isEmpty(twoTree)) {
-                                        tvOwerDier.setText(twoTree.substring(0, twoTree.indexOf("_")));
+                                        String s2 = twoTree.substring(0, twoTree.indexOf("_"));
+                                        if (oneTree.contains("/")) {
+                                            tvOwerDier.setText(s2.substring(0, s2.indexOf("/")));
+                                        } else {
+                                            tvOwerDier.setText(s2);
+                                        }
                                     } else {
                                         tvOwerDier.setText("暂无");
                                     }
                                     String threeTree = data.getString("threeTree");
                                     if (!TextUtils.isEmpty(threeTree)) {
-                                        tvOwerDisan.setText(threeTree.substring(0, threeTree.indexOf("_")));
+                                        String s3 = threeTree.substring(0, threeTree.indexOf("_"));
+                                        if (oneTree.contains("/")) {
+                                            tvOwerDisan.setText(s3.substring(0, s3.indexOf("/")));
+                                        } else {
+                                            tvOwerDisan.setText(s3);
+                                        }
                                     } else {
                                         tvOwerDisan.setText("暂无");
                                     }

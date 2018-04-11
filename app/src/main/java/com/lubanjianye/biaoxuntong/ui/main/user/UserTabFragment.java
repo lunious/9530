@@ -1,6 +1,5 @@
 package com.lubanjianye.biaoxuntong.ui.main.user;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.AppCompatTextView;
@@ -8,7 +7,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
@@ -36,14 +34,11 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
