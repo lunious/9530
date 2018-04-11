@@ -126,12 +126,12 @@ public class SearchHistoryFragment extends BaseFragment {
         String[] tabs = new String[]{"天然气", "道路", "基础设施","服务器", "扶贫产业", "搬迁", "污水处理", "隧道","地质灾害隐患", "绿化","整治工程","疫苗"};
         FlowLayout flowLayout = headView.findViewById(R.id.flowlayout);
         for (int i = 0; i < tabs.length; i++) {
-            ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, DensityUtil.dip2px(getContext(), 24));
+            ViewGroup.MarginLayoutParams lp = new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, DensityUtil.dip2px(getContext(), 26));
             lp.setMargins(DensityUtil.dip2px(getContext(), 5), 0, DensityUtil.dip2px(getContext(), 5), 0);
             TextView tv = new TextView(getActivity());
             tv.setPadding(DensityUtil.dip2px(getContext(), 5), 0, DensityUtil.dip2px(getContext(), 5), 0);
             tv.setTextColor(getResources().getColor(R.color.main_theme_color));
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
             tv.setText(tabs[i]);
             tv.setOnClickListener(new View.OnClickListener() {
                 @Override

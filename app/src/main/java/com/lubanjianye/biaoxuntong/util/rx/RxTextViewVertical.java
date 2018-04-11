@@ -126,7 +126,6 @@ public class RxTextViewVertical extends TextSwitcher implements ViewSwitcher.Vie
         t.setPadding(mPadding, mPadding, mPadding, mPadding);
         t.setTextColor(textColor);
         t.setTextSize(mTextSize);
-
         t.setClickable(true);
         t.setOnClickListener(new OnClickListener() {
             @Override

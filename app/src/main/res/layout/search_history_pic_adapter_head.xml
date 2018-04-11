@@ -17,56 +17,71 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="2dp"
-        android:visibility="visible"
-        android:layout_marginTop="@dimen/d60">
+        android:layout_marginTop="@dimen/d60"
+        android:visibility="visible">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_search_tab"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_gravity="center_vertical"
                 android:layout_marginLeft="10dp"
-                android:textSize="@dimen/d16"
-                android:textColor="@color/main_theme_color"
-                android:text="热门搜索"/>
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/d20"
+                    android:layout_height="@dimen/d20"
+                    android:src="@mipmap/hot_search" />
+
+                <TextView
+                    android:id="@+id/tv_search_tab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d4"
+                    android:text="热门搜索"
+                    android:textColor="@color/main_theme_color"
+                    android:textSize="@dimen/d16" />
+
+            </LinearLayout>
 
 
             <View
                 android:layout_width="match_parent"
-                android:layout_marginRight="15dp"
+                android:layout_height="1px"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="15dp"
                 android:layout_marginTop="@dimen/d8"
-                android:background="#dddddd"
-                android:layout_height="1px"/>
+                android:background="#dddddd" />
 
             <cn.lankton.flowlayout.FlowLayout
                 android:id="@+id/flowlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="15dp"
+                android:layout_marginTop="10dp"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 app:lineSpacing="10dp"
-                app:maxLine="3"/>
+                app:maxLine="3" />
 
         </LinearLayout>
 
     </LinearLayout>
+
     <TextView
         android:id="@+id/tv_no_history"
         android:layout_width="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="80dp"
-        android:layout_marginBottom="80dp"
-        android:layout_gravity="center"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="80dp"
+        android:layout_marginTop="80dp"
+        android:gravity="center_horizontal"
         android:text="暂无搜索记录"
-        android:textSize="@dimen/d15"
-        android:textColor="#c5c5c5"/>
+        android:textColor="#c5c5c5"
+        android:textSize="@dimen/d15" />
 </LinearLayout>
