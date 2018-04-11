@@ -72,7 +72,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="比选公告"
                                 android:textColor="@color/main_status_blue"
-                                android:textSize="@dimen/d14" />
+                                android:textSize="@dimen/d15" />
 
 
                             <View
@@ -98,7 +98,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="项目编号:"
                                 android:textColor="@color/main_text_color"
-                                android:textSize="@dimen/d14" />
+                                android:textSize="@dimen/d15" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_pub_num"
@@ -106,7 +106,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/d4"
                                 android:text=""
-                                android:textSize="@dimen/d14" />
+                                android:textSize="@dimen/d15" />
 
                         </LinearLayout>
                     </LinearLayout>
@@ -123,7 +123,7 @@
                             android:layout_alignParentLeft="true"
                             android:text="四川省甘孜藏族自治州稻城县"
                             android:textColor="#ff999999"
-                            android:textSize="@dimen/d14" />
+                            android:textSize="@dimen/d15" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/tv_gzgg"
@@ -137,7 +137,7 @@
                             android:paddingTop="@dimen/d2"
                             android:text="更正公告"
                             android:textColor="@color/main_status_blue"
-                            android:textSize="@dimen/d14"/>
+                            android:textSize="@dimen/d15"/>
 
                     </RelativeLayout>
 
@@ -161,7 +161,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="2017-1-1"
-                                android:textSize="@dimen/d13" />
+                                android:textSize="@dimen/d15" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
@@ -169,7 +169,7 @@
                                 android:layout_marginLeft="@dimen/d4"
                                 android:text="发布"
                                 android:textColor="@color/main_text_color"
-                                android:textSize="@dimen/d12" />
+                                android:textSize="@dimen/d15" />
 
                         </LinearLayout>
 
@@ -185,7 +185,7 @@
                             android:paddingTop="@dimen/d2"
                             android:text="结果公告"
                             android:textColor="@color/main_status_blue"
-                            android:textSize="@dimen/d14" />
+                            android:textSize="@dimen/d15" />
 
 
                 </RelativeLayout>

@@ -86,7 +86,7 @@
                                     android:layout_marginLeft="@dimen/d10"
                                     android:text="截止"
                                     android:textColor="@color/main_status_red"
-                                    android:textSize="@dimen/d14" />
+                                    android:textSize="@dimen/d15" />
 
                             </LinearLayout>
 
@@ -102,7 +102,7 @@
                                 android:paddingTop="@dimen/d2"
                                 android:text="更正公告"
                                 android:textColor="@color/main_status_blue"
-                                android:textSize="@dimen/d14" />
+                                android:textSize="@dimen/d15" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -129,7 +129,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/d10"
                                     android:text="发布"
-                                    android:textSize="@dimen/d14" />
+                                    android:textSize="@dimen/d15" />
 
                             </LinearLayout>
 
@@ -145,7 +145,7 @@
                                 android:paddingTop="@dimen/d2"
                                 android:text="结果公告"
                                 android:textColor="@color/main_status_blue"
-                                android:textSize="@dimen/d14" />
+                                android:textSize="@dimen/d15" />
 
                         </RelativeLayout>
                     </LinearLayout>
