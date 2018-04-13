@@ -137,7 +137,7 @@ public class ImageGalleryActivity extends ImageBaseActivity implements ViewPager
 
         mImagePager = (PreviewerViewPager) findViewById(R.id.vp_image);
         mIndexText = (TextView) findViewById(R.id.tv_index);
-        ivSave = findViewById(R.id.iv_save);
+        ivSave = (ImageView) findViewById(R.id.iv_save);
         ivSave.setOnClickListener(this);
         mImagePager.addOnPageChangeListener(this);
     }

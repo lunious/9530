@@ -64,9 +64,9 @@ public class LargeImageActivity extends SwipeBackActivity implements EasyPermiss
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_large_image);
 
-        mImageView = findViewById(R.id.imageView);
-        mImageSave = findViewById(R.id.iv_save);
-        mLoading = findViewById(R.id.loading);
+        mImageView = (SubsamplingScaleImageView) findViewById(R.id.imageView);
+        mImageSave = (ImageView) findViewById(R.id.iv_save);
+        mLoading = (Loading) findViewById(R.id.loading);
         mImageSave.setOnClickListener(this);
 
 

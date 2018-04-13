@@ -41,7 +41,7 @@ public class CropActivity extends SwipeBackActivity implements View.OnClickListe
 
 
         getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        mCropLayout =  findViewById(R.id.cropLayout);
+        mCropLayout = (CropLayout) findViewById(R.id.cropLayout);
 
         String url = mOption.getSelectedImages().get(0);
         getImageLoader().load(url)
