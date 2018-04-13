@@ -53,8 +53,8 @@ dependencies {
     implementation 'com.android.support:cardview-v7:27.1.0'
     implementation 'com.android.support:multidex:1.0.3'
     //Fragmentation依赖
-    compile 'me.yokeyword:fragmentation:1.2.0'
-    compile 'me.yokeyword:fragmentation-swipeback:1.2.0'
+    compile 'me.yokeyword:fragmentation:1.1.8'
+    compile 'me.yokeyword:fragmentation-swipeback:1.1.8'
     //EventBus依赖
     compile 'org.greenrobot:eventbus:3.0.0'
     //fastjson依赖
