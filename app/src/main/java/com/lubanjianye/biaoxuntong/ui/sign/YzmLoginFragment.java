@@ -8,6 +8,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -228,6 +229,10 @@ public class YzmLoginFragment extends BaseFragment implements View.OnClickListen
                     .execute(new StringCallback() {
                         @Override
                         public void onSuccess(Response<String> response) {
+
+
+                            Log.d("YHBADSDASDASD",response.body());
+
                             final JSONObject profileJson = JSON.parseObject(response.body());
                             final String status = profileJson.getString("status");
                             final String message = profileJson.getString("message");
@@ -239,7 +244,7 @@ public class YzmLoginFragment extends BaseFragment implements View.OnClickListen
 
                                 final JSONObject userInfo = JSON.parseObject(response.body()).getJSONObject("data");
                                 id = userInfo.getLong("id");
-                                token = userInfo.getString("token");
+                                token = response.headers().get("token");
                                 comid = userInfo.getString("comid");
 
                                 //登录成功，获取用户信息

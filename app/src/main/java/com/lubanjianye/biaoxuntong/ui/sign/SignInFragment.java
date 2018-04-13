@@ -141,6 +141,9 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                         final String status = profileJson.getString("status");
                                         final String message = profileJson.getString("message");
 
+
+                                        Log.d("HYABSDASDASDASD",response.body());
+
                                         if ("200".equals(status)) {
                                             final JSONObject userInfo = JSON.parseObject(response.body()).getJSONObject("data");
                                             id = userInfo.getLong("id");
