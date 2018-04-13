@@ -276,8 +276,6 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
                             String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
 
-                            Log.d("JADBSHBJDASDASDA", jiemi);
-
                             final JSONObject object = JSON.parseObject(jiemi);
                             final String status = object.getString("status");
                             final String message = object.getString("message");
@@ -286,7 +284,7 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
                                 final JSONObject data = object.getJSONObject("data");
                                 final JSONArray array = data.getJSONArray("list");
                                 if (array.size() > 0) {
-                                    setSearchRsult(content, 1);
+                                    setSearchRsult(content, searchType);
                                 } else {
                                     mMsgView.showSearchEmpty();
                                 }
@@ -327,7 +325,7 @@ public class SearchFragment extends BaseFragment implements View.OnClickListener
                                 final JSONObject data = object.getJSONObject("data");
                                 final JSONArray array = data.getJSONArray("list");
                                 if (array.size() > 0) {
-                                    setSearchRsult(content, 1);
+                                    setSearchRsult(content, searchType);
                                 } else {
                                     mMsgView.showSearchEmpty();
                                 }
