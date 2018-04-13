@@ -21,10 +21,10 @@
         <com.github.ybq.android.spinkit.SpinKitView
             android:id="@+id/spin_loading"
             style="@style/SpinKitView"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
             android:layout_gravity="center"
-            android:padding="10dp" />
+            android:padding="12dp" />
     </LinearLayout>
 
     <LinearLayout
