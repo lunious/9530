@@ -11,9 +11,9 @@
     <LinearLayout
         android:id="@+id/result_header_search_view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d30"
+        android:layout_height="@dimen/d28"
         android:layout_gravity="center"
-        android:padding="@dimen/d4"
+        android:padding="@dimen/d2"
         android:background="@drawable/bg_search">
 
         <LinearLayout
@@ -22,8 +22,8 @@
             android:gravity="center">
 
             <ImageView
-                android:layout_width="@dimen/d13"
-                android:layout_height="@dimen/d13"
+                android:layout_width="@dimen/d12"
+                android:layout_height="@dimen/d12"
                 android:layout_gravity="center"
                 android:src="@mipmap/img_search" />
 
@@ -35,7 +35,7 @@
                 android:paddingStart="@dimen/d6"
                 android:text="搜索你感兴趣的内容"
                 android:textColor="#9d9d9d"
-                android:textSize="@dimen/d14" />
+                android:textSize="@dimen/d13" />
         </LinearLayout>
 
 

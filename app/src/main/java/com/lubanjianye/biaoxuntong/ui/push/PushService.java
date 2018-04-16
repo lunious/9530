@@ -9,8 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
-import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgrowDetailActivity;
@@ -21,8 +20,6 @@ import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultXjgggDeta
 import com.lubanjianye.biaoxuntong.util.notify.NotifyUtil;
 import com.mixpush.client.core.MixPushIntentService;
 import com.mixpush.client.core.MixPushMessage;
-
-import org.greenrobot.eventbus.EventBus;
 
 
 /**
@@ -131,7 +128,7 @@ public class PushService extends MixPushIntentService {
         } else if ("2".equals(mType)) {
 
         } else if ("3".equals(mType)) {
-            intent = new Intent(getApplicationContext(), BrowserActivity.class);
+            intent = new Intent(getApplicationContext(), BrowserSuitActivity.class);
             intent.putExtra("url", mUrl);
             intent.putExtra("title", mTitle);
         }

@@ -23,7 +23,7 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
@@ -807,7 +807,7 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
         switch (view.getId()) {
 
             case R.id.tv_gzgg:
-                intent = new Intent(getActivity(), BrowserActivity.class);
+                intent = new Intent(getActivity(), BrowserSuitActivity.class);
                 intent.putExtra("url", gzUrl);
                 intent.putExtra("title", "更正公告");
                 startActivity(intent);
@@ -963,7 +963,7 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
                 toShare(mEntityId, shareTitle, shareContent, BiaoXunTongApi.SHARE_URL + shareUrl);
                 break;
             case R.id.tv_yw:
-                intent = new Intent(getActivity(), BrowserActivity.class);
+                intent = new Intent(getActivity(), BrowserSuitActivity.class);
                 intent.putExtra("url", shareUrl);
                 intent.putExtra("title", shareTitle);
                 startActivity(intent);

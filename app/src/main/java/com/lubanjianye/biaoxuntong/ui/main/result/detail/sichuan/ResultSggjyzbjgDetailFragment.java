@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,7 +23,7 @@ import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexScgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
@@ -306,7 +305,7 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                     tvDataDetail.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                                            Intent intent = new Intent(getActivity(), BrowserSuitActivity.class);
                                             intent.putExtra("url", url);
                                             intent.putExtra("title", shareTitle);
                                             startActivity(intent);
@@ -494,7 +493,7 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                     tvDataDetail.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                                            Intent intent = new Intent(getActivity(), BrowserSuitActivity.class);
                                             intent.putExtra("url", url);
                                             intent.putExtra("title", shareTitle);
                                             startActivity(intent);

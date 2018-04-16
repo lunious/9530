@@ -93,6 +93,12 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
+            android:name=".ui.browser.BrowserSuitActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Main"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
             android:name=".ui.browser.BrowserActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
