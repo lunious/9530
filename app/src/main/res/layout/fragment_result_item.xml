@@ -22,14 +22,15 @@
             android:maxLines="2"
             android:text="This is main title."
             android:textColor="#ff434343"
-            android:textSize="@dimen/d16" />
+            android:textSize="@dimen/d15" />
 
         <LinearLayout
             android:id="@+id/linear_temp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_item_title"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_item_type"
@@ -39,7 +40,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="#ff999999"
-                android:textSize="@dimen/d14" />
+                android:textSize="@dimen/d13" />
         </LinearLayout>
 
 
@@ -48,7 +49,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/linear_temp">
+            android:layout_below="@id/linear_temp"
+            android:layout_marginTop="@dimen/d16">
 
 
             <LinearLayout

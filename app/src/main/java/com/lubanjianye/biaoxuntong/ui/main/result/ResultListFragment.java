@@ -48,15 +48,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.result
- * 文件名:   ResultListFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/12  0:26
- * 描述:     TODO
- */
-
 public class ResultListFragment extends BaseFragment {
 
     private RecyclerView resultRecycler = null;
@@ -111,7 +102,7 @@ public class ResultListFragment extends BaseFragment {
 
                 Intent intent = null;
 
-                if (mDiqu.equals("四川")){
+                if (mDiqu.equals("四川")) {
 
                     if ("xjggg".equals(entity) || "sjggg".equals(entity) || "sggjy".equals(entity) || "sggjycgjgtable".equals(entity)) {
                         intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
@@ -129,16 +120,16 @@ public class ResultListFragment extends BaseFragment {
                         intent.putExtra("mId", "");
                         startActivity(intent);
                     }
-                }else if (mDiqu.equals("重庆")){
-                    if ("cqcggg".equals(entity)){
+                } else if (mDiqu.equals("重庆")) {
+                    if ("cqcggg".equals(entity)) {
                         final String title = data.getEntryName();
                         intent = new Intent(getActivity(), BrowserDetailActivity.class);
                         intent.putExtra("api", BiaoXunTongApi.URL_GETRESULTLISTDETAIL);
                         intent.putExtra("title", title);
-                        intent.putExtra("entity",entity);
-                        intent.putExtra("entityid",entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("entityid", entityId);
                         startActivity(intent);
-                    }else if ("cqsggjyzbjg".equals(entity)){
+                    } else if ("cqsggjyzbjg".equals(entity)) {
                         intent = new Intent(BiaoXunTong.getApplicationContext(), ResultCqsggjyzbjgDetailActivity.class);
                         intent.putExtra("entityId", entityId);
                         intent.putExtra("entity", entity);
@@ -273,7 +264,6 @@ public class ResultListFragment extends BaseFragment {
     }
 
 
-
     private String mDiqu = "";
 
     public void requestData(final boolean isRefresh) {
@@ -300,7 +290,7 @@ public class ResultListFragment extends BaseFragment {
                         .params("diqu", mDiqu)
                         .params("size", 10)
                         .params("deviceId", deviceId)
-                        .cacheKey("result_login_cache" + mTitle+mDiqu)
+                        .cacheKey("result_login_cache" + mTitle + mDiqu)
                         .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                         .cacheTime(3600 * 72000)
                         .execute(new StringCallback() {
@@ -400,7 +390,7 @@ public class ResultListFragment extends BaseFragment {
                         .params("size", 10)
                         .params("diqu", mDiqu)
                         .params("deviceId", deviceId)
-                        .cacheKey("result_no_login_cache" + mTitle+mDiqu)
+                        .cacheKey("result_no_login_cache" + mTitle + mDiqu)
                         .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
                         .cacheTime(3600 * 72000)
                         .execute(new StringCallback() {
