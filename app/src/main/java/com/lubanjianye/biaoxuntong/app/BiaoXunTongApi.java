@@ -1,5 +1,13 @@
 package com.lubanjianye.biaoxuntong.app;
 
+/**
+ * 项目名:   LuBanBiaoXunTong
+ * 包名:     com.lubanjianye.biaoxuntong.pw.api
+ * 文件名:   BiaoXunTongApi
+ * 创建者:   lunious
+ * 创建时间: 2017/10/20  9:15
+ * 描述:     网络请求接口
+ */
 
 public abstract class BiaoXunTongApi {
 
@@ -147,7 +155,8 @@ public abstract class BiaoXunTongApi {
     /**
      * 获取资质类型（6种）
      */
-    public static final String URL_GETZZLXLIST = BASEURL + "bxtajax/ZzCodeajax/getZzcodeJs";
+    public static final String URL_GETZZLXLIST = "http://www.lubanjianye.com/qyzz_select/lx";
+    public static final String URL_GETQYZZLIST = "http://www.lubanjianye.com/qyzz_select/branch";
     /**
      * 获取资质类型（全部）
      */

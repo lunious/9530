@@ -2,14 +2,7 @@ package com.lubanjianye.biaoxuntong.bean;
 
 import java.io.Serializable;
 
-/**
- * 项目名:   9527
- * 包名:     com.lubanjianye.biaoxuntong.bean
- * 文件名:   QueryBean
- * 创建者:   lunious
- * 创建时间: 2017/12/24  22:00
- * 描述:     TODO
- */
+
 
 public class QueryBean implements Serializable{
     private String zzlx = null;

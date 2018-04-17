@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="vertical"
         android:paddingLeft="@dimen/d10"
         android:paddingRight="@dimen/d4">
@@ -15,10 +14,10 @@
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_query_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/d52"
             android:ellipsize="end"
             android:maxLines="2"
-            android:layout_marginTop="@dimen/d6"
+            android:gravity="center_vertical"
             android:text="This is main title."
             android:textColor="#ff6c6c6c"
             android:textSize="@dimen/d15" />
@@ -27,7 +26,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/d1"
-            android:layout_marginTop="@dimen/d8"
             android:background="@color/main_status_red" />
 
     </LinearLayout>

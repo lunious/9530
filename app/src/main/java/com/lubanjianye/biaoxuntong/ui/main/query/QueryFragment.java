@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -27,8 +29,8 @@ import com.lubanjianye.biaoxuntong.bean.QueryBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
@@ -78,7 +80,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
 
     private PromptDialog promptDialog;
-    String provinceCode = "";
 
     private long id = 0;
     private String mobile = "";
@@ -97,20 +98,24 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     private List<String> Djlist = new ArrayList<String>();
     private List<String> Qylist = new ArrayList<String>();
 
+    String one = null;
+    String two = null;
+    String three = null;
+    String four = null;
+    String five = null;
+    String six = null;
 
-    String one;
-    String two;
-    String three;
-    String four;
-    String five;
-    String six;
 
+    private String provinceCode = "";
+    private String lxId = "";
+    private String dlId = "";
+    private String xlId = "";
+    private String zyId = "";
+    private String djId = "";
+    private String fs = "";
+    private String zcd = "";
+    private String entrySign = "";
 
-    List<Object> zyIds = new ArrayList<Object>();
-    String djId = "";
-    int entrySign = -1;
-    String lxId = "";
-    String zcd = "";
 
     String qyIds = "";
 
@@ -306,23 +311,11 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
             if (area.equals("四川")) {
                 provinceCode = "510000";
-                Qylist.add("川内");
-                Qylist.add("入川");
-                Qylist.add("川内+入川");
-                Qylist.add("全国");
             } else if (area.equals("重庆")) {
                 provinceCode = "500000";
-                Qylist.add("渝内");
-                Qylist.add("入渝");
-                Qylist.add("渝内+入渝");
-                Qylist.add("全国");
             }
         } else {
             provinceCode = "510000";
-            Qylist.add("川内");
-            Qylist.add("入川");
-            Qylist.add("川内+入川");
-            Qylist.add("全国");
         }
     }
 
@@ -457,56 +450,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
         rlv_query.setAdapter(mAdapter);
     }
 
-    public void getSuitIds() {
-
-        if ("特级".equals(five) || "甲级".equals(five) || "不分等级".equals(five)) {
-            djId = "1";
-        } else if ("一级".equals(five) || "乙级".equals(five)) {
-            djId = "2";
-        } else if ("二级".equals(five) || "丙级".equals(five) || "暂定级".equals(five) || "预备级".equals(five)) {
-            djId = "3";
-        } else if ("三级".equals(five) || "未分级".equals(five)) {
-            djId = "4";
-        } else {
-            djId = "4";
-        }
-
-        if ("川内+入川".equals(six) || "渝内+入渝".equals(six)) {
-            entrySign = 2;
-        } else if ("川内".equals(six) || "渝内".equals(six)) {
-            entrySign = 0;
-        } else if ("入川".equals(six) || "入渝".equals(six)) {
-            entrySign = 1;
-        } else if ("全国".equals(six)) {
-            entrySign = -1;
-        } else {
-            entrySign = 2;
-        }
-
-
-        if ("特级".equals(five) || "甲级".equals(five) || "不分等级".equals(five)) {
-            djId = "1";
-        } else if ("一级".equals(five) || "乙级".equals(five)) {
-            djId = "2";
-        } else if ("二级".equals(five) || "丙级".equals(five) || "暂定级".equals(five) || "预备级".equals(five)) {
-            djId = "3";
-        } else if ("三级".equals(five) || "未分级".equals(five)) {
-            djId = "4";
-        }
-
-        if ("川内+入川".equals(six)) {
-            entrySign = 2;
-        } else if ("川内".equals(six)) {
-            entrySign = 0;
-        } else if ("入川".equals(six)) {
-            entrySign = 1;
-        } else if ("全国".equals(six)) {
-            entrySign = -1;
-        }
-
-
-    }
-
 
     @Override
     public void onSupportInvisible() {
@@ -548,7 +491,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
         switch (view.getId()) {
             case R.id.vip_detail:
                 String VipUrl = "http://m.lubanjianye.com/home/index/vipservice.html";
-                Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                Intent intent = new Intent(getActivity(), BrowserSuitActivity.class);
                 intent.putExtra("url", VipUrl);
                 intent.putExtra("title", "");
                 startActivity(intent);
@@ -556,7 +499,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             case R.id.btn_add:
                 if (TextUtils.isEmpty(one)) {
                     ToastUtil.shortToast(getContext(), "请选择资质类型");
-
                 } else {
                     if (mDataList.size() <= 2) {
                         QueryBean bean = new QueryBean();
@@ -567,10 +509,10 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                         bean.setDj(five);
                         bean.setDq(six);
                         mDataList.add(bean);
+
                         mAdapter.notifyDataSetChanged();
 
                         //得到符合条件的id
-                        getSuitIds();
                         getSuitCompany();
 
                     } else {
@@ -583,7 +525,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             case R.id.btn_start_search:
 
                 if (mDataList.size() > 0) {
-
                     if (ids_1.size() > 0 && ids_2.size() == 0 && ids_3.size() == 0) {
                         if (ids.size() > 0) {
                             ids.clear();
@@ -764,13 +705,18 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
     public void getSuitCompany() {
         JsonString jsonString = new JsonString();
-        jsonString.setZyIds(zyIds);
         jsonString.setLxId(lxId);
-        jsonString.setZcd(zcd);
+        jsonString.setDlId(dlId);
+        jsonString.setXlId(xlId);
+        jsonString.setZyId(zyId);
         jsonString.setDjId(djId);
+        jsonString.setFs(fs);
+        jsonString.setZcd(zcd);
         jsonString.setProvinceCode(provinceCode);
         jsonString.setEntrySign(entrySign);
         String userJson = JSON.toJSONString(jsonString);
+
+        Log.d("JABSJHDBASDAS", userJson);
 
         OkGo.<String>post(BiaoXunTongApi.URL_GETSUITIDS)
                 .params("JSONString", userJson)
@@ -844,103 +790,82 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     public void loadZZLX() {
 
         OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
-                .params("lx_code", "")
-                .params("dl_code", "")
-                .params("xl_code", "")
-                .params("zy_code", "")
+                .params("provinceCode", provinceCode)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
 
-                        final JSONObject object = JSON.parseObject(response.body());
-                        String status = object.getString("status");
+                        final JSONArray array = JSON.parseArray(response.body());
 
-                        if ("200".equals(status)) {
+                        final JSONObject object = array.getJSONObject(0);
+                        final String nodeName = object.getString("nodeName");
+                        final JSONArray options = object.getJSONArray("options");
 
-                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
+                        for (int i = 0; i < 7; i++) {
+                            final JSONObject objectOptions = options.getJSONObject(i);
 
-                            for (int i = 0; i < array.size(); i++) {
+                            final String text = objectOptions.getString("text");
 
-                                final JSONObject data = array.getJSONObject(i);
-                                String name = data.getString("lx_name");
-                                Zzlxlist.add(name);
-                            }
-
-
-                            mSpinerZzlx = new SpinerPopWindow<String>(getActivity(), Zzlxlist, new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    mSpinerZzlx.dismiss();
-                                    tvZzlx.setText(Zzlxlist.get(position));
-                                    one = Zzlxlist.get(position);
-                                    tvDl.setVisibility(View.VISIBLE);
-                                    tvXl.setVisibility(View.VISIBLE);
-                                    tvZy.setVisibility(View.VISIBLE);
-
-                                    //重置后面选项名称
-                                    tvDl.setText("大类");
-                                    tvXl.setText("小类");
-                                    tvZy.setText("专业");
-                                    tvDj.setText("等级");
-                                    tvQy.setText("地区范围");
-
-
-                                    if (Dllist.size() > 0) {
-                                        Dllist.clear();
-                                    }
-
-                                    if (Xllist.size() > 0) {
-                                        Xllist.clear();
-                                    }
-
-                                    if (Zylist.size() > 0) {
-                                        Zylist.clear();
-                                    }
-
-                                    if (Djlist.size() > 0) {
-                                        Djlist.clear();
-                                    }
-
-
-                                    two = null;
-                                    three = null;
-                                    four = null;
-                                    five = null;
-                                    six = null;
-
-
-                                    String lx_code = array.getJSONObject(position).getString("lx_code");
-                                    if (Dllist.size() > 0) {
-                                        Dllist.clear();
-                                    }
-                                    lxId = lx_code;
-                                    loadDL(lx_code);
-
-
-                                }
-                            });
-
-                            tvZzlx.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    if (mSpinerZzlx == null) {
-                                        return;
-                                    }
-                                    mSpinerZzlx.setWidth(ll.getWidth());
-                                    mSpinerZzlx.setHeight(ll.getHeight() / 2);
-                                    mSpinerZzlx.showAsDropDown(view);
-                                    setTextImage(R.id.tv_zzlx, R.mipmap.up);
-                                }
-                            });
-
-                            mSpinerZzlx.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                                @Override
-                                public void onDismiss() {
-                                    //TODO
-                                    setTextImage(R.id.tv_zzlx, R.mipmap.down);
-                                }
-                            });
+                            Zzlxlist.add(text);
                         }
+
+                        mSpinerZzlx = new SpinerPopWindow<String>(getActivity(), Zzlxlist, new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                mSpinerZzlx.dismiss();
+                                one = Zzlxlist.get(position);
+                                lxId = options.getJSONObject(position).getString("value");
+                                two = null;
+                                three = null;
+                                four = null;
+                                five = null;
+                                six = null;
+
+                                tvZzlx.setText(Zzlxlist.get(position));
+                                tvDl.setVisibility(View.VISIBLE);
+                                tvXl.setVisibility(View.VISIBLE);
+                                tvZy.setVisibility(View.VISIBLE);
+
+                                //重置后面选项名称
+                                tvDl.setText("大类");
+                                tvXl.setText("小类");
+                                tvZy.setText("专业");
+                                tvDj.setText("等级");
+                                tvQy.setText("地区范围");
+
+
+                                String value = options.getJSONObject(position).getString("value");
+                                String text = options.getJSONObject(position).getString("text");
+
+                                if (Dllist.size() > 0) {
+                                    Dllist.clear();
+                                }
+
+                                loadDL(provinceCode, nodeName, value, text);
+
+                            }
+                        });
+
+                        tvZzlx.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (mSpinerZzlx == null) {
+                                    return;
+                                }
+                                mSpinerZzlx.setWidth(ll.getWidth());
+                                mSpinerZzlx.setHeight(ll.getHeight() / 2);
+                                mSpinerZzlx.showAsDropDown(view);
+                                setTextImage(R.id.tv_zzlx, R.mipmap.up);
+                            }
+                        });
+
+                        mSpinerZzlx.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                            @Override
+                            public void onDismiss() {
+                                //TODO
+                                setTextImage(R.id.tv_zzlx, R.mipmap.down);
+                            }
+                        });
 
                     }
                 });
@@ -949,167 +874,337 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     /**
      * 加载大类列表
      */
-    public void loadDL(final String lx_code) {
+    public void loadDL(final String provinceCode, String nodeName, String value, String text) {
 
-        OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
-                .params("lx_code", lx_code)
-                .params("dl_code", "")
-                .params("xl_code", "")
-                .params("zy_code", "")
+        OkGo.<String>post(BiaoXunTongApi.URL_GETQYZZLIST)
+                .params("provinceCode", provinceCode)
+                .params("nodeName", nodeName)
+                .params("value", value)
+                .params("text", text)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        final JSONObject object = JSON.parseObject(response.body());
-                        String status = object.getString("status");
 
-                        if ("200".equals(status)) {
-                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
+                        final JSONArray array = JSON.parseArray(response.body());
 
-                            if ("监理".equals(tvZzlx.getText().toString())) {
-                                Dllist.add(array.getJSONObject(0).getString("dl_name"));
-                            } else {
-                                for (int i = 0; i < array.size(); i++) {
+                        for (int i = 0; i < array.size(); i++) {
+                            final JSONObject object = array.getJSONObject(i);
+                            final String nodeName = object.getString("nodeName");
+                            if ("QY_DL".equals(nodeName)) {
+                                final boolean visible = object.getBoolean("visible");
+                                final JSONArray options = object.getJSONArray("options");
+                                if (!visible) {
+                                    tvDl.setVisibility(View.GONE);
+                                    final JSONObject objectOptions = options.getJSONObject(0);
+                                    final String value = objectOptions.getString("value");
+                                    dlId = value;
+                                } else {
+                                    for (int j = 0; j < options.size(); j++) {
+                                        final JSONObject objectOptions = options.getJSONObject(j);
 
-                                    final JSONObject data = array.getJSONObject(i);
-                                    String name = data.getString("dl_name");
-                                    if (TextUtils.isEmpty(name)) {
-                                        Dllist.add("不分大类");
-                                        tvDl.setVisibility(View.GONE);
-                                        tvXl.setVisibility(View.GONE);
-                                        tvZy.setVisibility(View.GONE);
+                                        final String text = objectOptions.getString("text");
 
-                                        //TODO 得到listZy_ids
-
-                                        OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
-                                                .params("lx_code", lx_code)
-                                                .params("dl_code", "")
-                                                .params("xl_code", "")
-                                                .params("zy_code", "")
-                                                .execute(new StringCallback() {
-                                                    @Override
-                                                    public void onSuccess(Response<String> response) {
-                                                        final JSONObject object = JSON.parseObject(response.body());
-                                                        String status = object.getString("status");
-
-                                                        if ("200".equals(status)) {
-                                                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
-                                                            //得到listzy_ids
-                                                            if (zyIds.size() > 0) {
-                                                                zyIds.clear();
-                                                            }
-                                                            for (int i = 0; i < array.size(); i++) {
-                                                                final JSONObject data = array.getJSONObject(i);
-                                                                JSONArray listzy_ids = data.getJSONArray("listzy_ids");
-                                                                if (listzy_ids != null) {
-                                                                    zyIds = listzy_ids;
-                                                                }
-                                                            }
-
-                                                        }
-                                                    }
-                                                });
-
-                                    } else {
-                                        Dllist.add(name);
+                                        Dllist.add(text);
                                     }
 
-                                    JSONArray djArray = data.getJSONArray("listdj");
-                                    if (djArray != null) {
+                                    mSpinerDl = new SpinerPopWindow<String>(getActivity(), Dllist, new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            mSpinerDl.dismiss();
+                                            two = Dllist.get(position);
+                                            dlId = options.getJSONObject(position).getString("value");
+                                            three = null;
+                                            four = null;
+                                            five = null;
+                                            six = null;
 
-                                        if (Djlist.size() > 0) {
-                                            Djlist.clear();
-                                        }
 
-                                        for (int j = 0; j < djArray.size(); j++) {
-                                            final JSONObject dj = djArray.getJSONObject(j);
-                                            String djName = dj.getString("name");
-                                            Djlist.add(djName);
+                                            tvDl.setText(Dllist.get(position));
+                                            tvXl.setVisibility(View.VISIBLE);
+                                            tvZy.setVisibility(View.VISIBLE);
+
+                                            //重置后面选项名称
+                                            tvXl.setText("小类");
+                                            tvZy.setText("专业");
+                                            tvDj.setText("等级");
+                                            tvQy.setText("地区范围");
+
+
+                                            String value = options.getJSONObject(position).getString("value");
+                                            String text = options.getJSONObject(position).getString("text");
+
+                                            if (Xllist.size() > 0) {
+                                                Xllist.clear();
+                                            }
+
+                                            loadXL(provinceCode, nodeName, value, text);
 
                                         }
-                                        loadDJ();
-                                    }
+                                    });
 
-                                    JSONArray qyArray = data.getJSONArray("listdq");
-                                    if (qyArray != null) {
-                                        loadQY();
-                                    }
+                                    tvDl.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (mSpinerDl == null) {
+                                                return;
+                                            }
+                                            mSpinerDl.setWidth(ll.getWidth());
+                                            mSpinerDl.setHeight(ll.getHeight() / 2);
+                                            mSpinerDl.showAsDropDown(view);
+                                            setTextImage(R.id.tv_dl, R.mipmap.up);
+                                        }
+                                    });
 
-
+                                    mSpinerDl.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss() {
+                                            //TODO
+                                            setTextImage(R.id.tv_dl, R.mipmap.down);
+                                        }
+                                    });
                                 }
-                            }
 
+                            } else if ("QY_XL".equals(nodeName)) {
+                                final boolean visible = object.getBoolean("visible");
+                                final JSONArray options = object.getJSONArray("options");
 
-                            mSpinerDl = new SpinerPopWindow<String>(getActivity(), Dllist, new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    mSpinerDl.dismiss();
-
-                                    String DlName = Dllist.get(position);
-                                    tvDl.setText(Dllist.get(position));
-
-                                    two = Dllist.get(position);
-
-                                    tvXl.setVisibility(View.VISIBLE);
-                                    tvZy.setVisibility(View.VISIBLE);
-
-                                    //重置后面选项名称
-                                    tvXl.setText("小类");
-                                    tvZy.setText("专业");
-                                    tvDj.setText("等级");
-                                    tvQy.setText("地区范围");
-
+                                if (!visible) {
+                                    tvXl.setVisibility(View.GONE);
+                                    final JSONObject objectOptions = options.getJSONObject(0);
+                                    final String value = objectOptions.getString("value");
+                                    xlId = value;
+                                } else {
                                     if (Xllist.size() > 0) {
                                         Xllist.clear();
                                     }
+                                    for (int j = 0; j < options.size(); j++) {
+                                        final JSONObject objectOptions = options.getJSONObject(j);
+                                        final String text = objectOptions.getString("text");
+                                        Xllist.add(text);
+                                    }
+                                    mSpinerXl = new SpinerPopWindow<String>(getActivity(), Xllist, new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            mSpinerXl.dismiss();
+                                            three = Xllist.get(position);
+                                            xlId = options.getJSONObject(position).getString("value");
+                                            four = null;
+                                            five = null;
+                                            six = null;
 
+                                            tvXl.setText(Xllist.get(position));
+
+                                            //重置后面选项名称
+                                            tvZy.setText("专业");
+                                            tvDj.setText("等级");
+                                            tvQy.setText("地区范围");
+
+
+                                            String value = options.getJSONObject(position).getString("value");
+                                            String text = options.getJSONObject(position).getString("text");
+
+                                            loadZY(provinceCode, nodeName, value, text);
+
+                                        }
+                                    });
+
+                                    tvXl.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (mSpinerXl == null) {
+                                                return;
+                                            }
+                                            mSpinerXl.setWidth(ll.getWidth());
+                                            mSpinerXl.setHeight(ll.getHeight() / 2);
+                                            mSpinerXl.showAsDropDown(view);
+                                            setTextImage(R.id.tv_xl, R.mipmap.up);
+                                        }
+                                    });
+
+                                    mSpinerXl.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss() {
+                                            //TODO
+                                            setTextImage(R.id.tv_xl, R.mipmap.down);
+                                        }
+                                    });
+
+                                }
+                            } else if ("QY_ZY".equals(nodeName)) {
+                                final boolean visible = object.getBoolean("visible");
+                                final JSONArray options = object.getJSONArray("options");
+                                if (!visible) {
+                                    tvZy.setVisibility(View.GONE);
+                                    final JSONObject objectOptions = options.getJSONObject(0);
+                                    final String value = objectOptions.getString("value");
+                                    zyId = value;
+                                } else {
                                     if (Zylist.size() > 0) {
                                         Zylist.clear();
                                     }
 
+                                    for (int j = 0; j < options.size(); j++) {
+                                        final JSONObject objectOptions = options.getJSONObject(j);
+
+                                        final String text = objectOptions.getString("text");
+
+                                        Zylist.add(text);
+                                    }
+
+                                    mSpinerZy = new SpinerPopWindow<String>(getActivity(), Zylist, new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            mSpinerZy.dismiss();
+                                            four = Zylist.get(position);
+                                            zyId = options.getJSONObject(position).getString("value");
+                                            five = null;
+                                            six = null;
+
+                                            tvZy.setText(Zylist.get(position));
+
+
+                                            //重置后面选项名称
+                                            tvDj.setText("等级");
+                                            tvQy.setText("地区范围");
+
+
+                                        }
+                                    });
+
+                                    tvZy.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (mSpinerZy == null) {
+                                                return;
+                                            }
+                                            mSpinerZy.setWidth(ll.getWidth());
+                                            mSpinerZy.setHeight(ll.getHeight() / 2);
+                                            mSpinerZy.showAsDropDown(view);
+                                            setTextImage(R.id.tv_zy, R.mipmap.up);
+                                        }
+                                    });
+
+                                    mSpinerZy.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss() {
+                                            //TODO
+                                            setTextImage(R.id.tv_zy, R.mipmap.down);
+                                        }
+                                    });
+
+
+                                }
+                            } else if ("QY_DJ".equals(nodeName)) {
+                                final boolean visible = object.getBoolean("visible");
+                                final JSONArray options = object.getJSONArray("options");
+                                if (!visible) {
+                                    tvDj.setVisibility(View.GONE);
+                                    final JSONObject objectOptions = options.getJSONObject(0);
+                                    final String value = objectOptions.getString("value");
+                                    djId = value;
+                                } else {
                                     if (Djlist.size() > 0) {
                                         Djlist.clear();
                                     }
+                                    for (int j = 0; j < options.size(); j++) {
+                                        final JSONObject objectOptions = options.getJSONObject(j);
 
+                                        final String text = objectOptions.getString("text");
 
-                                    three = null;
-                                    four = null;
-                                    five = null;
-                                    six = null;
-
-                                    String dl_code = array.getJSONObject(position).getString("dl_code");
-
-                                    if (Xllist.size() > 0) {
-                                        Xllist.clear();
+                                        Djlist.add(text);
                                     }
 
-                                    loadXL(dl_code);
+                                    mSpinerDj = new SpinerPopWindow<String>(getActivity(), Djlist, new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            mSpinerDj.dismiss();
+                                            five = Djlist.get(position);
+                                            djId = options.getJSONObject(position).getString("value");
+                                            six = null;
+                                            tvDj.setText(Djlist.get(position));
+                                            //重置后面选项名称
+                                            tvQy.setText("地区范围");
+                                        }
+                                    });
 
+                                    tvDj.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (mSpinerDj == null) {
+                                                return;
+                                            }
+                                            mSpinerDj.setWidth(ll.getWidth());
+                                            mSpinerDj.setHeight(ll.getHeight() / 2);
+                                            mSpinerDj.showAsDropDown(view);
+                                            setTextImage(R.id.tv_dj, R.mipmap.up);
+                                        }
+                                    });
+
+                                    mSpinerDj.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss() {
+                                            //TODO
+                                            setTextImage(R.id.tv_dj, R.mipmap.down);
+                                        }
+                                    });
 
                                 }
-                            });
-
-                            tvDl.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    if (mSpinerDl == null) {
-                                        return;
+                            } else if ("QY_DQ".equals(nodeName)) {
+                                final boolean visible = object.getBoolean("visible");
+                                final JSONArray options = object.getJSONArray("options");
+                                if (!visible) {
+                                    tvQy.setVisibility(View.GONE);
+                                    final JSONObject objectOptions = options.getJSONObject(0);
+                                    final String value = objectOptions.getString("value");
+                                    entrySign = value;
+                                } else {
+                                    if (Qylist.size() > 0) {
+                                        Qylist.clear();
                                     }
-                                    mSpinerDl.setWidth(ll.getWidth());
-                                    mSpinerDl.setHeight(ll.getHeight() / 2);
-                                    mSpinerDl.showAsDropDown(view);
-                                    setTextImage(R.id.tv_dl, R.mipmap.up);
-                                }
-                            });
+                                    for (int j = 0; j < options.size(); j++) {
+                                        final JSONObject objectOptions = options.getJSONObject(j);
 
-                            mSpinerDl.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                                @Override
-                                public void onDismiss() {
-                                    //TODO
-                                    setTextImage(R.id.tv_dl, R.mipmap.down);
+                                        final String text = objectOptions.getString("text");
+
+                                        Qylist.add(text);
+                                    }
+
+                                    mSpinerQy = new SpinerPopWindow<String>(getActivity(), Qylist, new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            mSpinerQy.dismiss();
+                                            six = Qylist.get(position);
+                                            entrySign = options.getJSONObject(position).getString("value");
+                                            tvQy.setText(Qylist.get(position));
+
+                                        }
+                                    });
+
+                                    tvQy.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (mSpinerQy == null) {
+                                                return;
+                                            }
+                                            mSpinerQy.setWidth(ll.getWidth());
+                                            mSpinerQy.setHeight(ll.getHeight() / 2);
+                                            mSpinerQy.showAsDropDown(view);
+                                            setTextImage(R.id.tv_qy, R.mipmap.up);
+                                        }
+                                    });
+
+                                    mSpinerQy.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss() {
+                                            setTextImage(R.id.tv_qy, R.mipmap.down);
+                                        }
+                                    });
                                 }
-                            });
+                            }
                         }
+
                     }
+
                 });
 
     }
@@ -1117,145 +1212,263 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     /**
      * 加载小类列表
      */
-    public void loadXL(final String dl_code) {
+    public void loadXL(final String provinceCode, String nodeName, String value, String text) {
 
-
-        OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
-                .params("lx_code", "")
-                .params("dl_code", dl_code)
-                .params("xl_code", "")
-                .params("zy_code", "")
+        OkGo.<String>post(BiaoXunTongApi.URL_GETQYZZLIST)
+                .params("provinceCode", provinceCode)
+                .params("nodeName", nodeName)
+                .params("value", value)
+                .params("text", text)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        final JSONObject object = JSON.parseObject(response.body());
-                        String status = object.getString("status");
 
-                        if ("200".equals(status)) {
-                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
+                        final JSONArray array = JSON.parseArray(response.body());
 
-                            for (int i = 0; i < array.size(); i++) {
+                        for (int i = 0; i < array.size(); i++) {
+                            final JSONObject object = array.getJSONObject(i);
+                            final String nodeName = object.getString("nodeName");
 
-                                final JSONObject data = array.getJSONObject(i);
-                                String name = data.getString("xl_name");
-                                if (TextUtils.isEmpty(name)) {
-                                    Xllist.add("不分小类");
+                            if ("QY_XL".equals(nodeName)) {
+                                final boolean visible = object.getBoolean("visible");
+                                final JSONArray options = object.getJSONArray("options");
+
+                                if (!visible) {
                                     tvXl.setVisibility(View.GONE);
-                                    tvZy.setVisibility(View.GONE);
-
-                                    //TODO 得到listZy_ids
-                                    OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
-                                            .params("lx_code", "")
-                                            .params("dl_code", dl_code)
-                                            .params("xl_code", "")
-                                            .params("zy_code", "")
-                                            .execute(new StringCallback() {
-                                                @Override
-                                                public void onSuccess(Response<String> response) {
-                                                    final JSONObject object = JSON.parseObject(response.body());
-                                                    String status = object.getString("status");
-
-                                                    if ("200".equals(status)) {
-                                                        final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
-                                                        //得到listzy_ids
-                                                        if (zyIds.size() > 0) {
-                                                            zyIds.clear();
-                                                        }
-                                                        for (int i = 0; i < array.size(); i++) {
-                                                            final JSONObject data = array.getJSONObject(i);
-                                                            JSONArray listzy_ids = data.getJSONArray("listzy_ids");
-                                                            if (listzy_ids != null) {
-                                                                zyIds = listzy_ids;
-                                                            }
-                                                        }
-
-                                                    }
-                                                }
-                                            });
-
-
+                                    final JSONObject objectOptions = options.getJSONObject(0);
+                                    final String value = objectOptions.getString("value");
+                                    xlId = value;
                                 } else {
-                                    Xllist.add(name);
-                                }
+                                    for (int j = 0; j < options.size(); j++) {
+                                        final JSONObject objectOptions = options.getJSONObject(j);
 
-                                JSONArray djArray = data.getJSONArray("listdj");
-                                if (djArray != null) {
+                                        final String text = objectOptions.getString("text");
 
-                                    if (Djlist.size() > 0) {
-                                        Djlist.clear();
-                                    }
-                                    for (int j = 0; j < djArray.size(); j++) {
-                                        final JSONObject dj = djArray.getJSONObject(j);
-
-                                        String djName = dj.getString("name");
-                                        Djlist.add(djName);
+                                        Xllist.add(text);
                                     }
 
-                                    loadDJ();
+                                    mSpinerXl = new SpinerPopWindow<String>(getActivity(), Xllist, new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            mSpinerXl.dismiss();
+                                            three = Xllist.get(position);
+                                            xlId = options.getJSONObject(position).getString("value");
+                                            four = null;
+                                            five = null;
+                                            six = null;
+
+
+                                            tvXl.setText(Xllist.get(position));
+                                            tvZy.setVisibility(View.VISIBLE);
+
+                                            //重置后面选项名称
+                                            tvZy.setText("专业");
+                                            tvDj.setText("等级");
+                                            tvQy.setText("地区范围");
+
+
+                                            String value = options.getJSONObject(position).getString("value");
+                                            String text = options.getJSONObject(position).getString("text");
+
+                                            loadZY(provinceCode, nodeName, value, text);
+
+                                        }
+                                    });
+
+                                    tvXl.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (mSpinerXl == null) {
+                                                return;
+                                            }
+                                            mSpinerXl.setWidth(ll.getWidth());
+                                            mSpinerXl.setHeight(ll.getHeight() / 2);
+                                            mSpinerXl.showAsDropDown(view);
+                                            setTextImage(R.id.tv_xl, R.mipmap.up);
+                                        }
+                                    });
+
+                                    mSpinerXl.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss() {
+                                            //TODO
+                                            setTextImage(R.id.tv_xl, R.mipmap.down);
+                                        }
+                                    });
                                 }
-
-                                JSONArray qyArray = data.getJSONArray("listdq");
-                                if (qyArray != null) {
-                                    loadQY();
-                                }
-
-                            }
-                            mSpinerXl = new SpinerPopWindow<String>(getActivity(), Xllist, new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    mSpinerXl.dismiss();
-
-                                    tvXl.setText(Xllist.get(position));
-                                    tvZy.setVisibility(View.VISIBLE);
-
-                                    three = Xllist.get(position);
-
-                                    //重置后面选项名称
-                                    tvZy.setText("专业");
-                                    tvDj.setText("等级");
-                                    tvQy.setText("地区范围");
-
-                                    four = null;
-                                    five = null;
-                                    six = null;
-
-
+                            } else if ("QY_ZY".equals(nodeName)) {
+                                final boolean visible = object.getBoolean("visible");
+                                final JSONArray options = object.getJSONArray("options");
+                                if (!visible) {
+                                    tvZy.setVisibility(View.GONE);
+                                    final JSONObject objectOptions = options.getJSONObject(0);
+                                    final String value = objectOptions.getString("value");
+                                    zyId = value;
+                                } else {
                                     if (Zylist.size() > 0) {
                                         Zylist.clear();
                                     }
 
+                                    for (int j = 0; j < options.size(); j++) {
+                                        final JSONObject objectOptions = options.getJSONObject(j);
+
+                                        final String text = objectOptions.getString("text");
+
+                                        Zylist.add(text);
+                                    }
+
+                                    mSpinerZy = new SpinerPopWindow<String>(getActivity(), Zylist, new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            mSpinerZy.dismiss();
+                                            four = Zylist.get(position);
+                                            zyId = options.getJSONObject(position).getString("value");
+                                            five = null;
+                                            six = null;
+
+                                            tvZy.setText(Zylist.get(position));
+                                            //重置后面选项名称
+                                            tvDj.setText("等级");
+                                            tvQy.setText("地区范围");
+
+
+                                        }
+                                    });
+
+                                    tvZy.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (mSpinerZy == null) {
+                                                return;
+                                            }
+                                            mSpinerZy.setWidth(ll.getWidth());
+                                            mSpinerZy.setHeight(ll.getHeight() / 2);
+                                            mSpinerZy.showAsDropDown(view);
+                                            setTextImage(R.id.tv_zy, R.mipmap.up);
+                                        }
+                                    });
+
+                                    mSpinerZy.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss() {
+                                            //TODO
+                                            setTextImage(R.id.tv_zy, R.mipmap.down);
+                                        }
+                                    });
+
+
+                                }
+                            } else if ("QY_DJ".equals(nodeName)) {
+                                final boolean visible = object.getBoolean("visible");
+                                final JSONArray options = object.getJSONArray("options");
+                                if (!visible) {
+                                    tvDj.setVisibility(View.GONE);
+                                    final JSONObject objectOptions = options.getJSONObject(0);
+                                    final String value = objectOptions.getString("value");
+                                    djId = value;
+                                } else {
                                     if (Djlist.size() > 0) {
                                         Djlist.clear();
                                     }
+                                    for (int j = 0; j < options.size(); j++) {
+                                        final JSONObject objectOptions = options.getJSONObject(j);
 
+                                        final String text = objectOptions.getString("text");
 
-                                    String xl_code = array.getJSONObject(position).getString("xl_code");
-                                    loadZY(xl_code);
-
-                                }
-                            });
-
-                            tvXl.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    if (mSpinerXl == null) {
-                                        return;
+                                        Djlist.add(text);
                                     }
-                                    mSpinerXl.setWidth(ll.getWidth());
-                                    mSpinerXl.setHeight(ll.getHeight() / 2);
-                                    mSpinerXl.showAsDropDown(view);
-                                    setTextImage(R.id.tv_xl, R.mipmap.up);
-                                }
-                            });
 
-                            mSpinerXl.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                                @Override
-                                public void onDismiss() {
-                                    //TODO
-                                    setTextImage(R.id.tv_xl, R.mipmap.down);
+                                    mSpinerDj = new SpinerPopWindow<String>(getActivity(), Djlist, new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            mSpinerDj.dismiss();
+                                            five = Djlist.get(position);
+                                            djId = options.getJSONObject(position).getString("value");
+                                            six = null;
+                                            tvDj.setText(Djlist.get(position));
+
+                                            //重置后面选项名称
+                                            tvQy.setText("地区范围");
+                                        }
+                                    });
+
+                                    tvDj.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (mSpinerDj == null) {
+                                                return;
+                                            }
+                                            mSpinerDj.setWidth(ll.getWidth());
+                                            mSpinerDj.setHeight(ll.getHeight() / 2);
+                                            mSpinerDj.showAsDropDown(view);
+                                            setTextImage(R.id.tv_dj, R.mipmap.up);
+                                        }
+                                    });
+
+                                    mSpinerDj.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss() {
+                                            //TODO
+                                            setTextImage(R.id.tv_dj, R.mipmap.down);
+                                        }
+                                    });
+
                                 }
-                            });
+                            } else if ("QY_DQ".equals(nodeName)) {
+                                final boolean visible = object.getBoolean("visible");
+                                final JSONArray options = object.getJSONArray("options");
+                                if (!visible) {
+                                    tvQy.setVisibility(View.GONE);
+                                    final JSONObject objectOptions = options.getJSONObject(0);
+                                    final String value = objectOptions.getString("value");
+                                    entrySign = value;
+                                } else {
+                                    if (Qylist.size() > 0) {
+                                        Qylist.clear();
+                                    }
+                                    for (int j = 0; j < options.size(); j++) {
+                                        final JSONObject objectOptions = options.getJSONObject(j);
+
+                                        final String text = objectOptions.getString("text");
+
+                                        Qylist.add(text);
+                                    }
+
+                                    mSpinerQy = new SpinerPopWindow<String>(getActivity(), Qylist, new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            mSpinerQy.dismiss();
+                                            six = Qylist.get(position);
+                                            entrySign = options.getJSONObject(position).getString("value");
+                                            tvQy.setText(Qylist.get(position));
+
+                                        }
+                                    });
+
+                                    tvQy.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (mSpinerQy == null) {
+                                                return;
+                                            }
+                                            mSpinerQy.setWidth(ll.getWidth());
+                                            mSpinerQy.setHeight(ll.getHeight() / 2);
+                                            mSpinerQy.showAsDropDown(view);
+                                            setTextImage(R.id.tv_qy, R.mipmap.up);
+                                        }
+                                    });
+
+                                    mSpinerQy.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss() {
+                                            setTextImage(R.id.tv_qy, R.mipmap.down);
+                                        }
+                                    });
+                                }
+                            }
                         }
+
+
                     }
                 });
 
@@ -1264,238 +1477,200 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     /**
      * 加载专业列表
      */
-    public void loadZY(final String xl_code) {
+    public void loadZY(String provinceCode, String nodeName, String value, String text) {
 
-        OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
-                .params("lx_code", "")
-                .params("dl_code", "")
-                .params("xl_code", xl_code)
-                .params("zy_code", "")
+        OkGo.<String>post(BiaoXunTongApi.URL_GETQYZZLIST)
+                .params("provinceCode", provinceCode)
+                .params("nodeName", nodeName)
+                .params("value", value)
+                .params("text", text)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
-                        final JSONObject object = JSON.parseObject(response.body());
-                        String status = object.getString("status");
 
-                        if ("200".equals(status)) {
-                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
+                        final JSONArray array = JSON.parseArray(response.body());
 
-                            for (int i = 0; i < array.size(); i++) {
+                        for (int i = 0; i < array.size(); i++) {
+                            final JSONObject object = array.getJSONObject(i);
+                            final String nodeName = object.getString("nodeName");
 
-                                final JSONObject data = array.getJSONObject(i);
-                                String name = data.getString("zy_name");
-                                if (TextUtils.isEmpty(name)) {
-                                    Zylist.add("不分专业");
+                            if ("QY_ZY".equals(nodeName)) {
+                                final boolean visible = object.getBoolean("visible");
+                                final JSONArray options = object.getJSONArray("options");
+                                if (!visible) {
                                     tvZy.setVisibility(View.GONE);
-
-                                    //TODO 得到listZy_ids
-                                    OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
-                                            .params("lx_code", "")
-                                            .params("dl_code", "")
-                                            .params("xl_code", xl_code)
-                                            .params("zy_code", "")
-                                            .execute(new StringCallback() {
-                                                @Override
-                                                public void onSuccess(Response<String> response) {
-                                                    final JSONObject object = JSON.parseObject(response.body());
-                                                    String status = object.getString("status");
-
-                                                    if ("200".equals(status)) {
-                                                        final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
-                                                        //得到listzy_ids
-                                                        if (zyIds.size() > 0) {
-                                                            zyIds.clear();
-                                                        }
-                                                        for (int i = 0; i < array.size(); i++) {
-                                                            final JSONObject data = array.getJSONObject(i);
-                                                            JSONArray listzy_ids = data.getJSONArray("listzy_ids");
-                                                            if (listzy_ids != null) {
-                                                                zyIds = listzy_ids;
-                                                            }
-                                                        }
-
-                                                    }
-                                                }
-                                            });
-
+                                    final JSONObject objectOptions = options.getJSONObject(0);
+                                    final String value = objectOptions.getString("value");
+                                    zyId = value;
                                 } else {
-                                    Zylist.add(name);
+
+                                    for (int j = 0; j < options.size(); j++) {
+                                        final JSONObject objectOptions = options.getJSONObject(j);
+
+                                        final String text = objectOptions.getString("text");
+
+                                        Zylist.add(text);
+                                    }
+
+
+                                    mSpinerZy = new SpinerPopWindow<String>(getActivity(), Zylist, new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            mSpinerZy.dismiss();
+                                            four = Zylist.get(position);
+                                            zyId = options.getJSONObject(position).getString("value");
+                                            five = null;
+                                            six = null;
+
+                                            tvZy.setText(Zylist.get(position));
+
+                                            //重置后面选项名称
+                                            tvDj.setText("等级");
+                                            tvQy.setText("地区范围");
+
+
+                                        }
+                                    });
+
+                                    tvZy.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (mSpinerZy == null) {
+                                                return;
+                                            }
+                                            mSpinerZy.setWidth(ll.getWidth());
+                                            mSpinerZy.setHeight(ll.getHeight() / 2);
+                                            mSpinerZy.showAsDropDown(view);
+                                            setTextImage(R.id.tv_zy, R.mipmap.up);
+                                        }
+                                    });
+
+                                    mSpinerZy.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss() {
+                                            //TODO
+                                            setTextImage(R.id.tv_zy, R.mipmap.down);
+                                        }
+                                    });
+
                                 }
-
-                                JSONArray djArray = data.getJSONArray("listdj");
-                                if (djArray != null) {
-
+                            } else if ("QY_DJ".equals(nodeName)) {
+                                final boolean visible = object.getBoolean("visible");
+                                final JSONArray options = object.getJSONArray("options");
+                                if (!visible) {
+                                    tvDj.setVisibility(View.GONE);
+                                    final JSONObject objectOptions = options.getJSONObject(0);
+                                    final String value = objectOptions.getString("value");
+                                    djId = value;
+                                } else {
                                     if (Djlist.size() > 0) {
                                         Djlist.clear();
                                     }
-                                    for (int j = 0; j < djArray.size(); j++) {
-                                        final JSONObject dj = djArray.getJSONObject(j);
+                                    for (int j = 0; j < options.size(); j++) {
+                                        final JSONObject objectOptions = options.getJSONObject(j);
 
-                                        String djName = dj.getString("name");
-                                        Djlist.add(djName);
+                                        final String text = objectOptions.getString("text");
+
+                                        Djlist.add(text);
                                     }
 
-                                    loadDJ();
-                                }
+                                    mSpinerDj = new SpinerPopWindow<String>(getActivity(), Djlist, new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            mSpinerDj.dismiss();
+                                            five = Djlist.get(position);
+                                            djId = options.getJSONObject(position).getString("value");
+                                            six = null;
 
-                                JSONArray qyArray = data.getJSONArray("listdq");
-                                if (qyArray != null) {
-                                    loadQY();
-                                }
+                                            tvDj.setText(Djlist.get(position));
+                                            //重置后面选项名称
+                                            tvQy.setText("地区范围");
+                                        }
+                                    });
 
+                                    tvDj.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (mSpinerDj == null) {
+                                                return;
+                                            }
+                                            mSpinerDj.setWidth(ll.getWidth());
+                                            mSpinerDj.setHeight(ll.getHeight() / 2);
+                                            mSpinerDj.showAsDropDown(view);
+                                            setTextImage(R.id.tv_dj, R.mipmap.up);
+                                        }
+                                    });
+
+                                    mSpinerDj.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss() {
+                                            //TODO
+                                            setTextImage(R.id.tv_dj, R.mipmap.down);
+                                        }
+                                    });
+
+                                }
+                            } else if ("QY_DQ".equals(nodeName)) {
+                                final boolean visible = object.getBoolean("visible");
+                                final JSONArray options = object.getJSONArray("options");
+                                if (!visible) {
+                                    tvQy.setVisibility(View.GONE);
+                                    final JSONObject objectOptions = options.getJSONObject(0);
+                                    final String value = objectOptions.getString("value");
+                                    entrySign = value;
+                                } else {
+                                    if (Qylist.size() > 0) {
+                                        Qylist.clear();
+                                    }
+                                    for (int j = 0; j < options.size(); j++) {
+                                        final JSONObject objectOptions = options.getJSONObject(j);
+
+                                        final String text = objectOptions.getString("text");
+
+                                        Qylist.add(text);
+                                    }
+
+                                    mSpinerQy = new SpinerPopWindow<String>(getActivity(), Qylist, new AdapterView.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                            mSpinerQy.dismiss();
+
+                                            six = Qylist.get(position);
+                                            entrySign = options.getJSONObject(position).getString("value");
+                                            tvQy.setText(Qylist.get(position));
+
+
+                                        }
+                                    });
+
+                                    tvQy.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if (mSpinerQy == null) {
+                                                return;
+                                            }
+                                            mSpinerQy.setWidth(ll.getWidth());
+                                            mSpinerQy.setHeight(ll.getHeight() / 2);
+                                            mSpinerQy.showAsDropDown(view);
+                                            setTextImage(R.id.tv_qy, R.mipmap.up);
+                                        }
+                                    });
+
+                                    mSpinerQy.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                                        @Override
+                                        public void onDismiss() {
+                                            setTextImage(R.id.tv_qy, R.mipmap.down);
+                                        }
+                                    });
+                                }
                             }
-                            mSpinerZy = new SpinerPopWindow<String>(getActivity(), Zylist, new AdapterView.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    mSpinerZy.dismiss();
 
-                                    tvZy.setText(Zylist.get(position));
-
-                                    four = Zylist.get(position);
-
-                                    //重置后面选项名称
-                                    tvDj.setText("等级");
-                                    tvQy.setText("地区范围");
-
-                                    five = null;
-                                    six = null;
-
-                                    String zy_code = array.getJSONObject(position).getString("zy_code");
-
-                                    //TODO 得到listZy_ids
-
-                                    OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
-                                            .params("lx_code", "")
-                                            .params("dl_code", "")
-                                            .params("xl_code", "")
-                                            .params("zy_code", zy_code)
-                                            .execute(new StringCallback() {
-                                                @Override
-                                                public void onSuccess(Response<String> response) {
-                                                    final JSONObject object = JSON.parseObject(response.body());
-                                                    String status = object.getString("status");
-
-                                                    if ("200".equals(status)) {
-                                                        final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
-                                                        //得到listzy_ids
-                                                        if (zyIds.size() > 0) {
-                                                            zyIds.clear();
-                                                        }
-                                                        for (int i = 0; i < array.size(); i++) {
-                                                            final JSONObject data = array.getJSONObject(i);
-                                                            JSONArray listzy_ids = data.getJSONArray("listzy_ids");
-                                                            if (listzy_ids != null) {
-                                                                zyIds = listzy_ids;
-                                                            }
-                                                        }
-
-                                                    }
-                                                }
-                                            });
-
-                                }
-                            });
-
-                            tvZy.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    if (mSpinerZy == null) {
-                                        return;
-                                    }
-                                    mSpinerZy.setWidth(ll.getWidth());
-                                    mSpinerZy.setHeight(ll.getHeight() / 2);
-                                    mSpinerZy.showAsDropDown(view);
-                                    setTextImage(R.id.tv_zy, R.mipmap.up);
-                                }
-                            });
-
-                            mSpinerZy.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                                @Override
-                                public void onDismiss() {
-                                    //TODO
-                                    setTextImage(R.id.tv_zy, R.mipmap.down);
-                                }
-                            });
                         }
+
                     }
                 });
 
     }
 
-    /**
-     * 加载等级列表
-     */
-    public void loadDJ() {
 
-        mSpinerDj = new SpinerPopWindow<String>(getActivity(), Djlist, new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mSpinerDj.dismiss();
-                tvDj.setText(Djlist.get(position));
-
-                five = Djlist.get(position);
-
-                //重置后面选项名称
-                tvQy.setText("地区范围");
-            }
-        });
-
-        tvDj.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mSpinerDj == null) {
-                    return;
-                }
-                mSpinerDj.setWidth(ll.getWidth());
-                mSpinerDj.setHeight(ll.getHeight() / 2);
-                mSpinerDj.showAsDropDown(view);
-                setTextImage(R.id.tv_dj, R.mipmap.up);
-            }
-        });
-
-        mSpinerDj.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                //TODO
-                setTextImage(R.id.tv_dj, R.mipmap.down);
-            }
-        });
-    }
-
-    /**
-     * 加载区域列表
-     */
-    public void loadQY() {
-
-        mSpinerQy = new SpinerPopWindow<String>(getActivity(), Qylist, new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mSpinerQy.dismiss();
-                tvQy.setText(Qylist.get(position));
-
-                six = Qylist.get(position);
-
-            }
-        });
-
-        tvQy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mSpinerQy == null) {
-                    return;
-                }
-                mSpinerQy.setWidth(ll.getWidth());
-                mSpinerQy.setHeight(ll.getHeight() / 2);
-                mSpinerQy.showAsDropDown(view);
-                setTextImage(R.id.tv_qy, R.mipmap.up);
-            }
-        });
-
-        mSpinerQy.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                setTextImage(R.id.tv_qy, R.mipmap.down);
-            }
-        });
-    }
 }
