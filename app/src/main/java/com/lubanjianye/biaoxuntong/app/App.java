@@ -20,14 +20,6 @@ import me.yokeyword.fragmentation.Fragmentation;
 import me.yokeyword.fragmentation.helper.ExceptionHandler;
 import okhttp3.OkHttpClient;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.app
- * 文件名:   App
- * 创建者:   lunious
- * 创建时间: 2017/12/8  23:58
- * 描述:     TODO
- */
 
 public class App extends Application {
 

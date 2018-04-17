@@ -1,6 +1,7 @@
 package com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -238,6 +240,7 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
 
         //缓存文件最大值
         mWebSettings.setAppCacheMaxSize(Long.MAX_VALUE);
+
     }
 
     @Override
@@ -247,6 +250,27 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
         sggjyDetailStatusView.setOnRetryClickListener(mRetryClickListener);
 
         setWebView();
+
+        webView.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                //加载完成
+                sggjyDetailStatusView.showContent();
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                //加载开始
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                //加载失败
+            }
+
+        });
 
     }
 
@@ -366,9 +390,9 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
                                         tvDataTime.setText("暂无");
                                     }
 
-                                    String html = data.getString("html");
-                                    if (!TextUtils.isEmpty(html)) {
-                                        webView.loadData(html, "text/html", "UTF-8");
+                                    String entityUrl = data.getString("entityUrl");
+                                    if (!TextUtils.isEmpty(entityUrl)) {
+                                        webView.loadUrl(entityUrl);
                                     } else {
                                     }
 
@@ -398,7 +422,6 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
                                         tvOwerDisan.setText("暂无");
                                     }
 
-                                    sggjyDetailStatusView.showContent();
                                 } else {
                                     sggjyDetailStatusView.showError();
                                 }
@@ -453,9 +476,9 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
                                         tvDataTime.setText("暂无");
                                     }
 
-                                    String html = data.getString("html");
-                                    if (!TextUtils.isEmpty(html)) {
-                                        webView.loadData(html, "text/html", "UTF-8");
+                                    String entityUrl = data.getString("entityUrl");
+                                    if (!TextUtils.isEmpty(entityUrl)) {
+                                        webView.loadUrl(entityUrl);
                                     } else {
                                     }
                                     String zbdlqy = data.getString("zbdlqy");
@@ -482,7 +505,6 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
                                     } else {
                                         tvOwerDisan.setText("暂无");
                                     }
-                                    sggjyDetailStatusView.showContent();
 
                                 } else {
                                     sggjyDetailStatusView.showError();
