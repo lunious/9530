@@ -268,12 +268,13 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
             dismiss();
         } else {
             if (mOnPickListener != null) {
-                if ("四川".equals(data.getName()) || "重庆".equals(data.getName())) {
+                if ("香港".equals(data.getName()) || "澳门".equals(data.getName()) || "台湾".equals(data.getName())) {
+                    ToastUtil.shortToast(getContext(), "暂不支持该地区，敬请期待!");
+                } else {
                     mOnPickListener.onPick(position, data);
                     dismiss();
-                } else {
-                    ToastUtil.shortToast(getContext(), "数据上线中，敬请期待!");
                 }
+
 
             }
         }

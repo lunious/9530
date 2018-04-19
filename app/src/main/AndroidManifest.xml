@@ -326,6 +326,12 @@
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.detail.ArticleDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Main"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity"

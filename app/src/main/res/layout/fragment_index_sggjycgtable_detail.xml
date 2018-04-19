@@ -198,7 +198,7 @@
                         android:layout_marginTop="@dimen/d10"
                         android:background="#f9eeeeee" />
 
-                    <include layout="@layout/share_item" />
+                    <include layout="@layout/share_item_top" />
 
                     <LinearLayout
                         android:layout_width="match_parent"

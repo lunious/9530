@@ -102,18 +102,7 @@ public class BrowserSuitFragment extends BaseFragment implements View.OnClickLis
         webView = AgentWeb.with(this)
                 .setAgentWebParent(ll_webview, new LinearLayout.LayoutParams(-1, -1))
                 .useDefaultIndicator(getResources().getColor(R.color.main_status_red), 3)
-                .setAgentWebWebSettings(new IAgentWebSettings() {
-                    @Override
-                    public IAgentWebSettings toSetting(WebView webView) {
-                        settings(webView);
-                        return this;
-                    }
-
-                    @Override
-                    public WebSettings getWebSettings() {
-                        return mWebSettings;
-                    }
-                })
+                .setAgentWebWebSettings(iAgentWebSettings)
                 .createAgentWeb()
                 .ready()
                 .go(mUrl);
@@ -121,8 +110,20 @@ public class BrowserSuitFragment extends BaseFragment implements View.OnClickLis
 
     }
 
-    private void settings(WebView webView) {
+    private IAgentWebSettings iAgentWebSettings = new IAgentWebSettings() {
+        @Override
+        public IAgentWebSettings toSetting(WebView webView) {
+            settings(webView);
+            return this;
+        }
 
+        @Override
+        public WebSettings getWebSettings() {
+            return mWebSettings;
+        }
+    };
+
+    private void settings(WebView webView) {
 
         mWebSettings = webView.getSettings();
         mWebSettings.setJavaScriptEnabled(true);

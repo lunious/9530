@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 描述:     TODO
  */
 
-public class IndexListBean implements Serializable{
+public class IndexListBean implements Serializable {
 
     private int id = 0;
     private String entryName = null;
@@ -25,7 +25,15 @@ public class IndexListBean implements Serializable{
 
     private String isResult = null;
     private String isCorrections = null;
+    private String entityUrl = null;
 
+    public String getEntityUrl() {
+        return entityUrl;
+    }
+
+    public void setEntityUrl(String entityUrl) {
+        this.entityUrl = entityUrl;
+    }
 
     public String getIsResult() {
         return isResult;

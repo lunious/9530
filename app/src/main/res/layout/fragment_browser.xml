@@ -17,9 +17,9 @@
             android:id="@+id/ll_webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_marginBottom="@dimen/d44"
-            android:background="@color/main_status_light_gray"/>
+            android:background="@color/main_status_light_gray"
+            android:orientation="vertical" />
 
 
         <LinearLayout
@@ -31,7 +31,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/d1"
-                android:background="@color/main_status_dark_gray"/>
+                android:background="@color/main_status_dark_gray" />
 
             <LinearLayout
                 android:id="@+id/browser_bottom"
@@ -76,7 +76,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
 
 
     </RelativeLayout>

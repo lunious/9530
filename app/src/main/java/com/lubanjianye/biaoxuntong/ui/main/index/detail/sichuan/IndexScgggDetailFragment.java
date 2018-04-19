@@ -224,6 +224,11 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
         llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
         llPyqShare = getView().findViewById(R.id.ll_pyq_share);
 
+        llWeiBoShare.setOnClickListener(this);
+        llQQBoShare.setOnClickListener(this);
+        llWeixinBoShare.setOnClickListener(this);
+        llPyqShare.setOnClickListener(this);
+
         tvGz = getView().findViewById(R.id.tv_gzgg);
         tvJg = getView().findViewById(R.id.tv_jggg);
         tvGz.setOnClickListener(this);
@@ -233,10 +238,7 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
         llFav.setOnClickListener(this);
         llShare.setOnClickListener(this);
 
-        llWeiBoShare.setOnClickListener(this);
-        llQQBoShare.setOnClickListener(this);
-        llWeixinBoShare.setOnClickListener(this);
-        llPyqShare.setOnClickListener(this);
+
         tvYw.setOnClickListener(this);
 
 
@@ -787,10 +789,10 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
     }
 
     private Share mShare = new Share();
-    private PromptDialog promptDialog = null;
 
     @Override
     public void onClick(View view) {
+
         mShare.setAppName("鲁班标讯通");
         mShare.setAppShareIcon(R.mipmap.ic_share);
         if (mShare.getBitmapResID() == 0) {

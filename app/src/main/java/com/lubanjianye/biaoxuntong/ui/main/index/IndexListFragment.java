@@ -3,6 +3,7 @@ package com.lubanjianye.biaoxuntong.ui.main.index;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -21,11 +22,10 @@ import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
+import com.lubanjianye.biaoxuntong.ui.detail.ArticleDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.view.TipView;
 import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.chongqing.IndexCqsggjyDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexScgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
@@ -134,12 +134,20 @@ public class IndexListFragment extends BaseFragment {
                 final IndexListBean data = (IndexListBean) adapter.getData().get(position);
                 final int entityId = data.getEntityId();
                 final String entity = data.getEntity();
-
+                final String entityUrl = data.getEntityUrl();
 
                 Log.d("UBHDASBDSADAS", entityId + "---" + entity);
 
                 Intent intent = null;
-                if (mDiqu.equals("四川")) {
+
+                if (!TextUtils.isEmpty(entityUrl)) {
+                    intent = new Intent(BiaoXunTong.getApplicationContext(), ArticleDetailActivity.class);
+                    intent.putExtra("entityId", entityId);
+                    intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
+                    startActivity(intent);
+                } else {
                     if ("sggjy".equals(entity)) {
                         intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
                         intent.putExtra("entityId", entityId);
@@ -183,9 +191,7 @@ public class IndexListFragment extends BaseFragment {
                         intent.putExtra("ajaxlogtype", "0");
                         intent.putExtra("mId", "");
                         startActivity(intent);
-                    }
-                } else if (mDiqu.equals("重庆")) {
-                    if ("cqcggg".equals(entity)) {
+                    } else if ("cqcggg".equals(entity)) {
                         final String title = data.getEntryName();
                         intent = new Intent(getActivity(), BrowserDetailActivity.class);
                         intent.putExtra("api", BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL);
@@ -193,16 +199,18 @@ public class IndexListFragment extends BaseFragment {
                         intent.putExtra("entity", entity);
                         intent.putExtra("entityid", entityId);
                         startActivity(intent);
+
                     } else if ("cqsggjy".equals(entity)) {
-                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexCqsggjyDetailActivity.class);
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), ArticleDetailActivity.class);
                         intent.putExtra("entityId", entityId);
                         intent.putExtra("entity", entity);
                         intent.putExtra("ajaxlogtype", "0");
                         intent.putExtra("mId", "");
                         startActivity(intent);
                     }
-
                 }
+
+
             }
         });
     }
@@ -415,14 +423,13 @@ public class IndexListFragment extends BaseFragment {
                                 String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
-                                final JSONObject data = object.getJSONObject("data");
                                 final String status = object.getString("status");
                                 final String message = object.getString("message");
-                                final JSONArray array = data.getJSONArray("list");
-                                final boolean nextPage = data.getBoolean("nextpage");
-
 
                                 if ("200".equals(status)) {
+                                    final JSONObject data = object.getJSONObject("data");
+                                    final JSONArray array = data.getJSONArray("list");
+                                    final boolean nextPage = data.getBoolean("nextpage");
                                     if (array.size() > 0) {
                                         page = 2;
                                         setData(isRefresh, array, nextPage, n);
@@ -446,15 +453,15 @@ public class IndexListFragment extends BaseFragment {
                                     String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                     final JSONObject object = JSON.parseObject(jiemi);
-                                    final JSONObject data = object.getJSONObject("data");
                                     final String status = object.getString("status");
                                     final String message = object.getString("message");
-                                    final JSONArray array = data.getJSONArray("list");
-                                    final boolean nextPage = data.getBoolean("nextpage");
-
 
                                     if ("200".equals(status)) {
+                                        final JSONObject data = object.getJSONObject("data");
+                                        final JSONArray array = data.getJSONArray("list");
+                                        final boolean nextPage = data.getBoolean("nextpage");
                                         if (array.size() > 0) {
+                                            page = 2;
                                             setData(isRefresh, array, nextPage, n);
                                         } else {
                                             if (mDataList != null) {
@@ -487,15 +494,15 @@ public class IndexListFragment extends BaseFragment {
                                 String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
-                                final JSONObject data = object.getJSONObject("data");
                                 final String status = object.getString("status");
                                 final String message = object.getString("message");
-                                final JSONArray array = data.getJSONArray("list");
-                                final boolean nextPage = data.getBoolean("nextpage");
-
 
                                 if ("200".equals(status)) {
+                                    final JSONObject data = object.getJSONObject("data");
+                                    final JSONArray array = data.getJSONArray("list");
+                                    final boolean nextPage = data.getBoolean("nextpage");
                                     if (array.size() > 0) {
+                                        page = 2;
                                         setData(isRefresh, array, nextPage, n);
                                     } else {
                                         if (mDataList != null) {
@@ -534,14 +541,13 @@ public class IndexListFragment extends BaseFragment {
                                 String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
-                                final JSONObject data = object.getJSONObject("data");
                                 final String status = object.getString("status");
                                 final String message = object.getString("message");
-                                final JSONArray array = data.getJSONArray("list");
-                                final boolean nextPage = data.getBoolean("nextpage");
-
 
                                 if ("200".equals(status)) {
+                                    final JSONObject data = object.getJSONObject("data");
+                                    final JSONArray array = data.getJSONArray("list");
+                                    final boolean nextPage = data.getBoolean("nextpage");
                                     if (array.size() > 0) {
                                         page = 2;
                                         setData(isRefresh, array, nextPage, n);
@@ -566,14 +572,13 @@ public class IndexListFragment extends BaseFragment {
                                     String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                     final JSONObject object = JSON.parseObject(jiemi);
-                                    final JSONObject data = object.getJSONObject("data");
                                     final String status = object.getString("status");
                                     final String message = object.getString("message");
-                                    final JSONArray array = data.getJSONArray("list");
-                                    final boolean nextPage = data.getBoolean("nextpage");
-
 
                                     if ("200".equals(status)) {
+                                        final JSONObject data = object.getJSONObject("data");
+                                        final JSONArray array = data.getJSONArray("list");
+                                        final boolean nextPage = data.getBoolean("nextpage");
                                         if (array.size() > 0) {
                                             page = 2;
                                             setData(isRefresh, array, nextPage, n);
@@ -606,15 +611,15 @@ public class IndexListFragment extends BaseFragment {
                                 String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
-                                final JSONObject data = object.getJSONObject("data");
                                 final String status = object.getString("status");
                                 final String message = object.getString("message");
-                                final JSONArray array = data.getJSONArray("list");
-                                final boolean nextPage = data.getBoolean("nextpage");
-
 
                                 if ("200".equals(status)) {
+                                    final JSONObject data = object.getJSONObject("data");
+                                    final JSONArray array = data.getJSONArray("list");
+                                    final boolean nextPage = data.getBoolean("nextpage");
                                     if (array.size() > 0) {
+                                        page = 2;
                                         setData(isRefresh, array, nextPage, n);
                                     } else {
                                         if (mDataList != null) {
@@ -652,6 +657,7 @@ public class IndexListFragment extends BaseFragment {
                 bean.setEntity(list.getString("entity"));
                 bean.setDeadTime(list.getString("deadTime"));
                 bean.setAddress(list.getString("address"));
+                bean.setEntityUrl(list.getString("entityUrl"));
                 if ("最新标讯".equals(mTitle)) {
                     bean.setType(list.getString("type"));
                 }
@@ -676,6 +682,7 @@ public class IndexListFragment extends BaseFragment {
                     bean.setEntity(list.getString("entity"));
                     bean.setDeadTime(list.getString("deadTime"));
                     bean.setAddress(list.getString("address"));
+                    bean.setEntityUrl(list.getString("entityUrl"));
                     if ("最新标讯".equals(mTitle)) {
                         bean.setType(list.getString("type"));
                     }

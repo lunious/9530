@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d1"
+        android:background="#eeeeee" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d42"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="end|bottom"
+        android:background="@color/main_status_white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:weightSum="9"
+        tools:ignore="DisableBaselineAlignment,ObsoleteLayoutParam">
+
+        <LinearLayout
+            android:id="@+id/ll_yw"
+            android:layout_width="@dimen/d0"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/d8"
+                android:text="查看原文"
+                android:textColor="#6d6d6d"
+                android:textSize="@dimen/d16"
+                tools:ignore="HardcodedText,RtlHardcoded" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_fav"
+            android:layout_width="@dimen/d0"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:id="@+id/iv_fav"
+                android:layout_width="@dimen/d20"
+                android:layout_height="@dimen/d20"
+                android:src="@mipmap/ic_fav_pressed" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_share"
+            android:layout_width="@dimen/d0"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="@dimen/d20"
+                android:layout_height="@dimen/d20"
+                android:src="@mipmap/ic_share_black_pressed" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_browser"
+            android:layout_width="@dimen/d0"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <ImageView
+                android:layout_width="@dimen/d20"
+                android:layout_height="@dimen/d20"
+                android:src="@mipmap/ic_brows_systembrowser" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+

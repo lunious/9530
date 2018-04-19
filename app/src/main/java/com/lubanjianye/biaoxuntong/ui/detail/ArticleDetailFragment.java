@@ -1,33 +1,40 @@
-package com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan;
+package com.lubanjianye.biaoxuntong.ui.detail;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
-import android.text.TextUtils;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
+import com.just.agentweb.AgentWebConfig;
+import com.just.agentweb.AgentWebUtils;
 import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
+import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
-import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
-import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
@@ -41,26 +48,24 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 
 
-public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
+public class ArticleDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
+
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
-    private ImageView ivFav = null;
-    private LinearLayout llFav = null;
-    private LinearLayout llShare = null;
-    private MultipleStatusView sggjycgrowDetailStatusView = null;
-    private AppCompatTextView tvMainTitle = null;
-    private AppCompatTextView tvMainResource = null;
-    private AppCompatTextView tvPuNum = null;
-    private AppCompatTextView tv1 = null;
-    private AppCompatTextView tv2 = null;
-    private AppCompatTextView tv3 = null;
-    private AppCompatTextView tv4 = null;
-    private AppCompatTextView tv5 = null;
-    private AppCompatTextView tv6 = null;
-    private AppCompatTextView tv7 = null;
-    private AppCompatTextView tv8 = null;
+    private MultipleStatusView loadingStatus = null;
+    private WebView webView = null;
+    private LinearLayout ll_content = null;
+
     private NestedScrollView detailNsv = null;
+    private AppCompatTextView tv_title = null;
+    private ImageView ivFav = null;
+    private LinearLayout llShare = null;
+    private LinearLayout llBrowser = null;
+    private LinearLayout llYw = null;
+    private LinearLayout llFav = null;
+    private AppCompatTextView tv_data_time = null;
+
 
     private LinearLayout llWeiBoShare = null;
     private LinearLayout llQQBoShare = null;
@@ -72,30 +77,28 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
     private static final String ARG_ENTITY = "ARG_ENTITY";
     private static final String ARG_AJAXTYPE = "ARG_AJAXTYPE";
 
-
     private int myFav = -1;
     private int mEntityId = -1;
     private String mEntity = "";
     private String ajaxlogtype = "";
 
-    private String shareTitle = "";
-    private String shareContent = "";
-    private String shareUrl = "";
+    private String title = "";
+    private String sysTime = "";
+    private String url = "";
+    private String entityUrl = "";
 
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
 
 
-
-    public static IndexSggjycgrowDetailFragment create(@NonNull int entityId, String entity, String ajaxlogtype) {
+    public static ArticleDetailFragment create(@NonNull int entityId, String entity, String ajaxlogtype) {
         final Bundle args = new Bundle();
         args.putInt(ARG_ENTITYID, entityId);
         args.putString(ARG_ENTITY, entity);
         args.putString(ARG_AJAXTYPE, ajaxlogtype);
-        final IndexSggjycgrowDetailFragment fragment = new IndexSggjycgrowDetailFragment();
+        final ArticleDetailFragment fragment = new ArticleDetailFragment();
         fragment.setArguments(args);
         return fragment;
     }
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -111,95 +114,55 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
 
     @Override
     public Object setLayout() {
-        return R.layout.fragment_index_sggjycgrow_detail;
+        return R.layout.fragment_article_detail;
     }
 
     @Override
     public void initView() {
         llIvBack = getView().findViewById(R.id.ll_iv_back);
         mainBarName = getView().findViewById(R.id.main_bar_name);
-        ivFav = getView().findViewById(R.id.iv_fav);
-        llFav = getView().findViewById(R.id.ll_fav);
-        llShare = getView().findViewById(R.id.ll_share);
-        sggjycgrowDetailStatusView = getView().findViewById(R.id.sggjycgrow_detail_status_view);
-        tvMainTitle = getView().findViewById(R.id.tv_main_title);
-        tvMainResource = getView().findViewById(R.id.tv_main_resource);
-        tvPuNum = getView().findViewById(R.id.tv_pu_num);
-        tv1 = getView().findViewById(R.id.tv1);
-        tv2 = getView().findViewById(R.id.tv2);
-        tv3 = getView().findViewById(R.id.tv3);
-        tv4 = getView().findViewById(R.id.tv4);
-        tv5 = getView().findViewById(R.id.tv5);
-        tv6 = getView().findViewById(R.id.tv6);
-        tv7 = getView().findViewById(R.id.tv7);
-        tv8 = getView().findViewById(R.id.tv8);
+        loadingStatus = getView().findViewById(R.id.detail_status_view);
+        webView = getView().findViewById(R.id.wv_content);
         detailNsv = getView().findViewById(R.id.detail_nsv);
+        tv_title = getView().findViewById(R.id.tv_main_title);
+        ivFav = getView().findViewById(R.id.iv_fav);
+        llShare = getView().findViewById(R.id.ll_share);
+        llBrowser = getView().findViewById(R.id.ll_browser);
+        llYw = getView().findViewById(R.id.ll_yw);
+        llFav = getView().findViewById(R.id.ll_fav);
+        tv_data_time = getView().findViewById(R.id.tv_data_time);
+        ll_content = getView().findViewById(R.id.ll_content);
+
         llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
         llQQBoShare = getView().findViewById(R.id.ll_qq_share);
         llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
         llPyqShare = getView().findViewById(R.id.ll_pyq_share);
-
-
-        llIvBack.setOnClickListener(this);
-        llFav.setOnClickListener(this);
-        llShare.setOnClickListener(this);
 
         llWeiBoShare.setOnClickListener(this);
         llQQBoShare.setOnClickListener(this);
         llWeixinBoShare.setOnClickListener(this);
         llPyqShare.setOnClickListener(this);
 
+        llIvBack.setOnClickListener(this);
+        llShare.setOnClickListener(this);
+        llBrowser.setOnClickListener(this);
+        llYw.setOnClickListener(this);
+        llFav.setOnClickListener(this);
+
     }
 
     @Override
     public void initData() {
-        llIvBack.setVisibility(View.VISIBLE);
-        mainBarName.setText("标讯详情");
-        sggjycgrowDetailStatusView.setOnRetryClickListener(mRetryClickListener);
+        requestData();
+
     }
+
 
     @Override
     public void initEvent() {
-        requestData();
         initNsv();
+        initWebView();
     }
-
-
-    //点击重试
-    final View.OnClickListener mRetryClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            requestData();
-        }
-    };
-
-
-    private void initNsv() {
-        detailNsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY) {
-                    // 向下滑动
-                    mainBarName.setText(shareTitle);
-                }
-
-                if (scrollY < oldScrollY) {
-                    // 向上滑动
-                }
-
-                if (scrollY == 0) {
-                    // 顶部
-                    mainBarName.setText("标讯详情");
-                }
-
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    // 底部
-                    mainBarName.setText(shareTitle);
-                }
-            }
-        });
-    }
-
 
     private long id = 0;
 
@@ -212,9 +175,9 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
 
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
-            sggjycgrowDetailStatusView.showNoNetwork();
+            loadingStatus.showNoNetwork();
         } else {
-            sggjycgrowDetailStatusView.showLoading();
+            loadingStatus.showLoading();
 
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                 List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
@@ -245,91 +208,18 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
                                     ivFav.setImageResource(R.mipmap.ic_fav_pressed);
                                 }
 
-
                                 if ("200".equals(status)) {
                                     final JSONObject data = object.getJSONObject("data");
-                                    String reportTitle = data.getString("reportTitle");
-                                    shareUrl = data.getString("url");
-                                    shareTitle = reportTitle;
-
-                                    String squ0 = data.getString("squ0");
-                                    shareContent = squ0;
-                                    if (!TextUtils.isEmpty(squ0)) {
-                                        tvMainTitle.setText(squ0);
-                                    } else {
-                                        tvMainTitle.setText(reportTitle);
-                                    }
-                                    String resource = data.getString("resource");
-                                    if (!TextUtils.isEmpty(resource)) {
-                                        tvMainResource.setText(resource);
-                                    } else {
-                                        tvMainResource.setText("/");
-                                    }
-                                    String sysTime = data.getString("sysTime");
-                                    if (!TextUtils.isEmpty(sysTime)) {
-                                        tvPuNum.setText(sysTime);
-                                    } else {
-                                        tvPuNum.setText("/");
-                                    }
-
-                                    String squ1 = data.getString("squ1");
-                                    if (!TextUtils.isEmpty(squ1)) {
-                                        tv1.setText(squ1);
-                                    } else {
-                                        tv1.setText("/");
-                                    }
-
-                                    String squ2 = data.getString("squ2");
-                                    if (!TextUtils.isEmpty(squ2)) {
-                                        tv2.setText(squ2);
-                                    } else {
-                                        tv2.setText("/");
-                                    }
-
-                                    String squ3 = data.getString("squ3");
-                                    if (!TextUtils.isEmpty(squ3)) {
-                                        tv3.setText(squ3);
-                                    } else {
-                                        tv3.setText("/");
-                                    }
-
-                                    String squ4 = data.getString("squ4");
-                                    if (!TextUtils.isEmpty(squ4)) {
-                                        tv4.setText(squ4);
-                                    } else {
-                                        tv4.setText("/");
-                                    }
-
-                                    String squ5 = data.getString("squ5");
-                                    if (!TextUtils.isEmpty(squ5)) {
-                                        tv5.setText(squ5);
-                                    } else {
-                                        tv5.setText("/");
-                                    }
-
-                                    String squ6 = data.getString("squ6");
-                                    if (!TextUtils.isEmpty(squ6)) {
-                                        tv6.setText(squ6);
-                                    } else {
-                                        tv6.setText("/");
-                                    }
-
-                                    String squ7 = data.getString("squ7");
-                                    if (!TextUtils.isEmpty(squ7)) {
-                                        tv7.setText(squ7);
-                                    } else {
-                                        tv7.setText("/");
-                                    }
-
-                                    String squ8 = data.getString("squ8");
-                                    if (!TextUtils.isEmpty(squ8)) {
-                                        tv8.setText(squ8);
-                                    } else {
-                                        tv8.setText("/");
-                                    }
-                                    sggjycgrowDetailStatusView.showContent();
+                                    title = data.getString("reportTitle");
+                                    url = data.getString("url");
+                                    entityUrl = data.getString("entityUrl");
+                                    sysTime = data.getString("sysTime");
+                                    webView.loadUrl(entityUrl);
+                                    tv_title.setText(title);
+                                    tv_data_time.setText(sysTime);
+                                    loadingStatus.showContent();
                                 } else {
-                                    sggjycgrowDetailStatusView.showError();
+                                    loadingStatus.showError();
                                 }
                             }
                         });
@@ -352,89 +242,16 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
 
                                 if ("200".equals(status)) {
                                     final JSONObject data = object.getJSONObject("data");
-                                    String reportTitle = data.getString("reportTitle");
-                                    shareUrl = data.getString("url");
-                                    shareTitle = reportTitle;
-
-                                    String squ0 = data.getString("squ0");
-                                    shareContent = squ0;
-                                    if (!TextUtils.isEmpty(squ0)) {
-                                        tvMainTitle.setText(squ0);
-                                    } else {
-                                        tvMainTitle.setText(reportTitle);
-                                    }
-                                    String resource = data.getString("resource");
-                                    if (!TextUtils.isEmpty(resource)) {
-                                        tvMainResource.setText(resource);
-                                    } else {
-                                        tvMainResource.setText("/");
-                                    }
-                                    String sysTime = data.getString("sysTime");
-                                    if (!TextUtils.isEmpty(sysTime)) {
-                                        tvPuNum.setText(sysTime);
-                                    } else {
-                                        tvPuNum.setText("/");
-                                    }
-
-                                    String squ1 = data.getString("squ1");
-                                    if (!TextUtils.isEmpty(squ1)) {
-                                        tv1.setText(squ1);
-                                    } else {
-                                        tv1.setText("/");
-                                    }
-
-                                    String squ2 = data.getString("squ2");
-                                    if (!TextUtils.isEmpty(squ2)) {
-                                        tv2.setText(squ2);
-                                    } else {
-                                        tv2.setText("/");
-                                    }
-
-                                    String squ3 = data.getString("squ3");
-                                    if (!TextUtils.isEmpty(squ3)) {
-                                        tv3.setText(squ3);
-                                    } else {
-                                        tv3.setText("/");
-                                    }
-
-                                    String squ4 = data.getString("squ4");
-                                    if (!TextUtils.isEmpty(squ4)) {
-                                        tv4.setText(squ4);
-                                    } else {
-                                        tv4.setText("/");
-                                    }
-
-                                    String squ5 = data.getString("squ5");
-                                    if (!TextUtils.isEmpty(squ5)) {
-                                        tv5.setText(squ5);
-                                    } else {
-                                        tv5.setText("/");
-                                    }
-
-                                    String squ6 = data.getString("squ6");
-                                    if (!TextUtils.isEmpty(squ6)) {
-                                        tv6.setText(squ6);
-                                    } else {
-                                        tv6.setText("/");
-                                    }
-
-                                    String squ7 = data.getString("squ7");
-                                    if (!TextUtils.isEmpty(squ7)) {
-                                        tv7.setText(squ7);
-                                    } else {
-                                        tv7.setText("/");
-                                    }
-
-                                    String squ8 = data.getString("squ8");
-                                    if (!TextUtils.isEmpty(squ8)) {
-                                        tv8.setText(squ8);
-                                    } else {
-                                        tv8.setText("/");
-                                    }
-
-                                    sggjycgrowDetailStatusView.showContent();
+                                    title = data.getString("reportTitle");
+                                    url = data.getString("url");
+                                    entityUrl = data.getString("entityUrl");
+                                    sysTime = data.getString("sysTime");
+                                    webView.loadUrl(entityUrl);
+                                    tv_title.setText(title);
+                                    tv_data_time.setText(sysTime);
+                                    loadingStatus.showContent();
                                 } else {
-                                    sggjycgrowDetailStatusView.showError();
+                                    loadingStatus.showError();
                                 }
                             }
                         });
@@ -445,24 +262,119 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
 
     }
 
+    private void initNsv() {
+        detailNsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > oldScrollY) {
+                    // 向下滑动
+                    mainBarName.setText(title);
+                }
+
+                if (scrollY < oldScrollY) {
+                    // 向上滑动
+                    mainBarName.setText(title);
+                }
+
+                if (scrollY == 0) {
+                    // 顶部
+                    mainBarName.setText("");
+                }
+
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    // 底部
+                    mainBarName.setText(title);
+                }
+            }
+        });
+    }
+
+    private void initWebView() {
+        WebSettings mWebSettings = webView.getSettings();
+        mWebSettings = webView.getSettings();
+        mWebSettings.setJavaScriptEnabled(true);
+        mWebSettings.setSupportZoom(true);
+        mWebSettings.setBuiltInZoomControls(false);
+        mWebSettings.setSavePassword(false);
+        if (AgentWebUtils.checkNetwork(webView.getContext())) {
+            //根据cache-control获取数据。
+            mWebSettings.setCacheMode(android.webkit.WebSettings.LOAD_DEFAULT);
+        } else {
+            //没网，则从本地获取，即离线加载
+            mWebSettings.setCacheMode(android.webkit.WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            //适配5.0不允许http和https混合使用情况
+            mWebSettings.setMixedContentMode(android.webkit.WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        }
+
+        mWebSettings.setTextZoom(100);
+        mWebSettings.setDatabaseEnabled(true);
+        mWebSettings.setAppCacheEnabled(true);
+        mWebSettings.setLoadsImagesAutomatically(true);
+        mWebSettings.setSupportMultipleWindows(false);
+        mWebSettings.setBlockNetworkImage(false);//是否阻塞加载网络图片  协议http or https
+        mWebSettings.setAllowFileAccess(true); //允许加载本地文件html  file协议
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            mWebSettings.setAllowFileAccessFromFileURLs(false); //通过 file url 加载的 Javascript 读取其他的本地文件 .建议关闭
+            mWebSettings.setAllowUniversalAccessFromFileURLs(false);//允许通过 file url 加载的 Javascript 可以访问其他的源，包括其他的文件和 http，https 等其他的源
+        }
+        mWebSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+
+            mWebSettings.setLayoutAlgorithm(android.webkit.WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        } else {
+            mWebSettings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+        }
+        mWebSettings.setLoadWithOverviewMode(true);
+        mWebSettings.setUseWideViewPort(true);
+        mWebSettings.setDomStorageEnabled(true);
+        mWebSettings.setNeedInitialFocus(true);
+        mWebSettings.setDefaultTextEncodingName("utf-8");//设置编码格式
+        mWebSettings.setDefaultFontSize(16);
+        mWebSettings.setMinimumFontSize(12);//设置 WebView 支持的最小字体大小，默认为 8
+        mWebSettings.setGeolocationEnabled(true);
+        //
+        String dir = AgentWebConfig.getCachePath(webView.getContext());
+
+        //设置数据库路径  api19 已经废弃,这里只针对 webkit 起作用
+        mWebSettings.setGeolocationDatabasePath(dir);
+        mWebSettings.setDatabasePath(dir);
+        mWebSettings.setAppCachePath(dir);
+
+        //缓存文件最大值
+        mWebSettings.setAppCacheMaxSize(Long.MAX_VALUE);
+
+        webView.setWebViewClient(new MyWebViewClient());
+
+
+    }
+
+
     private Share mShare = new Share();
-    private PromptDialog promptDialog = null;
 
     @Override
-    public void onClick(View view) {
-
+    public void onClick(View v) {
         mShare.setAppName("鲁班标讯通");
         mShare.setAppShareIcon(R.mipmap.ic_share);
         if (mShare.getBitmapResID() == 0) {
             mShare.setBitmapResID(R.mipmap.ic_share);
         }
-        mShare.setTitle(shareTitle);
-        mShare.setContent(shareContent);
-        mShare.setSummary(shareContent);
-        mShare.setDescription(shareContent);
+        mShare.setTitle(title);
+        mShare.setContent(title);
+        mShare.setSummary(title);
+        mShare.setDescription(title);
         mShare.setImageUrl(null);
-        mShare.setUrl(BiaoXunTongApi.SHARE_URL + shareUrl);
-        switch (view.getId()) {
+        mShare.setUrl(BiaoXunTongApi.SHARE_URL + entityUrl);
+
+        Intent intent = null;
+        switch (v.getId()) {
             case R.id.ll_weibo_share:
                 OpenBuilder.with(getActivity())
                         .useWeibo(OpenConstant.WB_APP_KEY)
@@ -531,11 +443,7 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
             case R.id.ll_iv_back:
                 getActivity().onBackPressed();
                 break;
-            case R.id.ll_share:
-                toShare(mEntityId, shareTitle, shareContent, BiaoXunTongApi.SHARE_URL + shareUrl);
-                break;
             case R.id.ll_fav:
-
                 if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                     //已登录处理事件
                     List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
@@ -545,7 +453,6 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
                     }
 
                     if (myFav == 1) {
-
                         OkGo.<String>post(BiaoXunTongApi.URL_DELEFAV)
                                 .params("entityid", mEntityId)
                                 .params("entity", mEntity)
@@ -562,13 +469,13 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
                                             ToastUtil.shortToast(getContext(), "取消收藏");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
+
                                             ToastUtil.shortToast(getContext(), "服务器异常");
                                         }
                                     }
                                 });
 
                     } else if (myFav == 0) {
-
                         OkGo.<String>post(BiaoXunTongApi.URL_ADDFAV)
                                 .params("entityid", mEntityId)
                                 .params("entity", mEntity)
@@ -591,12 +498,29 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
                                 });
 
                     }
-
                 } else {
                     //未登录去登陆
                     startActivity(new Intent(getActivity(), SignInActivity.class));
                 }
-
+                break;
+            case R.id.ll_share:
+                toShare(mEntityId, title, title, BiaoXunTongApi.SHARE_URL + entityUrl);
+                break;
+            case R.id.ll_browser:
+                try {
+                    // 启用外部浏览器
+                    Uri uri = Uri.parse(url);
+                    Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(it);
+                } catch (Exception e) {
+                    ToastUtil.shortToast(getContext(), "网页地址错误");
+                }
+                break;
+            case R.id.ll_yw:
+                intent = new Intent(getActivity(), BrowserSuitActivity.class);
+                intent.putExtra("url", url);
+                intent.putExtra("title", title);
+                startActivity(intent);
                 break;
             default:
                 break;
@@ -612,4 +536,58 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
     public void onSuccess() {
 
     }
+
+
+    private class MyWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url == null) {
+                return false;
+            }
+            try {
+                if (url.startsWith("weixin://") //微信
+                        || url.startsWith("mailto://") //邮件
+                        || url.startsWith("tel://")//电话
+                        || url.startsWith("tel:")//电话
+                        //其他自定义的scheme
+                        || url.startsWith("mqqwpa://")) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                    return true;
+                }
+            } catch (Exception e) { //防止crash (如果手机上没有安装处理某个scheme开头的url的APP, 会导致crash)
+                return true;//没有安装该app时，返回true，表示拦截自定义链接，但不跳转，避免弹出上面的错误页面
+            }
+
+            //处理http和https开头的url
+            if (url.startsWith("http://") || url.startsWith("https://")) {
+                webView.loadUrl(url);
+                return false;
+            }
+            return true;
+
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            //加载完成
+            ll_content.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            //加载开始
+            ll_content.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+            super.onReceivedError(view, errorCode, description, failingUrl);
+            //加载失败
+            ll_content.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+
 }

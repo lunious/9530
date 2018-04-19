@@ -1,11 +1,15 @@
 package com.lubanjianye.biaoxuntong.ui.browser;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -114,8 +118,6 @@ public class BrowserDetailFragment extends BaseFragment implements View.OnClickL
             mEntityId = args.getInt(ENTITYID);
         }
 
-        mainTitle.setText(mTitle);
-
         requestData();
 
     }
@@ -175,6 +177,7 @@ public class BrowserDetailFragment extends BaseFragment implements View.OnClickL
                                 webView = AgentWeb.with(BrowserDetailFragment.this)
                                         .setAgentWebParent(ll_webview, new LinearLayout.LayoutParams(-1, -1))
                                         .useDefaultIndicator(getResources().getColor(R.color.main_status_red), 3)
+                                        .setWebViewClient(mWebViewClient)
                                         .createAgentWeb()
                                         .ready()
                                         .go(mUrl);
@@ -219,6 +222,18 @@ public class BrowserDetailFragment extends BaseFragment implements View.OnClickL
         }
     }
 
+    private WebViewClient mWebViewClient = new WebViewClient() {
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            //do you  work
+            mainTitle.setText("加载中...");
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            mainTitle.setText(mTitle);
+        }
+    };
 
     private Share mShare = new Share();
 
