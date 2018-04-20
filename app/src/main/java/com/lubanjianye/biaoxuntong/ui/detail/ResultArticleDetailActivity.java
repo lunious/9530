@@ -6,12 +6,11 @@ import android.text.TextUtils;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseActivity;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgrowDetailFragment;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
-public class ArticleDetailActivity extends BaseActivity {
+public class ResultArticleDetailActivity extends BaseActivity {
 
     private int mEntityId = -1;
     private String mEntity = "";
@@ -44,7 +43,7 @@ public class ArticleDetailActivity extends BaseActivity {
         }
 
 
-        final ArticleDetailFragment fragment = ArticleDetailFragment.create(mEntityId, mEntity, ajaxType);
+        final ResultArticleDetailFragment fragment = ResultArticleDetailFragment.create(mEntityId, mEntity, ajaxType);
         return fragment;
     }
 }

@@ -22,7 +22,7 @@ import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
-import com.lubanjianye.biaoxuntong.ui.detail.ArticleDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.detail.IndexArticleDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.view.TipView;
 import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
@@ -141,7 +141,7 @@ public class IndexListFragment extends BaseFragment {
                 Intent intent = null;
 
                 if (!TextUtils.isEmpty(entityUrl)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), ArticleDetailActivity.class);
+                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexArticleDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
@@ -201,7 +201,7 @@ public class IndexListFragment extends BaseFragment {
                         startActivity(intent);
 
                     } else if ("cqsggjy".equals(entity)) {
-                        intent = new Intent(BiaoXunTong.getApplicationContext(), ArticleDetailActivity.class);
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexArticleDetailActivity.class);
                         intent.putExtra("entityId", entityId);
                         intent.putExtra("entity", entity);
                         intent.putExtra("ajaxlogtype", "0");

@@ -345,6 +345,7 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
                                 if ("200".equals(status)) {
                                     xcgggDetailStatusView.showContent();
                                     final JSONObject data = object.getJSONObject("data");
+
                                     //判断是否有更正和结果
                                     //1、判断有误更正
                                     final JSONArray arrayGz = data.getJSONArray("listGzUrl");

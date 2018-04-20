@@ -3,6 +3,7 @@ package com.lubanjianye.biaoxuntong.ui.main.result;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.classic.common.MultipleStatusView;
-import com.google.gson.JsonObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
@@ -22,6 +22,8 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.ui.detail.IndexArticleDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.detail.ResultArticleDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.search.activity.SearchActivity;
 import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
@@ -98,13 +100,21 @@ public class ResultListFragment extends BaseFragment {
                 final ResultListBean data = (ResultListBean) adapter.getData().get(position);
                 final int entityId = data.getEntityid();
                 final String entity = data.getEntity();
+                final String entityUrl = data.getEntityUrl();
 
-                Log.d("JASBHDBHSABDSADSAD", entityId + "___" + entity);
+                Log.d("JASBHDBHSABDSADSAD", entityId + "___" + entity+"____"+entityUrl);
 
                 Intent intent = null;
 
-                if (mDiqu.equals("四川")) {
+                if (!TextUtils.isEmpty(entityUrl)) {
+                    intent = new Intent(BiaoXunTong.getApplicationContext(), ResultArticleDetailActivity.class);
+                    intent.putExtra("entityId", entityId);
+                    intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
+                    startActivity(intent);
 
+                } else {
                     if ("xjggg".equals(entity) || "sjggg".equals(entity) || "sggjy".equals(entity) || "sggjycgjgtable".equals(entity)) {
                         intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
                         intent.putExtra("entityId", entityId);
@@ -120,9 +130,7 @@ public class ResultListFragment extends BaseFragment {
                         intent.putExtra("ajaxlogtype", "0");
                         intent.putExtra("mId", "");
                         startActivity(intent);
-                    }
-                } else if (mDiqu.equals("重庆")) {
-                    if ("cqcggg".equals(entity)) {
+                    } else if ("cqcggg".equals(entity)) {
                         final String title = data.getEntryName();
                         intent = new Intent(getActivity(), BrowserDetailActivity.class);
                         intent.putExtra("api", BiaoXunTongApi.URL_GETRESULTLISTDETAIL);
@@ -141,6 +149,8 @@ public class ResultListFragment extends BaseFragment {
                 }
 
             }
+
+
         });
 
     }
@@ -544,6 +554,7 @@ public class ResultListFragment extends BaseFragment {
                 bean.setSysTime(list.getString("sysTime"));
                 bean.setEntityid(list.getInteger("entityid"));
                 bean.setEntity(list.getString("entity"));
+                bean.setEntityUrl(list.getString("entityUrl"));
                 mDataList.add(bean);
             }
 
@@ -562,6 +573,7 @@ public class ResultListFragment extends BaseFragment {
                     bean.setSysTime(list.getString("sysTime"));
                     bean.setEntityid(list.getInteger("entityid"));
                     bean.setEntity(list.getString("entity"));
+                    bean.setEntityUrl(list.getString("entityUrl"));
                     mDataList.add(bean);
                 }
             }

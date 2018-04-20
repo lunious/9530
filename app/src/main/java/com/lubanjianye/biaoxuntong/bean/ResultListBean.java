@@ -2,14 +2,7 @@ package com.lubanjianye.biaoxuntong.bean;
 
 import java.io.Serializable;
 
-/**
- * 项目名:   Lunious
- * 包名:     com.lubanjianye.biaoxuntong.bean
- * 文件名:   ResultListBean
- * 创建者:   lunious
- * 创建时间: 2017/11/29  22:37
- * 描述:     TODO
- */
+
 
 public class ResultListBean implements Serializable {
 
@@ -19,6 +12,15 @@ public class ResultListBean implements Serializable {
     private String entity = null;
     private int entityid = 0;
     private String sysTime = null;
+    private String entityUrl = null;
+
+    public String getEntityUrl() {
+        return entityUrl;
+    }
+
+    public void setEntityUrl(String entityUrl) {
+        this.entityUrl = entityUrl;
+    }
 
     public int getId() {
         return id;

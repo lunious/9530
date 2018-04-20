@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -18,17 +19,21 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
 import com.just.agentweb.AgentWebConfig;
 import com.just.agentweb.AgentWebUtils;
 import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
@@ -49,7 +54,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 
 
-public class ArticleDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
+public class IndexArticleDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
 
 
     private LinearLayout llIvBack = null;
@@ -73,6 +78,14 @@ public class ArticleDetailFragment extends BaseFragment implements View.OnClickL
     private LinearLayout llWeixinBoShare = null;
     private LinearLayout llPyqShare = null;
 
+    private LinearLayout llWeiBoShare_bottom = null;
+    private LinearLayout llQQBoShare_bottom = null;
+    private LinearLayout llWeixinBoShare_bottom = null;
+    private LinearLayout llPyqShare_bottom = null;
+
+    private AppCompatTextView atv_gz = null;
+    private AppCompatTextView atv_jg = null;
+
 
     private static final String ARG_ENTITYID = "ARG_ENTITYID";
     private static final String ARG_ENTITY = "ARG_ENTITY";
@@ -91,12 +104,12 @@ public class ArticleDetailFragment extends BaseFragment implements View.OnClickL
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
 
 
-    public static ArticleDetailFragment create(@NonNull int entityId, String entity, String ajaxlogtype) {
+    public static IndexArticleDetailFragment create(@NonNull int entityId, String entity, String ajaxlogtype) {
         final Bundle args = new Bundle();
         args.putInt(ARG_ENTITYID, entityId);
         args.putString(ARG_ENTITY, entity);
         args.putString(ARG_AJAXTYPE, ajaxlogtype);
-        final ArticleDetailFragment fragment = new ArticleDetailFragment();
+        final IndexArticleDetailFragment fragment = new IndexArticleDetailFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -115,7 +128,7 @@ public class ArticleDetailFragment extends BaseFragment implements View.OnClickL
 
     @Override
     public Object setLayout() {
-        return R.layout.fragment_article_detail;
+        return R.layout.fragment_index_article_detail;
     }
 
     @Override
@@ -139,10 +152,26 @@ public class ArticleDetailFragment extends BaseFragment implements View.OnClickL
         llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
         llPyqShare = getView().findViewById(R.id.ll_pyq_share);
 
+        llWeiBoShare_bottom = getView().findViewById(R.id.ll_weibo_share_bottom);
+        llQQBoShare_bottom = getView().findViewById(R.id.ll_qq_share_bottom);
+        llWeixinBoShare_bottom = getView().findViewById(R.id.ll_chat_share_bottom);
+        llPyqShare_bottom = getView().findViewById(R.id.ll_pyq_share_bottom);
+
+        atv_gz = getView().findViewById(R.id.atv_gz);
+        atv_jg = getView().findViewById(R.id.atv_jg);
+
+        atv_gz.setOnClickListener(this);
+        atv_jg.setOnClickListener(this);
+
         llWeiBoShare.setOnClickListener(this);
         llQQBoShare.setOnClickListener(this);
         llWeixinBoShare.setOnClickListener(this);
         llPyqShare.setOnClickListener(this);
+
+        llWeiBoShare_bottom.setOnClickListener(this);
+        llQQBoShare_bottom.setOnClickListener(this);
+        llWeixinBoShare_bottom.setOnClickListener(this);
+        llPyqShare_bottom.setOnClickListener(this);
 
         llIvBack.setOnClickListener(this);
         llShare.setOnClickListener(this);
@@ -211,6 +240,26 @@ public class ArticleDetailFragment extends BaseFragment implements View.OnClickL
 
                                 if ("200".equals(status)) {
                                     final JSONObject data = object.getJSONObject("data");
+                                    //判断是否有更正和结果
+                                    //1、判断有误更正
+                                    final JSONArray arrayGz = data.getJSONArray("listGzUrl");
+                                    //2、判断有无结果
+                                    final JSONArray arrayJg = data.getJSONArray("listJgId");
+                                    if (arrayGz != null) {
+
+                                    } else {
+                                        atv_gz.setText("无");
+                                        atv_gz.setTextColor(getResources().getColor(R.color.main_text_color));
+                                    }
+                                    if (arrayJg != null) {
+                                        atv_jg.setVisibility(View.VISIBLE);
+                                        JSONObject list = arrayJg.getJSONObject(arrayJg.size() - 1);
+
+                                    } else {
+                                        atv_jg.setVisibility(View.GONE);
+                                    }
+
+
                                     String mTitle = data.getString("entryName");
                                     if (!TextUtils.isEmpty(mTitle)) {
                                         title = mTitle;
@@ -387,6 +436,12 @@ public class ArticleDetailFragment extends BaseFragment implements View.OnClickL
 
         Intent intent = null;
         switch (v.getId()) {
+            case R.id.atv_gz:
+                ToastUtil.shortToast(getContext(), "相关更正公告");
+                break;
+            case R.id.atv_jg:
+                ToastUtil.shortToast(getContext(), "相关结果公告");
+                break;
             case R.id.ll_weibo_share:
                 OpenBuilder.with(getActivity())
                         .useWeibo(OpenConstant.WB_APP_KEY)
@@ -438,6 +493,71 @@ public class ArticleDetailFragment extends BaseFragment implements View.OnClickL
                         });
                 break;
             case R.id.ll_pyq_share:
+                OpenBuilder.with(getActivity())
+                        .useWechat(OpenConstant.WECHAT_APP_ID)
+                        .shareTimeLine(mShare, new OpenBuilder.Callback() {
+                            @Override
+                            public void onFailed() {
+
+                            }
+
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                break;
+            case R.id.ll_weibo_share_bottom:
+                OpenBuilder.with(getActivity())
+                        .useWeibo(OpenConstant.WB_APP_KEY)
+                        .share(mShare, new OpenBuilder.Callback() {
+                            @Override
+                            public void onFailed() {
+
+                            }
+
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                break;
+            case R.id.ll_qq_share_bottom:
+                OpenBuilder.with(getActivity())
+                        .useTencent(OpenConstant.QQ_APP_ID)
+                        .share(mShare, new IUiListener() {
+                            @Override
+                            public void onComplete(Object o) {
+                                ToastUtil.shortToast(getContext(), "分享成功");
+                            }
+
+                            @Override
+                            public void onError(UiError uiError) {
+                                ToastUtil.shortToast(getContext(), "分享失败");
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                ToastUtil.shortToast(getContext(), "分享取消");
+                            }
+                        }, this);
+                break;
+            case R.id.ll_chat_share_bottom:
+                OpenBuilder.with(getActivity())
+                        .useWechat(OpenConstant.WECHAT_APP_ID)
+                        .shareSession(mShare, new OpenBuilder.Callback() {
+                            @Override
+                            public void onFailed() {
+
+                            }
+
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                break;
+            case R.id.ll_pyq_share_bottom:
                 OpenBuilder.with(getActivity())
                         .useWechat(OpenConstant.WECHAT_APP_ID)
                         .shareTimeLine(mShare, new OpenBuilder.Callback() {
@@ -573,7 +693,7 @@ public class ArticleDetailFragment extends BaseFragment implements View.OnClickL
 
             //处理http和https开头的url
             if (url.startsWith("http://") || url.startsWith("https://")) {
-                webView.loadUrl(url);
+//                webView.loadUrl(url);
                 return false;
             }
             return true;
