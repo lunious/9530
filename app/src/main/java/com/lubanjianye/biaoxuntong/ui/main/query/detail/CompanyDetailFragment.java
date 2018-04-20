@@ -8,6 +8,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -24,6 +25,7 @@ import com.lubanjianye.biaoxuntong.bean.CompanySgyjListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
@@ -316,25 +318,32 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                     @Override
                     public void onSuccess(Response<String> response) {
                         final JSONObject object = JSON.parseObject(response.body());
-                        final JSONArray array = object.getJSONArray("data");
+                        final String status = object.getString("status");
+                        final String message = object.getString("message");
 
-                        if (array.size() > 0) {
-                            if (tvQyzzTip != null) {
-                                tvQyzzTip.setVisibility(View.GONE);
+                        if ("200".equals(status)) {
+                            final JSONArray array = object.getJSONArray("data");
+                            if (array.size() > 0) {
+                                if (tvQyzzTip != null) {
+                                    tvQyzzTip.setVisibility(View.GONE);
+                                }
+
+                                setQyzzData(array);
+                                companyDetailStatusView.showContent();
+                            } else {
+                                if (mDataList != null) {
+                                    mDataList.clear();
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                                //TODO 内容为空的处理
+                                if (tvQyzzTip != null) {
+                                    tvQyzzTip.setVisibility(View.VISIBLE);
+                                }
                             }
-
-                            setQyzzData(array);
-                            companyDetailStatusView.showContent();
                         } else {
-                            if (mDataList != null) {
-                                mDataList.clear();
-                                mAdapter.notifyDataSetChanged();
-                            }
-                            //TODO 内容为空的处理
-                            if (tvQyzzTip != null) {
-                                tvQyzzTip.setVisibility(View.VISIBLE);
-                            }
+                            ToastUtil.shortToast(getActivity(), message);
                         }
+
                     }
                 });
 
@@ -357,24 +366,32 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                     @Override
                     public void onSuccess(Response<String> response) {
                         final JSONObject object = JSON.parseObject(response.body());
-                        final JSONArray array = object.getJSONArray("data");
+                        final String status = object.getString("status");
+                        final String message = object.getString("message");
 
-                        if (array.size() > 0) {
-                            if (tvRyzzTip != null) {
-                                tvRyzzTip.setVisibility(View.GONE);
+                        if ("200".equals(status)) {
+                            final JSONArray array = object.getJSONArray("data");
+                            if (array.size() > 0) {
+                                if (tvRyzzTip != null) {
+                                    tvRyzzTip.setVisibility(View.GONE);
+                                }
+                                setRyzzData(array);
+                                companyDetailStatusView.showContent();
+                            } else {
+                                if (mRyzzDataList != null) {
+                                    mRyzzDataList.clear();
+                                    mRyzzAdapter.notifyDataSetChanged();
+                                }
+                                //TODO 内容为空的处理
+                                if (tvRyzzTip != null) {
+                                    tvRyzzTip.setVisibility(View.VISIBLE);
+                                }
                             }
-                            setRyzzData(array);
-                            companyDetailStatusView.showContent();
                         } else {
-                            if (mRyzzDataList != null) {
-                                mRyzzDataList.clear();
-                                mRyzzAdapter.notifyDataSetChanged();
-                            }
-                            //TODO 内容为空的处理
-                            if (tvRyzzTip != null) {
-                                tvRyzzTip.setVisibility(View.VISIBLE);
-                            }
+                            ToastUtil.shortToast(getActivity(), message);
                         }
+
+
                     }
                 });
 
@@ -397,27 +414,33 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                     @Override
                     public void onSuccess(Response<String> response) {
                         final JSONObject object = JSON.parseObject(response.body());
-                        String status = object.getString("status");
-                        final JSONArray array = object.getJSONArray("data");
+                        final String status = object.getString("status");
+                        final String message = object.getString("message");
 
 
-                        if (array.size() > 0) {
-                            if (tvQyyjTip != null) {
-                                tvQyyjTip.setVisibility(View.GONE);
+                        if ("200".equals(status)) {
+                            final JSONArray array = object.getJSONArray("data");
+                            if (array.size() > 0) {
+                                if (tvQyyjTip != null) {
+                                    tvQyyjTip.setVisibility(View.GONE);
+                                }
+                                setQyyjData(array);
+                                companyDetailStatusView.showContent();
+                            } else {
+                                if (mQyyjDataList != null) {
+                                    mQyyjDataList.clear();
+                                    mRyzzAdapter.notifyDataSetChanged();
+                                }
+                                //TODO 内容为空的处理
+                                if (tvQyyjTip != null) {
+                                    tvQyyjTip.setVisibility(View.VISIBLE);
+                                }
                             }
-                            setQyyjData(array);
-                            companyDetailStatusView.showContent();
                         } else {
-                            if (mQyyjDataList != null) {
-                                mQyyjDataList.clear();
-                                mRyzzAdapter.notifyDataSetChanged();
-                            }
-                            //TODO 内容为空的处理
-                            if (tvQyyjTip != null) {
-                                tvQyyjTip.setVisibility(View.VISIBLE);
-                            }
-
+                            ToastUtil.shortToast(getActivity(), message);
                         }
+
+
                     }
                 });
 

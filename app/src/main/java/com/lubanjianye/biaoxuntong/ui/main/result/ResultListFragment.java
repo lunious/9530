@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.classic.common.MultipleStatusView;
+import com.google.gson.JsonObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
@@ -299,36 +300,16 @@ public class ResultListFragment extends BaseFragment {
                                 String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
-                                final JSONObject data = object.getJSONObject("data");
-                                final JSONArray array = data.getJSONArray("list");
-                                final boolean nextPage = data.getBoolean("nextpage");
+                                final String status = object.getString("status");
+                                final String message = object.getString("message");
 
-                                if (array.size() > 0) {
-                                    page = 2;
-                                    setData(isRefresh, array, nextPage);
-                                } else {
-                                    if (mDataList != null) {
-                                        mDataList.clear();
-                                        mAdapter.notifyDataSetChanged();
-                                    }
-                                    //TODO 内容为空的处理
-                                    loadingStatus.showEmpty();
-                                    resultRefresh.setEnableRefresh(false);
-                                }
-
-                            }
-
-                            @Override
-                            public void onCacheSuccess(Response<String> response) {
-                                if (!isInitCache) {
-                                    String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
-
-                                    final JSONObject object = JSON.parseObject(jiemi);
+                                if ("200".equals(status)) {
                                     final JSONObject data = object.getJSONObject("data");
                                     final JSONArray array = data.getJSONArray("list");
                                     final boolean nextPage = data.getBoolean("nextpage");
 
                                     if (array.size() > 0) {
+                                        page = 2;
                                         setData(isRefresh, array, nextPage);
                                     } else {
                                         if (mDataList != null) {
@@ -338,6 +319,42 @@ public class ResultListFragment extends BaseFragment {
                                         //TODO 内容为空的处理
                                         loadingStatus.showEmpty();
                                         resultRefresh.setEnableRefresh(false);
+                                    }
+                                } else {
+                                    ToastUtil.shortToast(getActivity(), message);
+                                }
+
+
+                            }
+
+                            @Override
+                            public void onCacheSuccess(Response<String> response) {
+                                if (!isInitCache) {
+                                    String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+
+                                    final JSONObject object = JSON.parseObject(jiemi);
+                                    final String status = object.getString("status");
+                                    final String message = object.getString("message");
+
+                                    if ("200".equals(status)) {
+                                        final JSONObject data = object.getJSONObject("data");
+                                        final JSONArray array = data.getJSONArray("list");
+                                        final boolean nextPage = data.getBoolean("nextpage");
+
+                                        if (array.size() > 0) {
+                                            page = 2;
+                                            setData(isRefresh, array, nextPage);
+                                        } else {
+                                            if (mDataList != null) {
+                                                mDataList.clear();
+                                                mAdapter.notifyDataSetChanged();
+                                            }
+                                            //TODO 内容为空的处理
+                                            loadingStatus.showEmpty();
+                                            resultRefresh.setEnableRefresh(false);
+                                        }
+                                    } else {
+                                        ToastUtil.shortToast(getActivity(), message);
                                     }
 
                                     isInitCache = true;
@@ -359,21 +376,30 @@ public class ResultListFragment extends BaseFragment {
                                 String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
-                                final JSONObject data = object.getJSONObject("data");
-                                final JSONArray array = data.getJSONArray("list");
-                                final boolean nextPage = data.getBoolean("nextpage");
+                                final String status = object.getString("status");
+                                final String message = object.getString("message");
 
-                                if (array.size() > 0) {
-                                    setData(isRefresh, array, nextPage);
-                                } else {
-                                    if (mDataList != null) {
-                                        mDataList.clear();
-                                        mAdapter.notifyDataSetChanged();
+                                if ("200".equals(status)) {
+                                    final JSONObject data = object.getJSONObject("data");
+                                    final JSONArray array = data.getJSONArray("list");
+                                    final boolean nextPage = data.getBoolean("nextpage");
+
+                                    if (array.size() > 0) {
+                                        page = 2;
+                                        setData(isRefresh, array, nextPage);
+                                    } else {
+                                        if (mDataList != null) {
+                                            mDataList.clear();
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                        //TODO 内容为空的处理
+                                        loadingStatus.showEmpty();
+                                        resultRefresh.setEnableRefresh(false);
                                     }
-                                    //TODO 内容为空的处理
-                                    loadingStatus.showEmpty();
-                                    resultRefresh.setEnableRefresh(false);
+                                } else {
+                                    ToastUtil.shortToast(getActivity(), message);
                                 }
+
 
                             }
                         });
@@ -399,22 +425,30 @@ public class ResultListFragment extends BaseFragment {
                                 String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
-                                final JSONObject data = object.getJSONObject("data");
-                                final JSONArray array = data.getJSONArray("list");
-                                final boolean nextPage = data.getBoolean("nextpage");
+                                final String status = object.getString("status");
+                                final String message = object.getString("message");
 
-                                if (array.size() > 0) {
-                                    page = 2;
-                                    setData(isRefresh, array, nextPage);
-                                } else {
-                                    if (mDataList != null) {
-                                        mDataList.clear();
-                                        mAdapter.notifyDataSetChanged();
+                                if ("200".equals(status)) {
+                                    final JSONObject data = object.getJSONObject("data");
+                                    final JSONArray array = data.getJSONArray("list");
+                                    final boolean nextPage = data.getBoolean("nextpage");
+
+                                    if (array.size() > 0) {
+                                        page = 2;
+                                        setData(isRefresh, array, nextPage);
+                                    } else {
+                                        if (mDataList != null) {
+                                            mDataList.clear();
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                        //TODO 内容为空的处理
+                                        loadingStatus.showEmpty();
+                                        resultRefresh.setEnableRefresh(false);
                                     }
-                                    //TODO 内容为空的处理
-                                    loadingStatus.showEmpty();
-                                    resultRefresh.setEnableRefresh(false);
+                                } else {
+                                    ToastUtil.shortToast(getActivity(), message);
                                 }
+
 
                             }
 
@@ -423,21 +457,30 @@ public class ResultListFragment extends BaseFragment {
                                 String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
-                                final JSONObject data = object.getJSONObject("data");
-                                final JSONArray array = data.getJSONArray("list");
-                                final boolean nextPage = data.getBoolean("nextpage");
+                                final String status = object.getString("status");
+                                final String message = object.getString("message");
 
-                                if (array.size() > 0) {
-                                    setData(isRefresh, array, nextPage);
-                                } else {
-                                    if (mDataList != null) {
-                                        mDataList.clear();
-                                        mAdapter.notifyDataSetChanged();
+                                if ("200".equals(status)) {
+                                    final JSONObject data = object.getJSONObject("data");
+                                    final JSONArray array = data.getJSONArray("list");
+                                    final boolean nextPage = data.getBoolean("nextpage");
+
+                                    if (array.size() > 0) {
+                                        page = 2;
+                                        setData(isRefresh, array, nextPage);
+                                    } else {
+                                        if (mDataList != null) {
+                                            mDataList.clear();
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                        //TODO 内容为空的处理
+                                        loadingStatus.showEmpty();
+                                        resultRefresh.setEnableRefresh(false);
                                     }
-                                    //TODO 内容为空的处理
-                                    loadingStatus.showEmpty();
-                                    resultRefresh.setEnableRefresh(false);
+                                } else {
+                                    ToastUtil.shortToast(getActivity(), message);
                                 }
+
 
                             }
                         });
@@ -454,21 +497,30 @@ public class ResultListFragment extends BaseFragment {
                                 String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
-                                final JSONObject data = object.getJSONObject("data");
-                                final JSONArray array = data.getJSONArray("list");
-                                final boolean nextPage = data.getBoolean("nextpage");
+                                final String status = object.getString("status");
+                                final String message = object.getString("message");
 
-                                if (array.size() > 0) {
-                                    setData(isRefresh, array, nextPage);
-                                } else {
-                                    if (mDataList != null) {
-                                        mDataList.clear();
-                                        mAdapter.notifyDataSetChanged();
+                                if ("200".equals(status)) {
+                                    final JSONObject data = object.getJSONObject("data");
+                                    final JSONArray array = data.getJSONArray("list");
+                                    final boolean nextPage = data.getBoolean("nextpage");
+
+                                    if (array.size() > 0) {
+                                        page = 2;
+                                        setData(isRefresh, array, nextPage);
+                                    } else {
+                                        if (mDataList != null) {
+                                            mDataList.clear();
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                        //TODO 内容为空的处理
+                                        loadingStatus.showEmpty();
+                                        resultRefresh.setEnableRefresh(false);
                                     }
-                                    //TODO 内容为空的处理
-                                    loadingStatus.showEmpty();
-                                    resultRefresh.setEnableRefresh(false);
+                                } else {
+                                    ToastUtil.shortToast(getActivity(), message);
                                 }
+
 
                             }
                         });

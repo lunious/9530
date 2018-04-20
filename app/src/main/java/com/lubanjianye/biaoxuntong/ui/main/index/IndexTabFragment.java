@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -100,6 +101,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
     private String locationArea = "";
 
+    private String provinceCode = "";
 
     @Override
     public Object setLayout() {
@@ -150,14 +152,19 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
         mLocationClient.setLocOption(option);
 
 
-        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
-            String area = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
+        if (AppSharePreferenceMgr.contains(getApplicationContext(), EventMessage.LOCA_AREA)) {
+            String area = (String) AppSharePreferenceMgr.get(getApplicationContext(), EventMessage.LOCA_AREA, "");
             tv_location.setText(area);
 
         } else {
             tv_location.setText("四川");
         }
 
+        if (AppSharePreferenceMgr.contains(getApplicationContext(), EventMessage.LOCA_AREA_CODE)) {
+            provinceCode = (String) AppSharePreferenceMgr.get(getApplicationContext(), EventMessage.LOCA_AREA_CODE, "");
+        } else {
+            provinceCode = "510000";
+        }
 
     }
 
@@ -189,8 +196,8 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
     public void initEvent() {
         //热门城市
         hotCities = new ArrayList<>();
-        hotCities.add(new HotCity("四川", "四川", null));
-        hotCities.add(new HotCity("重庆", "重庆", null));
+        hotCities.add(new HotCity("四川", "四川", "510000"));
+        hotCities.add(new HotCity("重庆", "重庆", "500000"));
 
 
         requestStorage_location();
@@ -229,9 +236,13 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
         String mDiqu = tv_location.getText().toString();
 
-
         //保存地区
-        AppSharePreferenceMgr.put(getContext(), EventMessage.LOCA_AREA, mDiqu);
+        AppSharePreferenceMgr.put(getApplicationContext(), EventMessage.LOCA_AREA, mDiqu);
+        //保存地区code
+        AppSharePreferenceMgr.put(getApplicationContext(), EventMessage.LOCA_AREA_CODE, provinceCode);
+
+
+        Log.d("JHSAHDUGASUYDAS", provinceCode);
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             //得到用户userId
@@ -533,11 +544,11 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                 @Override
                                 public void onPick(int position, City data) {
 
-
                                     if (data != null) {
 
                                         if (!data.getName().equals(tv_location.getText().toString())) {
                                             tv_location.setText(String.format("%s", data.getName()));
+                                            provinceCode = data.getCode();
                                             if (indexStlTab != null) {
                                                 indexStlTab.setCurrentTab(0);
                                                 indexStlTab.setViewPager(indexVp);
@@ -580,6 +591,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                     if (data != null) {
                                         if (!data.getName().equals(tv_location.getText().toString())) {
                                             tv_location.setText(String.format("%s", data.getName()));
+                                            provinceCode = data.getCode();
                                             if (indexStlTab != null) {
                                                 indexStlTab.setCurrentTab(0);
                                                 indexStlTab.setViewPager(indexVp);
@@ -635,7 +647,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
     @AfterPermissionGranted(RC_STORAGE_AND_LOCATION)
     public void requestStorage_location() {
-        String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.READ_EXTERNAL_STORAGE};
+        String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(getContext(), perms)) {
             // 检查更新
             if (NetUtil.isNetworkConnected(getActivity())) {

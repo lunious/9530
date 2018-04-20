@@ -43,14 +43,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.query
- * 文件名:   CompanySearchResultFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/15  23:03
- * 描述:     TODO
- */
 
 public class CompanySearchResultFragment extends BaseFragment implements View.OnClickListener {
 

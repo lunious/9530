@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -173,11 +174,11 @@ public class ArticleDetailFragment extends BaseFragment implements View.OnClickL
             EventBus.getDefault().post(new EventMessage(EventMessage.READ_STATUS));
         }
 
-
         if (!NetUtil.isNetworkConnected(getActivity())) {
             loadingStatus.showNoNetwork();
         } else {
             loadingStatus.showLoading();
+            mainBarName.setText("加载中...");
 
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                 List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
@@ -210,7 +211,12 @@ public class ArticleDetailFragment extends BaseFragment implements View.OnClickL
 
                                 if ("200".equals(status)) {
                                     final JSONObject data = object.getJSONObject("data");
-                                    title = data.getString("reportTitle");
+                                    String mTitle = data.getString("entryName");
+                                    if (!TextUtils.isEmpty(mTitle)) {
+                                        title = mTitle;
+                                    } else {
+                                        title = data.getString("reportTitle");
+                                    }
                                     url = data.getString("url");
                                     entityUrl = data.getString("entityUrl");
                                     sysTime = data.getString("sysTime");
@@ -241,8 +247,14 @@ public class ArticleDetailFragment extends BaseFragment implements View.OnClickL
                                 String status = object.getString("status");
 
                                 if ("200".equals(status)) {
+
                                     final JSONObject data = object.getJSONObject("data");
-                                    title = data.getString("reportTitle");
+                                    String mTitle = data.getString("entryName");
+                                    if (!TextUtils.isEmpty(mTitle)) {
+                                        title = mTitle;
+                                    } else {
+                                        title = data.getString("reportTitle");
+                                    }
                                     url = data.getString("url");
                                     entityUrl = data.getString("entityUrl");
                                     sysTime = data.getString("sysTime");
@@ -278,7 +290,7 @@ public class ArticleDetailFragment extends BaseFragment implements View.OnClickL
 
                 if (scrollY == 0) {
                     // 顶部
-                    mainBarName.setText("");
+                    mainBarName.setText("标讯详情");
                 }
 
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
@@ -572,19 +584,18 @@ public class ArticleDetailFragment extends BaseFragment implements View.OnClickL
         public void onPageFinished(WebView view, String url) {
             //加载完成
             ll_content.setVisibility(View.GONE);
+            mainBarName.setText("标讯详情");
         }
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             //加载开始
-            ll_content.setVisibility(View.VISIBLE);
         }
 
         @Override
         public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
             //加载失败
-            ll_content.setVisibility(View.VISIBLE);
         }
 
     }
