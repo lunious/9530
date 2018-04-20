@@ -10,14 +10,6 @@ import com.lubanjianye.biaoxuntong.bean.QueryBean;
 
 import java.util.List;
 
-/**
- * 项目名:   9527
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.query
- * 文件名:   QueryAdapter
- * 创建者:   lunious
- * 创建时间: 2017/12/24  21:58
- * 描述:     TODO
- */
 
 public class QueryAdapter extends BaseItemDraggableAdapter<QueryBean, BaseViewHolder> {
 

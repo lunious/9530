@@ -9,14 +9,6 @@ import com.lubanjianye.biaoxuntong.bean.CompanySearchResultListBean;
 
 import java.util.List;
 
-/**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.query
- * 文件名:   CompanySearchResultListAdapter
- * 创建者:   lunious
- * 创建时间: 2017/12/15  23:11
- * 描述:     TODO
- */
 
 
 public class CompanySearchResultListAdapter extends BaseQuickAdapter<CompanySearchResultListBean, BaseViewHolder> {

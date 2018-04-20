@@ -295,14 +295,8 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
         initRecyclerView();
         initAdapter();
 
-        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
-            String area = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
-
-            if (area.equals("四川")) {
-                provinceCode = "510000";
-            } else if (area.equals("重庆")) {
-                provinceCode = "500000";
-            }
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA_CODE)) {
+            provinceCode = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA_CODE, "");
         } else {
             provinceCode = "510000";
         }
