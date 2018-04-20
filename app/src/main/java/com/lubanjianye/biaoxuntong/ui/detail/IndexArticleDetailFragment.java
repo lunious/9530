@@ -298,6 +298,24 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                                 if ("200".equals(status)) {
 
                                     final JSONObject data = object.getJSONObject("data");
+                                    //判断是否有更正和结果
+                                    //1、判断有误更正
+                                    final JSONArray arrayGz = data.getJSONArray("listGzUrl");
+                                    //2、判断有无结果
+                                    final JSONArray arrayJg = data.getJSONArray("listJgId");
+                                    if (arrayGz != null) {
+
+                                    } else {
+                                        atv_gz.setText("无");
+                                        atv_gz.setTextColor(getResources().getColor(R.color.main_text_color));
+                                    }
+                                    if (arrayJg != null) {
+                                        atv_jg.setVisibility(View.VISIBLE);
+                                        JSONObject list = arrayJg.getJSONObject(arrayJg.size() - 1);
+
+                                    } else {
+                                        atv_jg.setVisibility(View.GONE);
+                                    }
                                     String mTitle = data.getString("entryName");
                                     if (!TextUtils.isEmpty(mTitle)) {
                                         title = mTitle;

@@ -268,29 +268,18 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             tvQy.setText("地区范围");
 
 
-            if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
-                String area = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
-
-                if (area.equals("四川")) {
-                    provinceCode = "510000";
-                    Qylist.add("川内");
-                    Qylist.add("入川");
-                    Qylist.add("川内+入川");
-                    Qylist.add("全国");
-                } else if (area.equals("重庆")) {
-                    provinceCode = "500000";
-                    Qylist.add("渝内");
-                    Qylist.add("入渝");
-                    Qylist.add("渝内+入渝");
-                    Qylist.add("全国");
-                }
+            if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA_CODE)) {
+                provinceCode = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA_CODE, "");
             } else {
                 provinceCode = "510000";
-                Qylist.add("川内");
-                Qylist.add("入川");
-                Qylist.add("川内+入川");
-                Qylist.add("全国");
             }
+
+            one = null;
+            two = null;
+            three = null;
+            four = null;
+            five = null;
+            six = null;
 
 
         }
@@ -306,8 +295,14 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
         initRecyclerView();
         initAdapter();
 
-        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA_CODE)) {
-            provinceCode = (String) AppSharePreferenceMgr.get(getActivity(), EventMessage.LOCA_AREA_CODE, "");
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
+            String area = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
+
+            if (area.equals("四川")) {
+                provinceCode = "510000";
+            } else if (area.equals("重庆")) {
+                provinceCode = "500000";
+            }
         } else {
             provinceCode = "510000";
         }
@@ -493,7 +488,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             case R.id.btn_add:
                 if (TextUtils.isEmpty(one)) {
                     ToastUtil.shortToast(getContext(), "请选择资质类型");
-                } else {
+                } else if ("工程造价咨询".equals(one) || "设计施工一体化".equals(one)) {
                     if (mDataList.size() <= 2) {
                         QueryBean bean = new QueryBean();
                         bean.setZzlx(one);
@@ -512,7 +507,29 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                     } else {
                         ToastUtil.shortToast(getContext(), "最多叠加三个条件!");
                     }
+                } else {
+                    if (TextUtils.isEmpty(two)) {
+                        ToastUtil.shortToast(getContext(), "请选择大类");
+                    } else {
+                        if (mDataList.size() <= 2) {
+                            QueryBean bean = new QueryBean();
+                            bean.setZzlx(one);
+                            bean.setDl(two);
+                            bean.setXl(three);
+                            bean.setZy(four);
+                            bean.setDj(five);
+                            bean.setDq(six);
+                            mDataList.add(bean);
 
+                            mAdapter.notifyDataSetChanged();
+
+                            //得到符合条件的id
+                            getSuitCompany();
+
+                        } else {
+                            ToastUtil.shortToast(getContext(), "最多叠加三个条件!");
+                        }
+                    }
                 }
 
                 break;
