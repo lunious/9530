@@ -332,15 +332,17 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
             mWebSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            //适配5.0不允许http和https混合使用情况
-            mWebSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            //适配5.0不允许http和https混合使用情况
+//            mWebSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+//            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+//        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            webView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+//        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+//            webView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+//        }
+
+        webView.setLayerType(View.LAYER_TYPE_NONE, null);
 
         mWebSettings.setTextZoom(100);
         mWebSettings.setDatabaseEnabled(true);

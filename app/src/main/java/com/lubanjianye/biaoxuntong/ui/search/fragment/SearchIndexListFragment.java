@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.PopupWindow;
@@ -25,12 +27,14 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.detail.IndexArticleDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.ui.main.index.IndexListAdapter;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.chongqing.IndexCqsggjyDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexScgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgrowDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgtableDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexXcgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
@@ -138,15 +142,23 @@ public class SearchIndexListFragment extends BaseFragment {
         searchRecycler.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-
                 final IndexListBean data = (IndexListBean) adapter.getData().get(position);
                 final int entityId = data.getEntityId();
                 final String entity = data.getEntity();
+                final String entityUrl = data.getEntityUrl();
 
+                Log.d("UBHDASBDSADAS", entityId + "---" + entity);
 
                 Intent intent = null;
-                if ("四川".equals(mDiqu)) {
 
+                if (!TextUtils.isEmpty(entityUrl)) {
+                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexArticleDetailActivity.class);
+                    intent.putExtra("entityId", entityId);
+                    intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
+                    startActivity(intent);
+                } else {
                     if ("sggjy".equals(entity)) {
                         intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
                         intent.putExtra("entityId", entityId);
@@ -176,7 +188,13 @@ public class SearchIndexListFragment extends BaseFragment {
                         intent.putExtra("ajaxlogtype", "0");
                         intent.putExtra("mId", "");
                         startActivity(intent);
-
+                    } else if ("sggjycgrow".equals(entity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgrowDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
                     } else if ("scggg".equals(entity)) {
                         intent = new Intent(BiaoXunTong.getApplicationContext(), IndexScgggDetailActivity.class);
                         intent.putExtra("entityId", entityId);
@@ -184,9 +202,7 @@ public class SearchIndexListFragment extends BaseFragment {
                         intent.putExtra("ajaxlogtype", "0");
                         intent.putExtra("mId", "");
                         startActivity(intent);
-                    }
-                } else if ("重庆".equals(mDiqu)) {
-                    if ("cqcggg".equals(entity)) {
+                    } else if ("cqcggg".equals(entity)) {
                         final String title = data.getEntryName();
                         intent = new Intent(getActivity(), BrowserDetailActivity.class);
                         intent.putExtra("api", BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL);
@@ -194,8 +210,9 @@ public class SearchIndexListFragment extends BaseFragment {
                         intent.putExtra("entity", entity);
                         intent.putExtra("entityid", entityId);
                         startActivity(intent);
+
                     } else if ("cqsggjy".equals(entity)) {
-                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexCqsggjyDetailActivity.class);
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexArticleDetailActivity.class);
                         intent.putExtra("entityId", entityId);
                         intent.putExtra("entity", entity);
                         intent.putExtra("ajaxlogtype", "0");
@@ -203,6 +220,7 @@ public class SearchIndexListFragment extends BaseFragment {
                         startActivity(intent);
                     }
                 }
+
 
             }
         });
@@ -361,6 +379,7 @@ public class SearchIndexListFragment extends BaseFragment {
                 bean.setSignstauts(list.getString("signstauts"));
                 bean.setIsResult(list.getString("isResult"));
                 bean.setIsCorrections(list.getString("isCorrections"));
+                bean.setEntityUrl(list.getString("entityUrl"));
                 mDataList.add(bean);
             }
             resultRefresh.setRefreshing(false);
@@ -381,6 +400,7 @@ public class SearchIndexListFragment extends BaseFragment {
                     bean.setSignstauts(list.getString("signstauts"));
                     bean.setIsResult(list.getString("isResult"));
                     bean.setIsCorrections(list.getString("isCorrections"));
+                    bean.setEntityUrl(list.getString("entityUrl"));
                     mDataList.add(bean);
                 }
                 mAdapter.notifyDataSetChanged();

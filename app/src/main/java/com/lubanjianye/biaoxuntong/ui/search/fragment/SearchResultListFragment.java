@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -21,6 +23,7 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.detail.ResultArticleDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.ResultListAdapter;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailActivity;
@@ -44,7 +47,6 @@ import java.util.List;
 public class SearchResultListFragment extends BaseFragment {
 
 
-
     private RecyclerView resultRecycler = null;
     private SwipeRefreshLayout resultRefresh = null;
     private MultipleStatusView loadingStatus = null;
@@ -59,7 +61,6 @@ public class SearchResultListFragment extends BaseFragment {
     private String mDiqu = "";
 
     private static String keyWorld = "";
-
 
 
     public static SearchResultListFragment newInstance(String contentt) {
@@ -79,13 +80,22 @@ public class SearchResultListFragment extends BaseFragment {
                 final ResultListBean data = (ResultListBean) adapter.getData().get(position);
                 final int entityId = data.getEntityid();
                 final String entity = data.getEntity();
+                final String entityUrl = data.getEntityUrl();
 
-                Log.d("JASBHDBHSABDSADSAD", entityId + "___" + entity);
+                Log.d("JASBHDBHSABDSADSAD", entityId + "___" + entity+"____"+entityUrl);
 
                 Intent intent = null;
 
-                if ("四川".equals(mDiqu)){
-                    if ("xjggg".equals(entity) || "sjggg".equals(entity)) {
+                if (!TextUtils.isEmpty(entityUrl)) {
+                    intent = new Intent(BiaoXunTong.getApplicationContext(), ResultArticleDetailActivity.class);
+                    intent.putExtra("entityId", entityId);
+                    intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
+                    startActivity(intent);
+
+                } else {
+                    if ("xjggg".equals(entity) || "sjggg".equals(entity) || "sggjy".equals(entity) || "sggjycgjgtable".equals(entity)) {
                         intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
                         intent.putExtra("entityId", entityId);
                         intent.putExtra("entity", entity);
@@ -100,17 +110,15 @@ public class SearchResultListFragment extends BaseFragment {
                         intent.putExtra("ajaxlogtype", "0");
                         intent.putExtra("mId", "");
                         startActivity(intent);
-                    }
-                }else if("重庆".equals(mDiqu)){
-                    if ("cqcggg".equals(entity)){
+                    } else if ("cqcggg".equals(entity)) {
                         final String title = data.getEntryName();
                         intent = new Intent(getActivity(), BrowserDetailActivity.class);
                         intent.putExtra("api", BiaoXunTongApi.URL_GETRESULTLISTDETAIL);
                         intent.putExtra("title", title);
-                        intent.putExtra("entity",entity);
-                        intent.putExtra("entityid",entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("entityid", entityId);
                         startActivity(intent);
-                    }else if ("cqsggjyzbjg".equals(entity)){
+                    } else if ("cqsggjyzbjg".equals(entity)) {
                         intent = new Intent(BiaoXunTong.getApplicationContext(), ResultCqsggjyzbjgDetailActivity.class);
                         intent.putExtra("entityId", entityId);
                         intent.putExtra("entity", entity);
@@ -119,6 +127,7 @@ public class SearchResultListFragment extends BaseFragment {
                         startActivity(intent);
                     }
                 }
+
 
 
             }
@@ -145,7 +154,6 @@ public class SearchResultListFragment extends BaseFragment {
     }
 
 
-
     @Override
     public Object setLayout() {
         return R.layout.fragment_search_list;
@@ -157,11 +165,11 @@ public class SearchResultListFragment extends BaseFragment {
         resultRefresh = getView().findViewById(R.id.result_search_refresh);
         loadingStatus = getView().findViewById(R.id.result_search_list_status_view);
 
-        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)){
-            String area = (String) AppSharePreferenceMgr.get(getContext(),EventMessage.LOCA_AREA,"");
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
+            String area = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");
 
             mDiqu = area;
-        }else {
+        } else {
             mDiqu = "四川";
         }
 
@@ -181,9 +189,9 @@ public class SearchResultListFragment extends BaseFragment {
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
             mAdapter.setEnableLoadMore(false);
-            requestData(1,keyWorld);
+            requestData(1, keyWorld);
         } else {
-            requestData(0,keyWorld);
+            requestData(0, keyWorld);
         }
     }
 
@@ -214,7 +222,7 @@ public class SearchResultListFragment extends BaseFragment {
                         .params("keyWord", keyword)
                         .params("userid", id)
                         .params("page", page)
-                        .params("diqu",mDiqu)
+                        .params("diqu", mDiqu)
                         .params("size", 10)
                         .execute(new StringCallback() {
                             @Override
@@ -246,7 +254,7 @@ public class SearchResultListFragment extends BaseFragment {
                 OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
                         .params("keyWord", keyword)
                         .params("page", page)
-                        .params("diqu",mDiqu)
+                        .params("diqu", mDiqu)
                         .params("size", 10)
                         .execute(new StringCallback() {
                             @Override
@@ -291,6 +299,7 @@ public class SearchResultListFragment extends BaseFragment {
                 bean.setSysTime(list.getString("sysTime"));
                 bean.setEntityid(list.getInteger("entityid"));
                 bean.setEntity(list.getString("entity"));
+                bean.setEntityUrl(list.getString("entityUrl"));
                 mDataList.add(bean);
             }
             resultRefresh.setRefreshing(false);
@@ -307,6 +316,7 @@ public class SearchResultListFragment extends BaseFragment {
                     bean.setSysTime(list.getString("sysTime"));
                     bean.setEntityid(list.getInteger("entityid"));
                     bean.setEntity(list.getString("entity"));
+                    bean.setEntityUrl(list.getString("entityUrl"));
                     mDataList.add(bean);
                 }
                 mAdapter.notifyDataSetChanged();
