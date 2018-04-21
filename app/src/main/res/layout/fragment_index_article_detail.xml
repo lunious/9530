@@ -53,8 +53,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:paddingTop="@dimen/d20"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/d20">
 
                         <LinearLayout
                             android:id="@+id/ll_type"
@@ -69,16 +69,17 @@
                                 android:layout_height="wrap_content"
                                 android:text=""
                                 android:textColor="@color/main_status_blue"
-                                android:textSize="@dimen/d15" />
+                                android:textSize="@dimen/d14" />
 
                             <View
                                 android:layout_width="@dimen/d1"
                                 android:layout_height="match_parent"
                                 android:layout_marginBottom="@dimen/d4"
-                                android:layout_marginLeft="@dimen/d6"
-                                android:layout_marginRight="@dimen/d6"
+                                android:layout_marginLeft="@dimen/d4"
+                                android:layout_marginRight="@dimen/d4"
                                 android:layout_marginTop="@dimen/d4"
-                                android:background="@color/main_status_red" />
+                                android:background="@color/main_status_red"
+                                android:gravity="center" />
 
                         </LinearLayout>
 
@@ -88,15 +89,16 @@
                             android:layout_height="wrap_content"
                             android:text="项目编号:"
                             android:textColor="@color/main_text_color"
-                            android:textSize="@dimen/d15" />
+                            android:textSize="@dimen/d14" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/tv_pu_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/d4"
+                            android:maxLines="1"
                             android:text=""
-                            android:textSize="@dimen/d15" />
+                            android:textSize="@dimen/d14" />
                     </LinearLayout>
 
 
