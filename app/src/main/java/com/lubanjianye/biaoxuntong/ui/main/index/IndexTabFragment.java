@@ -536,8 +536,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                 if (!TextUtils.isEmpty(locationArea)) {
                     CityPicker.getInstance()
                             .setFragmentManager(getFragmentManager())
-                            .enableAnimation(true)
-                            .setAnimationStyle(R.style.CustomAnim)
+                            .enableAnimation(false)
                             .setLocatedCity(new LocatedCity(locationArea, "", ""))
                             .setHotCities(hotCities)
                             .setOnPickListener(new OnPickListener() {
@@ -580,8 +579,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                 } else {
                     CityPicker.getInstance()
                             .setFragmentManager(getFragmentManager())
-                            .enableAnimation(true)
-                            .setAnimationStyle(R.style.CustomAnim)
+                            .enableAnimation(false)
                             .setHotCities(hotCities)
                             .setOnPickListener(new OnPickListener() {
                                 @Override

@@ -11,10 +11,7 @@ import com.lubanjianye.biaoxuntong.ui.citypicker.model.LocatedCity;
 
 import java.util.List;
 
-/**
- * @Author: Bro0cL
- * @Date: 2018/2/6 17:52
- */
+
 public class CityPicker {
     private static final String TAG = "CityPicker";
 

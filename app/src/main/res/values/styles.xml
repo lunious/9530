@@ -195,10 +195,6 @@
         <item name="cpOverlayBackground">@drawable/cp_overlay_bg</item>
     </style>
 
-    <style name="CustomAnim">
-        <item name="android:windowEnterAnimation">@anim/custom_push_down_in</item>
-        <item name="android:windowExitAnimation">@anim/custom_push_up_out</item>
-    </style>
 
 
 </resources>
