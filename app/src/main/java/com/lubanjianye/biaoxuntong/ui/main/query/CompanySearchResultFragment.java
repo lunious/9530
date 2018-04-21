@@ -53,10 +53,12 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
 
     private static final String ARG_PROVINCECODE = "ARG_PROVINCECODE";
     private static final String ARG_QYID = "ARG_QYID";
+    private static final String ARG_SHOWSIGN = "ARG_SHOWSIGN";
     private View noDataView;
 
     private String mProvinceCode = "";
     private String mqyIds = "";
+    private String mShowSign = "";
 
     private CompanySearchResultListAdapter mAdapter;
     private ArrayList<CompanySearchResultListBean> mDataList = new ArrayList<>();
@@ -68,10 +70,11 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
         return R.layout.fragment_company_search_result;
     }
 
-    public static CompanySearchResultFragment create(@NonNull String provinceCode, String qyId) {
+    public static CompanySearchResultFragment create(@NonNull String provinceCode, String qyId, String showSign) {
         final Bundle args = new Bundle();
         args.putString(ARG_PROVINCECODE, provinceCode);
         args.putString(ARG_QYID, qyId);
+        args.putString(ARG_SHOWSIGN, showSign);
         final CompanySearchResultFragment fragment = new CompanySearchResultFragment();
         fragment.setArguments(args);
         return fragment;
@@ -85,7 +88,7 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
         if (args != null) {
             mProvinceCode = args.getString(ARG_PROVINCECODE);
             mqyIds = args.getString(ARG_QYID);
-
+            mShowSign = args.getString(ARG_SHOWSIGN);
         }
     }
 
@@ -344,6 +347,11 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
                 bean.setEntrySign(list.getString("entrySign"));
                 bean.setSfId(list.getString("sfId"));
                 bean.setProvinceCode(mProvinceCode);
+                if ("1".equals(mShowSign)) {
+                    bean.setShowSign("1");
+                } else {
+                    bean.setShowSign("0");
+                }
                 mDataList.add(bean);
             }
             companySearchResultRefresh.finishRefresh(0, true);
@@ -358,6 +366,11 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
                     bean.setEntrySign(list.getString("entrySign"));
                     bean.setSfId(list.getString("sfId"));
                     bean.setProvinceCode(mProvinceCode);
+                    if ("1".equals(mShowSign)) {
+                        bean.setShowSign("1");
+                    } else {
+                        bean.setShowSign("0");
+                    }
                     mDataList.add(bean);
                 }
             }

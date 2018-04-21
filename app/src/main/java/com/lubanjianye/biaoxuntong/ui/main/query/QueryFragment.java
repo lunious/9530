@@ -618,6 +618,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                         Intent intent = new Intent(getActivity(), CompanySearchResultActivity.class);
                                         intent.putExtra("provinceCode", provinceCode);
                                         intent.putExtra("qyIds", qyIds);
+                                        intent.putExtra("showSign", "1");
                                         startActivity(intent);
                                     } else {
                                         ToastUtil.shortToast(getContext(), "请先绑定手机号");
@@ -685,6 +686,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                 Intent intent = new Intent(getActivity(), CompanySearchResultActivity.class);
                                                 intent.putExtra("provinceCode", provinceCode);
                                                 intent.putExtra("qyIds", data.toString());
+                                                intent.putExtra("showSign", "0");
                                                 startActivity(intent);
                                             } else {
                                                 promptDialog.dismissImmediately();
