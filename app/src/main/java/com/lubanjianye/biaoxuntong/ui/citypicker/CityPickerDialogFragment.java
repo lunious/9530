@@ -2,6 +2,7 @@ package com.lubanjianye.biaoxuntong.ui.citypicker;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,6 +35,8 @@ import com.lubanjianye.biaoxuntong.ui.citypicker.model.HotCity;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.LocateState;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.LocatedCity;
 import com.lubanjianye.biaoxuntong.ui.citypicker.view.SideIndexBar;
+import com.lubanjianye.biaoxuntong.util.dimen.DensityUtil;
+import com.lubanjianye.biaoxuntong.util.dimen.DimenUtil;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import java.util.ArrayList;
@@ -183,9 +186,9 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         Dialog dialog = super.onCreateDialog(savedInstanceState);
         Window window = dialog.getWindow();
         if (window != null) {
-            window.getDecorView().setPadding(0, 0, 0, 0);
             window.setBackgroundDrawableResource(android.R.color.transparent);
             window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+            window.getDecorView().setPadding(0, 0, 0, 0);
             if (enableAnim) {
                 window.setWindowAnimations(mAnimStyle);
             }
