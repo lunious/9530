@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -21,6 +22,8 @@ import com.lubanjianye.biaoxuntong.bean.CollectionListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
+import com.lubanjianye.biaoxuntong.ui.detail.IndexArticleDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.detail.ResultArticleDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.chongqing.IndexCqsggjyDetailActivity;
@@ -78,7 +81,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
     private boolean isInitCache = false;
     private long id = 0;
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
-
 
 
     @Override
@@ -282,9 +284,30 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
                 final int entityId = data.getEntityId();
                 final String entity = data.getEntity();
-
+                final String entityUrl = data.getEntityUrl();
+                final String type = data.getType();
                 Intent intent = null;
 
+                if (!TextUtils.isEmpty(entityUrl)) {
+                    if ("采购中标公示".equals(type) || "工程中标结果".equals(type) || "交易结果公示".equals(type) ||
+                            "中标公告".equals(type) || "成交公示".equals(type) || "交易结果".equals(type)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), ResultArticleDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+
+                    } else {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexArticleDetailActivity.class);
+                        intent.putExtra("entityId", entityId);
+                        intent.putExtra("entity", entity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    }
+
+                } else {
                     if ("sggjy".equals(entity)) {
                         intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
                         intent.putExtra("entityId", entityId);
@@ -339,7 +362,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                         intent.putExtra("ajaxlogtype", "0");
                         intent.putExtra("mId", "");
                         startActivity(intent);
-                    }else if ("cqcggg".equals(entity)) {
+                    } else if ("cqcggg".equals(entity)) {
                         final String title = data.getEntryName();
                         intent = new Intent(getActivity(), BrowserDetailActivity.class);
                         intent.putExtra("api", BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL);
@@ -363,6 +386,8 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                         startActivity(intent);
                     }
                 }
+
+            }
 
         });
 
@@ -500,6 +525,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 bean.setEntity(list.getString("entity"));
                 bean.setIsResult(list.getString("isResult"));
                 bean.setIsCorrections(list.getString("isCorrections"));
+                bean.setEntityUrl(list.getString("entityUrl"));
                 mDataList.add(bean);
             }
 
@@ -520,6 +546,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                     bean.setEntity(list.getString("entity"));
                     bean.setIsResult(list.getString("isResult"));
                     bean.setIsCorrections(list.getString("isCorrections"));
+                    bean.setEntityUrl(list.getString("entityUrl"));
                     mDataList.add(bean);
                 }
 

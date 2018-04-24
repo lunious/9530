@@ -48,6 +48,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
+import static com.lubanjianye.biaoxuntong.app.BiaoXunTong.getApplicationContext;
+
 
 public class ResultArticleDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
 
@@ -92,6 +94,7 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
     private String sysTime = "";
     private String url = "";
     private String entityUrl = "";
+    private String mDiqu = "";
 
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
 
@@ -169,6 +172,14 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
 
     @Override
     public void initData() {
+
+        if (AppSharePreferenceMgr.contains(getApplicationContext(), EventMessage.LOCA_AREA)) {
+            String area = (String) AppSharePreferenceMgr.get(getApplicationContext(), EventMessage.LOCA_AREA, "");
+            mDiqu = area;
+        } else {
+            mDiqu = "四川";
+        }
+
         requestData();
 
     }
@@ -551,6 +562,7 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
                                 .params("entityid", mEntityId)
                                 .params("entity", mEntity)
                                 .params("userid", id)
+                                .params("diqu", mDiqu)
                                 .params("deviceId", deviceId)
                                 .execute(new StringCallback() {
                                     @Override
@@ -574,6 +586,7 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
                                 .params("entityid", mEntityId)
                                 .params("entity", mEntity)
                                 .params("userid", id)
+                                .params("diqu", mDiqu)
                                 .params("deviceId", deviceId)
                                 .execute(new StringCallback() {
                                     @Override

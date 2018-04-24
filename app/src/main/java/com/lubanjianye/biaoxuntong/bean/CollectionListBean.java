@@ -2,14 +2,6 @@ package com.lubanjianye.biaoxuntong.bean;
 
 import java.io.Serializable;
 
-/**
- * 项目名:   Lunioussky
- * 包名:     com.lubanjianye.biaoxuntong.bean
- * 文件名:   CollectionListBean
- * 创建者:   lunious
- * 创建时间: 2017/11/29  14:25
- * 描述:     TODO
- */
 
 public class CollectionListBean implements Serializable {
 
@@ -20,9 +12,18 @@ public class CollectionListBean implements Serializable {
     private int entityId = 0;
     private String sysTime = null;
     private String address = null;
-
     private String isResult = null;
     private String isCorrections = null;
+
+    private String entityUrl = null;
+
+    public String getEntityUrl() {
+        return entityUrl;
+    }
+
+    public void setEntityUrl(String entityUrl) {
+        this.entityUrl = entityUrl;
+    }
 
     public String getIsResult() {
         return isResult;

@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -48,6 +49,8 @@ import com.tencent.tauth.UiError;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
+
+import static com.lubanjianye.biaoxuntong.app.BiaoXunTong.getApplicationContext;
 
 
 public class IndexArticleDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
@@ -103,6 +106,8 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
     private String type = "";
     private String url = "";
     private String entityUrl = "";
+    private String mDiqu = "";
+
 
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
 
@@ -189,6 +194,15 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
 
     @Override
     public void initData() {
+
+        if (AppSharePreferenceMgr.contains(getApplicationContext(), EventMessage.LOCA_AREA)) {
+            String area = (String) AppSharePreferenceMgr.get(getApplicationContext(), EventMessage.LOCA_AREA, "");
+            mDiqu = area;
+        } else {
+            mDiqu = "四川";
+        }
+
+
         requestData();
 
     }
@@ -665,6 +679,7 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                                 .params("entityid", mEntityId)
                                 .params("entity", mEntity)
                                 .params("userid", id)
+                                .params("diqu", mDiqu)
                                 .params("deviceId", deviceId)
                                 .execute(new StringCallback() {
                                     @Override
@@ -688,6 +703,7 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                                 .params("entityid", mEntityId)
                                 .params("entity", mEntity)
                                 .params("userid", id)
+                                .params("diqu", mDiqu)
                                 .params("deviceId", deviceId)
                                 .execute(new StringCallback() {
                                     @Override

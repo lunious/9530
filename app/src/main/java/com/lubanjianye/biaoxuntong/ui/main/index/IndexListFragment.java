@@ -391,7 +391,7 @@ public class IndexListFragment extends BaseFragment {
     public void requestData(final boolean isRefresh, final int n) {
 
 
-        int size = 10 + (int) (Math.random() * 10);
+        int size = 10 + (int) (Math.random() * 5);
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA)) {
             mDiqu = (String) AppSharePreferenceMgr.get(getContext(), EventMessage.LOCA_AREA, "");

@@ -43,7 +43,7 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="联系人："
+                    android:text="联系方式："
                     android:textSize="@dimen/d13" />
 
                 <android.support.v7.widget.AppCompatTextView

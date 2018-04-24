@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -49,11 +48,9 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -860,7 +857,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                     return;
                                 }
                                 mSpinerZzlx.setWidth(ll.getWidth());
-                                mSpinerZzlx.setHeight(ll.getHeight() / 2);
+                                mSpinerZzlx.setHeight(ll.getHeight());
                                 mSpinerZzlx.showAsDropDown(view);
                                 setTextImage(R.id.tv_zzlx, R.mipmap.up);
                             }
@@ -956,7 +953,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                 return;
                                             }
                                             mSpinerDl.setWidth(ll.getWidth());
-                                            mSpinerDl.setHeight(ll.getHeight() / 2);
+                                            mSpinerDl.setHeight(ll.getHeight());
                                             mSpinerDl.showAsDropDown(view);
                                             setTextImage(R.id.tv_dl, R.mipmap.up);
                                         }
@@ -1022,7 +1019,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                 return;
                                             }
                                             mSpinerXl.setWidth(ll.getWidth());
-                                            mSpinerXl.setHeight(ll.getHeight() / 2);
+                                            mSpinerXl.setHeight(ll.getHeight());
                                             mSpinerXl.showAsDropDown(view);
                                             setTextImage(R.id.tv_xl, R.mipmap.up);
                                         }
@@ -1085,7 +1082,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                 return;
                                             }
                                             mSpinerZy.setWidth(ll.getWidth());
-                                            mSpinerZy.setHeight(ll.getHeight() / 2);
+                                            mSpinerZy.setHeight(ll.getHeight());
                                             mSpinerZy.showAsDropDown(view);
                                             setTextImage(R.id.tv_zy, R.mipmap.up);
                                         }
@@ -1194,7 +1191,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                 return;
                                             }
                                             mSpinerQy.setWidth(ll.getWidth());
-                                            mSpinerQy.setHeight(ll.getHeight() / 2);
+                                            mSpinerQy.setHeight(ll.getHeight());
                                             mSpinerQy.showAsDropDown(view);
                                             setTextImage(R.id.tv_qy, R.mipmap.up);
                                         }
@@ -1289,7 +1286,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                 return;
                                             }
                                             mSpinerXl.setWidth(ll.getWidth());
-                                            mSpinerXl.setHeight(ll.getHeight() / 2);
+                                            mSpinerXl.setHeight(ll.getHeight());
                                             mSpinerXl.showAsDropDown(view);
                                             setTextImage(R.id.tv_xl, R.mipmap.up);
                                         }
@@ -1459,7 +1456,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                 return;
                                             }
                                             mSpinerQy.setWidth(ll.getWidth());
-                                            mSpinerQy.setHeight(ll.getHeight() / 2);
+                                            mSpinerQy.setHeight(ll.getHeight());
                                             mSpinerQy.showAsDropDown(view);
                                             setTextImage(R.id.tv_qy, R.mipmap.up);
                                         }
@@ -1546,7 +1543,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                 return;
                                             }
                                             mSpinerZy.setWidth(ll.getWidth());
-                                            mSpinerZy.setHeight(ll.getHeight() / 2);
+                                            mSpinerZy.setHeight(ll.getHeight());
                                             mSpinerZy.showAsDropDown(view);
                                             setTextImage(R.id.tv_zy, R.mipmap.up);
                                         }
@@ -1602,7 +1599,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                 return;
                                             }
                                             mSpinerDj.setWidth(ll.getWidth());
-                                            mSpinerDj.setHeight(ll.getHeight() / 2);
+                                            mSpinerDj.setHeight(ll.getHeight());
                                             mSpinerDj.showAsDropDown(view);
                                             setTextImage(R.id.tv_dj, R.mipmap.up);
                                         }
@@ -1657,7 +1654,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                 return;
                                             }
                                             mSpinerQy.setWidth(ll.getWidth());
-                                            mSpinerQy.setHeight(ll.getHeight() / 2);
+                                            mSpinerQy.setHeight(ll.getHeight());
                                             mSpinerQy.showAsDropDown(view);
                                             setTextImage(R.id.tv_qy, R.mipmap.up);
                                         }
