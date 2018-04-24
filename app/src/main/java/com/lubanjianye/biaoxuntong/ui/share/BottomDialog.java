@@ -11,6 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 
+
 public class BottomDialog extends BottomSheetDialog {
 
     private BottomSheetBehavior behavior;
