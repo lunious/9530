@@ -27,14 +27,6 @@ import java.util.List;
 
 import static com.lubanjianye.biaoxuntong.app.BiaoXunTong.getApplicationContext;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.launcher
- * 文件名:   LauncherScrollFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/10  22:51
- * 描述:     TODO
- */
 
 public class LauncherScrollFragment extends BaseFragment {
 
@@ -45,14 +37,14 @@ public class LauncherScrollFragment extends BaseFragment {
 
     private List<ImageView> guides;
     private MyViewPageAdapter viewPageAdapter;
-    private int disPoints;//点与点之间的距离
+    //点与点之间的距离
+    private int disPoints;
 
 
     @Override
     public Object setLayout() {
         return R.layout.fragment_launcher_scroll;
     }
-
 
 
     @Override
@@ -65,13 +57,6 @@ public class LauncherScrollFragment extends BaseFragment {
 
 
     private long id = 0;
-    private String mobile = "";
-    private String nickName = "";
-    private String token = "";
-    private String comid = "";
-    private String imageUrl = "";
-    private String companyName = "";
-
 
     @Override
     public void initData() {
@@ -79,12 +64,6 @@ public class LauncherScrollFragment extends BaseFragment {
         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
         for (int i = 0; i < users.size(); i++) {
             id = users.get(0).getId();
-            mobile = users.get(0).getNickName();
-            nickName = users.get(0).getNickName();
-            token = users.get(0).getToken();
-            comid = users.get(0).getComid();
-            imageUrl = users.get(0).getImageUrl();
-            companyName = users.get(0).getCompanyName();
         }
         if (id > 0) {
             AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);

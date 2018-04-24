@@ -23,7 +23,6 @@ import com.classic.common.MultipleStatusView;
 import com.just.agentweb.AgentWebConfig;
 import com.just.agentweb.AgentWebUtils;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;

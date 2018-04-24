@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_guide_pages"
@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/d18" >
+        android:layout_marginBottom="@dimen/d18">
 
         <LinearLayout
             android:id="@+id/ll_guide_points"
@@ -31,17 +31,17 @@
 
     <Button
         android:id="@+id/btn_guide_startexp"
-        android:background="@drawable/bg_start_use"
+        android:layout_width="@dimen/d180"
+        android:layout_height="@dimen/d42"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/d60"
+        android:background="@drawable/bg_start_use"
         android:paddingLeft="@dimen/d10"
         android:paddingRight="@dimen/d10"
-        android:textColor="#ddffffff"
-        android:layout_width="@dimen/d180"
-        android:layout_height="@dimen/d42"
         android:text="开始体验"
-        android:visibility="gone"
-        android:textSize="@dimen/d20" />
+        android:textColor="#ddffffff"
+        android:textSize="@dimen/s18"
+        android:visibility="gone" />
 
 </RelativeLayout>

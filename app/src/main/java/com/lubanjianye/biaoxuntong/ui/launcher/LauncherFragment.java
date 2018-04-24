@@ -55,7 +55,6 @@ public class LauncherFragment extends BaseFragment {
             }
 
 
-
             OkGo.<String>post(BiaoXunTongApi.URL_CHECKTOKEN)
                     .params("userId", userId)
                     .params("token", token)

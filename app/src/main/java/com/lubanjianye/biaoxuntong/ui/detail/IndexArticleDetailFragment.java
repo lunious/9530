@@ -67,11 +67,9 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
     private LinearLayout llYw = null;
     private LinearLayout llFav = null;
     private AppCompatTextView tv_data_time = null;
-    private AppCompatTextView tv_ly = null;
     private AppCompatTextView tv_status = null;
     private AppCompatTextView tv_dead_time = null;
     private AppCompatTextView tv_area = null;
-    private AppCompatTextView tv_num = null;
     private AppCompatTextView tv_type = null;
 
     private LinearLayout llWeiBoShare = null;
@@ -99,12 +97,10 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
 
     private String title = "";
     private String sysTime = "";
-    private String ly = "";
     private String sign_status = "";
     private String dead_time = "";
     private String area = "";
     private String type = "";
-    private String num = "";
     private String url = "";
     private String entityUrl = "";
 
@@ -152,7 +148,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
         llYw = getView().findViewById(R.id.ll_yw);
         llFav = getView().findViewById(R.id.ll_fav);
         tv_data_time = getView().findViewById(R.id.tv_data_time);
-        tv_ly = getView().findViewById(R.id.tv_ly);
         tv_status = getView().findViewById(R.id.tv_status);
         ll_content = getView().findViewById(R.id.ll_content);
         tv_dead_time = getView().findViewById(R.id.tv_dead_time);
@@ -162,7 +157,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
         llPyqShare = getView().findViewById(R.id.ll_pyq_share);
         tv_area = getView().findViewById(R.id.tv_area);
         tv_type = getView().findViewById(R.id.tv_type);
-        tv_num = getView().findViewById(R.id.tv_pu_num);
 
         llWeiBoShare_bottom = getView().findViewById(R.id.ll_weibo_share_bottom);
         llQQBoShare_bottom = getView().findViewById(R.id.ll_qq_share_bottom);
@@ -266,12 +260,9 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                                     if (arrayJg != null) {
                                         atv_jg.setVisibility(View.VISIBLE);
                                         JSONObject list = arrayJg.getJSONObject(arrayJg.size() - 1);
-
                                     } else {
                                         atv_jg.setVisibility(View.GONE);
                                     }
-
-
                                     String mTitle = data.getString("entryName");
                                     if (!TextUtils.isEmpty(mTitle)) {
                                         title = mTitle;
@@ -284,8 +275,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                                     webView.loadUrl(entityUrl);
                                     sysTime = data.getString("sysTime");
                                     tv_data_time.setText(sysTime);
-                                    ly = data.getString("lypt");
-                                    tv_ly.setText(ly);
                                     sign_status = data.getString("signStauts");
                                     if ("正在报名".equals(sign_status)) {
                                         tv_status.setText(sign_status);
@@ -298,25 +287,20 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                                         tv_status.setTextColor(android.graphics.Color.parseColor("#00bfdc"));
                                     }
                                     dead_time = data.getString("deadTime");
-                                    if (!dead_time.isEmpty()) {
+                                    if (!TextUtils.isEmpty(dead_time)) {
                                         tv_dead_time.setText(dead_time);
                                     } else {
                                         tv_dead_time.setText("暂无");
                                     }
                                     area = data.getString("area");
-                                    if (!area.isEmpty()) {
+                                    if (!TextUtils.isEmpty(area)) {
                                         tv_area.setText(area);
                                     } else {
                                         tv_area.setVisibility(View.GONE);
                                     }
-                                    type = data.getString("entryType");
+                                    type = data.getString("type");
                                     tv_type.setText(type);
-                                    num = data.getString("entryNum");
-                                    if (!num.isEmpty()) {
-                                        tv_num.setText(num);
-                                    } else {
-                                        tv_num.setText("暂无");
-                                    }
+
                                     loadingStatus.showContent();
                                 } else {
                                     loadingStatus.showError();
@@ -374,8 +358,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                                     webView.loadUrl(entityUrl);
                                     sysTime = data.getString("sysTime");
                                     tv_data_time.setText(sysTime);
-                                    ly = data.getString("lypt");
-                                    tv_ly.setText(ly);
                                     sign_status = data.getString("signStauts");
                                     if ("正在报名".equals(sign_status)) {
                                         tv_status.setText(sign_status);
@@ -388,25 +370,20 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                                         tv_status.setTextColor(android.graphics.Color.parseColor("#00bfdc"));
                                     }
                                     dead_time = data.getString("deadTime");
-                                    if (!dead_time.isEmpty()) {
+                                    if (!TextUtils.isEmpty(dead_time)) {
                                         tv_dead_time.setText(dead_time);
                                     } else {
                                         tv_dead_time.setText("暂无");
                                     }
                                     area = data.getString("area");
-                                    if (!area.isEmpty()) {
+                                    if (!TextUtils.isEmpty(area)) {
                                         tv_area.setText(area);
                                     } else {
                                         tv_area.setVisibility(View.GONE);
                                     }
-                                    type = data.getString("entryType");
+                                    type = data.getString("type");
                                     tv_type.setText(type);
-                                    num = data.getString("entryNum");
-                                    if (!num.isEmpty()) {
-                                        tv_num.setText(num);
-                                    } else {
-                                        tv_num.setText("暂无");
-                                    }
+
                                     loadingStatus.showContent();
                                 } else {
                                     loadingStatus.showError();

@@ -2,7 +2,6 @@ package com.lubanjianye.biaoxuntong.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
