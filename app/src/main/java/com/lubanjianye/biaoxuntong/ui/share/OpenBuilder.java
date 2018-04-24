@@ -35,14 +35,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-/**
- * 项目名:   Lunioussky
- * 包名:     com.lubanjianye.biaoxuntong.ui.share
- * 文件名:   OpenBuilder
- * 创建者:   lunious
- * 创建时间: 2017/11/2  17:13
- * 描述:     TODO
- */
 
 public class OpenBuilder {
     private Activity activity;

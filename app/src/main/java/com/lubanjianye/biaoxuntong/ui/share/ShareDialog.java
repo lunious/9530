@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lubanjianye.biaoxuntong.R;
@@ -35,15 +36,6 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * 项目名:   Lunioussky
- * 包名:     com.lubanjianye.biaoxuntong.ui.share
- * 文件名:   ShareDialog
- * 创建者:   lunious
- * 创建时间: 2017/11/2  17:15
- * 描述:     TODO
- */
 
 @SuppressWarnings("all")
 public class ShareDialog extends BottomDialog implements OpenBuilder.Callback,
@@ -86,6 +78,13 @@ public class ShareDialog extends BottomDialog implements OpenBuilder.Callback,
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View contentView = inflater.inflate(R.layout.dialog_share_main, null, false);
         RecyclerView shareRecycle = (RecyclerView) contentView.findViewById(R.id.share_recycler);
+        LinearLayout llCancel = contentView.findViewById(R.id.cancel_share);
+        llCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         final ShareActionAdapter adapter = new ShareActionAdapter(activity);
         adapter.addAll(getAdapterData());
         adapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {

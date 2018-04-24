@@ -100,6 +100,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
 
     private String locationArea = "";
+    private String locationCode = "";
 
     private String provinceCode = "";
 
@@ -534,10 +535,11 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                 break;
             case R.id.ll_location:
                 if (!TextUtils.isEmpty(locationArea)) {
+
                     CityPicker.getInstance()
                             .setFragmentManager(getFragmentManager())
                             .enableAnimation(true)
-                            .setLocatedCity(new LocatedCity(locationArea, "", ""))
+                            .setLocatedCity(new LocatedCity(locationArea, locationArea, locationCode))
                             .setHotCities(hotCities)
                             .setOnPickListener(new OnPickListener() {
                                 @Override
@@ -676,6 +678,73 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
         String province = bdLocation.getProvince();
         locationArea = province.substring(0, province.length() - 1);
 
+        if ("北京".equals(locationArea)) {
+            locationCode = "110000";
+        } else if ("天津".equals(locationArea)) {
+            locationCode = "120000";
+        } else if ("河北".equals(locationArea)) {
+            locationCode = "130000";
+        } else if ("山西".equals(locationArea)) {
+            locationCode = "140000";
+        } else if ("内蒙古".equals(locationArea)) {
+            locationCode = "150000";
+        } else if ("辽宁".equals(locationArea)) {
+            locationCode = "210000";
+        } else if ("吉林".equals(locationArea)) {
+            locationCode = "220000";
+        } else if ("黑龙江".equals(locationArea)) {
+            locationCode = "230000";
+        } else if ("上海".equals(locationArea)) {
+            locationCode = "310000";
+        } else if ("江苏".equals(locationArea)) {
+            locationCode = "320000";
+        } else if ("浙江".equals(locationArea)) {
+            locationCode = "330000";
+        } else if ("安徽".equals(locationArea)) {
+            locationCode = "340000";
+        } else if ("福建".equals(locationArea)) {
+            locationCode = "350000";
+        } else if ("江西".equals(locationArea)) {
+            locationCode = "360000";
+        } else if ("山东".equals(locationArea)) {
+            locationCode = "370000";
+        } else if ("广东".equals(locationArea)) {
+            locationCode = "440000";
+        } else if ("广西".equals(locationArea)) {
+            locationCode = "450000";
+        } else if ("海南".equals(locationArea)) {
+            locationCode = "460000";
+        } else if ("河南".equals(locationArea)) {
+            locationCode = "410000";
+        } else if ("湖北".equals(locationArea)) {
+            locationCode = "420000";
+        } else if ("湖南".equals(locationArea)) {
+            locationCode = "430000";
+        } else if ("重庆".equals(locationArea)) {
+            locationCode = "500000";
+        } else if ("四川".equals(locationArea)) {
+            locationCode = "510000";
+        } else if ("贵州".equals(locationArea)) {
+            locationCode = "520000";
+        } else if ("云南".equals(locationArea)) {
+            locationCode = "530000";
+        } else if ("西藏".equals(locationArea)) {
+            locationCode = "540000";
+        } else if ("陕西".equals(locationArea)) {
+            locationCode = "610000";
+        } else if ("甘肃".equals(locationArea)) {
+            locationCode = "620000";
+        } else if ("青海".equals(locationArea)) {
+            locationCode = "630000";
+        } else if ("宁夏".equals(locationArea)) {
+            locationCode = "640000";
+        } else if ("新疆".equals(locationArea)) {
+            locationCode = "650000";
+        } else if ("兵团".equals(locationArea)) {
+            locationCode = "650000";
+        }
+
+
         if (!AppSharePreferenceMgr.contains(getApplicationContext(), EventMessage.NO_CHANGE_AREA)) {
             String area = tv_location.getText().toString();
             if (!area.equals(locationArea)) {
@@ -716,7 +785,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
         }
 
         if (setArea) {
-            CityPicker.getInstance().locateComplete(new LocatedCity(locationArea, "", ""), locationArea == null ? LocateState.FAILURE : LocateState.SUCCESS);
+            CityPicker.getInstance().locateComplete(new LocatedCity(locationArea, locationArea, locationCode), locationArea == null ? LocateState.FAILURE : LocateState.SUCCESS);
         }
 
     }

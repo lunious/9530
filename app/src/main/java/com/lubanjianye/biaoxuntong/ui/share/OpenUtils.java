@@ -5,14 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.support.annotation.IdRes;
 
-/**
- * 项目名:   Lunioussky
- * 包名:     com.lubanjianye.biaoxuntong.ui.share
- * 文件名:   OpenUtils
- * 创建者:   lunious
- * 创建时间: 2017/11/2  17:12
- * 描述:     TODO
- */
 
 public class OpenUtils {
 

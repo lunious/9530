@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/share_icon"
-        android:layout_width="@dimen/d40"
-        android:layout_height="@dimen/d40"
+        android:layout_width="@dimen/d52"
+        android:layout_height="@dimen/d52"
         android:layout_marginBottom="@dimen/d4"
         android:contentDescription="@null"
         app:srcCompat="@mipmap/ic_login_3party_qq" />

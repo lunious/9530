@@ -148,7 +148,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d16"
+        android:layout_height="@dimen/d24"
         android:background="#FFF6F6F6" />
 
     <LinearLayout

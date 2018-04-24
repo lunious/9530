@@ -15,14 +15,6 @@ import com.lubanjianye.biaoxuntong.R;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 项目名:   Lunioussky
- * 包名:     com.lubanjianye.biaoxuntong.ui.share
- * 文件名:   BaseRecyclerAdapter
- * 创建者:   lunious
- * 创建时间: 2017/11/2  20:15
- * 描述:     TODO
- */
 
 @SuppressWarnings("unused")
 public abstract class BaseRecyclerAdapter<T> extends RecyclerView.Adapter {

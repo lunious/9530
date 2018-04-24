@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -48,9 +49,11 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -880,6 +883,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
      */
     public void loadDL(final String provinceCode, String nodeName, String value, String text) {
 
+
         OkGo.<String>post(BiaoXunTongApi.URL_GETQYZZLIST)
                 .params("provinceCode", provinceCode)
                 .params("nodeName", nodeName)
@@ -890,6 +894,8 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                     public void onSuccess(Response<String> response) {
 
                         final JSONArray array = JSON.parseArray(response.body());
+
+                        Log.d("AUBSDASDASD", response.body());
 
                         for (int i = 0; i < array.size(); i++) {
                             final JSONObject object = array.getJSONObject(i);
@@ -1169,7 +1175,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                         final JSONObject objectOptions = options.getJSONObject(j);
 
                                         final String text = objectOptions.getString("text");
-
+                                        Log.d("DBAHSBDHASDSA", "area==" + text);
                                         Qylist.add(text);
                                     }
 

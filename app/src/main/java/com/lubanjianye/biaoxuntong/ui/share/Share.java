@@ -4,14 +4,6 @@ import android.graphics.Bitmap;
 
 import java.io.Serializable;
 
-/**
- * 项目名:   Lunioussky
- * 包名:     com.lubanjianye.biaoxuntong.ui.share
- * 文件名:   Share
- * 创建者:   lunious
- * 创建时间: 2017/11/2  17:11
- * 描述:     TODO
- */
 
 
 public class Share implements Serializable {
