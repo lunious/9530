@@ -27,7 +27,7 @@
                 android:maxLines="2"
                 android:text="This is main title."
                 android:textColor="#ff434343"
-                android:textSize="@dimen/d16" />
+                android:textSize="@dimen/s16" />
 
 
             <ImageView
@@ -57,7 +57,7 @@
                 android:maxLines="2"
                 android:text="area"
                 android:textColor="#ff999999"
-                android:textSize="@dimen/d14"
+                android:textSize="@dimen/s14"
                 android:visibility="gone" />
 
         </LinearLayout>
@@ -73,7 +73,7 @@
             android:paddingTop="@dimen/d4"
             android:text="type"
             android:textColor="@color/main_status_blue"
-            android:textSize="@dimen/d14"
+            android:textSize="@dimen/s14"
             android:visibility="gone" />
 
 
@@ -106,7 +106,7 @@
                     android:layout_marginRight="@dimen/d4"
                     android:text="2018-1-1"
                     android:textColor="#ffa0a0a0"
-                    android:textSize="@dimen/d14" />
+                    android:textSize="@dimen/s14" />
 
             </LinearLayout>
 

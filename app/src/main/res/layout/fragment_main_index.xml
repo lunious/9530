@@ -24,7 +24,7 @@
             android:layout_margin="@dimen/d4"
             android:text="鲁班标讯通"
             android:textColor="@color/main_status_white"
-            android:textSize="@dimen/d17" />
+            android:textSize="@dimen/s17" />
 
         <LinearLayout
             android:id="@+id/ll_search"
@@ -53,7 +53,7 @@
                     android:paddingStart="@dimen/d2"
                     android:text="输入你感兴趣的招标公告名称"
                     android:textColor="#9d9d9d"
-                    android:textSize="@dimen/d13" />
+                    android:textSize="@dimen/s13" />
             </LinearLayout>
 
 
@@ -84,7 +84,7 @@
                 android:paddingLeft="@dimen/d1"
                 android:text="四川"
                 android:textColor="@color/main_status_white"
-                android:textSize="@dimen/d14" />
+                android:textSize="@dimen/s15" />
 
         </LinearLayout>
 
@@ -110,7 +110,7 @@
             tl:tl_textAllCaps="true"
             tl:tl_textSelectColor="@color/main_theme_color"
             tl:tl_textUnselectColor="#6c6c6c"
-            tl:tl_textsize="@dimen/d16" />
+            tl:tl_textsize="@dimen/s16" />
 
         <LinearLayout
             android:layout_width="@dimen/d0"

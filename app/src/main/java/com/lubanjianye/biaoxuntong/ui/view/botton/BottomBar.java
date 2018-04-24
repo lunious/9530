@@ -17,14 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.view.botton
- * 文件名:   BottomBar
- * 创建者:   lunious
- * 创建时间: 2017/12/9  0:17
- * 描述:     TODO
- */
 
 public class BottomBar extends LinearLayout {
 

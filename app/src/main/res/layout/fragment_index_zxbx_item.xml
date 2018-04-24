@@ -29,7 +29,7 @@
                 android:maxLines="2"
                 android:text="大英县隆盛镇五龙寨村农田水利项目"
                 android:textColor="#ff434343"
-                android:textSize="@dimen/d15" />
+                android:textSize="@dimen/s15" />
 
 
             <ImageView
@@ -67,10 +67,10 @@
                         android:id="@+id/tv_index_type"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="施工"
                         android:maxLength="8"
+                        android:text="施工"
                         android:textColor="#ff999999"
-                        android:textSize="@dimen/d13" />
+                        android:textSize="@dimen/s13" />
 
 
                     <android.support.v7.widget.AppCompatTextView
@@ -80,7 +80,7 @@
                         android:layout_marginLeft="@dimen/d8"
                         android:text="正在报名"
                         android:textColor="#1196db"
-                        android:textSize="@dimen/d13" />
+                        android:textSize="@dimen/s13" />
 
 
                 </LinearLayout>
@@ -101,7 +101,7 @@
                         android:layout_marginRight="@dimen/d8"
                         android:text="2017-12-01"
                         android:textColor="#ffa0a0a0"
-                        android:textSize="@dimen/d14" />
+                        android:textSize="@dimen/s14" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_index_time_type"
@@ -109,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:text="截止"
                         android:textColor="#cccc33"
-                        android:textSize="@dimen/d13" />
+                        android:textSize="@dimen/s14" />
 
                 </LinearLayout>
 
@@ -138,7 +138,7 @@
                         android:maxLines="1"
                         android:text="遂宁-大英县"
                         android:textColor="#ff999999"
-                        android:textSize="@dimen/d13" />
+                        android:textSize="@dimen/s13" />
 
                 </LinearLayout>
 
@@ -158,7 +158,7 @@
                         android:layout_marginRight="@dimen/d8"
                         android:text="2017-12-01"
                         android:textColor="#ffa0a0a0"
-                        android:textSize="@dimen/d14" />
+                        android:textSize="@dimen/s14" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv_index_pub_time_type"
@@ -166,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:text="发布"
                         android:textColor="@color/main_theme_color"
-                        android:textSize="@dimen/d13" />
+                        android:textSize="@dimen/s13" />
 
                 </LinearLayout>
 
@@ -175,7 +175,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="@dimen/p1"
             android:layout_marginLeft="@dimen/d6"
             android:layout_marginTop="@dimen/d6"
             android:background="@color/dark_view" />

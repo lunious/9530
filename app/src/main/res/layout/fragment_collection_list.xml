@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/d60"
             app:srlDrawableProgressSize="@dimen/d15"
-            app:srlDrawableSize="@dimen/d15"
+            app:srlDrawableSize="@dimen/s15"
             app:srlTextSizeTime="@dimen/d12"
             app:srlTextSizeTitle="@dimen/d15" />
 

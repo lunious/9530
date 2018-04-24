@@ -14,7 +14,7 @@
         app:tipBackgroundColor="#5066bfdc"
         app:tipText="网络错误"
         app:tipTextColor="@color/main_status_blue"
-        app:tipTextSize="13sp" />
+        app:tipTextSize="@dimen/s14" />
 
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/d60"
             app:srlDrawableProgressSize="@dimen/d15"
-            app:srlDrawableSize="@dimen/d15"
+            app:srlDrawableSize="@dimen/s15"
             app:srlTextSizeTime="@dimen/d12"
             app:srlTextSizeTitle="@dimen/d15" />
 

@@ -39,7 +39,7 @@
                     android:maxLines="1"
                     android:padding="@dimen/d5"
                     android:text="地区"
-                    android:textSize="@dimen/d15" />
+                    android:textSize="@dimen/s15" />
             </LinearLayout>
 
             <View
@@ -65,7 +65,7 @@
                     android:maxLines="1"
                     android:padding="@dimen/d5"
                     android:text="类型"
-                    android:textSize="@dimen/d15" />
+                    android:textSize="@dimen/s15" />
 
             </LinearLayout>
 
@@ -75,7 +75,7 @@
         <View
             android:id="@+id/view"
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="@dimen/p1"
             android:background="#cccccc"
             android:paddingBottom="@dimen/d10"
             android:paddingTop="@dimen/d10" />

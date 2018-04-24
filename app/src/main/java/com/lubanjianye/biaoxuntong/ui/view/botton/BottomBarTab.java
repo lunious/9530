@@ -16,14 +16,6 @@ import android.widget.TextView;
 
 import com.lubanjianye.biaoxuntong.R;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.view.botton
- * 文件名:   BottomBarTab
- * 创建者:   lunious
- * 创建时间: 2017/12/9  0:18
- * 描述:     TODO
- */
 
 public class BottomBarTab extends FrameLayout {
     private ImageView mIcon;

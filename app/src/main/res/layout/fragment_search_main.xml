@@ -38,12 +38,12 @@
                 <RelativeLayout
                     android:layout_width="@dimen/d0"
                     android:layout_height="@dimen/d32"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:layout_marginRight="@dimen/d10"
+                    android:layout_marginTop="@dimen/d32"
                     android:layout_weight="12"
                     android:background="@drawable/bg_search"
-                    android:padding="4dp">
+                    android:padding="@dimen/d4">
 
                     <com.lubanjianye.biaoxuntong.ui.search.view.LastInputEditText
                         android:id="@+id/et_search_content"
@@ -51,17 +51,17 @@
                         android:layout_height="match_parent"
                         android:background="@null"
                         android:drawableLeft="@mipmap/img_search"
-                        android:drawablePadding="9dp"
+                        android:drawablePadding="@dimen/d9"
                         android:hint="请输入关键字搜索"
                         android:inputType="text"
                         android:maxLines="1"
-                        android:paddingLeft="5dp"
-                        android:paddingRight="10dp"
+                        android:paddingLeft="@dimen/d5"
+                        android:paddingRight="@dimen/d10"
                         android:singleLine="true"
                         android:textColor="#808080"
                         android:textColorHint="#c5c5c5"
                         android:textCursorDrawable="@drawable/editor_cursor_shape"
-                        android:textSize="@dimen/d15" />
+                        android:textSize="@dimen/s15" />
 
                     <ImageView
                         android:id="@+id/iv_search_clear"
@@ -69,14 +69,14 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:padding="2dp"
+                        android:padding="@dimen/d2"
                         android:src="@mipmap/search_clear_pressed"
                         android:visibility="gone" />
 
                     <View
                         android:id="@+id/view_stop"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="@dimen/d40"
                         android:background="@color/transparent"
                         android:visibility="gone" />
                 </RelativeLayout>
@@ -90,7 +90,7 @@
                     android:layout_weight="2"
                     android:text="搜索"
                     android:textColor="@color/main_status_white"
-                    android:textSize="@dimen/d17" />
+                    android:textSize="@dimen/s17" />
 
 
             </LinearLayout>
@@ -98,7 +98,7 @@
             <View
                 android:id="@+id/view_sapce"
                 android:layout_width="match_parent"
-                android:layout_height="16dp"
+                android:layout_height="@dimen/d16"
                 android:background="@color/main_theme_color" />
         </LinearLayout>
 
