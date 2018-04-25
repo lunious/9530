@@ -9,14 +9,6 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.util.appinfo.AppApplicationMgr;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.sign
- * 文件名:   AboutFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/14  11:42
- * 描述:     TODO
- */
 
 public class AboutFragment extends BaseFragment implements View.OnClickListener {
 

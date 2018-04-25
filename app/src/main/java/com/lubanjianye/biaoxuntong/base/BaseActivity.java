@@ -7,17 +7,11 @@ import android.support.v7.widget.ContentFrameLayout;
 
 import com.gyf.barlibrary.ImmersionBar;
 import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
+import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.fragment.base
- * 文件名:   BaseActivity
- * 创建者:   lunious
- * 创建时间: 2017/12/9  21:14
- * 描述:     TODO
- */
 
 public abstract class BaseActivity extends SwipeBackActivity {
 
@@ -28,6 +22,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
         //初始化，默认透明状态栏和黑色导航栏
         ImmersionBar.with(this).init();
         initContainer(savedInstanceState);
+        initToggton();
     }
 
     //用来容纳Fragment的容器
@@ -41,6 +36,16 @@ public abstract class BaseActivity extends SwipeBackActivity {
     }
 
     public abstract BaseFragment setRootFragment();
+
+    private void initToggton() {
+
+        if (AppSharePreferenceMgr.contains(this, EventMessage.LEFT_BACK)) {
+//            setSwipeBackEnable(true);
+        } else {
+            setSwipeBackEnable(false);
+        }
+
+    }
 
 
     @Override

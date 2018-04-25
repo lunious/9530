@@ -10,10 +10,10 @@
         android:id="@+id/share_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="@dimen/d14"
-        android:paddingTop="@dimen/d20"
-        android:layout_marginLeft="@dimen/d18"
-        android:layout_marginRight="@dimen/d18"/>
+        android:layout_marginLeft="@dimen/d20"
+        android:layout_marginRight="@dimen/d20"
+        android:paddingBottom="@dimen/d16"
+        android:paddingTop="@dimen/d22" />
 
     <View
         android:layout_width="match_parent"

@@ -289,7 +289,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             five = null;
             six = null;
 
-
             if ("440000".equals(provinceCode)) {
                 tvZzlx.setVisibility(View.VISIBLE);
                 tvDl.setVisibility(View.VISIBLE);

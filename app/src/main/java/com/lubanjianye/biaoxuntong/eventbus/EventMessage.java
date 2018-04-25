@@ -1,13 +1,5 @@
 package com.lubanjianye.biaoxuntong.eventbus;
 
-/**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.eventbus
- * 文件名:   EventMessage
- * 创建者:   lunious
- * 创建时间: 2017/12/15  12:47
- * 描述:     TODO
- */
 
 public class EventMessage {
 
@@ -29,6 +21,9 @@ public class EventMessage {
     public static final String NO_CHANGE_AREA = "no_change_area";
     public static final String IF_ASK_LOCATION = "if_ask_location";
 
+    public static final String DOUBLE_CLICK_EXIT = "double_click_exit";
+
+    public static final String LEFT_BACK = "left_back";
 
 
     public final String message;

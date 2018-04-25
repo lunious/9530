@@ -25,14 +25,16 @@ public class CollectionListAdapter extends BaseQuickAdapter<CollectionListBean, 
         String isCorrections = item.getIsCorrections();
 
         if (!"0".equals(isCorrections) && !"0".equals(isResult)) {
-            helper.setVisible(R.id.iv_status,true);
+            helper.setVisible(R.id.iv_status, true);
             helper.setImageResource(R.id.iv_status, R.mipmap.ddddd);
         } else if (!"0".equals(isResult) && "0".equals(isCorrections)) {
-            helper.setVisible(R.id.iv_status,true);
+            helper.setVisible(R.id.iv_status, true);
             helper.setImageResource(R.id.iv_status, R.mipmap.aaaaa);
         } else if (!"0".equals(isCorrections) && "0".equals(isResult)) {
-            helper.setVisible(R.id.iv_status,true);
+            helper.setVisible(R.id.iv_status, true);
             helper.setImageResource(R.id.iv_status, R.mipmap.bbbbb);
+        } else {
+            helper.setGone(R.id.iv_status, false);
         }
 
 

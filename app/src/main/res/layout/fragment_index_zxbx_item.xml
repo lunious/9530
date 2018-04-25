@@ -34,8 +34,8 @@
 
             <ImageView
                 android:id="@+id/iv_status"
-                android:layout_width="@dimen/d26"
-                android:layout_height="@dimen/d26"
+                android:layout_width="@dimen/d32"
+                android:layout_height="@dimen/d32"
                 android:visibility="gone" />
 
 

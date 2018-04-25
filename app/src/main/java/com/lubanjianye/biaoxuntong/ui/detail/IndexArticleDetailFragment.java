@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -36,6 +35,9 @@ import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
@@ -69,6 +71,8 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
     private LinearLayout llBrowser = null;
     private LinearLayout llYw = null;
     private LinearLayout llFav = null;
+    private LinearLayout llCall = null;
+    private AppCompatTextView atv_fav = null;
     private AppCompatTextView tv_data_time = null;
     private AppCompatTextView tv_status = null;
     private AppCompatTextView tv_dead_time = null;
@@ -111,6 +115,8 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
 
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
 
+    private PromptDialog promptDialog = null;
+
 
     public static IndexArticleDetailFragment create(@NonNull int entityId, String entity, String ajaxlogtype) {
         final Bundle args = new Bundle();
@@ -148,10 +154,12 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
         detailNsv = getView().findViewById(R.id.detail_nsv);
         tv_title = getView().findViewById(R.id.tv_main_title);
         ivFav = getView().findViewById(R.id.iv_fav);
+        atv_fav = getView().findViewById(R.id.atv_fav);
         llShare = getView().findViewById(R.id.ll_share);
         llBrowser = getView().findViewById(R.id.ll_browser);
         llYw = getView().findViewById(R.id.ll_yw);
         llFav = getView().findViewById(R.id.ll_fav);
+        llCall = getView().findViewById(R.id.ll_call);
         tv_data_time = getView().findViewById(R.id.tv_data_time);
         tv_status = getView().findViewById(R.id.tv_status);
         ll_content = getView().findViewById(R.id.ll_content);
@@ -189,6 +197,7 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
         llBrowser.setOnClickListener(this);
         llYw.setOnClickListener(this);
         llFav.setOnClickListener(this);
+        llCall.setOnClickListener(this);
 
     }
 
@@ -204,6 +213,9 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
 
 
         requestData();
+
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
 
     }
 
@@ -253,9 +265,11 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                                 if (favorite == 1) {
                                     myFav = 1;
                                     ivFav.setImageResource(R.mipmap.ic_faved_pressed);
+                                    atv_fav.setText("已收藏");
                                 } else if (favorite == 0) {
                                     myFav = 0;
                                     ivFav.setImageResource(R.mipmap.ic_fav_pressed);
+                                    atv_fav.setText("收藏");
                                 }
 
                                 if ("200".equals(status)) {
@@ -527,10 +541,10 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
         Intent intent = null;
         switch (v.getId()) {
             case R.id.atv_gz:
-                ToastUtil.shortToast(getContext(), "相关更正公告");
+                ToastUtil.shortToast(getContext(), "暂无相关更正公告");
                 break;
             case R.id.atv_jg:
-                ToastUtil.shortToast(getContext(), "相关结果公告");
+                ToastUtil.shortToast(getContext(), "暂无相关结果公告");
                 break;
             case R.id.ll_weibo_share:
                 OpenBuilder.with(getActivity())
@@ -647,6 +661,31 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                             }
                         });
                 break;
+            case R.id.ll_call:
+                //客服界面
+                final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+
+                    }
+                });
+                cancel.setTextColor(getResources().getColor(R.color.status_text_color));
+                cancel.setTextSize(16);
+
+                final PromptButton sure = new PromptButton("呼      叫", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:400-028-9997"));
+                        startActivity(intent);
+                    }
+                });
+                sure.setTextColor(getResources().getColor(R.color.main_status_blue));
+                sure.setTextSize(16);
+                promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false)
+                        .round(6).loadingDuration(800);
+                promptDialog.showWarnAlert("是否呼叫服务热线:400-028-9997？", cancel, sure, true);
+                break;
             case R.id.ll_pyq_share_bottom:
                 OpenBuilder.with(getActivity())
                         .useWechat(OpenConstant.WECHAT_APP_ID)
@@ -689,6 +728,7 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                                         if ("200".equals(status)) {
                                             myFav = 0;
                                             ivFav.setImageResource(R.mipmap.ic_fav_pressed);
+                                            atv_fav.setText("收藏");
                                             ToastUtil.shortToast(getContext(), "取消收藏");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
@@ -713,6 +753,7 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                                         if ("200".equals(status)) {
                                             myFav = 1;
                                             ivFav.setImageResource(R.mipmap.ic_faved_pressed);
+                                            atv_fav.setText("已收藏");
                                             ToastUtil.shortToast(getContext(), "收藏成功");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {

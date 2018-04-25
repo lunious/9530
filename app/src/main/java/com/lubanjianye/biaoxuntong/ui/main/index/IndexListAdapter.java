@@ -33,6 +33,8 @@ public class IndexListAdapter extends BaseQuickAdapter<IndexListBean, BaseViewHo
         } else if (!"0".equals(isCorrections) && "0".equals(isResult)) {
             helper.setVisible(R.id.iv_status,true);
             helper.setImageResource(R.id.iv_status, R.mipmap.bbbbb);
+        }else {
+            helper.setGone(R.id.iv_status,false);
         }
 
         helper.setText(R.id.tv_index_title, item.getEntryName());

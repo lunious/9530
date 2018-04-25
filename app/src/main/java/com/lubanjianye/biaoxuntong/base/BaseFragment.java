@@ -12,14 +12,6 @@ import com.lubanjianye.biaoxuntong.util.HTMLUtil;
 
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.fragment.base
- * 文件名:   BaseFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/9  20:49
- * 描述:     TODO
- */
 
 public abstract class BaseFragment extends SwipeBackFragment {
 

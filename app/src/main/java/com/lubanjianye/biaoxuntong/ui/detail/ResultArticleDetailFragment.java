@@ -34,6 +34,9 @@ import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
@@ -68,6 +71,8 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
     private LinearLayout llYw = null;
     private LinearLayout llFav = null;
     private AppCompatTextView tv_data_time = null;
+    private LinearLayout llCall = null;
+    private AppCompatTextView atv_fav = null;
 
 
     private LinearLayout llWeiBoShare = null;
@@ -97,7 +102,7 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
     private String mDiqu = "";
 
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
-
+    private PromptDialog promptDialog = null;
 
     public static ResultArticleDetailFragment create(@NonNull int entityId, String entity, String ajaxlogtype) {
         final Bundle args = new Bundle();
@@ -141,7 +146,8 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
         llFav = getView().findViewById(R.id.ll_fav);
         tv_data_time = getView().findViewById(R.id.tv_data_time);
         ll_content = getView().findViewById(R.id.ll_content);
-
+        llCall = getView().findViewById(R.id.ll_call);
+        atv_fav = getView().findViewById(R.id.atv_fav);
         llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
         llQQBoShare = getView().findViewById(R.id.ll_qq_share);
         llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
@@ -167,6 +173,7 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
         llBrowser.setOnClickListener(this);
         llYw.setOnClickListener(this);
         llFav.setOnClickListener(this);
+        llCall.setOnClickListener(this);
 
     }
 
@@ -181,6 +188,10 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
         }
 
         requestData();
+
+
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
 
     }
 
@@ -230,9 +241,11 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
                                 if (favorite == 1) {
                                     myFav = 1;
                                     ivFav.setImageResource(R.mipmap.ic_faved_pressed);
+                                    atv_fav.setText("已收藏");
                                 } else if (favorite == 0) {
                                     myFav = 0;
                                     ivFav.setImageResource(R.mipmap.ic_fav_pressed);
+                                    atv_fav.setText("收藏");
                                 }
 
                                 if ("200".equals(status)) {
@@ -548,6 +561,31 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
             case R.id.ll_iv_back:
                 getActivity().onBackPressed();
                 break;
+            case R.id.ll_call:
+                //客服界面
+                final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+
+                    }
+                });
+                cancel.setTextColor(getResources().getColor(R.color.status_text_color));
+                cancel.setTextSize(16);
+
+                final PromptButton sure = new PromptButton("呼      叫", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:400-028-9997"));
+                        startActivity(intent);
+                    }
+                });
+                sure.setTextColor(getResources().getColor(R.color.main_status_blue));
+                sure.setTextSize(16);
+                promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false)
+                        .round(6).loadingDuration(800);
+                promptDialog.showWarnAlert("是否呼叫服务热线:400-028-9997？", cancel, sure, true);
+                break;
             case R.id.ll_fav:
                 if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                     //已登录处理事件
@@ -572,6 +610,7 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
                                         if ("200".equals(status)) {
                                             myFav = 0;
                                             ivFav.setImageResource(R.mipmap.ic_fav_pressed);
+                                            atv_fav.setText("收藏");
                                             ToastUtil.shortToast(getContext(), "取消收藏");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
@@ -596,6 +635,7 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
                                         if ("200".equals(status)) {
                                             myFav = 1;
                                             ivFav.setImageResource(R.mipmap.ic_faved_pressed);
+                                            atv_fav.setText("已收藏");
                                             ToastUtil.shortToast(getContext(), "收藏成功");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {

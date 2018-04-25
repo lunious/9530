@@ -3,8 +3,6 @@ package com.lubanjianye.biaoxuntong.ui.push;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.SystemClock;
-
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
@@ -22,14 +20,6 @@ import com.mixpush.client.core.MixPushIntentService;
 import com.mixpush.client.core.MixPushMessage;
 
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.push
- * 文件名:   PushService
- * 创建者:   lunious
- * 创建时间: 2017/12/13  11:36
- * 描述:     TODO
- */
 
 public class PushService extends MixPushIntentService {
 

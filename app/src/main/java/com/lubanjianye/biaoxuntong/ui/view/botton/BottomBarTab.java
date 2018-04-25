@@ -47,7 +47,7 @@ public class BottomBarTab extends FrameLayout {
         lLContainer.setLayoutParams(paramsContainer);
 
         mIcon = new ImageView(context);
-        int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 22, getResources().getDisplayMetrics());
+        int size = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 23, getResources().getDisplayMetrics());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(size, size);
         mIcon.setImageResource(icon);
         mIcon.setLayoutParams(params);
@@ -58,14 +58,14 @@ public class BottomBarTab extends FrameLayout {
         mTvTitle.setText(title);
         LinearLayout.LayoutParams paramsTv = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         paramsTv.topMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics());
-        mTvTitle.setTextSize(10);
+        mTvTitle.setTextSize(11);
         mTvTitle.setTextColor(ContextCompat.getColor(context, R.color.tab_text_unselect));
         mTvTitle.setLayoutParams(paramsTv);
         lLContainer.addView(mTvTitle);
 
         addView(lLContainer);
 
-        int min = dip2px(context,8);
+        int min = dip2px(context, 8);
         int padding = dip2px(context, 3);
         mTvUnreadCount = new TextView(context);
         mTvUnreadCount.setBackgroundResource(R.drawable.ic_red_dot);
@@ -73,7 +73,7 @@ public class BottomBarTab extends FrameLayout {
         mTvUnreadCount.setTextColor(Color.WHITE);
         mTvUnreadCount.setPadding(padding, 0, padding, 0);
         mTvUnreadCount.setGravity(Gravity.CENTER);
-        FrameLayout.LayoutParams tvUnReadParams = new FrameLayout.LayoutParams(min,min);
+        FrameLayout.LayoutParams tvUnReadParams = new FrameLayout.LayoutParams(min, min);
         tvUnReadParams.gravity = Gravity.CENTER;
         tvUnReadParams.leftMargin = dip2px(context, 10);
         tvUnReadParams.bottomMargin = dip2px(context, 14);

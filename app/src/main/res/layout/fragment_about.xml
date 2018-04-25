@@ -38,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:text="鲁班标讯通"
                     android:textColor="#ff434343"
-                    android:textSize="@dimen/d16" />
+                    android:textSize="@dimen/d20" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

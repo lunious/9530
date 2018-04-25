@@ -20,7 +20,6 @@ import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.sign.AboutActivity;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.company.MyCompanyActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.setting.SettingActivity;

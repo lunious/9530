@@ -26,6 +26,7 @@ import com.lubanjianye.biaoxuntong.ui.update.UpdateAppManager;
 import com.lubanjianye.biaoxuntong.ui.update.UpdateCallback;
 import com.lubanjianye.biaoxuntong.ui.update.utils.CProgressDialogUtils;
 import com.lubanjianye.biaoxuntong.ui.update.utils.OkGoUpdateHttpUtil;
+import com.lubanjianye.biaoxuntong.ui.view.ToggleButton;
 import com.lubanjianye.biaoxuntong.util.appinfo.AppApplicationMgr;
 import com.lubanjianye.biaoxuntong.util.cache.AppCleanMgr;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
@@ -53,9 +54,9 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
     private AppCompatTextView tvCacheSize = null;
     private LinearLayout llUpdate = null;
     private LinearLayout llCacheSize = null;
-    private AppCompatTextView tvUpdate = null;
-
     private LinearLayout llOpinion = null;
+    private ToggleButton mDoubleExit = null;
+    private ToggleButton mLeftBack = null;
 
 
     //存储权限
@@ -74,13 +75,16 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
         tvCacheSize = getView().findViewById(R.id.tv_cache_size);
         llUpdate = getView().findViewById(R.id.ll_update);
         llCacheSize = getView().findViewById(R.id.ll_cache_size);
-        tvUpdate = getView().findViewById(R.id.tv_update);
         llOpinion = getView().findViewById(R.id.ll_opinion);
+        mDoubleExit = getView().findViewById(R.id.tb_double_click_exit);
+        mLeftBack = getView().findViewById(R.id.tb_left_back);
         llOpinion.setOnClickListener(this);
         llBack.setOnClickListener(this);
         llCancel.setOnClickListener(this);
         llUpdate.setOnClickListener(this);
         llCacheSize.setOnClickListener(this);
+        mDoubleExit.setOnClickListener(this);
+        mLeftBack.setOnClickListener(this);
 
     }
 
@@ -91,7 +95,6 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
         String cacheSize = AppCleanMgr.getAppClearSize(getContext());
 
         tvCacheSize.setText(cacheSize);
-        tvUpdate.setText(AppApplicationMgr.getVersionName(getContext()));
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             llCancel.setVisibility(View.VISIBLE);
@@ -99,12 +102,43 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
             llCancel.setVisibility(View.INVISIBLE);
         }
 
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.DOUBLE_CLICK_EXIT)) {
+            mDoubleExit.setToggleOn();
+        } else {
+            mDoubleExit.setToggleOff();
+        }
+
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LEFT_BACK)) {
+            mLeftBack.setToggleOn();
+        } else {
+            mLeftBack.setToggleOff();
+        }
+
 
     }
 
     @Override
     public void initEvent() {
-
+        mDoubleExit.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+            @Override
+            public void onToggle(boolean on) {
+                if (on) {
+                    AppSharePreferenceMgr.put(getContext(), EventMessage.DOUBLE_CLICK_EXIT, "on");
+                } else {
+                    AppSharePreferenceMgr.remove(getContext(), EventMessage.DOUBLE_CLICK_EXIT);
+                }
+            }
+        });
+        mLeftBack.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+            @Override
+            public void onToggle(boolean on) {
+                if (on) {
+                    AppSharePreferenceMgr.put(getContext(), EventMessage.LEFT_BACK, "on");
+                } else {
+                    AppSharePreferenceMgr.remove(getContext(), EventMessage.LEFT_BACK);
+                }
+            }
+        });
     }
 
     @Override
@@ -163,6 +197,12 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                 //更新界面
                 requestExternalStorage();
                 updateDiy();
+                break;
+            case R.id.tb_double_click_exit:
+                mDoubleExit.toggle();
+                break;
+            case R.id.tb_left_back:
+                mLeftBack.toggle();
                 break;
             default:
                 break;
