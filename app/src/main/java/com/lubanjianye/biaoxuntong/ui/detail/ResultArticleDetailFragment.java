@@ -101,6 +101,8 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
     private String entityUrl = "";
     private String mDiqu = "";
 
+    private String shareUrl = "";
+
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
     private PromptDialog promptDialog = null;
 
@@ -257,6 +259,7 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
                                         title = data.getString("reportTitle");
                                     }
                                     url = data.getString("url");
+                                    shareUrl = data.getString("entityUrl").replace("&", "%26");
                                     entityUrl = data.getString("entityUrl");
                                     sysTime = data.getString("sysTime");
                                     webView.loadUrl(entityUrl);
@@ -295,6 +298,7 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
                                         title = data.getString("reportTitle");
                                     }
                                     url = data.getString("url");
+                                    shareUrl = data.getString("entityUrl").replace("&", "%26");
                                     entityUrl = data.getString("entityUrl");
                                     sysTime = data.getString("sysTime");
                                     webView.loadUrl(entityUrl);
@@ -424,7 +428,7 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
         mShare.setSummary(title);
         mShare.setDescription(title);
         mShare.setImageUrl(null);
-        mShare.setUrl(BiaoXunTongApi.SHARE_URL + entityUrl);
+        mShare.setUrl(BiaoXunTongApi.SHARE_URL + shareUrl);
 
         Intent intent = null;
         switch (v.getId()) {
@@ -651,7 +655,7 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
                 }
                 break;
             case R.id.ll_share:
-                toShare(mEntityId, title, title, BiaoXunTongApi.SHARE_URL + entityUrl);
+                toShare(mEntityId, title, title, BiaoXunTongApi.SHARE_URL + shareUrl);
                 break;
             case R.id.ll_browser:
                 try {
