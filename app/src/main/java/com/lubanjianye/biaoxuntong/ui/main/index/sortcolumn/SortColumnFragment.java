@@ -471,7 +471,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
             SortColumnBean bean = new SortColumnBean();
             JSONObject list = data.getJSONObject(i);
             bean.setId(list.getInteger("id"));
-            bean.setName("+"+list.getString("name"));
+            bean.setName("+ "+list.getString("name"));
             bean.setShowDele(false);
             bean.setChangeColo(false);
             mData1.add(bean);
@@ -486,7 +486,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
             SortColumnBean bean = new SortColumnBean();
             JSONObject list = data.getJSONObject(i);
             bean.setId(list.getInteger("id"));
-            bean.setName("+"+list.getString("name"));
+            bean.setName("+ "+list.getString("name"));
             bean.setShowDele(false);
             bean.setChangeColo(false);
             mData2.add(bean);

@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.util.AppConfig;
@@ -30,7 +29,6 @@ import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;

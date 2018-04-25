@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/main_bg_color"
     android:orientation="vertical">
 
 
@@ -9,9 +10,10 @@
         android:id="@+id/share_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/main_bg_color"
-        android:paddingBottom="@dimen/d20"
-        android:paddingTop="@dimen/d32" />
+        android:paddingBottom="@dimen/d14"
+        android:paddingTop="@dimen/d20"
+        android:layout_marginLeft="@dimen/d18"
+        android:layout_marginRight="@dimen/d18"/>
 
     <View
         android:layout_width="match_parent"
@@ -22,13 +24,14 @@
     <LinearLayout
         android:id="@+id/cancel_share"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/main_status_white">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/d18"
-            android:layout_marginTop="@dimen/d18"
+            android:layout_marginBottom="@dimen/d10"
+            android:layout_marginTop="@dimen/d10"
             android:gravity="center"
             android:text="取消分享"
             android:textColor="@color/main_text_color"

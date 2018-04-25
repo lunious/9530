@@ -84,7 +84,7 @@
                 android:paddingLeft="@dimen/d1"
                 android:text="四川"
                 android:textColor="@color/main_status_white"
-                android:textSize="@dimen/s15" />
+                android:textSize="@dimen/s14" />
 
         </LinearLayout>
 

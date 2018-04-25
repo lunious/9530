@@ -9,14 +9,6 @@ import com.lubanjianye.biaoxuntong.bean.CollectionListBean;
 
 import java.util.List;
 
-/**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.collection
- * 文件名:   CollectionListAdapter
- * 创建者:   lunious
- * 创建时间: 2017/12/15  21:46
- * 描述:     TODO
- */
 
 public class CollectionListAdapter extends BaseQuickAdapter<CollectionListBean, BaseViewHolder> {
 

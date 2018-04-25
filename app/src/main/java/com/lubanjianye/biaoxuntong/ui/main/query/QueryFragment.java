@@ -69,6 +69,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     private TextView tvZy = null;
     private TextView tvDj = null;
     private TextView tvQy = null;
+    private AppCompatTextView tvGdQy = null;
     private Button btnAdd = null;
     private View view = null;
     private LinearLayout ll = null;
@@ -90,6 +91,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     private SpinerPopWindow<String> mSpinerZy;
     private SpinerPopWindow<String> mSpinerDj;
     private SpinerPopWindow<String> mSpinerQy;
+    private SpinerPopWindow<String> mSpinerGdQy;
 
     private List<String> Zzlxlist = new ArrayList<String>();
     private List<String> Dllist = new ArrayList<String>();
@@ -97,6 +99,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     private List<String> Zylist = new ArrayList<String>();
     private List<String> Djlist = new ArrayList<String>();
     private List<String> Qylist = new ArrayList<String>();
+    private List<String> GdQylist = new ArrayList<String>();
 
     String one = null;
     String two = null;
@@ -218,6 +221,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
         tvZy = getView().findViewById(R.id.tv_zy);
         tvDj = getView().findViewById(R.id.tv_dj);
         tvQy = getView().findViewById(R.id.tv_qy);
+        tvGdQy = getView().findViewById(R.id.tv_gd_qy);
         btnAdd = getView().findViewById(R.id.btn_add);
         view = getView().findViewById(R.id.view);
         ll = getView().findViewById(R.id.ll);
@@ -258,6 +262,9 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             if (Qylist.size() > 0) {
                 Qylist.clear();
             }
+            if (GdQylist.size() > 0) {
+                GdQylist.clear();
+            }
 
             //重置后面选项名称
             tvZzlx.setText("资质类型");
@@ -266,6 +273,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             tvZy.setText("专业");
             tvDj.setText("等级");
             tvQy.setText("地区范围");
+            tvGdQy.setText("地区范围");
 
 
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOCA_AREA_CODE)) {
@@ -280,6 +288,28 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             four = null;
             five = null;
             six = null;
+
+
+            if ("440000".equals(provinceCode)) {
+                tvZzlx.setVisibility(View.VISIBLE);
+                tvDl.setVisibility(View.VISIBLE);
+                tvXl.setVisibility(View.VISIBLE);
+                tvZy.setVisibility(View.VISIBLE);
+                tvDj.setVisibility(View.VISIBLE);
+                tvQy.setVisibility(View.GONE);
+                tvGdQy.setVisibility(View.VISIBLE);
+                GdQylist.add("粤内");
+                GdQylist.add("粤内和入粤");
+                GdQylist.add("全国");
+            } else {
+                tvZzlx.setVisibility(View.VISIBLE);
+                tvDl.setVisibility(View.VISIBLE);
+                tvXl.setVisibility(View.VISIBLE);
+                tvZy.setVisibility(View.VISIBLE);
+                tvDj.setVisibility(View.VISIBLE);
+                tvQy.setVisibility(View.VISIBLE);
+                tvGdQy.setVisibility(View.GONE);
+            }
 
 
         }
@@ -312,6 +342,28 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
         //跑马灯效果
         getScrollViewData();
+
+        if ("440000".equals(provinceCode)) {
+            tvZzlx.setVisibility(View.VISIBLE);
+            tvDl.setVisibility(View.VISIBLE);
+            tvXl.setVisibility(View.VISIBLE);
+            tvZy.setVisibility(View.VISIBLE);
+            tvDj.setVisibility(View.VISIBLE);
+            tvQy.setVisibility(View.GONE);
+            tvGdQy.setVisibility(View.VISIBLE);
+            GdQylist.add("粤内");
+            GdQylist.add("粤内和入粤");
+            GdQylist.add("全国");
+            loadGdQy();
+        } else {
+            tvZzlx.setVisibility(View.VISIBLE);
+            tvDl.setVisibility(View.VISIBLE);
+            tvXl.setVisibility(View.VISIBLE);
+            tvZy.setVisibility(View.VISIBLE);
+            tvDj.setVisibility(View.VISIBLE);
+            tvQy.setVisibility(View.VISIBLE);
+            tvGdQy.setVisibility(View.GONE);
+        }
 
         loadZZLX();
 
@@ -784,10 +836,79 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             case R.id.tv_qy:
                 tvQy.setCompoundDrawables(null, null, drawable, null);
                 break;
+            case R.id.tv_gd_qy:
+                tvGdQy.setCompoundDrawables(null, null, drawable, null);
+                break;
             default:
                 break;
         }
 
+    }
+
+    /**
+     * 加载广东地区
+     */
+
+    public void loadGdQy() {
+        mSpinerGdQy = new SpinerPopWindow<String>(getActivity(), GdQylist, new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mSpinerGdQy.dismiss();
+                six = GdQylist.get(position);
+
+
+                if ("粤内".equals(six)) {
+                    entrySign = "0";
+                } else if ("粤内和入粤".equals(six)) {
+                    entrySign = "2";
+                } else if ("全国".equals(six)) {
+                    entrySign = "-1";
+                }
+
+                one = null;
+                two = null;
+                three = null;
+                four = null;
+                five = null;
+
+                tvGdQy.setText(GdQylist.get(position));
+                tvZzlx.setVisibility(View.VISIBLE);
+                tvDl.setVisibility(View.VISIBLE);
+                tvXl.setVisibility(View.VISIBLE);
+                tvZy.setVisibility(View.VISIBLE);
+                tvDj.setVisibility(View.VISIBLE);
+
+                //重置后面选项名称
+                tvZzlx.setText("资质类型");
+                tvDl.setText("大类");
+                tvXl.setText("小类");
+                tvZy.setText("专业");
+                tvDj.setText("等级");
+
+
+            }
+        });
+
+        tvGdQy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mSpinerGdQy == null) {
+                    return;
+                }
+                mSpinerGdQy.setWidth(ll.getWidth());
+                mSpinerGdQy.setHeight(ll.getHeight());
+                mSpinerGdQy.showAsDropDown(view);
+                setTextImage(R.id.tv_gd_qy, R.mipmap.up);
+            }
+        });
+
+        mSpinerGdQy.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                //TODO
+                setTextImage(R.id.tv_gd_qy, R.mipmap.down);
+            }
+        });
     }
 
     /**
@@ -1164,9 +1285,11 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                 final JSONArray options = object.getJSONArray("options");
                                 if (!visible) {
                                     tvQy.setVisibility(View.GONE);
-                                    final JSONObject objectOptions = options.getJSONObject(0);
-                                    final String value = objectOptions.getString("value");
-                                    entrySign = value;
+                                    if (options.size() > 0) {
+                                        final JSONObject objectOptions = options.getJSONObject(0);
+                                        final String value = objectOptions.getString("value");
+                                        entrySign = value;
+                                    }
                                 } else {
                                     if (Qylist.size() > 0) {
                                         Qylist.clear();
@@ -1429,9 +1552,11 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                 final JSONArray options = object.getJSONArray("options");
                                 if (!visible) {
                                     tvQy.setVisibility(View.GONE);
-                                    final JSONObject objectOptions = options.getJSONObject(0);
-                                    final String value = objectOptions.getString("value");
-                                    entrySign = value;
+                                    if (options.size() > 0) {
+                                        final JSONObject objectOptions = options.getJSONObject(0);
+                                        final String value = objectOptions.getString("value");
+                                        entrySign = value;
+                                    }
                                 } else {
                                     if (Qylist.size() > 0) {
                                         Qylist.clear();
@@ -1625,9 +1750,11 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                 final JSONArray options = object.getJSONArray("options");
                                 if (!visible) {
                                     tvQy.setVisibility(View.GONE);
-                                    final JSONObject objectOptions = options.getJSONObject(0);
-                                    final String value = objectOptions.getString("value");
-                                    entrySign = value;
+                                    if (options.size() > 0) {
+                                        final JSONObject objectOptions = options.getJSONObject(0);
+                                        final String value = objectOptions.getString("value");
+                                        entrySign = value;
+                                    }
                                 } else {
                                     if (Qylist.size() > 0) {
                                         Qylist.clear();
