@@ -8,7 +8,7 @@ android {
         applicationId "com.lubanjianye.biaoxuntong"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 26
+        versionCode 25
         versionName "1.5.0(425a5c)"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
