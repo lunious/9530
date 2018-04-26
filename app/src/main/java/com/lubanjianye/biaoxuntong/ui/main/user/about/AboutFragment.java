@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.ui.sign;
+package com.lubanjianye.biaoxuntong.ui.main.user.about;
 
 import android.content.Intent;
 import android.support.v7.widget.AppCompatTextView;

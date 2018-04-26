@@ -2,7 +2,6 @@ package com.lubanjianye.biaoxuntong.ui.citypicker;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -81,6 +80,15 @@ public class CityPickerDialogFragment extends AppCompatDialogFragment implements
         args.putBoolean("cp_enable_anim", enable);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onResume() {
+        ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+//        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+        super.onResume();
     }
 
     @Override

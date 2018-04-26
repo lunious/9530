@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d48"
+        android:layout_height="@dimen/d44"
         android:layout_alignParentBottom="true"
         android:background="@color/main_status_white"
         android:gravity="center_vertical"
@@ -39,7 +39,7 @@
                 android:id="@+id/atv_fav"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/d4"
+                android:paddingTop="@dimen/d2"
                 android:text="收藏"
                 android:textSize="@dimen/s10" />
 
@@ -62,7 +62,7 @@
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/d4"
+                android:paddingTop="@dimen/d2"
                 android:text="分享"
                 android:textSize="@dimen/s10" />
 
@@ -85,7 +85,7 @@
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/d4"
+                android:paddingTop="@dimen/d2"
                 android:text="咨询"
                 android:textSize="@dimen/s10" />
 
@@ -108,7 +108,7 @@
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/d4"
+                android:paddingTop="@dimen/d2"
                 android:text="浏览器"
                 android:textSize="@dimen/s10" />
 
@@ -119,7 +119,7 @@
             android:layout_width="@dimen/d0"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:background="@color/dark_view"
+            android:background="@color/view"
             android:gravity="center"
             android:orientation="horizontal"
             tools:ignore="UseCompoundDrawables">

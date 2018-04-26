@@ -43,14 +43,10 @@
                 android:textColor="@color/main_text_color"
                 android:textSize="@dimen/d15" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tv_cache_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#6c6c6c"
-                android:textSize="@dimen/d15"
-                tools:ignore="RelativeOverlap"
-                tools:text="0KB" />
+            <ImageView
+                android:layout_width="@dimen/d16"
+                android:layout_height="@dimen/d16"
+                android:src="@mipmap/nomal_forward" />
         </LinearLayout>
 
         <View
@@ -106,9 +102,9 @@
             android:padding="@dimen/d12">
 
             <ImageView
-                android:layout_width="@dimen/d18"
+                android:layout_width="@dimen/d20"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/d8"
+                android:layout_marginEnd="@dimen/d5"
                 android:src="@mipmap/nomal_exit" />
 
             <android.support.v7.widget.AppCompatTextView
@@ -144,9 +140,9 @@
             android:padding="@dimen/d12">
 
             <ImageView
-                android:layout_width="@dimen/d16"
+                android:layout_width="@dimen/d15"
                 android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/d8"
+                android:layout_marginEnd="@dimen/d10"
                 android:src="@mipmap/nomal_back" />
 
             <android.support.v7.widget.AppCompatTextView

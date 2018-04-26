@@ -138,6 +138,8 @@ public class IndexListFragment extends BaseFragment {
 
                 Log.d("UBHDASBDSADAS", entityId + "---" + entity);
 
+                Log.d("DASDSADSADASD", entityUrl);
+
                 Intent intent = null;
 
                 if (!TextUtils.isEmpty(entityUrl)) {

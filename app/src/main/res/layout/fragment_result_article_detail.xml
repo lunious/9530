@@ -70,7 +70,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/d16"
-                        android:layout_marginTop="@dimen/d16"
+                        android:layout_marginTop="@dimen/d20"
                         android:background="#88eeeeee" />
 
 
@@ -80,7 +80,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/d6"
+                        android:layout_marginTop="@dimen/d12"
                         android:orientation="vertical">
 
 
@@ -476,11 +476,11 @@
                             <View
                                 android:layout_width="@dimen/d1"
                                 android:layout_height="match_parent"
+                                android:layout_gravity="center"
                                 android:layout_marginBottom="@dimen/d4"
                                 android:layout_marginLeft="@dimen/d6"
                                 android:layout_marginRight="@dimen/d6"
                                 android:layout_marginTop="@dimen/d4"
-                                android:layout_gravity="center"
                                 android:background="@color/main_status_red" />
 
                             <android.support.v7.widget.AppCompatTextView

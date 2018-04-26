@@ -133,7 +133,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingTop="@dimen/d18">
+                        android:paddingTop="@dimen/d14">
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/tv_data_time"
@@ -159,7 +159,7 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/d16"
-                        android:layout_marginTop="@dimen/d16"
+                        android:layout_marginTop="@dimen/d20"
                         android:background="#88eeeeee" />
 
 
@@ -169,7 +169,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/d6"
+                        android:layout_marginTop="@dimen/d12"
                         android:orientation="vertical">
 
 

@@ -1,6 +1,7 @@
 package com.lubanjianye.biaoxuntong.ui.launcher;
 
 import android.content.Intent;
+
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
@@ -122,8 +123,6 @@ public class LauncherFragment extends BaseFragment {
             if (getActivity() != null) {
                 getActivity().finish();
             }
-            AppSharePreferenceMgr.put(getContext(), EventMessage.LEFT_BACK, "on");
-            AppSharePreferenceMgr.put(getContext(), EventMessage.DOUBLE_CLICK_EXIT, "on");
         } else {
             //进入主页
             Intent intent = new Intent(getActivity(), MainActivity.class);

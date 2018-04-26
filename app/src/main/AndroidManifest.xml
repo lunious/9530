@@ -174,7 +174,7 @@
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.sign.AboutActivity"
+            android:name=".ui.main.user.about.AboutActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"

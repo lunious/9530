@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.ui.sign;
+package com.lubanjianye.biaoxuntong.ui.main.user.about;
 
 import com.lubanjianye.biaoxuntong.base.BaseActivity;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;

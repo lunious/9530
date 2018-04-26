@@ -40,9 +40,9 @@ public abstract class BaseActivity extends SwipeBackActivity {
     private void initToggton() {
 
         if (AppSharePreferenceMgr.contains(this, EventMessage.LEFT_BACK)) {
-//            setSwipeBackEnable(true);
-        } else {
             setSwipeBackEnable(false);
+        } else {
+//            setSwipeBackEnable(true);
         }
 
     }

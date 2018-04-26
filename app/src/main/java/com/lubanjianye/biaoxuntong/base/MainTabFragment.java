@@ -41,7 +41,7 @@ public class MainTabFragment extends BaseFragment {
      */
     @Override
     public boolean onBackPressedSupport() {
-        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.DOUBLE_CLICK_EXIT)) {
+        if (!AppSharePreferenceMgr.contains(getContext(), EventMessage.DOUBLE_CLICK_EXIT)) {
             if (System.currentTimeMillis() - TOUCH_TIME < WAIT_TIME) {
                 _mActivity.finish();
             } else {

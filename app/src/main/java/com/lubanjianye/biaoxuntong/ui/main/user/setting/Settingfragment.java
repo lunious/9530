@@ -51,7 +51,6 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
     private LinearLayout llBack = null;
     private AppCompatTextView mainBarName = null;
     private AppCompatTextView llCancel = null;
-    private AppCompatTextView tvCacheSize = null;
     private LinearLayout llUpdate = null;
     private LinearLayout llCacheSize = null;
     private LinearLayout llOpinion = null;
@@ -72,7 +71,6 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
         llBack = getView().findViewById(R.id.ll_iv_back);
         mainBarName = getView().findViewById(R.id.main_bar_name);
         llCancel = getView().findViewById(R.id.ll_cancel);
-        tvCacheSize = getView().findViewById(R.id.tv_cache_size);
         llUpdate = getView().findViewById(R.id.ll_update);
         llCacheSize = getView().findViewById(R.id.ll_cache_size);
         llOpinion = getView().findViewById(R.id.ll_opinion);
@@ -94,7 +92,6 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
         mainBarName.setText("系统设置");
         String cacheSize = AppCleanMgr.getAppClearSize(getContext());
 
-        tvCacheSize.setText(cacheSize);
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             llCancel.setVisibility(View.VISIBLE);
@@ -103,15 +100,15 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
         }
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.DOUBLE_CLICK_EXIT)) {
-            mDoubleExit.setToggleOn();
-        } else {
             mDoubleExit.setToggleOff();
+        } else {
+            mDoubleExit.setToggleOn();
         }
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LEFT_BACK)) {
-            mLeftBack.setToggleOn();
-        } else {
             mLeftBack.setToggleOff();
+        } else {
+            mLeftBack.setToggleOn();
         }
 
 
@@ -123,9 +120,9 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
             @Override
             public void onToggle(boolean on) {
                 if (on) {
-                    AppSharePreferenceMgr.put(getContext(), EventMessage.DOUBLE_CLICK_EXIT, "on");
-                } else {
                     AppSharePreferenceMgr.remove(getContext(), EventMessage.DOUBLE_CLICK_EXIT);
+                } else {
+                    AppSharePreferenceMgr.put(getContext(), EventMessage.DOUBLE_CLICK_EXIT, "off");
                 }
             }
         });
@@ -133,9 +130,9 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
             @Override
             public void onToggle(boolean on) {
                 if (on) {
-                    AppSharePreferenceMgr.put(getContext(), EventMessage.LEFT_BACK, "on");
-                } else {
                     AppSharePreferenceMgr.remove(getContext(), EventMessage.LEFT_BACK);
+                } else {
+                    AppSharePreferenceMgr.put(getContext(), EventMessage.LEFT_BACK, "off");
                 }
             }
         });
@@ -149,8 +146,7 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.ll_cache_size:
                 AppCleanMgr.cleanInternalCache(getContext());
-                tvCacheSize.setText("");
-                ToastUtil.shortBottonToast(getContext(), "缓存清理成功");
+                ToastUtil.shortToast(getContext(), "缓存清理成功");
                 break;
             case R.id.ll_opinion:
                 //意见反馈界面

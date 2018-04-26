@@ -39,10 +39,7 @@ import com.lubanjianye.biaoxuntong.ui.update.view.NumberProgressBar;
 
 import java.io.File;
 
-/**
- * Created by Vector
- * on 2017/7/19 0019.
- */
+
 
 public class UpdateDialogFragment extends DialogFragment implements View.OnClickListener {
     public static final String TIPS = "请授权访问存储空间权限，否则App无法更新";
