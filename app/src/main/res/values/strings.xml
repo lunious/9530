@@ -33,7 +33,7 @@
     <string name="no_content">空空如也，换个关键词试试吧</string>
 
     <!--定位相关-->
-    <string name="cp_search_hint_text">请输入地区中文名或拼音搜索</string>
+    <string name="cp_search_hint_text">请输入地区名搜索</string>
     <string name="cp_cancel">取消</string>
     <string name="cp_no_result">没有找到，换个名字试试~</string>
     <string name="cp_locate_failed">定位失败</string>

@@ -51,7 +51,7 @@
                     android:layout_gravity="center"
                     android:maxLines="1"
                     android:paddingStart="@dimen/d2"
-                    android:text="输入你感兴趣的招标公告名称"
+                    android:text="输入你感兴趣的公告名称"
                     android:textColor="#9d9d9d"
                     android:textSize="@dimen/s13" />
             </LinearLayout>
