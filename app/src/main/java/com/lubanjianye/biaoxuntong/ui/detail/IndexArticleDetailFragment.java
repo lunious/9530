@@ -79,11 +79,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
     private AppCompatTextView tv_area = null;
     private AppCompatTextView tv_type = null;
 
-    private LinearLayout llWeiBoShare = null;
-    private LinearLayout llQQBoShare = null;
-    private LinearLayout llWeixinBoShare = null;
-    private LinearLayout llPyqShare = null;
-
     private LinearLayout llWeiBoShare_bottom = null;
     private LinearLayout llQQBoShare_bottom = null;
     private LinearLayout llWeixinBoShare_bottom = null;
@@ -166,10 +161,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
         tv_status = getView().findViewById(R.id.tv_status);
         ll_content = getView().findViewById(R.id.ll_content);
         tv_dead_time = getView().findViewById(R.id.tv_dead_time);
-        llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
-        llQQBoShare = getView().findViewById(R.id.ll_qq_share);
-        llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
-        llPyqShare = getView().findViewById(R.id.ll_pyq_share);
         tv_area = getView().findViewById(R.id.tv_area);
         tv_type = getView().findViewById(R.id.tv_type);
 
@@ -184,10 +175,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
         atv_gz.setOnClickListener(this);
         atv_jg.setOnClickListener(this);
 
-        llWeiBoShare.setOnClickListener(this);
-        llQQBoShare.setOnClickListener(this);
-        llWeixinBoShare.setOnClickListener(this);
-        llPyqShare.setOnClickListener(this);
 
         llWeiBoShare_bottom.setOnClickListener(this);
         llQQBoShare_bottom.setOnClickListener(this);
@@ -549,71 +536,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                 break;
             case R.id.atv_jg:
                 ToastUtil.shortToast(getContext(), "暂无相关结果公告");
-                break;
-            case R.id.ll_weibo_share:
-                OpenBuilder.with(getActivity())
-                        .useWeibo(OpenConstant.WB_APP_KEY)
-                        .share(mShare, new OpenBuilder.Callback() {
-                            @Override
-                            public void onFailed() {
-
-                            }
-
-                            @Override
-                            public void onSuccess() {
-
-                            }
-                        });
-                break;
-            case R.id.ll_qq_share:
-                OpenBuilder.with(getActivity())
-                        .useTencent(OpenConstant.QQ_APP_ID)
-                        .share(mShare, new IUiListener() {
-                            @Override
-                            public void onComplete(Object o) {
-                                ToastUtil.shortToast(getContext(), "分享成功");
-                            }
-
-                            @Override
-                            public void onError(UiError uiError) {
-                                ToastUtil.shortToast(getContext(), "分享失败");
-                            }
-
-                            @Override
-                            public void onCancel() {
-                                ToastUtil.shortToast(getContext(), "分享取消");
-                            }
-                        }, this);
-                break;
-            case R.id.ll_chat_share:
-                OpenBuilder.with(getActivity())
-                        .useWechat(OpenConstant.WECHAT_APP_ID)
-                        .shareSession(mShare, new OpenBuilder.Callback() {
-                            @Override
-                            public void onFailed() {
-
-                            }
-
-                            @Override
-                            public void onSuccess() {
-
-                            }
-                        });
-                break;
-            case R.id.ll_pyq_share:
-                OpenBuilder.with(getActivity())
-                        .useWechat(OpenConstant.WECHAT_APP_ID)
-                        .shareTimeLine(mShare, new OpenBuilder.Callback() {
-                            @Override
-                            public void onFailed() {
-
-                            }
-
-                            @Override
-                            public void onSuccess() {
-
-                            }
-                        });
                 break;
             case R.id.ll_weibo_share_bottom:
                 OpenBuilder.with(getActivity())
