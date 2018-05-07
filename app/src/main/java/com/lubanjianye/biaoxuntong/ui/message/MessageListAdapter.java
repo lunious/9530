@@ -10,14 +10,6 @@ import com.lubanjianye.biaoxuntong.util.DataTimeUtil;
 
 import java.util.List;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.result
- * 文件名:   ResultListAdapter
- * 创建者:   lunious
- * 创建时间: 2017/12/12  0:33
- * 描述:     TODO
- */
 
 public class MessageListAdapter extends BaseQuickAdapter<MessageListBean, BaseViewHolder> {
 
@@ -33,7 +25,7 @@ public class MessageListAdapter extends BaseQuickAdapter<MessageListBean, BaseVi
         if ("0".equals(isRead)) {
             helper.setVisible(R.id.message_red, true);
         } else {
-            helper.setGone(R.id.message_red, false);
+            helper.setVisible(R.id.message_red, false);
         }
 
         helper.setText(R.id.tv_item_title, item.getEntityName());
