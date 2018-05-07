@@ -14,9 +14,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="@dimen/d16"
+            android:textSize="@dimen/d14"
             android:lineSpacingMultiplier = "1.2"
-            android:layout_margin="@dimen/d10"
+            android:layout_marginLeft="@dimen/d20"
+            android:layout_marginRight="@dimen/d20"
+            android:layout_marginTop="@dimen/d14"
+            android:layout_marginBottom="@dimen/d20"
             android:text="欢迎使用鲁班标讯通，本协议自开始使用APP时即产生法律效力。成都鲁班建业科技股份有限公司（以下简称鲁班建业科技,也简称鲁班建业通）可能会更新协议内容，并通过网站公告来通知用户。更新结果将在鲁班建业科技通知之日起生效。协议包括鲁班建业通网站内容的使用政策、鲁班建业通隐私政策。您在使用鲁班建业通提供的服务之前，应仔细阅读本服务公约。如您不同意本服务公约或随时对其的修改，您可以主动取消鲁班建业通提供的服务；您一旦使用鲁班建业通服务，即视为您已了解并完全同意本服务公约各项内容，并成为鲁班建业通用户（以下简称“用户”）。\n\n
 一.引言\n\n
 1.1.宗旨\n
@@ -104,7 +107,7 @@
    10.1.本协议的生效、履行、解释及争议的解决均适用中华人民共和国法律；您同意有关本协议以及使用鲁班建业通的服务产生的争议交由成都鲁班建业科技股份有限公司住所地法院以诉讼方式解决。\n
    10.2.您理解并同意，根据服务的升级，我们有权对本协议进行更改。我们会在我们的网站及相关软件产品中公告相关的更改，请您随时予以关注。在本协议修改之后，您继续使用鲁班建业通及相关服务的行为，将表示您已经同意并接受了本协议的更改。\n\n
  十一. 本协议条款的最终解释权归成都鲁班建业科技股份有限公司所有。\n\n
-  您确认您已仔细阅读以上条款，同时完全接受以上条款的内容。\n
+        注册即表示您已仔细阅读以上条款，同时完全接受以上条款的内容。\n
 "/>
 
 

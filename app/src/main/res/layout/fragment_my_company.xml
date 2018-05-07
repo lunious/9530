@@ -71,8 +71,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d10"
-        android:background="@color/view" />
+        android:layout_height="@dimen/d10" />
 
 
     <android.support.v4.widget.NestedScrollView
@@ -94,11 +93,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_marginBottom="@dimen/d14"
-                android:layout_marginTop="@dimen/d14"
+                android:background="@color/main_status_white"
                 android:orientation="horizontal"
+                android:paddingBottom="@dimen/d14"
                 android:paddingEnd="@dimen/d8"
-                android:paddingStart="@dimen/d8">
+                android:paddingStart="@dimen/d8"
+                android:paddingTop="@dimen/d14">
 
 
                 <ImageView
@@ -125,9 +125,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/d20"
-                android:layout_marginBottom="@dimen/d14"
-                android:background="#eeeeee" />
+                android:layout_height="@dimen/d20" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -138,16 +136,14 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/d32"
-                    android:layout_marginLeft="@dimen/d10"
-                    android:layout_marginRight="@dimen/d10"
+                    android:background="@color/main_status_white"
                     android:gravity="center"
                     android:orientation="horizontal">
 
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="@dimen/d0"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="4"
                         android:gravity="center"
                         android:text="企业资质"
                         android:textColor="@color/main_text_color"
@@ -160,6 +156,7 @@
                     android:id="@+id/rlv_qyzz"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/main_status_white"
                     android:overScrollMode="never"
                     android:paddingBottom="@dimen/d10"
                     android:scrollbars="none" />
@@ -178,9 +175,10 @@
                     android:id="@+id/ll_more_qyzz"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/main_status_white"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/d6"
+                    android:paddingBottom="@dimen/d20"
                     android:paddingTop="@dimen/d8"
                     android:visibility="gone">
 
@@ -215,25 +213,20 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/d16"
-                    android:layout_marginBottom="@dimen/d14"
-                    android:layout_marginTop="@dimen/d14"
-                    android:background="#eeeeee" />
+                    android:layout_height="@dimen/d20" />
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/d32"
-                    android:layout_marginLeft="@dimen/d10"
-                    android:layout_marginRight="@dimen/d10"
+                    android:background="@color/main_status_white"
                     android:gravity="center"
                     android:orientation="horizontal">
 
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="@dimen/d0"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="4"
                         android:gravity="center"
                         android:text="人员资格"
                         android:textColor="@color/main_text_color"
@@ -247,6 +240,7 @@
                     android:id="@+id/rlv_ryzz"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/main_status_white"
                     android:overScrollMode="never"
                     android:paddingBottom="@dimen/d10"
                     android:scrollbars="none" />
@@ -268,7 +262,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/d12"
+                    android:paddingBottom="@dimen/d20"
+                    android:background="@color/main_status_white"
                     android:paddingTop="@dimen/d8"
                     android:visibility="gone">
 
@@ -303,25 +298,20 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/d16"
-                    android:layout_marginBottom="@dimen/d14"
-                    android:layout_marginTop="@dimen/d14"
-                    android:background="#eeeeee" />
+                    android:layout_height="@dimen/d20" />
 
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/d32"
-                    android:layout_marginLeft="@dimen/d10"
-                    android:layout_marginRight="@dimen/d10"
+                    android:background="@color/main_status_white"
                     android:gravity="center"
                     android:orientation="horizontal">
 
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="@dimen/d0"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="4"
                         android:gravity="center"
                         android:text="企业业绩"
                         android:textColor="@color/main_text_color"
@@ -335,6 +325,7 @@
                     android:id="@+id/rlv_qyyj"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@color/main_status_white"
                     android:overScrollMode="never"
                     android:paddingBottom="@dimen/d10"
                     android:scrollbars="none" />
@@ -356,8 +347,9 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/d16"
+                    android:paddingBottom="@dimen/d20"
                     android:paddingTop="@dimen/d8"
+                    android:background="@color/main_status_white"
                     android:visibility="gone">
 
                     <android.support.v7.widget.AppCompatTextView

@@ -25,14 +25,6 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.sign
- * 文件名:   SignUpFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/13  12:18
- * 描述:     TODO
- */
 
 public class SignUpFragment extends BaseFragment implements View.OnClickListener {
 

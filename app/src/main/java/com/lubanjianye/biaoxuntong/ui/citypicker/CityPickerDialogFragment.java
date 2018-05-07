@@ -34,8 +34,6 @@ import com.lubanjianye.biaoxuntong.ui.citypicker.model.HotCity;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.LocateState;
 import com.lubanjianye.biaoxuntong.ui.citypicker.model.LocatedCity;
 import com.lubanjianye.biaoxuntong.ui.citypicker.view.SideIndexBar;
-import com.lubanjianye.biaoxuntong.util.dimen.DensityUtil;
-import com.lubanjianye.biaoxuntong.util.dimen.DimenUtil;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import java.util.ArrayList;
