@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:text="分享到"
         android:layout_gravity="center"
-        android:paddingTop="@dimen/d16"
-        android:paddingBottom="@dimen/d16"
+        android:paddingTop="@dimen/d12"
+        android:paddingBottom="@dimen/d12"
         android:textSize="@dimen/s14"
         android:textColor="@color/main_text_color"/>
 
@@ -29,10 +29,10 @@
         android:id="@+id/share_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/d16"
-        android:layout_marginRight="@dimen/d16"
-        android:paddingBottom="@dimen/d16"
-        android:paddingTop="@dimen/d20" />
+        android:layout_marginLeft="@dimen/d14"
+        android:layout_marginRight="@dimen/d14"
+        android:paddingBottom="@dimen/d12"
+        android:paddingTop="@dimen/d14" />
 
     <View
         android:layout_width="match_parent"
@@ -53,7 +53,7 @@
             android:layout_marginTop="@dimen/d10"
             android:gravity="center"
             android:text="取消"
-            android:textColor="@color/main_text_light_color"
+            android:textColor="@color/main_status_red"
             android:textSize="@dimen/d16" />
     </LinearLayout>
 

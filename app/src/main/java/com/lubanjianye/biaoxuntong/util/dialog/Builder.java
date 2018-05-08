@@ -19,7 +19,7 @@ public class Builder {
     int roundAlpha = 120;
     boolean touchAble = false;
     boolean withAnim = true;//
-    long stayDuration = 1000;
+    long stayDuration = 800;
     boolean cancleAble;
     int icon;
     String text;

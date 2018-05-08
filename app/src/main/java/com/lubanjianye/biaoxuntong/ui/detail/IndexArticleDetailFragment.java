@@ -64,7 +64,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
     private WebView webView = null;
     private LinearLayout ll_content = null;
 
-    private NestedScrollView detailNsv = null;
     private AppCompatTextView tv_title = null;
     private ImageView ivFav = null;
     private LinearLayout llShare = null;
@@ -148,7 +147,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
         mainBarName = getView().findViewById(R.id.main_bar_name);
         loadingStatus = getView().findViewById(R.id.detail_status_view);
         webView = getView().findViewById(R.id.wv_content);
-        detailNsv = getView().findViewById(R.id.detail_nsv);
         tv_title = getView().findViewById(R.id.tv_main_title);
         ivFav = getView().findViewById(R.id.iv_fav);
         atv_fav = getView().findViewById(R.id.atv_fav);
@@ -192,7 +190,7 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
 
     @Override
     public void initData() {
-
+        mainBarName.setText("标讯详情");
         if (AppSharePreferenceMgr.contains(getApplicationContext(), EventMessage.LOCA_AREA)) {
             String area = (String) AppSharePreferenceMgr.get(getApplicationContext(), EventMessage.LOCA_AREA, "");
             mDiqu = area;
@@ -211,7 +209,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
 
     @Override
     public void initEvent() {
-        initNsv();
         initWebView();
     }
 
@@ -228,7 +225,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
             loadingStatus.showNoNetwork();
         } else {
             loadingStatus.showLoading();
-            mainBarName.setText("加载中...");
 
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                 List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
@@ -416,33 +412,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
 
     }
 
-    private void initNsv() {
-        detailNsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY) {
-                    // 向下滑动
-                    mainBarName.setText(title);
-                }
-
-                if (scrollY < oldScrollY) {
-                    // 向上滑动
-                    mainBarName.setText(title);
-                }
-
-                if (scrollY == 0) {
-                    // 顶部
-                    mainBarName.setText("标讯详情");
-                }
-
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    // 底部
-                    mainBarName.setText(title);
-                }
-            }
-        });
-    }
-
     private void initWebView() {
         WebSettings mWebSettings = webView.getSettings();
         mWebSettings = webView.getSettings();
@@ -608,8 +577,8 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                 });
                 sure.setTextColor(getResources().getColor(R.color.main_status_blue));
                 sure.setTextSize(16);
-                promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false)
-                        .round(6).loadingDuration(800);
+                promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
+                        .round(4).loadingDuration(600);
                 promptDialog.showWarnAlert("是否呼叫服务热线:400-028-9997？", cancel, sure, true);
                 break;
             case R.id.ll_pyq_share_bottom:
@@ -763,7 +732,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
         public void onPageFinished(WebView view, String url) {
             //加载完成
             ll_content.setVisibility(View.GONE);
-            mainBarName.setText("标讯详情");
         }
 
         @Override

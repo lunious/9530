@@ -338,8 +338,8 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
                 });
                 sure.setTextColor(getResources().getColor(R.color.main_status_blue));
                 sure.setTextSize(16);
-                promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false)
-                        .round(6).loadingDuration(800);
+                promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
+                        .round(4).loadingDuration(600);
                 promptDialog.showWarnAlert("是否拨打:400-028-9997？", cancel, sure, true);
 
                 break;

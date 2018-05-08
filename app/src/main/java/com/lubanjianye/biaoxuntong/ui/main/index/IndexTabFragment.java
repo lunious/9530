@@ -225,9 +225,9 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
             });
             toLogin.setTextColor(Color.parseColor("#00bfdc"));
             toLogin.setTextSize(16);
-            promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false)
-                    .round(6).loadingDuration(800);
-            promptDialog.showWarnAlert("账号登陆过期、请重新登录!", toLogin, cancel, false);
+            promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
+                    .round(4).loadingDuration(600);
+            promptDialog.showWarnAlert("账号登陆过期、请重新登录!", toLogin, cancel, true);
         }
 
     }
@@ -242,8 +242,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
         //保存地区code
         AppSharePreferenceMgr.put(getApplicationContext(), EventMessage.LOCA_AREA_CODE, provinceCode);
 
-
-        Log.d("JHSAHDUGASUYDAS", provinceCode);
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             //得到用户userId
@@ -778,8 +776,8 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                 });
                 sure.setTextColor(getResources().getColor(R.color.main_status_blue));
                 sure.setTextSize(16);
-                promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false)
-                        .round(6).loadingDuration(800);
+                promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
+                        .round(4).loadingDuration(600);
                 promptDialog.showWarnAlert("当前定位为" + locationArea + "," + "是否切换到" + locationArea + "?", cancel, sure, true);
             }
         }

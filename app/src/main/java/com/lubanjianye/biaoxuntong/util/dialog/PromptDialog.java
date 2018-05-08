@@ -77,29 +77,22 @@ public class PromptDialog {
     private void initAnim(int widthPixels, int heightPixels) {
 
         inDefaultAnim = new AnimationSet(true);
-        ScaleAnimation scaleAnimation = new ScaleAnimation(2, 1f, 2,
-                1f, widthPixels * 0.5f, heightPixels * 0.45f);
-        inDefaultAnim.addAnimation(scaleAnimation);
-
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0.2f, 1);
         inDefaultAnim.addAnimation(alphaAnimation);
         inDefaultAnim.setDuration(viewAnimDuration);
         inDefaultAnim.setFillAfter(false);
         inDefaultAnim.setInterpolator(new DecelerateInterpolator());
 
         outDefaultAnim = new AnimationSet(true);
-        scaleAnimation = new ScaleAnimation(1, 2, 1,
-                2, widthPixels * 0.5f, heightPixels * 0.45f);
-        alphaAnimation = new AlphaAnimation(1, 0);
-        alphaAnimation.setDuration(200);
-        outDefaultAnim.addAnimation(scaleAnimation);
+        alphaAnimation = new AlphaAnimation(1, 0.2f);
+        alphaAnimation.setDuration(100);
         outDefaultAnim.addAnimation(alphaAnimation);
-        outDefaultAnim.setDuration(viewAnimDuration);
+//        outDefaultAnim.setDuration(viewAnimDuration);
         outDefaultAnim.setFillAfter(false);
         outDefaultAnim.setInterpolator(new AccelerateInterpolator());
 
         alphaAnimation = new AlphaAnimation(0, 1);
-        scaleAnimation = new ScaleAnimation(1, 1, 1,
+        ScaleAnimation scaleAnimation = new ScaleAnimation(1, 1, 1,
                 1, widthPixels * 0.5f, heightPixels * 0.5f);
         inSheetAnim = new AnimationSet(true);
         inSheetAnim.addAnimation(alphaAnimation);
