@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
@@ -32,14 +33,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 项目名:   9527
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.query.detail
- * 文件名:   CompanyQyzzListFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/26  23:04
- * 描述:     TODO
- */
 
 public class CompanyQyzzListFragment extends BaseFragment implements View.OnClickListener {
 
@@ -48,6 +41,8 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
 
     private RecyclerView companyQyzzRecycler = null;
     private SmartRefreshLayout companyQyzzRefresh = null;
+    private MultipleStatusView loadingStatus = null;
+
 
 
     private CompanyQyzzListAdapter mAdapter;
@@ -90,6 +85,7 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
         mainBarName = getView().findViewById(R.id.main_bar_name);
         companyQyzzRecycler = getView().findViewById(R.id.company_qyzz_recycler);
         companyQyzzRefresh = getView().findViewById(R.id.company_qyzz_refresh);
+        loadingStatus = getView().findViewById(R.id.mycompany_all_qyzz_list_status_view);
         llIvBack.setOnClickListener(this);
     }
 
@@ -185,32 +181,38 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
             token = users.get(0).getToken();
         }
 
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            loadingStatus.showNoNetwork();
+        } else {
+            loadingStatus.showLoading();
 
-        OkGo.<String>post(BiaoXunTongApi.URL_COMPANYQYZZ + sfId)
-                .params("userId", id)
-                .params("token", token)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
+            OkGo.<String>post(BiaoXunTongApi.URL_COMPANYQYZZ + sfId)
+                    .params("userId", id)
+                    .params("token", token)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
 
-                        final JSONObject object = JSON.parseObject(response.body());
-                        final JSONArray array = object.getJSONArray("data");
+                            final JSONObject object = JSON.parseObject(response.body());
+                            final JSONArray array = object.getJSONArray("data");
 
-                        if (array.size() > 0) {
-                            setData(array);
-                        } else {
-                            if (mDataList != null) {
-                                mDataList.clear();
-                                mAdapter.notifyDataSetChanged();
-                            }
-                            //TODO 内容为空的处理
-                            mAdapter.setEmptyView(noDataView);
-                            if (companyQyzzRefresh != null) {
-                                companyQyzzRefresh.setEnableRefresh(false);
+                            if (array.size() > 0) {
+                                setData(array);
+                            } else {
+                                if (mDataList != null) {
+                                    mDataList.clear();
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                                //TODO 内容为空的处理
+                                mAdapter.setEmptyView(noDataView);
+                                if (companyQyzzRefresh != null) {
+                                    companyQyzzRefresh.setEnableRefresh(false);
+                                }
                             }
                         }
-                    }
-                });
+                    });
+
+        }
 
 
     }
@@ -237,6 +239,6 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
             mAdapter.loadMoreComplete();
         }
 
-
+        loadingStatus.showContent();
     }
 }

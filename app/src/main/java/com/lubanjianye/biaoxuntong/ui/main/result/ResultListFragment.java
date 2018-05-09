@@ -313,6 +313,9 @@ public class ResultListFragment extends BaseFragment {
                                 final String status = object.getString("status");
                                 final String message = object.getString("message");
 
+                                Log.d("ASDSADSAD",id+"");
+                                Log.d("JABNDSDASDA",jiemi);
+
                                 if ("200".equals(status)) {
                                     final JSONObject data = object.getJSONObject("data");
                                     final JSONArray array = data.getJSONArray("list");

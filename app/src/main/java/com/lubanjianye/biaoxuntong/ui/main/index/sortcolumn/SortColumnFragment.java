@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -28,9 +30,11 @@ import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -239,7 +243,6 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
 
     private void initAdapter() {
 
-
         OnItemDragListener listener = new OnItemDragListener() {
 
             int oldPosition = 0;
@@ -247,17 +250,20 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
 
             @Override
             public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
-                oldPosition = pos;
+
             }
 
             @Override
             public void onItemDragMoving(final RecyclerView.ViewHolder source, int from, final RecyclerView.ViewHolder target, int to) {
+                final SortColumnBean data = mAdapter.getData().get(from);
+                newPosition = data.getId();
+                final SortColumnBean data1 = mAdapter.getData().get(to);
+                oldPosition = data1.getId();
 
             }
 
             @Override
             public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
-                newPosition = pos;
 
                 if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
 
@@ -267,10 +273,11 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                         userId = users.get(0).getId();
                     }
 
+
                     OkGo.<String>post(BiaoXunTongApi.URL_TABLINE)
                             .params("userId", userId)
-                            .params("oldIndex", oldPosition)
-                            .params("newIndex", newPosition)
+                            .params("id", oldPosition)
+                            .params("previousId", newPosition)
                             .execute(new StringCallback() {
                                 @Override
                                 public void onSuccess(Response<String> response) {
@@ -447,6 +454,8 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
             int id = list.getInteger("id");
             bean.setId(id);
             String name = list.getString("name");
+            int isShow = list.getInteger("isShow");
+            bean.setIsShow(isShow);
             bean.setName(name);
             if ("最新标讯".equals(name) || "施工".equals(name) || "监理".equals(name) || "勘察".equals(name)
                     || "设计".equals(name) || "政府采购".equals(name) || "行业资讯".equals(name)) {
@@ -471,9 +480,11 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
             SortColumnBean bean = new SortColumnBean();
             JSONObject list = data.getJSONObject(i);
             bean.setId(list.getInteger("id"));
-            bean.setName("+ "+list.getString("name"));
+            bean.setName("+ " + list.getString("name"));
             bean.setShowDele(false);
             bean.setChangeColo(false);
+            int isShow = list.getInteger("isShow");
+            bean.setIsShow(isShow);
             mData1.add(bean);
         }
         mAdapter1.notifyDataSetChanged();
@@ -486,9 +497,11 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
             SortColumnBean bean = new SortColumnBean();
             JSONObject list = data.getJSONObject(i);
             bean.setId(list.getInteger("id"));
-            bean.setName("+ "+list.getString("name"));
+            bean.setName("+ " + list.getString("name"));
             bean.setShowDele(false);
             bean.setChangeColo(false);
+            int isShow = list.getInteger("isShow");
+            bean.setIsShow(isShow);
             mData2.add(bean);
         }
         mAdapter2.notifyDataSetChanged();

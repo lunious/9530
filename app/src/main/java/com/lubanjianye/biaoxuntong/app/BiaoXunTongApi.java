@@ -44,7 +44,9 @@ public abstract class BiaoXunTongApi {
     /**
      * 设置标签顺序
      */
-    public static final String URL_TABLINE = BASEURL + "bxtajax/key/setLabelSort";
+//    public static final String URL_TABLINE = BASEURL + "bxtajax/key/setLabelSort";
+
+    public static final String URL_TABLINE = BASEURL + "bxtajax/key/setLabelSortTwo";
 
     /**
      * 账号、密码登陆

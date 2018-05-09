@@ -10,14 +10,7 @@ import com.lubanjianye.biaoxuntong.bean.SortColumnBean;
 
 import java.util.List;
 
-/**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.index.sortcolumn
- * 文件名:   SortColumnAdapter
- * 创建者:   lunious
- * 创建时间: 2017/12/16  18:31
- * 描述:     TODO
- */
+
 
 public class SortColumnAdapter extends BaseItemDraggableAdapter<SortColumnBean, BaseViewHolder> {
 

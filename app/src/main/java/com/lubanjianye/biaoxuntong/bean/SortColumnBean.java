@@ -2,20 +2,22 @@ package com.lubanjianye.biaoxuntong.bean;
 
 import java.io.Serializable;
 
-/**
- * 项目名:   Lunious
- * 包名:     com.lubanjianye.biaoxuntong.fragment_column
- * 文件名:   SortColumnBean
- * 创建者:   lunious
- * 创建时间: 2017/11/30  23:28
- * 描述:     TODO
- */
+
 
 public class SortColumnBean implements Serializable{
     private int id = 0;
     private String name = null;
     private boolean isShowDele = false;
     private boolean isChangeColo = false;
+    private int isShow = 1;
+
+    public int getIsShow() {
+        return isShow;
+    }
+
+    public void setIsShow(int isShow) {
+        this.isShow = isShow;
+    }
 
     public boolean isShowDele() {
         return isShowDele;

@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
@@ -32,14 +33,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.query.detail
- * 文件名:   CompanySgyjListFragment
- * 创建者:   lunious
- * 创建时间: 2017/12/16  0:12
- * 描述:     TODO
- */
 
 public class CompanySgyjListFragment extends BaseFragment implements View.OnClickListener {
 
@@ -47,7 +40,7 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
     private AppCompatTextView mainBarName = null;
     private RecyclerView companySgyjRecycler = null;
     private SmartRefreshLayout companySgyjRefresh = null;
-
+    private MultipleStatusView loadingStatus = null;
 
     private CompanySgyjListAdapter mAdapter;
     private ArrayList<CompanySgyjListBean> mDataList = new ArrayList<>();
@@ -88,7 +81,7 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
         mainBarName = getView().findViewById(R.id.main_bar_name);
         companySgyjRecycler = getView().findViewById(R.id.company_sgyj_recycler);
         companySgyjRefresh = getView().findViewById(R.id.company_sgyj_refresh);
-
+        loadingStatus = getView().findViewById(R.id.mycompany_all_sgyj_list_status_view);
         llIvBack.setOnClickListener(this);
     }
 
@@ -183,31 +176,37 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
             token = users.get(0).getToken();
         }
 
-        OkGo.<String>post(BiaoXunTongApi.URL_COMPANYSGYJ + sfId)
-                .params("userId", id)
-                .params("token", token)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        final JSONObject object = JSON.parseObject(response.body());
-                        String status = object.getString("status");
-                        final JSONArray array = object.getJSONArray("data");
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            loadingStatus.showNoNetwork();
+        } else {
+            loadingStatus.showLoading();
 
-                        if (array.size() > 0) {
-                            setData(array);
-                        } else {
-                            if (mDataList != null) {
-                                mDataList.clear();
-                                mAdapter.notifyDataSetChanged();
-                            }
-                            //TODO 内容为空的处理
-                            mAdapter.setEmptyView(noDataView);
-                            if (companySgyjRefresh != null) {
-                                companySgyjRefresh.setEnableRefresh(false);
+            OkGo.<String>post(BiaoXunTongApi.URL_COMPANYSGYJ + sfId)
+                    .params("userId", id)
+                    .params("token", token)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject object = JSON.parseObject(response.body());
+                            String status = object.getString("status");
+                            final JSONArray array = object.getJSONArray("data");
+
+                            if (array.size() > 0) {
+                                setData(array);
+                            } else {
+                                if (mDataList != null) {
+                                    mDataList.clear();
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                                //TODO 内容为空的处理
+                                mAdapter.setEmptyView(noDataView);
+                                if (companySgyjRefresh != null) {
+                                    companySgyjRefresh.setEnableRefresh(false);
+                                }
                             }
                         }
-                    }
-                });
+                    });
+        }
 
 
     }
@@ -240,6 +239,8 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
             mAdapter.loadMoreComplete();
         }
 
+
+        loadingStatus.showContent();
 
     }
 
