@@ -1,239 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <include layout="@layout/fragment_main_bar" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <!--登录后头像部分-->
-            <RelativeLayout
-                android:id="@+id/rl_login"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/d140"
-                android:background="@mipmap/avatar_bg"
-                android:visibility="invisible">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/d12"
-                        android:layout_marginTop="@dimen/d34"
-                        android:orientation="horizontal">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/img_user_avatar"
-                            android:layout_width="@dimen/d72"
-                            android:layout_height="@dimen/d72"
-                            android:src="@mipmap/widget_default_face"
-                            app:civ_border_color="@color/main_status_white"
-                            app:civ_border_width="@dimen/d1" />
-
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginLeft="@dimen/d8"
-                            android:orientation="vertical">
-
-                            <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/tv_user_name"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingRight="@dimen/d8"
-                                android:paddingStart="@dimen/d8"
-                                android:text="lunious"
-                                android:textColor="@android:color/white"
-                                android:textSize="@dimen/d16" />
-
-                            <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/tv_user_company"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/d14"
-                                android:paddingBottom="@dimen/d2"
-                                android:paddingRight="@dimen/d8"
-                                android:paddingStart="@dimen/d8"
-                                android:paddingTop="@dimen/d2"
-                                android:text="未绑定企业"
-                                android:textColor="@color/main_status_white"
-                                android:textSize="@dimen/d16" />
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-                </LinearLayout>
-
-
-            </RelativeLayout>
-
-            <!--未登录头像部分-->
-            <RelativeLayout
-                android:id="@+id/rl_no_login"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/d140"
-                android:background="@mipmap/avatar_bg"
-                android:visibility="invisible">
-
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/img_default_avatar"
-                    android:layout_width="@dimen/d68"
-                    android:layout_height="@dimen/d68"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/d2"
-                    android:src="@mipmap/widget_default_face"
-                    app:civ_border_color="@color/main_status_white"
-                    app:civ_border_width="@dimen/d1" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/tv_default_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/img_default_avatar"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="@dimen/d8"
-                    android:text="点击头像登陆"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/d16" />
-
-            </RelativeLayout>
-        </FrameLayout>
-
-
-        <!--轮播图部分-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/d140"
-            android:background="@color/view"
-            android:clipChildren="false"
-            android:gravity="bottom"
-            android:orientation="horizontal">
-
-            <com.youth.banner.Banner
-                android:id="@+id/banner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@mipmap/default_banner"
-                app:indicator_drawable_selected="@color/main_theme_color"
-                app:indicator_drawable_unselected="@android:color/white"
-                app:indicator_height="@dimen/d1"
-                app:indicator_margin="@dimen/d6"
-                app:indicator_width="@dimen/d6" />
-
-        </LinearLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/d10" />
-
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/ll_company"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:orientation="vertical">
+            <include layout="@layout/fragment_main_bar" />
 
-                <LinearLayout
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <!--登录后头像部分-->
+                <RelativeLayout
+                    android:id="@+id/rl_login"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/d12">
+                    android:layout_height="@dimen/d140"
+                    android:background="@mipmap/avatar_bg"
+                    android:visibility="invisible">
 
-                    <ImageView
-                        android:layout_width="@dimen/d18"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="@dimen/d8"
-                        android:src="@mipmap/my_aptitude" />
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="@dimen/d0"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="我的资质"
-                        android:textColor="@color/main_text_color"
-                        android:textSize="@dimen/d15" />
+                        android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="@dimen/d16"
-                        android:layout_height="@dimen/d16"
-                        android:src="@mipmap/nomal_forward" />
-                </LinearLayout>
 
-            </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/d12"
+                            android:layout_marginTop="@dimen/d34"
+                            android:orientation="horizontal">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/d10" />
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/img_user_avatar"
+                                android:layout_width="@dimen/d72"
+                                android:layout_height="@dimen/d72"
+                                android:src="@mipmap/widget_default_face"
+                                app:civ_border_color="@color/main_status_white"
+                                app:civ_border_width="@dimen/d1" />
 
-            <LinearLayout
-                android:id="@+id/ll_helper"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:orientation="vertical">
 
-                <LinearLayout
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginLeft="@dimen/d8"
+                                android:orientation="vertical">
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/tv_user_name"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingRight="@dimen/d8"
+                                    android:paddingStart="@dimen/d8"
+                                    android:text="lunious"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="@dimen/d16" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/tv_user_company"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/d14"
+                                    android:paddingBottom="@dimen/d2"
+                                    android:paddingRight="@dimen/d8"
+                                    android:paddingStart="@dimen/d8"
+                                    android:paddingTop="@dimen/d2"
+                                    android:text="未绑定企业"
+                                    android:textColor="@color/main_status_white"
+                                    android:textSize="@dimen/d16" />
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+                <!--未登录头像部分-->
+                <RelativeLayout
+                    android:id="@+id/rl_no_login"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/d12">
+                    android:layout_height="@dimen/d140"
+                    android:background="@mipmap/avatar_bg"
+                    android:visibility="invisible">
 
-                    <ImageView
-                        android:layout_width="@dimen/d18"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="@dimen/d8"
-                        android:src="@mipmap/official_service" />
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="@dimen/d0"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="客服"
-                        android:textColor="@color/main_text_color"
-                        android:textSize="@dimen/d15" />
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_default_avatar"
+                        android:layout_width="@dimen/d68"
+                        android:layout_height="@dimen/d68"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/d2"
+                        android:src="@mipmap/widget_default_face"
+                        app:civ_border_color="@color/main_status_white"
+                        app:civ_border_width="@dimen/d1" />
 
                     <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_default_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/d6"
-                        android:text="400-028-9997"
-                        android:textSize="@dimen/d15" />
+                        android:layout_below="@+id/img_default_avatar"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/d8"
+                        android:text="点击头像登陆"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/d16" />
 
-                    <ImageView
-                        android:layout_width="@dimen/d16"
-                        android:layout_height="@dimen/d16"
-                        android:src="@mipmap/nomal_forward" />
-                </LinearLayout>
+                </RelativeLayout>
+            </FrameLayout>
+
+
+            <!--轮播图部分-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d140"
+                android:background="@color/view"
+                android:clipChildren="false"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+
+                <com.youth.banner.Banner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@mipmap/default_banner"
+                    app:indicator_drawable_selected="@color/main_theme_color"
+                    app:indicator_drawable_unselected="@android:color/white"
+                    app:indicator_height="@dimen/d1"
+                    app:indicator_margin="@dimen/d6"
+                    app:indicator_width="@dimen/d6" />
 
             </LinearLayout>
+
 
             <View
                 android:layout_width="match_parent"
@@ -241,15 +152,145 @@
 
 
             <LinearLayout
-                android:id="@+id/ll_setting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/ll_company"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/d12">
+
+                        <ImageView
+                            android:layout_width="@dimen/d18"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="@dimen/d8"
+                            android:src="@mipmap/my_aptitude" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="@dimen/d0"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="我的资质"
+                            android:textColor="@color/main_text_color"
+                            android:textSize="@dimen/d15" />
+
+                        <ImageView
+                            android:layout_width="@dimen/d16"
+                            android:layout_height="@dimen/d16"
+                            android:src="@mipmap/nomal_forward" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d10" />
+
+                <LinearLayout
+                    android:id="@+id/ll_helper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/d12">
+
+                        <ImageView
+                            android:layout_width="@dimen/d18"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="@dimen/d8"
+                            android:src="@mipmap/official_service" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="@dimen/d0"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="客服"
+                            android:textColor="@color/main_text_color"
+                            android:textSize="@dimen/d15" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/d6"
+                            android:text="400-028-9997"
+                            android:textSize="@dimen/d15" />
+
+                        <ImageView
+                            android:layout_width="@dimen/d16"
+                            android:layout_height="@dimen/d16"
+                            android:src="@mipmap/nomal_forward" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d10" />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_setting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/d12">
+
+                        <ImageView
+                            android:layout_width="@dimen/d18"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="@dimen/d8"
+                            android:src="@mipmap/system_setting" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="@dimen/d0"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="设置"
+                            android:textColor="@color/main_text_color"
+                            android:textSize="@dimen/d15" />
+
+                        <ImageView
+                            android:id="@+id/tv_all_account_arrow"
+                            android:layout_width="@dimen/d16"
+                            android:layout_height="@dimen/d16"
+                            android:src="@mipmap/nomal_forward" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d10" />
+
+                <LinearLayout
+                    android:id="@+id/ll_questions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:padding="@dimen/d12">
@@ -258,64 +299,28 @@
                         android:layout_width="@dimen/d18"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="@dimen/d8"
-                        android:src="@mipmap/system_setting" />
+                        android:src="@mipmap/nomal_question" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="@dimen/d0"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="设置"
+                        android:text="关于我们"
                         android:textColor="@color/main_text_color"
                         android:textSize="@dimen/d15" />
 
                     <ImageView
-                        android:id="@+id/tv_all_account_arrow"
                         android:layout_width="@dimen/d16"
                         android:layout_height="@dimen/d16"
                         android:src="@mipmap/nomal_forward" />
                 </LinearLayout>
 
-            </LinearLayout>
 
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/d10" />
-
-            <LinearLayout
-                android:id="@+id/ll_questions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="@dimen/d12">
-
-                <ImageView
-                    android:layout_width="@dimen/d18"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="@dimen/d8"
-                    android:src="@mipmap/nomal_question" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_width="@dimen/d0"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="关于我们"
-                    android:textColor="@color/main_text_color"
-                    android:textSize="@dimen/d15" />
-
-                <ImageView
-                    android:layout_width="@dimen/d16"
-                    android:layout_height="@dimen/d16"
-                    android:src="@mipmap/nomal_forward" />
             </LinearLayout>
 
 
         </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
 
-    </LinearLayout>
-
-
-</android.support.v4.widget.NestedScrollView>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>
