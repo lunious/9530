@@ -216,6 +216,8 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
 
     private void requestData() {
 
+        loadingStatus.showLoading();
+
         if ("1".equals(ajaxlogtype)) {
             //改变已读未读状态
             EventBus.getDefault().post(new EventMessage(EventMessage.READ_STATUS));
@@ -224,8 +226,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
         if (!NetUtil.isNetworkConnected(getActivity())) {
             loadingStatus.showNoNetwork();
         } else {
-            loadingStatus.showLoading();
-
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                 List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
                 for (int i = 0; i < users.size(); i++) {
