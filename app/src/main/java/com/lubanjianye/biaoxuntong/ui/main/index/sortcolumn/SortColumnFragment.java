@@ -54,6 +54,9 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
     private ArrayList<SortColumnBean> mData2 = new ArrayList<>();
 
 
+    private ArrayList<Integer> mId = new ArrayList<>();
+
+
     private ItemTouchHelper mItemTouchHelper;
     private ItemDragAndSwipeCallback mItemDragAndSwipeCallback;
 
@@ -251,19 +254,24 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
             @Override
             public void onItemDragStart(RecyclerView.ViewHolder viewHolder, int pos) {
 
+                oldPosition = mId.get(pos);
+
+                Log.d("HABVSDSADASDA", "oldPosition===" + oldPosition);
             }
+
 
             @Override
             public void onItemDragMoving(final RecyclerView.ViewHolder source, int from, final RecyclerView.ViewHolder target, int to) {
-                final SortColumnBean data = mAdapter.getData().get(from);
-                newPosition = data.getId();
-                final SortColumnBean data1 = mAdapter.getData().get(to);
-                oldPosition = data1.getId();
 
             }
 
             @Override
             public void onItemDragEnd(RecyclerView.ViewHolder viewHolder, int pos) {
+
+                newPosition = mId.get(pos);
+
+                Log.d("HABVSDSADASDA", "newPosition===" + newPosition);
+
 
                 if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
 
@@ -448,10 +456,12 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
     private void setData(JSONArray data) {
 
         mData.clear();
+        mId.clear();
         for (int i = 0; i < data.size(); i++) {
             SortColumnBean bean = new SortColumnBean();
             JSONObject list = data.getJSONObject(i);
             int id = list.getInteger("id");
+            mId.add(id);
             bean.setId(id);
             String name = list.getString("name");
             int isShow = list.getInteger("isShow");
@@ -469,6 +479,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
             mData.add(bean);
         }
 
+        Log.d("DAVSDSADSADAS", mId.toString());
 
         mAdapter.notifyDataSetChanged();
 
