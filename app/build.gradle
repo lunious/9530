@@ -8,10 +8,14 @@ android {
         applicationId "com.lubanjianye.biaoxuntong"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 26
-        versionName "2.0.0(425a5c)"
+        versionCode 27
+        versionName "2.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
+        ndk {
+            //设置支持的SO库架构
+            abiFilters 'arm64-v8a', 'armeabi' , 'arm64-v7a','x86' , 'x86_64'
+        }
         manifestPlaceholders = [
                 qq_id           : "1106195613",
                 GETUI_APP_ID    : "xDFIE5aoNL6ADZ2vLwRhf",

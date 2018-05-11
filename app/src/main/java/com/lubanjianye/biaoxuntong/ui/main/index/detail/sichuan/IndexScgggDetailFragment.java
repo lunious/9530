@@ -1,6 +1,7 @@
 package com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,15 +23,17 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
+import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
-import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
 import com.lubanjianye.biaoxuntong.util.AppConfig;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
@@ -42,6 +45,7 @@ import com.lzy.okgo.model.Response;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
 
+
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
@@ -52,7 +56,7 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
     LinearLayout llIvBack = null;
     AppCompatTextView mainBarName = null;
     MultipleStatusView xcgggDetailStatusView = null;
-    private AppCompatTextView tvYw = null;
+    private LinearLayout tvYw = null;
     private AppCompatTextView tvMainTitle = null;
     private AppCompatTextView tvMainArea = null;
     private AppCompatTextView tvMainCaigouMethod = null;
@@ -103,16 +107,20 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
     LinearLayout llOwerG = null;
     LinearLayout llBucai = null;
     private AppCompatTextView tvBucai = null;
-    NestedScrollView detailNsv = null;
     LinearLayout llShare = null;
+    private AppCompatTextView atv_fav = null;
+    private LinearLayout llCall = null;
+    private LinearLayout llBrowser = null;
 
-    private LinearLayout llWeiBoShare = null;
-    private LinearLayout llQQBoShare = null;
-    private LinearLayout llWeixinBoShare = null;
-    private LinearLayout llPyqShare = null;
 
     private AppCompatTextView tvGz = null;
     private AppCompatTextView tvJg = null;
+
+
+    private LinearLayout llWeiBoShare_bottom = null;
+    private LinearLayout llQQBoShare_bottom = null;
+    private LinearLayout llWeixinBoShare_bottom = null;
+    private LinearLayout llPyqShare_bottom = null;
 
 
     private static final String ARG_ENTITYID = "ARG_ENTITYID";
@@ -182,7 +190,10 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
         tvOwerLianxiNumber = getView().findViewById(R.id.tv_ower_lianxi_number);
         tvOwerLianxiLink = getView().findViewById(R.id.tv_ower_lianxi_link);
         tvOwerPinshen = getView().findViewById(R.id.tv_ower_pinshen);
-        tvYw = getView().findViewById(R.id.tv_yw);
+        atv_fav = getView().findViewById(R.id.atv_fav);
+        tvYw = getView().findViewById(R.id.ll_yw);
+        llCall = getView().findViewById(R.id.ll_call);
+        llBrowser = getView().findViewById(R.id.ll_browser);
         tvOwerA = getView().findViewById(R.id.tv_ower_a);
         tvOwerB = getView().findViewById(R.id.tv_ower_b);
         tvOwerC = getView().findViewById(R.id.tv_ower_c);
@@ -214,20 +225,9 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
         llOwerE = getView().findViewById(R.id.ll_ower_e);
         llOwerF = getView().findViewById(R.id.ll_ower_f);
         llOwerG = getView().findViewById(R.id.ll_ower_g);
-        detailNsv = getView().findViewById(R.id.detail_nsv);
         llShare = getView().findViewById(R.id.ll_share);
         llBucai = getView().findViewById(R.id.ll_bucai);
         tvBucai = getView().findViewById(R.id.tv_bucai);
-
-        llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
-        llQQBoShare = getView().findViewById(R.id.ll_qq_share);
-        llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
-        llPyqShare = getView().findViewById(R.id.ll_pyq_share);
-
-        llWeiBoShare.setOnClickListener(this);
-        llQQBoShare.setOnClickListener(this);
-        llWeixinBoShare.setOnClickListener(this);
-        llPyqShare.setOnClickListener(this);
 
         tvGz = getView().findViewById(R.id.tv_gzgg);
         tvJg = getView().findViewById(R.id.tv_jggg);
@@ -237,9 +237,26 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
         llIvBack.setOnClickListener(this);
         llFav.setOnClickListener(this);
         llShare.setOnClickListener(this);
+        llBrowser.setOnClickListener(this);
+        llCall.setOnClickListener(this);
+
+
+        llWeiBoShare_bottom = getView().findViewById(R.id.ll_weibo_share_bottom);
+        llQQBoShare_bottom = getView().findViewById(R.id.ll_qq_share_bottom);
+        llWeixinBoShare_bottom = getView().findViewById(R.id.ll_chat_share_bottom);
+        llPyqShare_bottom = getView().findViewById(R.id.ll_pyq_share_bottom);
+
+        llWeiBoShare_bottom.setOnClickListener(this);
+        llQQBoShare_bottom.setOnClickListener(this);
+        llWeixinBoShare_bottom.setOnClickListener(this);
+        llPyqShare_bottom.setOnClickListener(this);
 
 
         tvYw.setOnClickListener(this);
+
+
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
 
 
     }
@@ -254,7 +271,7 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
     @Override
     public void initEvent() {
         requestData();
-        initNsv();
+
     }
 
 
@@ -266,32 +283,6 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
         }
     };
 
-
-    private void initNsv() {
-        detailNsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY) {
-                    // 向下滑动
-                    mainBarName.setText(shareTitle);
-                }
-
-                if (scrollY < oldScrollY) {
-                    // 向上滑动
-                }
-
-                if (scrollY == 0) {
-                    // 顶部
-                    mainBarName.setText("标讯详情");
-                }
-
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    // 底部
-                    mainBarName.setText(shareTitle);
-                }
-            }
-        });
-    }
 
     private long id = 0;
 
@@ -305,7 +296,6 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
             //改变已读未读状态
             EventBus.getDefault().post(new EventMessage(EventMessage.READ_STATUS));
         }
-
 
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
@@ -337,9 +327,11 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
                                 if (favorite == 1) {
                                     myFav = 1;
                                     ivFav.setImageResource(R.mipmap.ic_faved_pressed);
+                                    atv_fav.setText("已收藏");
                                 } else if (favorite == 0) {
                                     myFav = 0;
                                     ivFav.setImageResource(R.mipmap.ic_fav_pressed);
+                                    atv_fav.setText("收藏");
                                 }
 
                                 if ("200".equals(status)) {
@@ -354,7 +346,8 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
                                     if (arrayGz != null) {
                                         gzUrl = arrayGz.getString(arrayGz.size() - 1);
                                     } else {
-                                        tvGz.setVisibility(View.GONE);
+                                        tvGz.setText("无");
+                                        tvGz.setTextColor(getResources().getColor(R.color.main_text_color));
                                     }
                                     if (arrayJg != null) {
                                         JSONObject list = arrayJg.getJSONObject(arrayJg.size() - 1);
@@ -581,7 +574,8 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
                                     if (arrayGz != null) {
                                         gzUrl = arrayGz.getString(arrayGz.size() - 1);
                                     } else {
-                                        tvGz.setVisibility(View.GONE);
+                                        tvGz.setText("无");
+                                        tvGz.setTextColor(getResources().getColor(R.color.main_text_color));
                                     }
                                     if (arrayJg != null) {
                                         JSONObject list = arrayJg.getJSONObject(arrayJg.size() - 1);
@@ -790,6 +784,7 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
     }
 
     private Share mShare = new Share();
+    private PromptDialog promptDialog = null;
 
     @Override
     public void onClick(View view) {
@@ -810,10 +805,12 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
         switch (view.getId()) {
 
             case R.id.tv_gzgg:
-                intent = new Intent(getActivity(), BrowserSuitActivity.class);
-                intent.putExtra("url", gzUrl);
-                intent.putExtra("title", "更正公告");
-                startActivity(intent);
+                if (!tvGz.getText().toString().equals("无")){
+                    intent = new Intent(getActivity(), BrowserSuitActivity.class);
+                    intent.putExtra("url", gzUrl);
+                    intent.putExtra("title", "更正公告");
+                    startActivity(intent);
+                }
                 break;
             case R.id.tv_jggg:
                 Log.d("HIUASDSABDBSADA", "哈哈哈为：" + jgEntity + "___" + jgEntityId);
@@ -834,7 +831,7 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
                     startActivity(intent);
                 }
                 break;
-            case R.id.ll_weibo_share:
+            case R.id.ll_weibo_share_bottom:
                 OpenBuilder.with(getActivity())
                         .useWeibo(OpenConstant.WB_APP_KEY)
                         .share(mShare, new OpenBuilder.Callback() {
@@ -849,7 +846,7 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
                             }
                         });
                 break;
-            case R.id.ll_qq_share:
+            case R.id.ll_qq_share_bottom:
                 OpenBuilder.with(getActivity())
                         .useTencent(OpenConstant.QQ_APP_ID)
                         .share(mShare, new IUiListener() {
@@ -869,7 +866,7 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
                             }
                         }, this);
                 break;
-            case R.id.ll_chat_share:
+            case R.id.ll_chat_share_bottom:
                 OpenBuilder.with(getActivity())
                         .useWechat(OpenConstant.WECHAT_APP_ID)
                         .shareSession(mShare, new OpenBuilder.Callback() {
@@ -884,7 +881,7 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
                             }
                         });
                 break;
-            case R.id.ll_pyq_share:
+            case R.id.ll_pyq_share_bottom:
                 OpenBuilder.with(getActivity())
                         .useWechat(OpenConstant.WECHAT_APP_ID)
                         .shareTimeLine(mShare, new OpenBuilder.Callback() {
@@ -925,6 +922,7 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
                                         if ("200".equals(status)) {
                                             myFav = 0;
                                             ivFav.setImageResource(R.mipmap.ic_fav_pressed);
+                                            atv_fav.setText("收藏");
                                             ToastUtil.shortToast(getContext(), "取消收藏");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
@@ -948,6 +946,7 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
                                         if ("200".equals(status)) {
                                             myFav = 1;
                                             ivFav.setImageResource(R.mipmap.ic_faved_pressed);
+                                            atv_fav.setText("已收藏");
                                             ToastUtil.shortToast(getContext(), "收藏成功");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
@@ -965,7 +964,42 @@ public class IndexScgggDetailFragment extends BaseFragment implements View.OnCli
             case R.id.ll_share:
                 toShare(mEntityId, shareTitle, shareContent, BiaoXunTongApi.SHARE_URL + shareUrl);
                 break;
-            case R.id.tv_yw:
+            case R.id.ll_call:
+                //客服界面
+                final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+
+                    }
+                });
+                cancel.setTextColor(getResources().getColor(R.color.status_text_color));
+                cancel.setTextSize(16);
+
+                final PromptButton sure = new PromptButton("呼      叫", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:400-028-9997"));
+                        startActivity(intent);
+                    }
+                });
+                sure.setTextColor(getResources().getColor(R.color.main_status_blue));
+                sure.setTextSize(16);
+                promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
+                        .round(4).loadingDuration(600);
+                promptDialog.showWarnAlert("是否呼叫服务热线:400-028-9997？", cancel, sure, true);
+                break;
+            case R.id.ll_browser:
+                try {
+                    // 启用外部浏览器
+                    Uri uri = Uri.parse(shareUrl);
+                    Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(it);
+                } catch (Exception e) {
+                    ToastUtil.shortToast(getContext(), "网页地址错误");
+                }
+                break;
+            case R.id.ll_yw:
                 intent = new Intent(getActivity(), BrowserSuitActivity.class);
                 intent.putExtra("url", shareUrl);
                 intent.putExtra("title", shareTitle);

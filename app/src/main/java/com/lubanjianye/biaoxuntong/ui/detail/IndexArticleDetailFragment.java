@@ -67,10 +67,11 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
     private AppCompatTextView tv_title = null;
     private ImageView ivFav = null;
     private LinearLayout llShare = null;
-    private LinearLayout llBrowser = null;
+
     private LinearLayout llYw = null;
     private LinearLayout llFav = null;
     private LinearLayout llCall = null;
+    private LinearLayout llBrowser = null;
     private AppCompatTextView atv_fav = null;
     private AppCompatTextView tv_data_time = null;
     private AppCompatTextView tv_status = null;
@@ -152,10 +153,10 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
         ivFav = getView().findViewById(R.id.iv_fav);
         atv_fav = getView().findViewById(R.id.atv_fav);
         llShare = getView().findViewById(R.id.ll_share);
-        llBrowser = getView().findViewById(R.id.ll_browser);
         llYw = getView().findViewById(R.id.ll_yw);
         llFav = getView().findViewById(R.id.ll_fav);
         llCall = getView().findViewById(R.id.ll_call);
+        llBrowser = getView().findViewById(R.id.ll_browser);
         tv_data_time = getView().findViewById(R.id.tv_data_time);
         tv_status = getView().findViewById(R.id.tv_status);
         ll_content = getView().findViewById(R.id.ll_content);
@@ -168,6 +169,11 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
         llQQBoShare_bottom = getView().findViewById(R.id.ll_qq_share_bottom);
         llWeixinBoShare_bottom = getView().findViewById(R.id.ll_chat_share_bottom);
         llPyqShare_bottom = getView().findViewById(R.id.ll_pyq_share_bottom);
+
+        llWeiBoShare_bottom.setOnClickListener(this);
+        llQQBoShare_bottom.setOnClickListener(this);
+        llWeixinBoShare_bottom.setOnClickListener(this);
+        llPyqShare_bottom.setOnClickListener(this);
 
         atv_gz = getView().findViewById(R.id.atv_gz);
         atv_jg = getView().findViewById(R.id.atv_jg);
@@ -184,9 +190,10 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
         llIvBack.setOnClickListener(this);
         llShare.setOnClickListener(this);
         llBrowser.setOnClickListener(this);
+        llCall.setOnClickListener(this);
         llYw.setOnClickListener(this);
         llFav.setOnClickListener(this);
-        llCall.setOnClickListener(this);
+
 
     }
 
@@ -600,6 +607,16 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                         .round(4).loadingDuration(600);
                 promptDialog.showWarnAlert("是否呼叫服务热线:400-028-9997？", cancel, sure, true);
                 break;
+            case R.id.ll_browser:
+                try {
+                    // 启用外部浏览器
+                    Uri uri = Uri.parse(url);
+                    Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(it);
+                } catch (Exception e) {
+                    ToastUtil.shortToast(getContext(), "网页地址错误");
+                }
+                break;
             case R.id.ll_iv_back:
                 getActivity().onBackPressed();
                 break;
@@ -669,16 +686,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                 break;
             case R.id.ll_share:
                 toShare(mEntityId, title, title, BiaoXunTongApi.SHARE_URL + shareUrl);
-                break;
-            case R.id.ll_browser:
-                try {
-                    // 启用外部浏览器
-                    Uri uri = Uri.parse(url);
-                    Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(it);
-                } catch (Exception e) {
-                    ToastUtil.shortToast(getContext(), "网页地址错误");
-                }
                 break;
             case R.id.ll_yw:
                 intent = new Intent(getActivity(), BrowserSuitActivity.class);

@@ -22,8 +22,6 @@
             android:layout_height="match_parent"
             android:background="@color/main_status_white"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/d8"
-            android:paddingRight="@dimen/d8"
             android:paddingTop="@dimen/d4">
 
             <android.support.v4.widget.NestedScrollView
@@ -31,6 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/d0"
                 android:layout_weight="1"
+                android:paddingLeft="@dimen/d8"
+                android:paddingRight="@dimen/d8"
                 android:overScrollMode="never"
                 android:scrollbars="none"
                 tools:ignore="RtlHardcoded">

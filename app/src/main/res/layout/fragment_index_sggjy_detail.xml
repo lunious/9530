@@ -22,8 +22,6 @@
             android:layout_height="match_parent"
             android:background="@color/main_status_white"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/d8"
-            android:paddingRight="@dimen/d8"
             android:paddingTop="@dimen/d4">
 
             <android.support.v4.widget.NestedScrollView
@@ -31,6 +29,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/d0"
                 android:layout_weight="1"
+                android:paddingLeft="@dimen/d8"
+                android:paddingRight="@dimen/d8"
                 android:overScrollMode="never"
                 android:scrollbars="none"
                 tools:ignore="RtlHardcoded">
@@ -90,19 +90,6 @@
 
                             </LinearLayout>
 
-                            <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/tv_gzgg"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:background="@drawable/bg_rect"
-                                android:paddingBottom="@dimen/d2"
-                                android:paddingLeft="@dimen/d6"
-                                android:paddingRight="@dimen/d6"
-                                android:paddingTop="@dimen/d2"
-                                android:text="更正公告"
-                                android:textColor="@color/main_status_blue"
-                                android:textSize="@dimen/d15" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -133,19 +120,6 @@
 
                             </LinearLayout>
 
-                            <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/tv_jggg"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:background="@drawable/bg_rect"
-                                android:paddingBottom="@dimen/d2"
-                                android:paddingLeft="@dimen/d6"
-                                android:paddingRight="@dimen/d6"
-                                android:paddingTop="@dimen/d2"
-                                android:text="结果公告"
-                                android:textColor="@color/main_status_blue"
-                                android:textSize="@dimen/d15" />
 
                         </RelativeLayout>
                     </LinearLayout>
@@ -158,18 +132,6 @@
                         android:background="#88eeeeee" />
 
 
-                    <include layout="@layout/share_item_top" />
-
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_fbt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/d12"
-                        android:lineSpacingMultiplier="1.2"
-                        android:text="副标题"
-                        android:textColor="#434343"
-                        android:textSize="@dimen/d15" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv1"
@@ -275,30 +237,95 @@
                         android:layout_height="@dimen/d1"
                         android:layout_marginTop="@dimen/d12"
                         android:background="@color/view" />
-
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/d26"
-                        android:layout_marginTop="@dimen/d12"
+                        android:layout_marginTop="@dimen/d24"
                         android:orientation="horizontal">
 
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/tv_yw"
-                            android:layout_width="wrap_content"
+
+                    </LinearLayout>
+
+
+                    <include layout="@layout/share_item_bottom" />
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/d10"
+                        android:orientation="vertical">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/d16"
+                            android:layout_marginTop="@dimen/d16"
+                            android:background="#88eeeeee" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:text="公告原文"
-                            android:textColor="@color/main_status_blue"
-                            android:textSize="@dimen/d16" />
+                            android:layout_marginBottom="@dimen/d10"
+                            android:layout_marginTop="@dimen/d20"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:layout_width="@dimen/d1"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="@dimen/d6"
+                                android:layout_marginLeft="@dimen/d6"
+                                android:layout_marginRight="@dimen/d6"
+                                android:layout_marginTop="@dimen/d6"
+                                android:background="@color/main_status_red" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="相关标讯"
+                                android:textColor="@color/main_text_color"
+                                android:textSize="@dimen/d16" />
+
+                        </LinearLayout>
 
 
-                    </RelativeLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/d20"
+                            android:layout_marginLeft="@dimen/d16"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_gzgg"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d10"
+                                android:text="相关更正公告"
+                                android:textColor="@color/main_theme_color"
+                                android:textSize="@dimen/d16" />
+
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_jggg"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d20"
+                                android:text="相关结果公告"
+                                android:textColor="@color/main_theme_color"
+                                android:textSize="@dimen/d16" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
 
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
 
-            <include layout="@layout/bottom_item_collect_share" />
+            <include layout="@layout/bottom_item_article_detail" />
 
         </LinearLayout>
     </com.classic.common.MultipleStatusView>
