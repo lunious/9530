@@ -68,7 +68,6 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
     private ImageView ivFav = null;
     private LinearLayout llFav = null;
     private MultipleStatusView sggjyDetailStatusView = null;
-    private NestedScrollView detailNsv = null;
     private AppCompatTextView tvOwerZhaobiaodaili = null;
     private WebView webView = null;
 
@@ -144,7 +143,6 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
         ivFav = getView().findViewById(R.id.iv_fav);
         llFav = getView().findViewById(R.id.ll_fav);
         sggjyDetailStatusView = getView().findViewById(R.id.sggjy_detail_status_view);
-        detailNsv = getView().findViewById(R.id.detail_nsv);
 
         llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
         llQQBoShare = getView().findViewById(R.id.ll_qq_share);
@@ -284,33 +282,7 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
     @Override
     public void initEvent() {
         requestData();
-        initNsv();
-    }
 
-    private void initNsv() {
-        detailNsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY) {
-                    // 向下滑动
-                    mainBarName.setText(shareTitle);
-                }
-
-                if (scrollY < oldScrollY) {
-                    // 向上滑动
-                }
-
-                if (scrollY == 0) {
-                    // 顶部
-                    mainBarName.setText("工程招标中标公示详情");
-                }
-
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    // 底部
-                    mainBarName.setText(shareTitle);
-                }
-            }
-        });
     }
 
     private long id = 0;

@@ -14,7 +14,7 @@
         android:layout_height="match_parent"
         app:emptyView="@layout/custom_empty_view"
         app:errorView="@layout/custom_error_view"
-        app:loadingView="@layout/custom_loading_view"
+        app:loadingView="@layout/custom_loading_text"
         app:noNetworkView="@layout/custom_no_network_view">
 
         <LinearLayout
@@ -184,10 +184,9 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/d18"
-                        android:layout_marginTop="@dimen/d16"
+                        android:layout_marginTop="@dimen/d24"
                         android:background="#f9eeeeee" />
 
-                    <include layout="@layout/share_item_top" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv1"
@@ -299,11 +298,88 @@
                         android:paddingTop="@dimen/d10"
                         android:text=""
                         android:textSize="@dimen/d16" />
+
+
+                    <include layout="@layout/share_item_bottom" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/d10"
+                        android:orientation="vertical">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/d16"
+                            android:layout_marginTop="@dimen/d16"
+                            android:background="#88eeeeee" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/d10"
+                            android:layout_marginTop="@dimen/d20"
+                            android:orientation="horizontal">
+
+                            <View
+                                android:layout_width="@dimen/d1"
+                                android:layout_height="match_parent"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="@dimen/d6"
+                                android:layout_marginLeft="@dimen/d6"
+                                android:layout_marginRight="@dimen/d6"
+                                android:layout_marginTop="@dimen/d6"
+                                android:background="@color/main_status_red" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="相关标讯"
+                                android:textColor="@color/main_text_color"
+                                android:textSize="@dimen/d16" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/d20"
+                            android:layout_marginLeft="@dimen/d16"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/atv_gz"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d10"
+                                android:text="无"
+                                android:textColor="@color/main_text_dark_color"
+                                android:textSize="@dimen/d16" />
+
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/atv_jg"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d20"
+                                android:text="相关结果公告"
+                                android:textColor="@color/main_theme_color"
+                                android:textSize="@dimen/d16"
+                                android:visibility="gone" />
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
 
 
-            <include layout="@layout/bottom_item_collect_share" />
+            <include layout="@layout/bottom_item_article_detail" />
+
 
         </LinearLayout>
     </com.classic.common.MultipleStatusView>

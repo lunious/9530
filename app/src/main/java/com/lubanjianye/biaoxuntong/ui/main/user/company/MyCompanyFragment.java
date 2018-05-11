@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.bean.CompanySgyjListBean;
@@ -24,6 +25,7 @@ import com.lubanjianye.biaoxuntong.ui.main.query.detail.CompanySgyjListAdapter;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
@@ -53,6 +55,8 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
     private AppCompatTextView qyzzCount = null;
     private AppCompatTextView ryzzCount = null;
     private AppCompatTextView qyyjCount = null;
+
+    private MultipleStatusView loadingStatus = null;
 
 
     private PromptDialog promptDialog = null;
@@ -117,6 +121,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
         qyzzCount = getView().findViewById(R.id.qyzz_count);
         ryzzCount = getView().findViewById(R.id.ryzz_count);
         qyyjCount = getView().findViewById(R.id.qyyj_count);
+        loadingStatus = getView().findViewById(R.id.company_status_view);
         llIvBack.setOnClickListener(this);
         llMoreQyzz.setOnClickListener(this);
         llMoreRyzz.setOnClickListener(this);
@@ -153,8 +158,13 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
     public void initEvent() {
         initRecyclerView();
         initAdapter();
-        getCompanyName();
 
+        if (!NetUtil.isNetworkConnected(getActivity())){
+            loadingStatus.showNoNetwork();
+        }else {
+            loadingStatus.showLoading();
+            getCompanyName();
+        }
 
     }
 
@@ -210,6 +220,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
     }
 
     private void getCompanyName() {
+
 
         if (!TextUtils.isEmpty(companyName)) {
             tvMyCompany.setText(companyName);
@@ -397,6 +408,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                                     }
 
                                 }
+
 
                             } else {
                             }
@@ -681,6 +693,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
 
                                                 }
 
+                                                loadingStatus.showContent();
                                             } else {
 
                                             }

@@ -483,7 +483,7 @@
                             <android.support.v7.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="相关公告"
+                                android:text="相关标讯"
                                 android:textColor="@color/main_text_color"
                                 android:textSize="@dimen/d16" />
 

@@ -109,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:text="截止"
                         android:textColor="#cccc33"
-                        android:textSize="@dimen/s14" />
+                        android:textSize="@dimen/s13" />
 
                 </LinearLayout>
 

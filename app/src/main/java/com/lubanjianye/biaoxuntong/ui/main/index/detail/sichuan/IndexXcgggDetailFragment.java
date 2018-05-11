@@ -103,7 +103,6 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
     LinearLayout llOwerG = null;
     LinearLayout llBucai = null;
     private AppCompatTextView tvBucai = null;
-    NestedScrollView detailNsv = null;
     LinearLayout llShare = null;
 
     private LinearLayout llWeiBoShare = null;
@@ -214,7 +213,6 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
         llOwerE = getView().findViewById(R.id.ll_ower_e);
         llOwerF = getView().findViewById(R.id.ll_ower_f);
         llOwerG = getView().findViewById(R.id.ll_ower_g);
-        detailNsv = getView().findViewById(R.id.detail_nsv);
         llShare = getView().findViewById(R.id.ll_share);
         llBucai = getView().findViewById(R.id.ll_bucai);
         tvBucai = getView().findViewById(R.id.tv_bucai);
@@ -252,7 +250,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
     @Override
     public void initEvent() {
         requestData();
-        initNsv();
+
     }
 
 
@@ -264,32 +262,6 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
         }
     };
 
-
-    private void initNsv() {
-        detailNsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY) {
-                    // 向下滑动
-                    mainBarName.setText(shareTitle);
-                }
-
-                if (scrollY < oldScrollY) {
-                    // 向上滑动
-                }
-
-                if (scrollY == 0) {
-                    // 顶部
-                    mainBarName.setText("标讯详情");
-                }
-
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    // 底部
-                    mainBarName.setText(shareTitle);
-                }
-            }
-        });
-    }
 
     private long id = 0;
 

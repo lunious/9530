@@ -60,7 +60,6 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
     private AppCompatTextView tv6 = null;
     private AppCompatTextView tv7 = null;
     private AppCompatTextView tv8 = null;
-    private NestedScrollView detailNsv = null;
 
     private LinearLayout llWeiBoShare = null;
     private LinearLayout llQQBoShare = null;
@@ -133,7 +132,6 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
         tv6 = getView().findViewById(R.id.tv6);
         tv7 = getView().findViewById(R.id.tv7);
         tv8 = getView().findViewById(R.id.tv8);
-        detailNsv = getView().findViewById(R.id.detail_nsv);
         llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
         llQQBoShare = getView().findViewById(R.id.ll_qq_share);
         llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
@@ -161,7 +159,6 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
     @Override
     public void initEvent() {
         requestData();
-        initNsv();
     }
 
 
@@ -173,32 +170,6 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
         }
     };
 
-
-    private void initNsv() {
-        detailNsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY) {
-                    // 向下滑动
-                    mainBarName.setText(shareTitle);
-                }
-
-                if (scrollY < oldScrollY) {
-                    // 向上滑动
-                }
-
-                if (scrollY == 0) {
-                    // 顶部
-                    mainBarName.setText("标讯详情");
-                }
-
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    // 底部
-                    mainBarName.setText(shareTitle);
-                }
-            }
-        });
-    }
 
 
     private long id = 0;

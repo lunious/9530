@@ -22,7 +22,6 @@ public class IndexHyzxDetailFragment extends BaseFragment implements View.OnClic
     private AppCompatTextView tvMainTitle = null;
     private AppCompatTextView tvMainTime = null;
     private AppCompatTextView tvMainContent = null;
-    private NestedScrollView detailNsv = null;
 
 
     private static final String ARG_TITLE = "ARG_TITLE";
@@ -71,7 +70,6 @@ public class IndexHyzxDetailFragment extends BaseFragment implements View.OnClic
         tvMainTitle = getView().findViewById(R.id.tv_main_title);
         tvMainTime = getView().findViewById(R.id.tv_main_time);
         tvMainContent = getView().findViewById(R.id.tv_main_content);
-        detailNsv = getView().findViewById(R.id.detail_nsv);
 
         llIvBack.setOnClickListener(this);
 
@@ -87,7 +85,7 @@ public class IndexHyzxDetailFragment extends BaseFragment implements View.OnClic
     @Override
     public void initEvent() {
         requestData();
-        initNsv();
+
     }
     //点击重试
     final View.OnClickListener mRetryClickListener = new View.OnClickListener() {
@@ -97,31 +95,6 @@ public class IndexHyzxDetailFragment extends BaseFragment implements View.OnClic
         }
     };
 
-    private void initNsv() {
-        detailNsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY) {
-                    // 向下滑动
-                    mainBarName.setText(mTItle);
-                }
-
-                if (scrollY < oldScrollY) {
-                    // 向上滑动
-                }
-
-                if (scrollY == 0) {
-                    // 顶部
-                    mainBarName.setText("标讯详情");
-                }
-
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    // 底部
-                    mainBarName.setText(mTItle);
-                }
-            }
-        });
-    }
 
 
     private void requestData() {

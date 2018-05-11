@@ -1,6 +1,7 @@
 package com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,6 +35,8 @@ import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
 import com.lubanjianye.biaoxuntong.util.AppConfig;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
@@ -73,7 +76,8 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
     private AppCompatTextView tvOwerLianxiNumber = null;
     private AppCompatTextView tvOwerLianxiLink = null;
     private AppCompatTextView tvOwerPinshen = null;
-    private AppCompatTextView tvYw = null;
+    private AppCompatTextView atv_fav = null;
+    private LinearLayout tvYw = null;
     private ImageView ivFav = null;
     private LinearLayout llFav = null;
     private LinearLayout llShare = null;
@@ -81,11 +85,14 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
     LinearLayout llBucai = null;
     private AppCompatTextView tvBucai = null;
 
+    private LinearLayout llCall = null;
+    private LinearLayout llBrowser = null;
 
-    private LinearLayout llWeiBoShare = null;
-    private LinearLayout llQQBoShare = null;
-    private LinearLayout llWeixinBoShare = null;
-    private LinearLayout llPyqShare = null;
+
+    private LinearLayout llWeiBoShare_bottom = null;
+    private LinearLayout llQQBoShare_bottom = null;
+    private LinearLayout llWeixinBoShare_bottom = null;
+    private LinearLayout llPyqShare_bottom = null;
 
     private AppCompatTextView tvGg = null;
 
@@ -157,32 +164,42 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
         tvOwerLianxiNumber = getView().findViewById(R.id.tv_ower_lianxi_number);
         tvOwerLianxiLink = getView().findViewById(R.id.tv_ower_lianxi_link);
         tvOwerPinshen = getView().findViewById(R.id.tv_ower_pinshen);
-        tvYw = getView().findViewById(R.id.tv_yw);
+        atv_fav = getView().findViewById(R.id.atv_fav);
+        tvYw = getView().findViewById(R.id.ll_yw);
         ivFav = getView().findViewById(R.id.iv_fav);
         llFav = getView().findViewById(R.id.ll_fav);
         llShare = getView().findViewById(R.id.ll_share);
         llBucai = getView().findViewById(R.id.ll_bucai);
         tvBucai = getView().findViewById(R.id.tv_bucai);
         llType = getView().findViewById(R.id.ll_type);
-
+        llCall = getView().findViewById(R.id.ll_call);
+        llBrowser = getView().findViewById(R.id.ll_browser);
+        llBrowser.setOnClickListener(this);
+        llCall.setOnClickListener(this);
 
         tvGg = getView().findViewById(R.id.tv_data_gg);
         tvGg.setOnClickListener(this);
 
-        llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
-        llQQBoShare = getView().findViewById(R.id.ll_qq_share);
-        llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
-        llPyqShare = getView().findViewById(R.id.ll_pyq_share);
+        llWeiBoShare_bottom = getView().findViewById(R.id.ll_weibo_share_bottom);
+        llQQBoShare_bottom = getView().findViewById(R.id.ll_qq_share_bottom);
+        llWeixinBoShare_bottom = getView().findViewById(R.id.ll_chat_share_bottom);
+        llPyqShare_bottom = getView().findViewById(R.id.ll_pyq_share_bottom);
+
+
+        llWeiBoShare_bottom.setOnClickListener(this);
+        llQQBoShare_bottom.setOnClickListener(this);
+        llWeixinBoShare_bottom.setOnClickListener(this);
+        llPyqShare_bottom.setOnClickListener(this);
 
         llIvBack.setOnClickListener(this);
         llShare.setOnClickListener(this);
         llFav.setOnClickListener(this);
 
-        llWeiBoShare.setOnClickListener(this);
-        llQQBoShare.setOnClickListener(this);
-        llWeixinBoShare.setOnClickListener(this);
-        llPyqShare.setOnClickListener(this);
         tvYw.setOnClickListener(this);
+
+
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
 
     }
 
@@ -243,9 +260,11 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                 if (favorite == 1) {
                                     myFav = 1;
                                     ivFav.setImageResource(R.mipmap.ic_faved_pressed);
+                                    atv_fav.setText("已收藏");
                                 } else if (favorite == 0) {
                                     myFav = 0;
                                     ivFav.setImageResource(R.mipmap.ic_fav_pressed);
+                                    atv_fav.setText("收藏");
                                 }
 
                                 if ("200".equals(status)) {
@@ -257,7 +276,8 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                         ggEntity = arrayGg.getString("entity");
                                         ggEntityId = arrayGg.getString("entityId");
                                         if (TextUtils.isEmpty(ggEntity)) {
-                                            tvGg.setVisibility(View.GONE);
+                                            tvGg.setText("无");
+                                            tvGg.setTextColor(getResources().getColor(R.color.main_text_color));
                                         }
                                     }
 
@@ -437,7 +457,8 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                         ggEntity = arrayGg.getString("entity");
                                         ggEntityId = arrayGg.getString("entityId");
                                         if (TextUtils.isEmpty(ggEntity)) {
-                                            tvGg.setVisibility(View.GONE);
+                                            tvGg.setText("无");
+                                            tvGg.setTextColor(getResources().getColor(R.color.main_text_color));
                                         }
                                     }
 
@@ -620,52 +641,54 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
         switch (view.getId()) {
 
             case R.id.tv_data_gg:
-                if ("sggjy".equals(ggEntity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
-                    intent.putExtra("entityId", Integer.valueOf(ggEntityId));
-                    intent.putExtra("entity", ggEntity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
+                if (!tvGg.getText().toString().equals("无")) {
+                    if ("sggjy".equals(ggEntity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
+                        intent.putExtra("entityId", Integer.valueOf(ggEntityId));
+                        intent.putExtra("entity", ggEntity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
 
-                } else if ("xcggg".equals(ggEntity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
-                    intent.putExtra("entityId", Integer.valueOf(ggEntityId));
-                    intent.putExtra("entity", ggEntity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("bxtgdj".equals(ggEntity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
-                    intent.putExtra("entityId", Integer.valueOf(ggEntityId));
-                    intent.putExtra("entity", ggEntity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("sggjycgtable".equals(ggEntity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
-                    intent.putExtra("entityId", Integer.valueOf(ggEntityId));
-                    intent.putExtra("entity", ggEntity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("sggjycgrow".equals(ggEntity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgrowDetailActivity.class);
-                    intent.putExtra("entityId", Integer.valueOf(ggEntityId));
-                    intent.putExtra("entity", ggEntity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("scggg".equals(ggEntity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexScgggDetailActivity.class);
-                    intent.putExtra("entityId", Integer.valueOf(ggEntityId));
-                    intent.putExtra("entity", ggEntity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
+                    } else if ("xcggg".equals(ggEntity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
+                        intent.putExtra("entityId", Integer.valueOf(ggEntityId));
+                        intent.putExtra("entity", ggEntity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("bxtgdj".equals(ggEntity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
+                        intent.putExtra("entityId", Integer.valueOf(ggEntityId));
+                        intent.putExtra("entity", ggEntity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("sggjycgtable".equals(ggEntity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
+                        intent.putExtra("entityId", Integer.valueOf(ggEntityId));
+                        intent.putExtra("entity", ggEntity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("sggjycgrow".equals(ggEntity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgrowDetailActivity.class);
+                        intent.putExtra("entityId", Integer.valueOf(ggEntityId));
+                        intent.putExtra("entity", ggEntity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("scggg".equals(ggEntity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexScgggDetailActivity.class);
+                        intent.putExtra("entityId", Integer.valueOf(ggEntityId));
+                        intent.putExtra("entity", ggEntity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    }
                 }
                 break;
-            case R.id.ll_weibo_share:
+            case R.id.ll_weibo_share_bottom:
                 OpenBuilder.with(getActivity())
                         .useWeibo(OpenConstant.WB_APP_KEY)
                         .share(mShare, new OpenBuilder.Callback() {
@@ -680,7 +703,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                             }
                         });
                 break;
-            case R.id.ll_qq_share:
+            case R.id.ll_qq_share_bottom:
                 OpenBuilder.with(getActivity())
                         .useTencent(OpenConstant.QQ_APP_ID)
                         .share(mShare, new IUiListener() {
@@ -700,7 +723,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                             }
                         }, this);
                 break;
-            case R.id.ll_chat_share:
+            case R.id.ll_chat_share_bottom:
                 OpenBuilder.with(getActivity())
                         .useWechat(OpenConstant.WECHAT_APP_ID)
                         .shareSession(mShare, new OpenBuilder.Callback() {
@@ -715,7 +738,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                             }
                         });
                 break;
-            case R.id.ll_pyq_share:
+            case R.id.ll_pyq_share_bottom:
                 OpenBuilder.with(getActivity())
                         .useWechat(OpenConstant.WECHAT_APP_ID)
                         .shareTimeLine(mShare, new OpenBuilder.Callback() {
@@ -758,6 +781,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                         if ("200".equals(status)) {
                                             myFav = 0;
                                             ivFav.setImageResource(R.mipmap.ic_fav_pressed);
+                                            atv_fav.setText("收藏");
                                             ToastUtil.shortToast(getContext(), "取消收藏");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
@@ -780,6 +804,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                         if ("200".equals(status)) {
                                             myFav = 1;
                                             ivFav.setImageResource(R.mipmap.ic_faved_pressed);
+                                            atv_fav.setText("已收藏");
                                             ToastUtil.shortToast(getContext(), "收藏成功");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
@@ -794,7 +819,42 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                     startActivity(new Intent(getActivity(), SignInActivity.class));
                 }
                 break;
-            case R.id.tv_yw:
+            case R.id.ll_browser:
+                try {
+                    // 启用外部浏览器
+                    Uri uri = Uri.parse(shareUrl);
+                    Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(it);
+                } catch (Exception e) {
+                    ToastUtil.shortToast(getContext(), "网页地址错误");
+                }
+                break;
+            case R.id.ll_call:
+                //客服界面
+                final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+
+                    }
+                });
+                cancel.setTextColor(getResources().getColor(R.color.status_text_color));
+                cancel.setTextSize(16);
+
+                final PromptButton sure = new PromptButton("呼      叫", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:400-028-9997"));
+                        startActivity(intent);
+                    }
+                });
+                sure.setTextColor(getResources().getColor(R.color.main_status_blue));
+                sure.setTextSize(16);
+                promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
+                        .round(4).loadingDuration(600);
+                promptDialog.showWarnAlert("是否呼叫服务热线:400-028-9997？", cancel, sure, true);
+                break;
+            case R.id.ll_yw:
                 intent = new Intent(getActivity(), BrowserSuitActivity.class);
                 intent.putExtra("url", ywUrl);
                 intent.putExtra("title", shareTitle);

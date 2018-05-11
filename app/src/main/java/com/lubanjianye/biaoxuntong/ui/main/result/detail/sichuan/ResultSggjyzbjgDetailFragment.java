@@ -1,6 +1,7 @@
 package com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,6 +36,9 @@ import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
@@ -57,7 +61,7 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
     private LinearLayout llShare = null;
     private AppCompatTextView tvMainTitle = null;
     private AppCompatTextView tvDataTime = null;
-    private AppCompatTextView tvDataDetail = null;
+    private LinearLayout tvDataDetail = null;
     private AppCompatTextView tvOwerBiaoduanname = null;
     private AppCompatTextView tvOwerXiangmuyezhu = null;
     private AppCompatTextView tvOwerXiangmuyezhuNumb = null;
@@ -76,22 +80,24 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
     private AppCompatTextView tvOwerCompanyBaojia = null;
     private AppCompatTextView tvOwerCompanyToubiaojia = null;
     private AppCompatTextView tvOwerCompanyPinjia = null;
+    private AppCompatTextView atv_fav = null;
     private ImageView ivFav = null;
     private LinearLayout llFav = null;
+    private LinearLayout llCall = null;
+    private LinearLayout llBrowser = null;
     private MultipleStatusView sggjyDetailStatusView = null;
 
-    private LinearLayout llWeiBoShare = null;
-    private LinearLayout llQQBoShare = null;
-    private LinearLayout llWeixinBoShare = null;
-    private LinearLayout llPyqShare = null;
-
+    private LinearLayout llWeiBoShare_bottom = null;
+    private LinearLayout llQQBoShare_bottom = null;
+    private LinearLayout llWeixinBoShare_bottom = null;
+    private LinearLayout llPyqShare_bottom = null;
 
     private AppCompatTextView tvGg = null;
 
     private static final String ARG_ENTITYID = "ARG_ENTITYID";
     private static final String ARG_ENTITY = "ARG_ENTITY";
     private static final String ARG_AJAXTYPE = "ARG_AJAXTYPE";
-
+    private PromptDialog promptDialog = null;
 
     private int myFav = -1;
     private int mEntityId = -1;
@@ -143,7 +149,7 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
         llShare = getView().findViewById(R.id.ll_share);
         tvMainTitle = getView().findViewById(R.id.tv_main_title);
         tvDataTime = getView().findViewById(R.id.tv_data_time);
-        tvDataDetail = getView().findViewById(R.id.tv_data_detail);
+        tvDataDetail = getView().findViewById(R.id.ll_yw);
         tvOwerBiaoduanname = getView().findViewById(R.id.tv_ower_biaoduanname);
         tvOwerXiangmuyezhu = getView().findViewById(R.id.tv_ower_xiangmuyezhu);
         tvOwerXiangmuyezhuNumb = getView().findViewById(R.id.tv_ower_xiangmuyezhu_numb);
@@ -157,6 +163,7 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
         tvOwerToubiaoxianjia = getView().findViewById(R.id.tv_ower_toubiaoxianjia);
         tvOwerDiyi = getView().findViewById(R.id.tv_ower_diyi);
         tvOwerDier = getView().findViewById(R.id.tv_ower_dier);
+        atv_fav = getView().findViewById(R.id.atv_fav);
         tvOwerDisan = getView().findViewById(R.id.tv_ower_disan);
         tvOwerCompanyName = getView().findViewById(R.id.tv_ower_company_name);
         tvOwerCompanyBaojia = getView().findViewById(R.id.tv_ower_company_baojia);
@@ -164,17 +171,29 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
         tvOwerCompanyPinjia = getView().findViewById(R.id.tv_ower_company_pinjia);
         ivFav = getView().findViewById(R.id.iv_fav);
         llFav = getView().findViewById(R.id.ll_fav);
+
         sggjyDetailStatusView = getView().findViewById(R.id.sggjy_detail_status_view);
 
-        llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
-        llQQBoShare = getView().findViewById(R.id.ll_qq_share);
-        llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
-        llPyqShare = getView().findViewById(R.id.ll_pyq_share);
+        llWeiBoShare_bottom = getView().findViewById(R.id.ll_weibo_share_bottom);
+        llQQBoShare_bottom = getView().findViewById(R.id.ll_qq_share_bottom);
+        llWeixinBoShare_bottom = getView().findViewById(R.id.ll_chat_share_bottom);
+        llPyqShare_bottom = getView().findViewById(R.id.ll_pyq_share_bottom);
 
 
+        llWeiBoShare_bottom.setOnClickListener(this);
+        llQQBoShare_bottom.setOnClickListener(this);
+        llWeixinBoShare_bottom.setOnClickListener(this);
+        llPyqShare_bottom.setOnClickListener(this);
+
+        llCall = getView().findViewById(R.id.ll_call);
+        llBrowser = getView().findViewById(R.id.ll_browser);
+        llBrowser.setOnClickListener(this);
+        llCall.setOnClickListener(this);
         llIvBack.setOnClickListener(this);
         llShare.setOnClickListener(this);
         llFav.setOnClickListener(this);
+
+
 
         tvGg = getView().findViewById(R.id.tv_data_gg);
         tvGg.setOnClickListener(this);
@@ -183,10 +202,9 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
         tvOwerDier.setOnClickListener(this);
         tvOwerDisan.setOnClickListener(this);
 
-        llWeiBoShare.setOnClickListener(this);
-        llQQBoShare.setOnClickListener(this);
-        llWeixinBoShare.setOnClickListener(this);
-        llPyqShare.setOnClickListener(this);
+
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
 
 
     }
@@ -254,9 +272,11 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                 if (favorite == 1) {
                                     myFav = 1;
                                     ivFav.setImageResource(R.mipmap.ic_faved_pressed);
+                                    atv_fav.setText("已收藏");
                                 } else if (favorite == 0) {
                                     myFav = 0;
                                     ivFav.setImageResource(R.mipmap.ic_fav_pressed);
+                                    atv_fav.setText("收藏");
                                 }
                                 if ("200".equals(status)) {
                                     final JSONObject data = object.getJSONObject("data");
@@ -266,13 +286,13 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                         ggEntity = arrayGg.getString("entity");
                                         ggEntityId = arrayGg.getString("entityId");
                                         if (TextUtils.isEmpty(ggEntity)) {
-                                            tvGg.setVisibility(View.GONE);
+                                            tvGg.setText("无");
+                                            tvGg.setTextColor(getResources().getColor(R.color.main_text_color));
                                         }
                                     }
 
                                     final String url = data.getString("url");
                                     shareUrl = url;
-
                                     tvDataDetail.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
@@ -456,7 +476,8 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                         ggEntity = arrayGg.getString("entity");
                                         ggEntityId = arrayGg.getString("entityId");
                                         if (TextUtils.isEmpty(ggEntity)) {
-                                            tvGg.setVisibility(View.GONE);
+                                            tvGg.setText("无");
+                                            tvGg.setTextColor(getResources().getColor(R.color.main_text_color));
                                         }
                                     }
 
@@ -632,52 +653,54 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
         Intent intent = null;
         switch (view.getId()) {
             case R.id.tv_data_gg:
-                if ("sggjy".equals(ggEntity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
-                    intent.putExtra("entityId", Integer.valueOf(ggEntityId));
-                    intent.putExtra("entity", ggEntity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
+                if (!tvGg.getText().toString().equals("无")) {
+                    if ("sggjy".equals(ggEntity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
+                        intent.putExtra("entityId", Integer.valueOf(ggEntityId));
+                        intent.putExtra("entity", ggEntity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
 
-                } else if ("xcggg".equals(ggEntity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
-                    intent.putExtra("entityId", Integer.valueOf(ggEntityId));
-                    intent.putExtra("entity", ggEntity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("bxtgdj".equals(ggEntity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
-                    intent.putExtra("entityId", Integer.valueOf(ggEntityId));
-                    intent.putExtra("entity", ggEntity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("sggjycgtable".equals(ggEntity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
-                    intent.putExtra("entityId", Integer.valueOf(ggEntityId));
-                    intent.putExtra("entity", ggEntity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("sggjycgrow".equals(ggEntity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgrowDetailActivity.class);
-                    intent.putExtra("entityId", Integer.valueOf(ggEntityId));
-                    intent.putExtra("entity", ggEntity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
-                } else if ("scggg".equals(ggEntity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexScgggDetailActivity.class);
-                    intent.putExtra("entityId", Integer.valueOf(ggEntityId));
-                    intent.putExtra("entity", ggEntity);
-                    intent.putExtra("ajaxlogtype", "0");
-                    intent.putExtra("mId", "");
-                    startActivity(intent);
+                    } else if ("xcggg".equals(ggEntity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
+                        intent.putExtra("entityId", Integer.valueOf(ggEntityId));
+                        intent.putExtra("entity", ggEntity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("bxtgdj".equals(ggEntity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
+                        intent.putExtra("entityId", Integer.valueOf(ggEntityId));
+                        intent.putExtra("entity", ggEntity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("sggjycgtable".equals(ggEntity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
+                        intent.putExtra("entityId", Integer.valueOf(ggEntityId));
+                        intent.putExtra("entity", ggEntity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("sggjycgrow".equals(ggEntity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgrowDetailActivity.class);
+                        intent.putExtra("entityId", Integer.valueOf(ggEntityId));
+                        intent.putExtra("entity", ggEntity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    } else if ("scggg".equals(ggEntity)) {
+                        intent = new Intent(BiaoXunTong.getApplicationContext(), IndexScgggDetailActivity.class);
+                        intent.putExtra("entityId", Integer.valueOf(ggEntityId));
+                        intent.putExtra("entity", ggEntity);
+                        intent.putExtra("ajaxlogtype", "0");
+                        intent.putExtra("mId", "");
+                        startActivity(intent);
+                    }
                 }
                 break;
-            case R.id.ll_weibo_share:
+            case R.id.ll_weibo_share_bottom:
                 OpenBuilder.with(getActivity())
                         .useWeibo(OpenConstant.WB_APP_KEY)
                         .share(mShare, new OpenBuilder.Callback() {
@@ -692,7 +715,7 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                             }
                         });
                 break;
-            case R.id.ll_qq_share:
+            case R.id.ll_qq_share_bottom:
                 OpenBuilder.with(getActivity())
                         .useTencent(OpenConstant.QQ_APP_ID)
                         .share(mShare, new IUiListener() {
@@ -712,7 +735,7 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                             }
                         }, this);
                 break;
-            case R.id.ll_chat_share:
+            case R.id.ll_chat_share_bottom:
                 OpenBuilder.with(getActivity())
                         .useWechat(OpenConstant.WECHAT_APP_ID)
                         .shareSession(mShare, new OpenBuilder.Callback() {
@@ -727,7 +750,7 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                             }
                         });
                 break;
-            case R.id.ll_pyq_share:
+            case R.id.ll_pyq_share_bottom:
                 OpenBuilder.with(getActivity())
                         .useWechat(OpenConstant.WECHAT_APP_ID)
                         .shareTimeLine(mShare, new OpenBuilder.Callback() {
@@ -742,8 +765,43 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                             }
                         });
                 break;
+            case R.id.ll_call:
+                //客服界面
+                final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+
+                    }
+                });
+                cancel.setTextColor(getResources().getColor(R.color.status_text_color));
+                cancel.setTextSize(16);
+
+                final PromptButton sure = new PromptButton("呼      叫", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:400-028-9997"));
+                        startActivity(intent);
+                    }
+                });
+                sure.setTextColor(getResources().getColor(R.color.main_status_blue));
+                sure.setTextSize(16);
+                promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
+                        .round(4).loadingDuration(600);
+                promptDialog.showWarnAlert("是否呼叫服务热线:400-028-9997？", cancel, sure, true);
+                break;
             case R.id.ll_iv_back:
                 getActivity().finish();
+                break;
+            case R.id.ll_browser:
+                try {
+                    // 启用外部浏览器
+                    Uri uri = Uri.parse(shareUrl);
+                    Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(it);
+                } catch (Exception e) {
+                    ToastUtil.shortToast(getContext(), "网页地址错误");
+                }
                 break;
             case R.id.ll_share:
                 toShare(mEntityId, shareTitle, shareContent, BiaoXunTongApi.SHARE_URL + shareUrl);
@@ -771,6 +829,7 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                         if ("200".equals(status)) {
                                             myFav = 0;
                                             ivFav.setImageResource(R.mipmap.ic_fav_pressed);
+                                            atv_fav.setText("收藏");
                                             ToastUtil.shortToast(getContext(), "取消收藏");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
@@ -793,6 +852,7 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                         if ("200".equals(status)) {
                                             myFav = 1;
                                             ivFav.setImageResource(R.mipmap.ic_faved_pressed);
+                                            atv_fav.setText("已收藏");
                                             ToastUtil.shortToast(getContext(), "收藏成功");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {

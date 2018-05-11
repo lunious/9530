@@ -137,6 +137,8 @@ public class IndexListFragment extends BaseFragment {
                 final String entityUrl = data.getEntityUrl();
 
 
+                Log.d("AUYSBDUYBSADASDAS", entity + "********" + entityId);
+
                 Intent intent = null;
 
                 if (!TextUtils.isEmpty(entityUrl)) {

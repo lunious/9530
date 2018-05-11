@@ -61,13 +61,11 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
-
                             <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/tv_data_time"
+                                android:id="@+id/tv_type"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentLeft="true"
-                                android:text="2018-3-18"
+                                android:text="工程建设"
                                 android:textColor="@color/main_text_dark_color"
                                 android:textSize="@dimen/d14" />
 
@@ -77,11 +75,11 @@
                         <View
                             android:layout_width="@dimen/d1"
                             android:layout_height="match_parent"
+                            android:layout_gravity="center"
                             android:layout_marginBottom="@dimen/d4"
                             android:layout_marginLeft="@dimen/d6"
                             android:layout_marginRight="@dimen/d6"
                             android:layout_marginTop="@dimen/d4"
-                            android:layout_gravity="center"
                             android:background="@color/main_text_dark_color" />
 
 
@@ -109,23 +107,14 @@
                             android:orientation="horizontal">
 
 
-                            <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/tv_type"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="工程建设"
-                                android:textColor="@color/main_text_dark_color"
-                                android:textSize="@dimen/d14" />
-
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/d12"
                                 android:text="正在报名"
                                 android:textColor="@color/status_text_color"
-                                android:textSize="@dimen/d14" />
+                                android:textSize="@dimen/d16" />
 
 
                         </LinearLayout>
@@ -133,10 +122,11 @@
 
 
                     <RelativeLayout
+                        android:id="@+id/rl_dead_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingTop="@dimen/d20">
+                        android:paddingTop="@dimen/d12">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -146,23 +136,60 @@
 
 
                             <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="截止时间:"
-                                android:textColor="@color/main_status_red"
-                                android:textSize="@dimen/d14" />
-
-                            <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_dead_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/d4"
                                 android:text="2018-3-18"
                                 android:textColor="@color/main_text_dark_color"
                                 android:textSize="@dimen/d14" />
 
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/d6"
+                                android:text="截止"
+                                android:textColor="@color/main_status_red"
+                                android:textSize="@dimen/d14" />
+
+
                         </LinearLayout>
 
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/d12">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:orientation="horizontal">
+
+
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_data_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="2018-3-18"
+                                android:textColor="@color/main_text_dark_color"
+                                android:textSize="@dimen/d14" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/d6"
+                                android:text="发布"
+                                android:textColor="@color/main_text_dark_color"
+                                android:textSize="@dimen/d14" />
+
+
+                        </LinearLayout>
 
 
                     </RelativeLayout>
@@ -584,7 +611,7 @@
                             <android.support.v7.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="相关公告"
+                                android:text="相关标讯"
                                 android:textColor="@color/main_text_color"
                                 android:textSize="@dimen/d16" />
 

@@ -69,7 +69,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
     private ImageView ivFav = null;
     private LinearLayout llFav = null;
     private LinearLayout llShare = null;
-    private NestedScrollView detailNsv = null;
 
     private LinearLayout llWeiBoShare = null;
     private LinearLayout llQQBoShare = null;
@@ -153,7 +152,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
         ivFav = getView().findViewById(R.id.iv_fav);
         llFav = getView().findViewById(R.id.ll_fav);
         llShare = getView().findViewById(R.id.ll_share);
-        detailNsv = getView().findViewById(R.id.detail_nsv);
         llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
         llQQBoShare = getView().findViewById(R.id.ll_qq_share);
         llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
@@ -184,7 +182,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
     @Override
     public void initEvent() {
         requestData();
-        initNsv();
     }
 
 
@@ -196,35 +193,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
         }
     };
 
-
-    private void initNsv() {
-        detailNsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY) {
-                    // 向下滑动
-                    if (mainBarName != null) {
-                        mainBarName.setText(shareTitle);
-                    }
-
-                }
-
-                if (scrollY < oldScrollY) {
-                    // 向上滑动
-                }
-
-                if (scrollY == 0) {
-                    // 顶部
-                    mainBarName.setText("标讯详情");
-                }
-
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    // 底部
-                    mainBarName.setText(shareTitle);
-                }
-            }
-        });
-    }
 
 
     private long id = 0;

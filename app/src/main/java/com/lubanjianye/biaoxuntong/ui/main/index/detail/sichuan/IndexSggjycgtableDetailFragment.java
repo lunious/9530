@@ -73,7 +73,6 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
     ImageView ivFav = null;
     LinearLayout llFav = null;
     LinearLayout llShare = null;
-    NestedScrollView detailNsv = null;
     LinearLayout llBucai = null;
     LinearLayout llMainPubTime = null;
     private AppCompatTextView tvBucai = null;
@@ -158,7 +157,6 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
         ivFav = getView().findViewById(R.id.iv_fav);
         llFav = getView().findViewById(R.id.ll_fav);
         llShare = getView().findViewById(R.id.ll_share);
-        detailNsv = getView().findViewById(R.id.detail_nsv);
         llBucai = getView().findViewById(R.id.ll_bucai);
         tvBucai = getView().findViewById(R.id.tv_bucai);
         tvPubTime = getView().findViewById(R.id.tv_main_pub_time);
@@ -196,7 +194,6 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
     @Override
     public void initEvent() {
         requestData();
-        initNsv();
     }
 
 
@@ -208,32 +205,6 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
         }
     };
 
-
-    private void initNsv() {
-        detailNsv.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if (scrollY > oldScrollY) {
-                    // 向下滑动
-                    mainBarName.setText(shareTitle);
-                }
-
-                if (scrollY < oldScrollY) {
-                    // 向上滑动
-                }
-
-                if (scrollY == 0) {
-                    // 顶部
-                    mainBarName.setText("标讯详情");
-                }
-
-                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-                    // 底部
-                    mainBarName.setText(shareTitle);
-                }
-            }
-        });
-    }
 
     private long id = 0;
     private String nickName = "";

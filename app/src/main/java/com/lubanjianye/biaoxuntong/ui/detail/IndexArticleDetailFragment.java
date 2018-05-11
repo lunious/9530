@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,6 +15,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -77,6 +77,7 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
     private AppCompatTextView tv_dead_time = null;
     private AppCompatTextView tv_area = null;
     private AppCompatTextView tv_type = null;
+    private RelativeLayout rl_dead_time = null;
 
     private LinearLayout llWeiBoShare_bottom = null;
     private LinearLayout llQQBoShare_bottom = null;
@@ -161,6 +162,7 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
         tv_dead_time = getView().findViewById(R.id.tv_dead_time);
         tv_area = getView().findViewById(R.id.tv_area);
         tv_type = getView().findViewById(R.id.tv_type);
+        rl_dead_time = getView().findViewById(R.id.rl_dead_time);
 
         llWeiBoShare_bottom = getView().findViewById(R.id.ll_weibo_share_bottom);
         llQQBoShare_bottom = getView().findViewById(R.id.ll_qq_share_bottom);
@@ -305,6 +307,7 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                                         tv_dead_time.setText(dead_time);
                                     } else {
                                         tv_dead_time.setText("暂无");
+                                        rl_dead_time.setVisibility(View.GONE);
                                     }
                                     area = data.getString("area");
                                     if (!TextUtils.isEmpty(area)) {
@@ -389,6 +392,7 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                                         tv_dead_time.setText(dead_time);
                                     } else {
                                         tv_dead_time.setText("暂无");
+                                        rl_dead_time.setVisibility(View.GONE);
                                     }
                                     area = data.getString("area");
                                     if (!TextUtils.isEmpty(area)) {
@@ -556,6 +560,21 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                             }
                         });
                 break;
+            case R.id.ll_pyq_share_bottom:
+                OpenBuilder.with(getActivity())
+                        .useWechat(OpenConstant.WECHAT_APP_ID)
+                        .shareTimeLine(mShare, new OpenBuilder.Callback() {
+                            @Override
+                            public void onFailed() {
+
+                            }
+
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                break;
             case R.id.ll_call:
                 //客服界面
                 final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
@@ -580,21 +599,6 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                 promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
                         .round(4).loadingDuration(600);
                 promptDialog.showWarnAlert("是否呼叫服务热线:400-028-9997？", cancel, sure, true);
-                break;
-            case R.id.ll_pyq_share_bottom:
-                OpenBuilder.with(getActivity())
-                        .useWechat(OpenConstant.WECHAT_APP_ID)
-                        .shareTimeLine(mShare, new OpenBuilder.Callback() {
-                            @Override
-                            public void onFailed() {
-
-                            }
-
-                            @Override
-                            public void onSuccess() {
-
-                            }
-                        });
                 break;
             case R.id.ll_iv_back:
                 getActivity().onBackPressed();
