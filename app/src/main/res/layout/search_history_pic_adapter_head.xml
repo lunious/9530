@@ -28,7 +28,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginLeft="@dimen/d10"
                 android:layout_marginTop="@dimen/d10"
                 android:orientation="horizontal">
@@ -37,7 +36,8 @@
                     android:layout_width="@dimen/d18"
                     android:layout_height="@dimen/d18"
                     android:layout_gravity="center"
-                    android:src="@mipmap/hot_search" />
+                    android:src="@mipmap/hot_search"
+                    android:visibility="visible"/>
 
                 <TextView
                     android:id="@+id/tv_search_tab"
@@ -85,7 +85,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:layout_marginLeft="@dimen/d10"
         android:layout_marginTop="@dimen/d20"
         android:orientation="horizontal">
@@ -94,7 +93,8 @@
             android:layout_width="@dimen/d18"
             android:layout_height="@dimen/d18"
             android:layout_gravity="center"
-            android:src="@mipmap/search_icon" />
+            android:src="@mipmap/search_icon"
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
             android:layout_marginLeft="@dimen/d4"
             android:text="历史搜索"
             android:layout_gravity="center"
-            android:textColor="@color/main_text_dark_color"
+            android:textColor="@color/main_text_color"
             android:textSize="@dimen/d16" />
 
     </LinearLayout>

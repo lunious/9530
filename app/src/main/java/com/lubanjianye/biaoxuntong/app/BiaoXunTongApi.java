@@ -1,13 +1,5 @@
 package com.lubanjianye.biaoxuntong.app;
 
-/**
- * 项目名:   LuBanBiaoXunTong
- * 包名:     com.lubanjianye.biaoxuntong.pw.api
- * 文件名:   BiaoXunTongApi
- * 创建者:   lunious
- * 创建时间: 2017/10/20  9:15
- * 描述:     网络请求接口
- */
 
 public abstract class BiaoXunTongApi {
 

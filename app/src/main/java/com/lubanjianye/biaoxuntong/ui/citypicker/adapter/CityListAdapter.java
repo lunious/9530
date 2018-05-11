@@ -23,10 +23,7 @@ import com.lubanjianye.biaoxuntong.ui.citypicker.model.LocatedCity;
 
 import java.util.List;
 
-/**
- * @Author: Bro0cL
- * @Date: 2018/2/5 12:06
- */
+
 public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.BaseViewHolder> {
     private static final int VIEW_TYPE_CURRENT = 10;
     private static final int VIEW_TYPE_HOT = 11;
