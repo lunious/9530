@@ -59,6 +59,7 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
     private LinearLayout llShare = null;
+    private LinearLayout llFav = null;
     private AppCompatTextView tvMainTitle = null;
     private AppCompatTextView tvDataTime = null;
     private AppCompatTextView tvOwerBiaoduanname = null;
@@ -178,6 +179,8 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
         tvOwerDiyi.setOnClickListener(this);
         tvOwerDier.setOnClickListener(this);
         tvOwerDisan.setOnClickListener(this);
+        llFav = getView().findViewById(R.id.ll_fav);
+        llFav.setOnClickListener(this);
 
 
     }
