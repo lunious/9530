@@ -66,12 +66,8 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
     private AppCompatTextView tv_title = null;
     private ImageView ivFav = null;
     private LinearLayout llShare = null;
-    private LinearLayout llBrowser = null;
-    private LinearLayout llYw = null;
     private LinearLayout llFav = null;
     private AppCompatTextView tv_data_time = null;
-    private LinearLayout llCall = null;
-    private AppCompatTextView atv_fav = null;
 
 
     private LinearLayout llWeiBoShare_bottom = null;
@@ -91,14 +87,12 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
 
     private String title = "";
     private String sysTime = "";
-    private String url = "";
     private String entityUrl = "";
     private String mDiqu = "";
 
     private String shareUrl = "";
 
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
-    private PromptDialog promptDialog = null;
 
     public static ResultArticleDetailFragment create(@NonNull int entityId, String entity, String ajaxlogtype) {
         final Bundle args = new Bundle();
@@ -136,32 +130,20 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
         tv_title = getView().findViewById(R.id.tv_main_title);
         ivFav = getView().findViewById(R.id.iv_fav);
         llShare = getView().findViewById(R.id.ll_share);
-        llBrowser = getView().findViewById(R.id.ll_browser);
-        llYw = getView().findViewById(R.id.ll_yw);
         llFav = getView().findViewById(R.id.ll_fav);
         tv_data_time = getView().findViewById(R.id.tv_data_time);
         ll_content = getView().findViewById(R.id.ll_content);
-        llCall = getView().findViewById(R.id.ll_call);
-        atv_fav = getView().findViewById(R.id.atv_fav);
-
-
         llWeiBoShare_bottom = getView().findViewById(R.id.ll_weibo_share_bottom);
         llQQBoShare_bottom = getView().findViewById(R.id.ll_qq_share_bottom);
         llWeixinBoShare_bottom = getView().findViewById(R.id.ll_chat_share_bottom);
         llPyqShare_bottom = getView().findViewById(R.id.ll_pyq_share_bottom);
-
-
         llWeiBoShare_bottom.setOnClickListener(this);
         llQQBoShare_bottom.setOnClickListener(this);
         llWeixinBoShare_bottom.setOnClickListener(this);
         llPyqShare_bottom.setOnClickListener(this);
-
         llIvBack.setOnClickListener(this);
         llShare.setOnClickListener(this);
-        llBrowser.setOnClickListener(this);
-        llYw.setOnClickListener(this);
         llFav.setOnClickListener(this);
-        llCall.setOnClickListener(this);
 
     }
 
@@ -178,9 +160,6 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
 
         requestData();
 
-
-        //创建对象
-        promptDialog = new PromptDialog(getActivity());
 
     }
 
@@ -228,11 +207,9 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
                                 if (favorite == 1) {
                                     myFav = 1;
                                     ivFav.setImageResource(R.mipmap.ic_faved_pressed);
-                                    atv_fav.setText("已收藏");
                                 } else if (favorite == 0) {
                                     myFav = 0;
                                     ivFav.setImageResource(R.mipmap.ic_fav_pressed);
-                                    atv_fav.setText("收藏");
                                 }
 
                                 if ("200".equals(status)) {
@@ -243,7 +220,6 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
                                     } else {
                                         title = data.getString("reportTitle");
                                     }
-                                    url = data.getString("url");
                                     shareUrl = data.getString("entityUrl").replace("&", "%26");
                                     entityUrl = data.getString("entityUrl");
                                     sysTime = data.getString("sysTime");
@@ -282,7 +258,6 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
                                     } else {
                                         title = data.getString("reportTitle");
                                     }
-                                    url = data.getString("url");
                                     shareUrl = data.getString("entityUrl").replace("&", "%26");
                                     entityUrl = data.getString("entityUrl");
                                     sysTime = data.getString("sysTime");
@@ -388,7 +363,6 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
         mShare.setImageUrl(null);
         mShare.setUrl(BiaoXunTongApi.SHARE_URL + shareUrl);
 
-        Intent intent = null;
         switch (v.getId()) {
             case R.id.ll_weibo_share_bottom:
                 OpenBuilder.with(getActivity())
@@ -458,31 +432,6 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
             case R.id.ll_iv_back:
                 getActivity().onBackPressed();
                 break;
-            case R.id.ll_call:
-                //客服界面
-                final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
-                    @Override
-                    public void onClick(PromptButton button) {
-
-                    }
-                });
-                cancel.setTextColor(getResources().getColor(R.color.status_text_color));
-                cancel.setTextSize(16);
-
-                final PromptButton sure = new PromptButton("呼      叫", new PromptButtonListener() {
-                    @Override
-                    public void onClick(PromptButton button) {
-                        Intent intent = new Intent(Intent.ACTION_DIAL);
-                        intent.setData(Uri.parse("tel:400-028-9997"));
-                        startActivity(intent);
-                    }
-                });
-                sure.setTextColor(getResources().getColor(R.color.main_status_blue));
-                sure.setTextSize(16);
-                promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
-                        .round(4).loadingDuration(600);
-                promptDialog.showWarnAlert("是否呼叫服务热线:400-028-9997？", cancel, sure, true);
-                break;
             case R.id.ll_fav:
                 if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                     //已登录处理事件
@@ -507,7 +456,6 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
                                         if ("200".equals(status)) {
                                             myFav = 0;
                                             ivFav.setImageResource(R.mipmap.ic_fav_pressed);
-                                            atv_fav.setText("收藏");
                                             ToastUtil.shortToast(getContext(), "取消收藏");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
@@ -532,7 +480,6 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
                                         if ("200".equals(status)) {
                                             myFav = 1;
                                             ivFav.setImageResource(R.mipmap.ic_faved_pressed);
-                                            atv_fav.setText("已收藏");
                                             ToastUtil.shortToast(getContext(), "收藏成功");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
@@ -550,22 +497,7 @@ public class ResultArticleDetailFragment extends BaseFragment implements View.On
             case R.id.ll_share:
                 toShare(mEntityId, title, title, BiaoXunTongApi.SHARE_URL + shareUrl);
                 break;
-            case R.id.ll_browser:
-                try {
-                    // 启用外部浏览器
-                    Uri uri = Uri.parse(url);
-                    Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(it);
-                } catch (Exception e) {
-                    ToastUtil.shortToast(getContext(), "网页地址错误");
-                }
-                break;
-            case R.id.ll_yw:
-                intent = new Intent(getActivity(), BrowserSuitActivity.class);
-                intent.putExtra("url", url);
-                intent.putExtra("title", title);
-                startActivity(intent);
-                break;
+
             default:
                 break;
         }

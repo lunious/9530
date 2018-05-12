@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -36,9 +34,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-/**
- * Created by 11645 on 2018/3/22.
- */
 
 public class BrowserDetailFragment extends BaseFragment implements View.OnClickListener {
 
@@ -47,13 +42,9 @@ public class BrowserDetailFragment extends BaseFragment implements View.OnClickL
     private AppCompatTextView mainTitle = null;
     private LinearLayout ll_webview = null;
     private AgentWeb webView = null;
-
     private ImageView ivFav = null;
     private LinearLayout llFav = null;
     private LinearLayout llShare = null;
-    private NestedScrollView detailNsv = null;
-
-
     private static final String ARG_URL = "ARG_URL";
     private static final String ARG_TITLE = "ARG_TITLE";
     private static final String ENTITY = "ENTITY";
@@ -95,7 +86,6 @@ public class BrowserDetailFragment extends BaseFragment implements View.OnClickL
         ivFav = getView().findViewById(R.id.iv_fav);
         llFav = getView().findViewById(R.id.ll_fav);
         llShare = getView().findViewById(R.id.ll_share);
-        detailNsv = getView().findViewById(R.id.detail_nsv);
         mBack.setOnClickListener(this);
         llShare.setOnClickListener(this);
         llFav.setOnClickListener(this);
@@ -110,6 +100,7 @@ public class BrowserDetailFragment extends BaseFragment implements View.OnClickL
     @Override
     public void initData() {
         mBack.setVisibility(View.VISIBLE);
+        mainTitle.setText("标讯详情");
         final Bundle args = getArguments();
         if (args != null) {
             mApi = args.getString(ARG_URL);
@@ -128,10 +119,6 @@ public class BrowserDetailFragment extends BaseFragment implements View.OnClickL
     }
 
     private long id = 0;
-    private String nickName = "";
-    private String token = "";
-    private String comid = "";
-    private String imageUrl = "";
 
     private void requestData() {
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
@@ -139,10 +126,6 @@ public class BrowserDetailFragment extends BaseFragment implements View.OnClickL
 
             for (int i = 0; i < users.size(); i++) {
                 id = users.get(0).getId();
-                nickName = users.get(0).getNickName();
-                token = users.get(0).getToken();
-                comid = users.get(0).getComid();
-                imageUrl = users.get(0).getImageUrl();
             }
 
             OkGo.<String>post(mApi)
@@ -177,7 +160,6 @@ public class BrowserDetailFragment extends BaseFragment implements View.OnClickL
                                 webView = AgentWeb.with(BrowserDetailFragment.this)
                                         .setAgentWebParent(ll_webview, new LinearLayout.LayoutParams(-1, -1))
                                         .useDefaultIndicator(getResources().getColor(R.color.main_status_red), 3)
-                                        .setWebViewClient(mWebViewClient)
                                         .createAgentWeb()
                                         .ready()
                                         .go(mUrl);
@@ -222,18 +204,6 @@ public class BrowserDetailFragment extends BaseFragment implements View.OnClickL
         }
     }
 
-    private WebViewClient mWebViewClient = new WebViewClient() {
-        @Override
-        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-            //do you  work
-            mainTitle.setText("加载中...");
-        }
-
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            mainTitle.setText(mTitle);
-        }
-    };
 
     private Share mShare = new Share();
 
@@ -249,7 +219,6 @@ public class BrowserDetailFragment extends BaseFragment implements View.OnClickL
         mShare.setSummary(mTitle);
         mShare.setDescription(mTitle);
         mShare.setImageUrl(null);
-//        mShare.setUrl(BiaoXunTongApi.SHARE_URL + mUrl);
         mShare.setUrl(mUrl);
         switch (view.getId()) {
             case R.id.ll_iv_back:

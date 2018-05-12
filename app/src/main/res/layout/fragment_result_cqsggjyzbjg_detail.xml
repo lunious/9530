@@ -244,8 +244,6 @@
             </android.support.v4.widget.NestedScrollView>
 
 
-            <include layout="@layout/bottom_item_collect_share" />
-
 
         </LinearLayout>
     </com.classic.common.MultipleStatusView>

@@ -60,7 +60,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
     private AppCompatTextView tvMainArea = null;
     private AppCompatTextView tvPubTime = null;
     private AppCompatTextView tvDeadTime = null;
-    private LinearLayout tvYw = null;
     private AppCompatTextView tv1 = null;
     private AppCompatTextView tv2 = null;
     private AppCompatTextView tv3 = null;
@@ -71,25 +70,17 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
     private ImageView ivFav = null;
     private LinearLayout llFav = null;
     private LinearLayout llShare = null;
-    private AppCompatTextView atv_fav = null;
-    private LinearLayout llCall = null;
-    private LinearLayout llBrowser = null;
-
 
     private AppCompatTextView tvGz = null;
     private AppCompatTextView tvJg = null;
 
-
     private static final String ARG_ENTITYID = "ARG_ENTITYID";
     private static final String ARG_ENTITY = "ARG_ENTITY";
     private static final String ARG_AJAXTYPE = "ARG_AJAXTYPE";
-
     private LinearLayout llWeiBoShare_bottom = null;
     private LinearLayout llQQBoShare_bottom = null;
     private LinearLayout llWeixinBoShare_bottom = null;
     private LinearLayout llPyqShare_bottom = null;
-
-
     private int myFav = -1;
     private int mEntityId = -1;
     private String mEntity = "";
@@ -101,7 +92,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
     private String ajaxlogtype = "";
 
-    private String zbjgId = "";
 
 
     public static IndexSggjyDetailFragment create(@NonNull int entityId, String entity, String ajaxlogtype) {
@@ -134,10 +124,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
     @Override
     public void initView() {
 
-        //创建对象
-        promptDialog = new PromptDialog(getActivity());
-        //设置自定义属性
-        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
 
         llIvBack = getView().findViewById(R.id.ll_iv_back);
         mainBarName = getView().findViewById(R.id.main_bar_name);
@@ -146,7 +132,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
         tvMainArea = getView().findViewById(R.id.tv_main_area);
         tvPubTime = getView().findViewById(R.id.tv_pub_time);
         tvDeadTime = getView().findViewById(R.id.tv_dead_time);
-        tvYw = getView().findViewById(R.id.ll_yw);
         tv1 = getView().findViewById(R.id.tv1);
         tv2 = getView().findViewById(R.id.tv2);
         tv3 = getView().findViewById(R.id.tv3);
@@ -157,28 +142,17 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
         ivFav = getView().findViewById(R.id.iv_fav);
         llFav = getView().findViewById(R.id.ll_fav);
         llShare = getView().findViewById(R.id.ll_share);
-        llCall = getView().findViewById(R.id.ll_call);
-        llBrowser = getView().findViewById(R.id.ll_browser);
-        atv_fav = getView().findViewById(R.id.atv_fav);
-
         llWeiBoShare_bottom = getView().findViewById(R.id.ll_weibo_share_bottom);
         llQQBoShare_bottom = getView().findViewById(R.id.ll_qq_share_bottom);
         llWeixinBoShare_bottom = getView().findViewById(R.id.ll_chat_share_bottom);
         llPyqShare_bottom = getView().findViewById(R.id.ll_pyq_share_bottom);
-
         llWeiBoShare_bottom.setOnClickListener(this);
         llQQBoShare_bottom.setOnClickListener(this);
         llWeixinBoShare_bottom.setOnClickListener(this);
         llPyqShare_bottom.setOnClickListener(this);
-
-
         llIvBack.setOnClickListener(this);
         llShare.setOnClickListener(this);
         llFav.setOnClickListener(this);
-        tvYw.setOnClickListener(this);
-        llBrowser.setOnClickListener(this);
-        llCall.setOnClickListener(this);
-
         tvGz = getView().findViewById(R.id.tv_gzgg);
         tvJg = getView().findViewById(R.id.tv_jggg);
         tvGz.setOnClickListener(this);
@@ -255,11 +229,9 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                                     if (favorite == 1) {
                                         myFav = 1;
                                         ivFav.setImageResource(R.mipmap.ic_faved_pressed);
-                                        atv_fav.setText("已收藏");
                                     } else if (favorite == 0) {
                                         myFav = 0;
                                         ivFav.setImageResource(R.mipmap.ic_fav_pressed);
-                                        atv_fav.setText("收藏");
                                     }
                                     final JSONObject data = object.getJSONObject("data");
 
@@ -492,7 +464,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
 
 
     private Share mShare = new Share();
-    private PromptDialog promptDialog = null;
 
     @Override
     public void onClick(View view) {
@@ -538,7 +509,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                                         if ("200".equals(status)) {
                                             myFav = 0;
                                             ivFav.setImageResource(R.mipmap.ic_fav_pressed);
-                                            atv_fav.setText("收藏");
                                             ToastUtil.shortToast(getContext(), "取消收藏");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
@@ -561,7 +531,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                                         if ("200".equals(status)) {
                                             myFav = 1;
                                             ivFav.setImageResource(R.mipmap.ic_faved_pressed);
-                                            atv_fav.setText("已收藏");
                                             ToastUtil.shortToast(getContext(), "收藏成功");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
@@ -576,24 +545,17 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                     startActivity(new Intent(getActivity(), SignInActivity.class));
                 }
                 break;
-            case R.id.ll_yw:
-                Intent intent = new Intent(getActivity(), BrowserSuitActivity.class);
-                intent.putExtra("url", shareUrl);
-                intent.putExtra("title", shareTitle);
-                startActivity(intent);
-                break;
             case R.id.tv_gzgg:
                 if (!tvGz.getText().toString().equals("无")) {
-                    intent = new Intent(getActivity(), BrowserSuitActivity.class);
+                    Intent intent = new Intent(getActivity(), BrowserSuitActivity.class);
                     intent.putExtra("url", gzUrl);
                     intent.putExtra("title", "更正公告");
                     startActivity(intent);
                 }
                 break;
             case R.id.tv_jggg:
-                Log.d("HIUASDSABDBSADA", "哈哈哈为：" + jgEntity + "___" + jgEntityId);
                 if ("xjggg".equals(jgEntity) || "sjggg".equals(jgEntity) || "sggjy".equals(jgEntity) || "sggjycgjgtable".equals(jgEntity)) {
-                    intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
+                    Intent intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
                     intent.putExtra("entityId", Integer.valueOf(jgEntityId));
                     intent.putExtra("entity", jgEntity);
                     intent.putExtra("ajaxlogtype", "0");
@@ -601,38 +563,13 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                     startActivity(intent);
 
                 } else if ("sggjyzbjg".equals(jgEntity) || "sggjycgjgrow".equals(jgEntity) || "sggjyjgcgtable".equals(jgEntity)) {
-                    intent = new Intent(getActivity(), ResultSggjyzbjgDetailActivity.class);
+                    Intent intent = new Intent(getActivity(), ResultSggjyzbjgDetailActivity.class);
                     intent.putExtra("entityId", Integer.valueOf(jgEntityId));
                     intent.putExtra("entity", jgEntity);
                     intent.putExtra("ajaxlogtype", "0");
                     intent.putExtra("mId", "");
                     startActivity(intent);
                 }
-                break;
-            case R.id.ll_call:
-                //客服界面
-                final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
-                    @Override
-                    public void onClick(PromptButton button) {
-
-                    }
-                });
-                cancel.setTextColor(getResources().getColor(R.color.status_text_color));
-                cancel.setTextSize(16);
-
-                final PromptButton sure = new PromptButton("呼      叫", new PromptButtonListener() {
-                    @Override
-                    public void onClick(PromptButton button) {
-                        Intent intent = new Intent(Intent.ACTION_DIAL);
-                        intent.setData(Uri.parse("tel:400-028-9997"));
-                        startActivity(intent);
-                    }
-                });
-                sure.setTextColor(getResources().getColor(R.color.main_status_blue));
-                sure.setTextSize(16);
-                promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
-                        .round(4).loadingDuration(600);
-                promptDialog.showWarnAlert("是否呼叫服务热线:400-028-9997？", cancel, sure, true);
                 break;
             case R.id.ll_weibo_share_bottom:
                 OpenBuilder.with(getActivity())
@@ -698,16 +635,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
 
                             }
                         });
-                break;
-            case R.id.ll_browser:
-                try {
-                    // 启用外部浏览器
-                    Uri uri = Uri.parse(shareUrl);
-                    Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(it);
-                } catch (Exception e) {
-                    ToastUtil.shortToast(getContext(), "网页地址错误");
-                }
                 break;
             default:
                 break;

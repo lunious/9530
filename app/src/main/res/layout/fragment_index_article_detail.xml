@@ -107,7 +107,6 @@
                             android:orientation="horizontal">
 
 
-
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_status"
                                 android:layout_width="wrap_content"
@@ -169,7 +168,6 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:orientation="horizontal">
-
 
 
                             <android.support.v7.widget.AppCompatTextView
@@ -659,6 +657,5 @@
         </LinearLayout>
     </com.classic.common.MultipleStatusView>
 
-    <include layout="@layout/bottom_item_article_detail" />
 
 </LinearLayout>

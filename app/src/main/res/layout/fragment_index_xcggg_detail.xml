@@ -903,9 +903,6 @@
             </android.support.v4.widget.NestedScrollView>
 
 
-            <include layout="@layout/bottom_item_article_detail" />
-
-
         </LinearLayout>
     </com.classic.common.MultipleStatusView>
 

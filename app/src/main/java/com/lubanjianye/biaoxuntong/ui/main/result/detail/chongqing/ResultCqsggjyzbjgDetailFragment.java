@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
@@ -58,7 +57,6 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
-    private AppCompatTextView tvFavCount = null;
     private LinearLayout llShare = null;
     private AppCompatTextView tvMainTitle = null;
     private AppCompatTextView tvDataTime = null;
@@ -133,7 +131,6 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
         llIvBack = getView().findViewById(R.id.ll_iv_back);
         mainBarName = getView().findViewById(R.id.main_bar_name);
 
-        tvFavCount = getView().findViewById(R.id.tv_fav_count);
         llShare = getView().findViewById(R.id.ll_share);
         tvMainTitle = getView().findViewById(R.id.tv_main_title);
         tvDataTime = getView().findViewById(R.id.tv_data_time);

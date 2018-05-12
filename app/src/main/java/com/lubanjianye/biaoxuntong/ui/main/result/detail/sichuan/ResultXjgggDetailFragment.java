@@ -76,17 +76,14 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
     private AppCompatTextView tvOwerLianxiNumber = null;
     private AppCompatTextView tvOwerLianxiLink = null;
     private AppCompatTextView tvOwerPinshen = null;
-    private AppCompatTextView atv_fav = null;
-    private LinearLayout tvYw = null;
     private ImageView ivFav = null;
     private LinearLayout llFav = null;
     private LinearLayout llShare = null;
     private LinearLayout llType = null;
-    LinearLayout llBucai = null;
+    private LinearLayout llBucai = null;
     private AppCompatTextView tvBucai = null;
 
-    private LinearLayout llCall = null;
-    private LinearLayout llBrowser = null;
+
 
 
     private LinearLayout llWeiBoShare_bottom = null;
@@ -164,18 +161,13 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
         tvOwerLianxiNumber = getView().findViewById(R.id.tv_ower_lianxi_number);
         tvOwerLianxiLink = getView().findViewById(R.id.tv_ower_lianxi_link);
         tvOwerPinshen = getView().findViewById(R.id.tv_ower_pinshen);
-        atv_fav = getView().findViewById(R.id.atv_fav);
-        tvYw = getView().findViewById(R.id.ll_yw);
         ivFav = getView().findViewById(R.id.iv_fav);
         llFav = getView().findViewById(R.id.ll_fav);
         llShare = getView().findViewById(R.id.ll_share);
         llBucai = getView().findViewById(R.id.ll_bucai);
         tvBucai = getView().findViewById(R.id.tv_bucai);
         llType = getView().findViewById(R.id.ll_type);
-        llCall = getView().findViewById(R.id.ll_call);
-        llBrowser = getView().findViewById(R.id.ll_browser);
-        llBrowser.setOnClickListener(this);
-        llCall.setOnClickListener(this);
+
 
         tvGg = getView().findViewById(R.id.tv_data_gg);
         tvGg.setOnClickListener(this);
@@ -195,11 +187,6 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
         llShare.setOnClickListener(this);
         llFav.setOnClickListener(this);
 
-        tvYw.setOnClickListener(this);
-
-
-        //创建对象
-        promptDialog = new PromptDialog(getActivity());
 
     }
 
@@ -260,11 +247,9 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                 if (favorite == 1) {
                                     myFav = 1;
                                     ivFav.setImageResource(R.mipmap.ic_faved_pressed);
-                                    atv_fav.setText("已收藏");
                                 } else if (favorite == 0) {
                                     myFav = 0;
                                     ivFav.setImageResource(R.mipmap.ic_fav_pressed);
-                                    atv_fav.setText("收藏");
                                 }
 
                                 if ("200".equals(status)) {
@@ -622,7 +607,6 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
     }
 
     private Share mShare = new Share();
-    private PromptDialog promptDialog = null;
 
     @Override
     public void onClick(View view) {
@@ -781,7 +765,6 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                         if ("200".equals(status)) {
                                             myFav = 0;
                                             ivFav.setImageResource(R.mipmap.ic_fav_pressed);
-                                            atv_fav.setText("收藏");
                                             ToastUtil.shortToast(getContext(), "取消收藏");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
@@ -804,7 +787,6 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                         if ("200".equals(status)) {
                                             myFav = 1;
                                             ivFav.setImageResource(R.mipmap.ic_faved_pressed);
-                                            atv_fav.setText("已收藏");
                                             ToastUtil.shortToast(getContext(), "收藏成功");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
@@ -819,47 +801,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                     startActivity(new Intent(getActivity(), SignInActivity.class));
                 }
                 break;
-            case R.id.ll_browser:
-                try {
-                    // 启用外部浏览器
-                    Uri uri = Uri.parse(shareUrl);
-                    Intent it = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(it);
-                } catch (Exception e) {
-                    ToastUtil.shortToast(getContext(), "网页地址错误");
-                }
-                break;
-            case R.id.ll_call:
-                //客服界面
-                final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
-                    @Override
-                    public void onClick(PromptButton button) {
 
-                    }
-                });
-                cancel.setTextColor(getResources().getColor(R.color.status_text_color));
-                cancel.setTextSize(16);
-
-                final PromptButton sure = new PromptButton("呼      叫", new PromptButtonListener() {
-                    @Override
-                    public void onClick(PromptButton button) {
-                        Intent intent = new Intent(Intent.ACTION_DIAL);
-                        intent.setData(Uri.parse("tel:400-028-9997"));
-                        startActivity(intent);
-                    }
-                });
-                sure.setTextColor(getResources().getColor(R.color.main_status_blue));
-                sure.setTextSize(16);
-                promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
-                        .round(4).loadingDuration(600);
-                promptDialog.showWarnAlert("是否呼叫服务热线:400-028-9997？", cancel, sure, true);
-                break;
-            case R.id.ll_yw:
-                intent = new Intent(getActivity(), BrowserSuitActivity.class);
-                intent.putExtra("url", ywUrl);
-                intent.putExtra("title", shareTitle);
-                startActivity(intent);
-                break;
             default:
                 break;
         }
