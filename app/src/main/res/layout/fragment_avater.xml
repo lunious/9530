@@ -10,15 +10,11 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/index_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:srlDragRate="0.8"
+        app:srlEnablePureScrollMode="true"
+        app:srlFooterHeight="@dimen/d0">
 
-        <com.scwang.smartrefresh.layout.header.ClassicsHeader
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/d60"
-            app:srlDrawableProgressSize="@dimen/d15"
-            app:srlDrawableSize="@dimen/s15"
-            app:srlTextSizeTime="@dimen/d12"
-            app:srlTextSizeTitle="@dimen/d15" />
 
         <LinearLayout
             android:layout_width="match_parent"

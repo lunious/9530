@@ -69,8 +69,6 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
     private String companyName = "";
     private String imageUrl = "";
 
-    private String sex = "";
-    private String diqu = "";
 
     private PromptDialog promptDialog = null;
 
@@ -501,14 +499,12 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
 
                             String xingbie = user.getString("sex");
                             if (!TextUtils.isEmpty(xingbie)) {
-                                sex = xingbie;
                                 tvUserSex.setText(xingbie);
                             } else {
                                 tvUserSex.setText("点击设置");
                             }
                             String area = user.getString("diqu");
                             if (!TextUtils.isEmpty(area)) {
-                                diqu = area;
                                 tvUserArea.setText(area);
                             } else {
                                 tvUserArea.setText("点击设置");
