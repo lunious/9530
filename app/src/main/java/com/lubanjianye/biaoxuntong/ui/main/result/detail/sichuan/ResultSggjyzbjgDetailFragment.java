@@ -1,12 +1,12 @@
 package com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,7 +23,6 @@ import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexScgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
@@ -36,9 +35,6 @@ import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
-import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
-import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
-import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
@@ -76,10 +72,6 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
     private AppCompatTextView tvOwerDiyi = null;
     private AppCompatTextView tvOwerDier = null;
     private AppCompatTextView tvOwerDisan = null;
-    private AppCompatTextView tvOwerCompanyName = null;
-    private AppCompatTextView tvOwerCompanyBaojia = null;
-    private AppCompatTextView tvOwerCompanyToubiaojia = null;
-    private AppCompatTextView tvOwerCompanyPinjia = null;
     private ImageView ivFav = null;
     private MultipleStatusView sggjyDetailStatusView = null;
 
@@ -88,8 +80,19 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
     private LinearLayout llWeixinBoShare_bottom = null;
     private LinearLayout llPyqShare_bottom = null;
 
-    private AppCompatTextView tvGg = null;
 
+    private AppCompatTextView diyiBj = null;
+    private AppCompatTextView diyiTbj = null;
+    private AppCompatTextView diyiPf = null;
+    private AppCompatTextView dierBj = null;
+    private AppCompatTextView dierTbj = null;
+    private AppCompatTextView dierPf = null;
+    private AppCompatTextView disanBj = null;
+    private AppCompatTextView disanTbj = null;
+    private AppCompatTextView disanPf = null;
+
+
+    private AppCompatTextView tvGg = null;
     private static final String ARG_ENTITYID = "ARG_ENTITYID";
     private static final String ARG_ENTITY = "ARG_ENTITY";
     private static final String ARG_AJAXTYPE = "ARG_AJAXTYPE";
@@ -107,6 +110,7 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
 
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
     private String ajaxType = "0";
+
 
     @Override
     public Object setLayout() {
@@ -158,10 +162,6 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
         tvOwerDiyi = getView().findViewById(R.id.tv_ower_diyi);
         tvOwerDier = getView().findViewById(R.id.tv_ower_dier);
         tvOwerDisan = getView().findViewById(R.id.tv_ower_disan);
-        tvOwerCompanyName = getView().findViewById(R.id.tv_ower_company_name);
-        tvOwerCompanyBaojia = getView().findViewById(R.id.tv_ower_company_baojia);
-        tvOwerCompanyToubiaojia = getView().findViewById(R.id.tv_ower_company_toubiaojia);
-        tvOwerCompanyPinjia = getView().findViewById(R.id.tv_ower_company_pinjia);
         ivFav = getView().findViewById(R.id.iv_fav);
         sggjyDetailStatusView = getView().findViewById(R.id.sggjy_detail_status_view);
         llWeiBoShare_bottom = getView().findViewById(R.id.ll_weibo_share_bottom);
@@ -181,6 +181,17 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
         tvOwerDisan.setOnClickListener(this);
         llFav = getView().findViewById(R.id.ll_fav);
         llFav.setOnClickListener(this);
+
+
+        diyiBj = getView().findViewById(R.id.diyi_bj);
+        diyiTbj = getView().findViewById(R.id.diyi_tbj);
+        diyiPf = getView().findViewById(R.id.diyi_pf);
+        dierBj = getView().findViewById(R.id.dier_bj);
+        dierTbj = getView().findViewById(R.id.dier_tbj);
+        dierPf = getView().findViewById(R.id.dier_pf);
+        disanBj = getView().findViewById(R.id.disan_bj);
+        disanTbj = getView().findViewById(R.id.disan_tbj);
+        disanPf = getView().findViewById(R.id.disan_pf);
 
 
     }
@@ -240,6 +251,8 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                             @Override
                             public void onSuccess(Response<String> response) {
                                 String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+
+                                Log.d("YAGSYGDASDADAS", jiemi);
 
                                 //判断是否收藏过
                                 final JSONObject object = JSON.parseObject(jiemi);
@@ -350,62 +363,115 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                     }
                                     String oneTree = data.getString("oneTree");
 
+
                                     if (!TextUtils.isEmpty(oneTree)) {
-                                        String s1 = oneTree.substring(0, oneTree.indexOf("_"));
+                                        String regex = "\\_";
+                                        String[] arr = oneTree.split(regex);
+                                        String s1 = "";
+                                        String s2 = "";
+                                        String s3 = "";
+                                        String s4 = "";
+                                        if (arr.length == 4) {
+                                            s1 = arr[0];
+                                            s2 = arr[1];
+                                            s3 = arr[2];
+                                            s4 = arr[3];
+                                        } else if (arr.length == 3) {
+                                            s1 = arr[0];
+                                            s2 = arr[1];
+                                            s3 = arr[2];
+                                            s4 = "0.0";
+                                        } else if (arr.length == 1 || arr.length == 2) {
+                                            s1 = arr[0];
+                                            s2 = "0.0";
+                                            s3 = "0.0";
+                                            s4 = "0.0";
+                                        }
                                         if (oneTree.contains("/")) {
+                                            Log.d("ABSDASDASD",arr.length+"");
                                             tvOwerDiyi.setText(s1.substring(0, s1.indexOf("/")));
                                         } else {
                                             tvOwerDiyi.setText(s1);
                                         }
+                                        diyiBj.setText("投标报价（元）: " + s2);
+                                        diyiTbj.setText("经评审的投标价（元）: " + s3);
+                                        diyiPf.setText(s4);
+
                                     } else {
                                         tvOwerDiyi.setText("暂无");
                                     }
+
                                     String twoTree = data.getString("twoTree");
                                     if (!TextUtils.isEmpty(twoTree)) {
-                                        String s2 = twoTree.substring(0, twoTree.indexOf("_"));
-                                        if (oneTree.contains("/")) {
-                                            tvOwerDier.setText(s2.substring(0, s2.indexOf("/")));
-                                        } else {
-                                            tvOwerDier.setText(s2);
+                                        String regex = "\\_";
+                                        String[] arr = twoTree.split(regex);
+                                        String s1 = "";
+                                        String s2 = "";
+                                        String s3 = "";
+                                        String s4 = "";
+                                        if (arr.length == 4) {
+                                            s1 = arr[0];
+                                            s2 = arr[1];
+                                            s3 = arr[2];
+                                            s4 = arr[3];
+                                        } else if (arr.length == 3) {
+                                            s1 = arr[0];
+                                            s2 = arr[1];
+                                            s3 = arr[2];
+                                            s4 = "0.0";
+                                        } else if (arr.length == 1 || arr.length == 2) {
+                                            s1 = arr[0];
+                                            s2 = "0.0";
+                                            s3 = "0.0";
+                                            s4 = "0.0";
                                         }
+                                        if (oneTree.contains("/")) {
+                                            tvOwerDier.setText(s1.substring(0, s1.indexOf("/")));
+                                        } else {
+                                            tvOwerDier.setText(s1);
+                                        }
+                                        dierBj.setText("投标报价（元）: " + s2);
+                                        dierTbj.setText("经评审的投标价（元）: " + s3);
+                                        dierPf.setText(s4);
                                     } else {
                                         tvOwerDier.setText("暂无");
                                     }
                                     String threeTree = data.getString("threeTree");
                                     if (!TextUtils.isEmpty(threeTree)) {
-                                        String s3 = threeTree.substring(0, threeTree.indexOf("_"));
-                                        if (oneTree.contains("/")) {
-                                            tvOwerDisan.setText(s3.substring(0, s3.indexOf("/")));
-                                        } else {
-                                            tvOwerDisan.setText(s3);
+                                        String regex = "\\_";
+                                        String[] arr = threeTree.split(regex);
+                                        String s1 = "";
+                                        String s2 = "";
+                                        String s3 = "";
+                                        String s4 = "";
+                                        if (arr.length == 4) {
+                                            s1 = arr[0];
+                                            s2 = arr[1];
+                                            s3 = arr[2];
+                                            s4 = arr[3];
+                                        } else if (arr.length == 3) {
+                                            s1 = arr[0];
+                                            s2 = arr[1];
+                                            s3 = arr[2];
+                                            s4 = "0.0";
+                                        } else if (arr.length == 1 || arr.length == 2) {
+                                            s1 = arr[0];
+                                            s2 = "0.0";
+                                            s3 = "0.0";
+                                            s4 = "0.0";
                                         }
+                                        if (oneTree.contains("/")) {
+                                            tvOwerDisan.setText(s1.substring(0, s1.indexOf("/")));
+                                        } else {
+                                            tvOwerDisan.setText(s1);
+                                        }
+                                        disanBj.setText("投标报价（元）: " + s2);
+                                        disanTbj.setText("经评审的投标价（元）: " + s3);
+                                        disanPf.setText(s4);
                                     } else {
                                         tvOwerDisan.setText("暂无");
                                     }
-                                    String oneCompany = data.getString("oneCompany");
-                                    if (!TextUtils.isEmpty(oneCompany)) {
-                                        tvOwerCompanyName.setText(oneCompany);
-                                    } else {
-                                        tvOwerCompanyName.setText("暂无");
-                                    }
-                                    String onePrice = data.getString("onePrice");
-                                    if (!TextUtils.isEmpty(onePrice)) {
-                                        tvOwerCompanyBaojia.setText(onePrice);
-                                    } else {
-                                        tvOwerCompanyBaojia.setText("暂无");
-                                    }
-                                    String oneReviewPrice = data.getString("oneReviewPrice");
-                                    if (!TextUtils.isEmpty(oneReviewPrice)) {
-                                        tvOwerCompanyToubiaojia.setText(oneReviewPrice);
-                                    } else {
-                                        tvOwerCompanyToubiaojia.setText("暂无");
-                                    }
-                                    String oneScore = data.getString("oneScore");
-                                    if (!TextUtils.isEmpty(oneScore)) {
-                                        tvOwerCompanyPinjia.setText(oneScore);
-                                    } else {
-                                        tvOwerCompanyPinjia.setText("暂无");
-                                    }
+
                                     sggjyDetailStatusView.showContent();
                                 } else {
                                     sggjyDetailStatusView.showError();
@@ -544,30 +610,6 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                     } else {
                                         tvOwerDisan.setText("暂无");
                                     }
-                                    String oneCompany = data.getString("oneCompany");
-                                    if (!TextUtils.isEmpty(oneCompany)) {
-                                        tvOwerCompanyName.setText(oneCompany);
-                                    } else {
-                                        tvOwerCompanyName.setText("暂无");
-                                    }
-                                    String onePrice = data.getString("onePrice");
-                                    if (!TextUtils.isEmpty(onePrice)) {
-                                        tvOwerCompanyBaojia.setText(onePrice);
-                                    } else {
-                                        tvOwerCompanyBaojia.setText("暂无");
-                                    }
-                                    String oneReviewPrice = data.getString("oneReviewPrice");
-                                    if (!TextUtils.isEmpty(oneReviewPrice)) {
-                                        tvOwerCompanyToubiaojia.setText(oneReviewPrice);
-                                    } else {
-                                        tvOwerCompanyToubiaojia.setText("暂无");
-                                    }
-                                    String oneScore = data.getString("oneScore");
-                                    if (!TextUtils.isEmpty(oneScore)) {
-                                        tvOwerCompanyPinjia.setText(oneScore);
-                                    } else {
-                                        tvOwerCompanyPinjia.setText("暂无");
-                                    }
                                     sggjyDetailStatusView.showContent();
 
                                 } else {
@@ -585,10 +627,6 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
 
     String provinceCode = "510000";
 
-    private String nickName = "";
-    private String token = "";
-    private String comid = "";
-    private String imageUrl = "";
     private String mobile = "";
 
     @Override
@@ -792,10 +830,6 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
                         for (int i = 0; i < users.size(); i++) {
                             id = users.get(0).getId();
-                            nickName = users.get(0).getNickName();
-                            token = users.get(0).getToken();
-                            comid = users.get(0).getComid();
-                            imageUrl = users.get(0).getImageUrl();
                             mobile = users.get(0).getMobile();
                         }
 
@@ -843,10 +877,6 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
                         for (int i = 0; i < users.size(); i++) {
                             id = users.get(0).getId();
-                            nickName = users.get(0).getNickName();
-                            token = users.get(0).getToken();
-                            comid = users.get(0).getComid();
-                            imageUrl = users.get(0).getImageUrl();
                             mobile = users.get(0).getMobile();
                         }
 
@@ -894,10 +924,6 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
                         for (int i = 0; i < users.size(); i++) {
                             id = users.get(0).getId();
-                            nickName = users.get(0).getNickName();
-                            token = users.get(0).getToken();
-                            comid = users.get(0).getComid();
-                            imageUrl = users.get(0).getImageUrl();
                             mobile = users.get(0).getMobile();
                         }
 

@@ -75,6 +75,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginBottom="@dimen/d26"
                         android:layout_marginTop="@dimen/d6"
                         android:orientation="vertical">
 
@@ -413,26 +414,99 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/d12"
+                                android:layout_marginBottom="@dimen/d8"
                                 android:layout_marginTop="@dimen/d22"
                                 android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                                android:orientation="vertical">
 
-                                <ImageView
-                                    android:layout_width="@dimen/d20"
-                                    android:layout_height="@dimen/d20"
-                                    android:layout_gravity="center"
-                                    android:src="@mipmap/diyi" />
-
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:id="@+id/tv_ower_diyi"
-                                    android:layout_width="wrap_content"
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="@dimen/d10"
-                                    android:text=""
-                                    android:textColor="@color/main_status_blue"
-                                    android:textSize="@dimen/d15" />
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/d22"
+                                        android:layout_height="@dimen/d22"
+                                        android:layout_gravity="center"
+                                        android:src="@mipmap/diyi" />
+
+                                    <android.support.v7.widget.AppCompatTextView
+                                        android:id="@+id/tv_ower_diyi"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="@dimen/d6"
+                                        android:text="未来科技"
+                                        android:textColor="@color/main_status_blue"
+                                        android:textSize="@dimen/d16" />
+                                </LinearLayout>
+
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/d28"
+                                    android:paddingTop="@dimen/d8">
+
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"
+                                        android:gravity="center_vertical"
+                                        android:orientation="vertical">
+
+                                        <android.support.v7.widget.AppCompatTextView
+                                            android:id="@+id/diyi_bj"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="投标报价（元）: 0.0"
+                                            android:textColor="@color/main_text_dark_color"
+                                            android:textSize="@dimen/s12" />
+
+                                        <android.support.v7.widget.AppCompatTextView
+                                            android:id="@+id/diyi_tbj"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:paddingTop="@dimen/d2"
+                                            android:text="经评审的投标价（元）: 0.0"
+                                            android:textColor="@color/main_text_dark_color"
+                                            android:textSize="@dimen/s12" />
+
+                                    </LinearLayout>
+
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginRight="@dimen/d4"
+                                        android:background="@drawable/bg_sign_status"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="@dimen/d2">
+
+                                        <android.support.v7.widget.AppCompatTextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="综合评分"
+                                            android:textColor="@color/main_status_blue"
+                                            android:textSize="@dimen/s12" />
+
+                                        <android.support.v7.widget.AppCompatTextView
+                                            android:id="@+id/diyi_pf"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="0.0"
+                                            android:textColor="@color/main_status_blue"
+                                            android:textSize="@dimen/s12" />
+
+
+                                    </LinearLayout>
+
+
+                                </RelativeLayout>
+
 
                             </LinearLayout>
 
@@ -442,32 +516,105 @@
                                 android:layout_marginTop="@dimen/d12"
                                 android:background="@color/view" />
 
-
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/d12"
+                                android:layout_marginBottom="@dimen/d8"
                                 android:layout_marginTop="@dimen/d22"
                                 android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                                android:orientation="vertical">
 
-                                <ImageView
-                                    android:layout_width="@dimen/d20"
-                                    android:layout_height="@dimen/d20"
-                                    android:layout_gravity="center"
-                                    android:src="@mipmap/dier" />
-
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:id="@+id/tv_ower_dier"
-                                    android:layout_width="wrap_content"
+                                <LinearLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="@dimen/d10"
-                                    android:text=""
-                                    android:textColor="@color/main_status_blue"
-                                    android:textSize="@dimen/d15" />
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="@dimen/d22"
+                                        android:layout_height="@dimen/d22"
+                                        android:layout_gravity="center"
+                                        android:src="@mipmap/dier" />
+
+                                    <android.support.v7.widget.AppCompatTextView
+                                        android:id="@+id/tv_ower_dier"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="@dimen/d6"
+                                        android:text="未来科技"
+                                        android:textColor="@color/main_status_blue"
+                                        android:textSize="@dimen/d16" />
+                                </LinearLayout>
+
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/d28"
+                                    android:paddingTop="@dimen/d8">
+
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"
+                                        android:gravity="center_vertical"
+                                        android:orientation="vertical">
+
+                                        <android.support.v7.widget.AppCompatTextView
+                                            android:id="@+id/dier_bj"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="投标报价（元）:0.0"
+                                            android:textColor="@color/main_text_dark_color"
+                                            android:textSize="@dimen/s12" />
+
+                                        <android.support.v7.widget.AppCompatTextView
+                                            android:id="@+id/dier_tbj"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:paddingTop="@dimen/d2"
+                                            android:text="经评审的投标价（元）:0.0"
+                                            android:textColor="@color/main_text_dark_color"
+                                            android:textSize="@dimen/s12" />
+
+                                    </LinearLayout>
+
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginRight="@dimen/d4"
+                                        android:background="@drawable/bg_sign_status"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="@dimen/d2">
+
+                                        <android.support.v7.widget.AppCompatTextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="综合评分"
+                                            android:textColor="@color/main_status_blue"
+                                            android:textSize="@dimen/s12" />
+
+                                        <android.support.v7.widget.AppCompatTextView
+                                            android:id="@+id/dier_pf"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="0.0"
+                                            android:textColor="@color/main_status_blue"
+                                            android:textSize="@dimen/s12" />
+
+
+                                    </LinearLayout>
+
+
+                                </RelativeLayout>
+
 
                             </LinearLayout>
+
 
                             <View
                                 android:layout_width="match_parent"
@@ -475,173 +622,105 @@
                                 android:layout_marginTop="@dimen/d12"
                                 android:background="@color/view" />
 
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/d18"
+                                android:layout_marginBottom="@dimen/d8"
                                 android:layout_marginTop="@dimen/d22"
                                 android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <ImageView
-                                    android:layout_width="@dimen/d20"
-                                    android:layout_height="@dimen/d20"
-                                    android:layout_gravity="center"
-                                    android:src="@mipmap/disan" />
-
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:id="@+id/tv_ower_disan"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_gravity="center"
-                                    android:layout_marginLeft="@dimen/d10"
-                                    android:text=""
-                                    android:textColor="@color/main_status_blue"
-                                    android:textSize="@dimen/d15" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/d26"
-                            android:layout_marginTop="@dimen/d12"
-                            android:orientation="vertical">
-
-                            <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@drawable/bg_rect"
-                                android:gravity="center"
-                                android:padding="@dimen/d4"
-                                android:text="第一候选人概况"
-                                android:textColor="#ff434343"
-                                android:textSize="@dimen/d16" />
-
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/d10"
-                                android:gravity="center_vertical"
                                 android:orientation="vertical">
 
-                                <android.support.v7.widget.AppCompatTextView
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="中标候选人名称"
-                                    android:textColor="#ff434343"
-                                    android:textSize="@dimen/d16" />
+                                    android:orientation="horizontal">
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:id="@+id/tv_ower_company_name"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/d2"
-                                    android:text=""
-                                    android:textSize="@dimen/d15" />
+                                    <ImageView
+                                        android:layout_width="@dimen/d22"
+                                        android:layout_height="@dimen/d22"
+                                        android:layout_gravity="center"
+                                        android:src="@mipmap/disan" />
 
-                            </LinearLayout>
+                                    <android.support.v7.widget.AppCompatTextView
+                                        android:id="@+id/tv_ower_disan"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="@dimen/d6"
+                                        android:text="未来科技"
+                                        android:textColor="@color/main_status_blue"
+                                        android:textSize="@dimen/d16" />
+                                </LinearLayout>
 
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1px"
-                                android:layout_marginTop="@dimen/d12"
-                                android:background="@color/view" />
 
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/d12"
-                                android:gravity="center_vertical"
-                                android:orientation="vertical">
-
-                                <android.support.v7.widget.AppCompatTextView
+                                <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="投标报价（元）"
-                                    android:textColor="#ff434343"
-                                    android:textSize="@dimen/d16" />
+                                    android:layout_marginLeft="@dimen/d28"
+                                    android:paddingTop="@dimen/d8">
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:id="@+id/tv_ower_company_baojia"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/d4"
-                                    android:text=""
-                                    android:textSize="@dimen/d15" />
 
-                            </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentLeft="true"
+                                        android:gravity="center_vertical"
+                                        android:orientation="vertical">
 
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1px"
-                                android:layout_marginTop="@dimen/d12"
-                                android:background="@color/view" />
+                                        <android.support.v7.widget.AppCompatTextView
+                                            android:id="@+id/disan_bj"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="投标报价（元）:0.0"
+                                            android:textColor="@color/main_text_dark_color"
+                                            android:textSize="@dimen/s12" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/d12"
-                                android:gravity="center_vertical"
-                                android:orientation="vertical">
+                                        <android.support.v7.widget.AppCompatTextView
+                                            android:id="@+id/disan_tbj"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:paddingTop="@dimen/d2"
+                                            android:text="经评审的投标价（元）:0.0"
+                                            android:textColor="@color/main_text_dark_color"
+                                            android:textSize="@dimen/s12" />
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="经评审的投标价（元）"
-                                    android:textColor="#ff434343"
-                                    android:textSize="@dimen/d16" />
+                                    </LinearLayout>
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:id="@+id/tv_ower_company_toubiaojia"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/d4"
-                                    android:text=""
-                                    android:textSize="@dimen/d15" />
 
-                            </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_marginRight="@dimen/d4"
+                                        android:background="@drawable/bg_sign_status"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+                                        android:padding="@dimen/d2">
 
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1px"
-                                android:layout_marginTop="@dimen/d12"
-                                android:background="@color/view" />
+                                        <android.support.v7.widget.AppCompatTextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="综合评分"
+                                            android:textColor="@color/main_status_blue"
+                                            android:textSize="@dimen/s12" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/d20"
-                                android:layout_marginTop="@dimen/d12"
-                                android:gravity="center_vertical"
-                                android:orientation="vertical">
+                                        <android.support.v7.widget.AppCompatTextView
+                                            android:id="@+id/disan_pf"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="0.0"
+                                            android:textColor="@color/main_status_blue"
+                                            android:textSize="@dimen/s12" />
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="综合评标得分"
-                                    android:textColor="#000000"
-                                    android:textSize="@dimen/d16" />
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:id="@+id/tv_ower_company_pinjia"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="@dimen/d4"
-                                    android:text=""
-                                    android:textSize="@dimen/d15" />
+                                    </LinearLayout>
+
+
+                                </RelativeLayout>
+
 
                             </LinearLayout>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="1px"
-                                android:layout_marginTop="@dimen/d12"
-                                android:background="@color/view" />
 
 
                         </LinearLayout>

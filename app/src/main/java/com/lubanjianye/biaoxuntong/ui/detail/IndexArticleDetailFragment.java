@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -227,6 +228,8 @@ public class IndexArticleDetailFragment extends BaseFragment implements View.OnC
                             @Override
                             public void onSuccess(Response<String> response) {
                                 String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+
+                                Log.d("DAIJBSDBSADSA",jiemi);
 
                                 //判断是否收藏过
                                 final JSONObject object = JSON.parseObject(jiemi);

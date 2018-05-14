@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -36,7 +37,6 @@ import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
-import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
@@ -486,14 +486,8 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
     }
 
     private Share mShare = new Share();
-    private PromptDialog promptDialog = null;
 
     String provinceCode = "500000";
-
-    private String nickName = "";
-    private String token = "";
-    private String comid = "";
-    private String imageUrl = "";
     private String mobile = "";
 
     @Override
@@ -662,10 +656,6 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
                         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
                         for (int i = 0; i < users.size(); i++) {
                             id = users.get(0).getId();
-                            nickName = users.get(0).getNickName();
-                            token = users.get(0).getToken();
-                            comid = users.get(0).getComid();
-                            imageUrl = users.get(0).getImageUrl();
                             mobile = users.get(0).getMobile();
                         }
 
@@ -713,10 +703,6 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
                         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
                         for (int i = 0; i < users.size(); i++) {
                             id = users.get(0).getId();
-                            nickName = users.get(0).getNickName();
-                            token = users.get(0).getToken();
-                            comid = users.get(0).getComid();
-                            imageUrl = users.get(0).getImageUrl();
                             mobile = users.get(0).getMobile();
                         }
 
@@ -764,10 +750,6 @@ public class ResultCqsggjyzbjgDetailFragment extends BaseFragment implements Vie
                         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
                         for (int i = 0; i < users.size(); i++) {
                             id = users.get(0).getId();
-                            nickName = users.get(0).getNickName();
-                            token = users.get(0).getToken();
-                            comid = users.get(0).getComid();
-                            imageUrl = users.get(0).getImageUrl();
                             mobile = users.get(0).getMobile();
                         }
 
