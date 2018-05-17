@@ -49,12 +49,12 @@
 
                         <ImageView
                             android:layout_width="@dimen/d44"
-                            android:layout_height="@dimen/d46"
+                            android:layout_height="@dimen/d48"
                             android:layout_gravity="center"
                             android:src="@mipmap/qyzz" />
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
 
@@ -67,30 +67,64 @@
                                 android:maxLines="1"
                                 android:text=""
                                 android:textColor="#ff434343"
-                                android:textSize="@dimen/d18" />
+                                android:textSize="@dimen/d16" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/d8"
-                                android:layout_marginTop="@dimen/d4"
+                                android:layout_marginTop="@dimen/d8"
                                 android:orientation="horizontal">
 
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:layout_width="wrap_content"
+                                <LinearLayout
+                                    android:layout_width="@dimen/d0"
                                     android:layout_height="wrap_content"
-                                    android:text="法  人："
-                                    android:textSize="@dimen/d14" />
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
 
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:id="@+id/tv_faren"
-                                    android:layout_width="wrap_content"
+
+                                    <android.support.v7.widget.AppCompatTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="法  人："
+                                        android:textSize="@dimen/d14" />
+
+                                    <android.support.v7.widget.AppCompatTextView
+                                        android:id="@+id/tv_faren"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/d6"
+                                        android:maxLines="1"
+                                        android:text="周某人"
+                                        android:textColor="@color/main_status_blue"
+                                        android:textSize="@dimen/d14" />
+
+                                </LinearLayout>
+
+
+                                <LinearLayout
+                                    android:layout_width="@dimen/d0"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/d6"
-                                    android:maxLines="1"
-                                    android:text=""
-                                    android:textSize="@dimen/d14" />
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <android.support.v7.widget.AppCompatTextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="注  册  地："
+                                        android:textSize="@dimen/d14" />
+
+                                    <android.support.v7.widget.AppCompatTextView
+                                        android:id="@+id/tv_zc_data"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/d6"
+                                        android:text="成都"
+                                        android:textColor="@color/main_status_blue"
+                                        android:textSize="@dimen/d14" />
+
+                                </LinearLayout>
 
 
                             </LinearLayout>
@@ -108,37 +142,6 @@
                         android:orientation="vertical"
                         android:paddingTop="@dimen/d24">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-
-                            <LinearLayout
-                                android:layout_width="@dimen/d0"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:orientation="horizontal">
-
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="注  册  地："
-                                    android:textColor="@color/main_text_color"
-                                    android:textSize="@dimen/d15" />
-
-                                <android.support.v7.widget.AppCompatTextView
-                                    android:id="@+id/tv_zc_data"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/d6"
-                                    android:text=""
-                                    android:textSize="@dimen/d15" />
-
-                            </LinearLayout>
-
-                        </LinearLayout>
-
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -150,7 +153,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="信用代码："
-                                android:textColor="@color/main_text_color"
                                 android:textSize="@dimen/d15" />
 
                             <android.support.v7.widget.AppCompatTextView
@@ -158,6 +160,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/d6"
+                                android:textColor="@color/main_text_color"
                                 android:text=""
                                 android:textSize="@dimen/d15" />
                         </LinearLayout>
@@ -172,7 +175,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="注册类型："
-                                android:textColor="@color/main_text_color"
                                 android:textSize="@dimen/d15" />
 
                             <android.support.v7.widget.AppCompatTextView
@@ -180,6 +182,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/d6"
+                                android:textColor="@color/main_text_color"
                                 android:text=""
                                 android:textSize="@dimen/d15" />
 
@@ -195,7 +198,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="经营地址："
-                                android:textColor="@color/main_text_color"
                                 android:textSize="@dimen/d15" />
 
                             <android.support.v7.widget.AppCompatTextView
@@ -203,6 +205,29 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/d6"
+                                android:textColor="@color/main_text_color"
+                                android:text=""
+                                android:textSize="@dimen/d15" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:paddingTop="@dimen/d10">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="联系方式："
+                                android:textSize="@dimen/d15" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_lxr"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/d6"
+                                android:textColor="@color/main_text_color"
                                 android:text=""
                                 android:textSize="@dimen/d15" />
                         </LinearLayout>

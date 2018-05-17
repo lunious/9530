@@ -68,10 +68,10 @@
 
 
             <ImageView
-                android:layout_width="@dimen/d15"
-                android:layout_height="@dimen/d15"
+                android:layout_width="@dimen/d16"
+                android:layout_height="@dimen/d16"
                 android:layout_gravity="center"
-                android:paddingLeft="@dimen/d2"
+                android:paddingLeft="@dimen/d4"
                 android:paddingTop="@dimen/d1"
                 android:src="@mipmap/location" />
 

@@ -1,7 +1,6 @@
 package com.lubanjianye.biaoxuntong.ui.main.query;
 
 import android.support.annotation.Nullable;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lubanjianye.biaoxuntong.R;
@@ -21,8 +20,23 @@ public class CompanySearchResultListAdapter extends BaseQuickAdapter<CompanySear
         helper.setText(R.id.tv_company_name, item.getQy());
 
         String lxr = item.getLxr();
-        if (lxr != null) {
-            helper.setText(R.id.tv_lxr, lxr);
+
+        String ss = "";
+        if (lxr.contains("，")) {
+            String regex = "\\，";
+            String[] arr = lxr.split(regex);
+
+            for (int i = 0; i < arr.length; i++) {
+                String s1 = arr[0];
+                ss = s1;
+            }
+        } else {
+            ss = lxr;
+        }
+
+
+        if (ss != null) {
+            helper.setText(R.id.tv_lxr, ss);
         } else {
             helper.setText(R.id.tv_lxr, "暂未添加");
         }

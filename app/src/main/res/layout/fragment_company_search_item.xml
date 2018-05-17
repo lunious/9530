@@ -30,7 +30,7 @@
                 android:maxLines="2"
                 android:text="Main Title"
                 android:textColor="#ff434343"
-                android:textSize="@dimen/d15" />
+                android:textSize="@dimen/d16" />
 
             <LinearLayout
                 android:id="@+id/linear_temp"

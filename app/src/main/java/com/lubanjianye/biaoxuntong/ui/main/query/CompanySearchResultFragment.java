@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -36,11 +35,9 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -195,9 +192,11 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
 
                 final CompanySearchResultListBean data = (CompanySearchResultListBean) adapter.getData().get(position);
                 final String sfId = data.getSfId();
+                final String lxr = data.getLxr();
 
                 Intent intent = new Intent(getActivity(), CompanyDetailActivity.class);
                 intent.putExtra("sfId", sfId);
+                intent.putExtra("lxr", lxr);
                 startActivity(intent);
             }
         });

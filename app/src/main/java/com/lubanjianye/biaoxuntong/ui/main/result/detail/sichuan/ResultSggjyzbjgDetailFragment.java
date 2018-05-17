@@ -362,8 +362,6 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                         tvOwerToubiaoxianjia.setText("暂无");
                                     }
                                     String oneTree = data.getString("oneTree");
-
-
                                     if (!TextUtils.isEmpty(oneTree)) {
                                         String regex = "\\_";
                                         String[] arr = oneTree.split(regex);

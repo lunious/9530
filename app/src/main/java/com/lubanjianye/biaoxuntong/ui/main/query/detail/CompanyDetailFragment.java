@@ -43,6 +43,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
     private AppCompatTextView tvZcType = null;
     private AppCompatTextView tvJyArea = null;
     private AppCompatTextView tvPuNum = null;
+    private AppCompatTextView tvLxr = null;
     private MultipleStatusView companyDetailStatusView = null;
 
     private RecyclerView rlvQyzz = null;
@@ -73,16 +74,19 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
     private ArrayList<CompanySgyjListBean> mQyyjDataList = new ArrayList<>();
 
     private static final String ARG_SFID = "ARG_SFID";
+    private static final String ARG_LXR = "ARG_LXR";
     private String sfId = "";
+    private String lxr = "";
 
     @Override
     public Object setLayout() {
         return R.layout.fragment_company_detail;
     }
 
-    public static CompanyDetailFragment create(@NonNull String entity) {
+    public static CompanyDetailFragment create(@NonNull String sfid, String lxr) {
         final Bundle args = new Bundle();
-        args.putString(ARG_SFID, entity);
+        args.putString(ARG_SFID, sfid);
+        args.putString(ARG_LXR, lxr);
         final CompanyDetailFragment fragment = new CompanyDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -95,6 +99,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
         final Bundle args = getArguments();
         if (args != null) {
             sfId = args.getString(ARG_SFID);
+            lxr = args.getString(ARG_LXR);
         }
     }
 
@@ -154,6 +159,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
         tvZcType = getView().findViewById(R.id.tv_zc_type);
         tvJyArea = getView().findViewById(R.id.tv_jy_area);
         tvPuNum = getView().findViewById(R.id.tv_pu_num);
+        tvLxr = getView().findViewById(R.id.tv_lxr);
         companyDetailStatusView = getView().findViewById(R.id.company_detail_status_view);
 
         rlvQyzz = getView().findViewById(R.id.rlv_qyzz);
@@ -264,6 +270,12 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                                 tvPuNum.setText(tyshxydm);
                             } else {
                                 tvPuNum.setText("/");
+                            }
+
+                            if (!TextUtils.isEmpty(lxr)) {
+                                tvLxr.setText(lxr);
+                            } else {
+                                tvLxr.setText("/");
                             }
 
                         }
