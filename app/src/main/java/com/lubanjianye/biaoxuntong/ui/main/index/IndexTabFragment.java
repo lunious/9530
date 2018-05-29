@@ -767,6 +767,8 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                             indexStlTab.notifyDataSetChanged();
                         }
 
+                        provinceCode = locationCode;
+
                         requestData(true);
 
                         EventBus.getDefault().post(new EventMessage(EventMessage.LOCA_AREA_CHANGE));

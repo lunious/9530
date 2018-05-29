@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.util.appinfo.AppApplicationMgr;
 
@@ -56,7 +57,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
                 getActivity().onBackPressed();
                 break;
             case R.id.tv_luban:
-                Intent intent = new Intent(getActivity(), BrowserSuitActivity.class);
+                Intent intent = new Intent(getActivity(), BrowserActivity.class);
                 intent.putExtra("url", "http://www.lubanjianye.com/");
                 intent.putExtra("title", "鲁班建业通-招投标神器");
                 startActivity(intent);
