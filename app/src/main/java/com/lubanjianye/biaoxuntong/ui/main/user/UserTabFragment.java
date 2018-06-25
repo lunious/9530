@@ -5,8 +5,10 @@ import android.net.Uri;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
@@ -18,6 +20,7 @@ import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.about.AboutActivity;
+import com.lubanjianye.biaoxuntong.ui.main.user.avater.AccountActivity;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.company.MyCompanyActivity;
@@ -34,11 +37,14 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
@@ -50,6 +56,10 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     private LinearLayout llHelper = null;
     private LinearLayout llQuestion = null;
     private LinearLayout llSetting = null;
+    private LinearLayout llAccount = null;
+    private LinearLayout llQiandao = null;
+    private ImageView icErweima = null;
+    private LinearLayout llShare = null;
     private RelativeLayout rlLogin = null;
     private RelativeLayout rlNoLogin = null;
     private AppCompatTextView tvUserCompany = null;
@@ -66,14 +76,6 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     String imageUrl = "";
     String companyName = "";
 
-
-    private Banner banner = null;
-    private String url_1 = "";
-    private String url_2 = "";
-    private String url_3 = "";
-    private String detail_1 = "";
-    private String detail_2 = "";
-    private String detail_3 = "";
 
     private PromptDialog promptDialog = null;
 
@@ -102,25 +104,30 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
 
         imgUserAvatar = getView().findViewById(R.id.img_user_avatar);
         imgDefaultAvatar = getView().findViewById(R.id.img_default_avatar);
-        banner = getView().findViewById(R.id.banner);
         llCompany = getView().findViewById(R.id.ll_company);
         llHelper = getView().findViewById(R.id.ll_helper);
         llQuestion = getView().findViewById(R.id.ll_questions);
         llSetting = getView().findViewById(R.id.ll_setting);
+        llAccount = getView().findViewById(R.id.ll_account);
+        llShare = getView().findViewById(R.id.ll_share);
         tvUserCompany = getView().findViewById(R.id.tv_user_company);
         tvUserName = getView().findViewById(R.id.tv_user_name);
         rlLogin = getView().findViewById(R.id.rl_login);
         rlNoLogin = getView().findViewById(R.id.rl_no_login);
         messageNum = getView().findViewById(R.id.message_num);
+        llQiandao = getView().findViewById(R.id.ll_qiandao);
+        icErweima = getView().findViewById(R.id.ic_erweima);
+        llQiandao.setOnClickListener(this);
+        icErweima.setOnClickListener(this);
         rlLogin.setOnClickListener(this);
         imgDefaultAvatar.setOnClickListener(this);
         llCompany.setOnClickListener(this);
         llHelper.setOnClickListener(this);
         llQuestion.setOnClickListener(this);
         llSetting.setOnClickListener(this);
+        llAccount.setOnClickListener(this);
+        llShare.setOnClickListener(this);
 
-        //开启轮播图
-        initBanner();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -164,58 +171,6 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     public void initEvent() {
 
         showUserInfo();
-    }
-
-    public void initBanner() {
-
-        OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXBANNER)
-                .params("imgType", 2)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        final JSONObject object = JSON.parseObject(response.body());
-
-                        String status = object.getString("status");
-
-                        if ("200".equals(status)) {
-                            final JSONObject data = object.getJSONObject("data");
-                            url_1 = data.getString("imgOnePath");
-                            url_2 = data.getString("imgTwoPath");
-                            url_3 = data.getString("imgThreePath");
-                            detail_1 = data.getString("imgOneUrl");
-                            detail_2 = data.getString("imgTwoUrl");
-                            detail_3 = data.getString("imgThreeUrl");
-                        }
-
-                        final List<String> urls = new ArrayList<>();
-                        urls.add(url_1);
-                        urls.add(url_2);
-                        urls.add(url_3);
-                        banner.setImages(urls).setImageLoader(new GlideImageLoader()).start();
-                        banner.setDelayTime(4000);
-                    }
-                });
-        banner.setOnBannerListener(new OnBannerListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                Intent intent = null;
-                if (position == 0) {
-                    toShare(0, "我正在使用【鲁班标讯通】,推荐给你", "企业资质、人员资格、业绩、信用奖惩、经营风险、法律诉讼一键查询！", detail_1);
-                } else if (position == 1) {
-                    intent = new Intent(getActivity(), BrowserActivity.class);
-                    intent.putExtra("url", detail_2);
-                    intent.putExtra("title", "鲁班建业通-招投标神器");
-                    startActivity(intent);
-                } else {
-                    intent = new Intent(getActivity(), BrowserActivity.class);
-                    intent.putExtra("url", detail_3);
-                    intent.putExtra("title", "鲁班建业通-招投标神器");
-                    startActivity(intent);
-                }
-            }
-        });
-
-
     }
 
 
@@ -275,6 +230,19 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.ll_qiandao:
+                ToastUtil.shortBottonToast(getContext(), "签到");
+                break;
+            case R.id.ic_erweima:
+                ToastUtil.shortBottonToast(getContext(), "二维码");
+                break;
+            case R.id.ll_account:
+                //跳到我的账户
+                startActivity(new Intent(getContext(), AccountActivity.class));
+                break;
+            case R.id.ll_share:
+                ToastUtil.shortBottonToast(getContext(), "我的分享");
+                break;
             case R.id.ll_message:
                 //跳到消息中心
                 startActivity(new Intent(getContext(), MessageActivity.class));
