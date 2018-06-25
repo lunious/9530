@@ -21,6 +21,7 @@ import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.about.AboutActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AccountActivity;
+import com.lubanjianye.biaoxuntong.ui.main.user.avater.InviteActivity;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.company.MyCompanyActivity;
@@ -234,7 +235,8 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
                 ToastUtil.shortBottonToast(getContext(), "签到");
                 break;
             case R.id.ic_erweima:
-                ToastUtil.shortBottonToast(getContext(), "二维码");
+                //跳到我的邀请
+                startActivity(new Intent(getContext(), InviteActivity.class));
                 break;
             case R.id.ll_account:
                 //跳到我的账户
