@@ -290,14 +290,16 @@ public class SearchIndexListFragment extends BaseFragment {
 
                             String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
+
                             final JSONObject object = JSON.parseObject(jiemi);
-                            final JSONObject data = object.getJSONObject("data");
                             final String status = object.getString("status");
                             final String message = object.getString("message");
-                            final JSONArray array = data.getJSONArray("list");
-                            final boolean nextPage = data.getBoolean("nextpage");
+
 
                             if ("200".equals(status)) {
+                                final JSONObject data = object.getJSONObject("data");
+                                final JSONArray array = data.getJSONArray("list");
+                                final boolean nextPage = data.getBoolean("nextpage");
                                 if (array.size() > 0) {
                                     setData(isRefresh, array, nextPage);
                                 } else {
@@ -331,13 +333,13 @@ public class SearchIndexListFragment extends BaseFragment {
                             String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                             final JSONObject object = JSON.parseObject(jiemi);
-                            final JSONObject data = object.getJSONObject("data");
                             final String status = object.getString("status");
                             final String message = object.getString("message");
-                            final JSONArray array = data.getJSONArray("list");
-                            final boolean nextPage = data.getBoolean("nextpage");
 
                             if ("200".equals(status)) {
+                                final JSONObject data = object.getJSONObject("data");
+                                final JSONArray array = data.getJSONArray("list");
+                                final boolean nextPage = data.getBoolean("nextpage");
                                 if (array.size() > 0) {
                                     setData(isRefresh, array, nextPage);
                                 } else {

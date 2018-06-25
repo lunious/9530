@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -136,8 +135,6 @@ public class IndexListFragment extends BaseFragment {
                 final String entity = data.getEntity();
                 final String entityUrl = data.getEntityUrl();
 
-
-                Log.d("AUYSBDUYBSADASDAS", entity + "********" + entityId);
 
                 Intent intent = null;
 
