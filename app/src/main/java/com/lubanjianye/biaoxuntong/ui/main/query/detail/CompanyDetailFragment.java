@@ -10,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -23,6 +22,7 @@ import com.lubanjianye.biaoxuntong.bean.CompanyRyzzListBean;
 import com.lubanjianye.biaoxuntong.bean.CompanySgyjListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
+import com.lubanjianye.biaoxuntong.ui.main.query.qybg.QybgActivity;
 import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
@@ -45,6 +45,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
     private AppCompatTextView tvPuNum = null;
     private AppCompatTextView tvLxr = null;
     private MultipleStatusView companyDetailStatusView = null;
+    private LinearLayout llQybg = null;
 
     private RecyclerView rlvQyzz = null;
     private RecyclerView rlvRyzz = null;
@@ -77,6 +78,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
     private static final String ARG_LXR = "ARG_LXR";
     private String sfId = "";
     private String lxr = "";
+    private String companyName = "";
 
     @Override
     public Object setLayout() {
@@ -134,7 +136,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
         LinearLayoutManager layoutManager3 = new LinearLayoutManager(getContext());
         layoutManager3.setSmoothScrollbarEnabled(true);
         layoutManager3.setAutoMeasureEnabled(true);
-
+        llQybg = getView().findViewById(R.id.ll_qibg);
         rlvQyzz.setLayoutManager(layoutManager1);
         rlvRyzz.setLayoutManager(layoutManager2);
         rlvQyyj.setLayoutManager(layoutManager3);
@@ -145,6 +147,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
         rlvRyzz.setNestedScrollingEnabled(false);
         rlvQyyj.setHasFixedSize(true);
         rlvQyyj.setNestedScrollingEnabled(false);
+        llQybg.setOnClickListener(this);
 
 
     }
@@ -236,6 +239,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                             companyDetailStatusView.showContent();
                             final JSONObject data = object.getJSONObject("data");
                             String qy = data.getString("qy");
+                            companyName = qy;
                             if (!TextUtils.isEmpty(qy)) {
                                 tvMainTitle.setText(qy);
                             } else {
@@ -305,6 +309,12 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
             case R.id.ll_more_qyyj:
                 intent = new Intent(getActivity(), CompanySgyjListActivity.class);
                 intent.putExtra("sfId", sfId);
+                startActivity(intent);
+                break;
+            case R.id.ll_qibg:
+                intent = new Intent(getActivity(), QybgActivity.class);
+                intent.putExtra("sfId", sfId);
+                intent.putExtra("companyName", companyName);
                 startActivity(intent);
                 break;
             default:

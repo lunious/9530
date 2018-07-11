@@ -179,6 +179,12 @@
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.main.query.qybg.QybgActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Main"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".ui.main.user.avater.AvaterActivity"

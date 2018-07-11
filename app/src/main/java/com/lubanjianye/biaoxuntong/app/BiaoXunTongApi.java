@@ -229,6 +229,10 @@ public abstract class BiaoXunTongApi {
      * 用户行为
      */
     public static final String URL_GETUITASK = BASEURL + "bxtajax/GetuiTask/onclick";
+    /**
+     * 发送企业报告
+     */
+    public static final String URL_SENDPDF = BASEURL + "app/downpdf";
 
 
 }
