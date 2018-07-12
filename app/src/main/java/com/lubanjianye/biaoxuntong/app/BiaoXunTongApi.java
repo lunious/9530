@@ -232,7 +232,7 @@ public abstract class BiaoXunTongApi {
     /**
      * 发送企业报告
      */
-    public static final String URL_SENDPDF = BASEURL + "app/downpdf";
+    public static final String URL_SENDPDF = "http://119.23.161.79/app/downpdf/";
 
 
 }

@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
@@ -119,7 +121,7 @@ public class QybgFragment extends BaseFragment implements View.OnClickListener {
 
                 if (Pattern.matches(REGEX_EMAIL, email)) {
                     OkGo.<String>post(BiaoXunTongApi.URL_SENDPDF)
-                            .params("sfId", sfId)
+                            .params("sfId",sfId)
                             .params("email", email)
                             .params("mobile", mobile)
                             .params("token", token)
@@ -127,7 +129,14 @@ public class QybgFragment extends BaseFragment implements View.OnClickListener {
                             .execute(new StringCallback() {
                                 @Override
                                 public void onSuccess(Response<String> response) {
-
+                                    final JSONObject object = JSON.parseObject(response.body());
+                                    final String status = object.getString("status");
+                                    final String message = object.getString("message");
+                                    if ("200".equals(status)){
+                                        ToastUtil.shortBottonToast(getContext(),"发送成功，请注意查收邮箱!");
+                                    }else {
+                                        ToastUtil.shortBottonToast(getContext(),"请检查邮箱地址是否正确!");
+                                    }
                                 }
                             });
                 } else {
