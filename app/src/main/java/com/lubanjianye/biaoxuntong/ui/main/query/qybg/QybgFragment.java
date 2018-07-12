@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -18,6 +17,7 @@ import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -37,6 +37,7 @@ public class QybgFragment extends BaseFragment implements View.OnClickListener {
     private TextView tvCompany = null;
     private EditText etEmail = null;
     private TextView tvSend = null;
+    private PromptDialog promptDialog;
 
 
     private static final String ARG_SFID = "ARG_SFID";
@@ -93,6 +94,10 @@ public class QybgFragment extends BaseFragment implements View.OnClickListener {
     public void initData() {
         llIvBack.setVisibility(View.VISIBLE);
         mainBarName.setText("确认企业报告");
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
     }
 
     @Override
@@ -120,6 +125,7 @@ public class QybgFragment extends BaseFragment implements View.OnClickListener {
                 Log.d("NBAJISDASDDASD",sfId+"___"+email+"__"+mobile+"__"+token+"____"+userId);
 
                 if (Pattern.matches(REGEX_EMAIL, email)) {
+                    promptDialog.showLoading("正在发送...");
                     OkGo.<String>post(BiaoXunTongApi.URL_SENDPDF)
                             .params("sfId",sfId)
                             .params("email", email)
@@ -133,8 +139,11 @@ public class QybgFragment extends BaseFragment implements View.OnClickListener {
                                     final String status = object.getString("status");
                                     final String message = object.getString("message");
                                     if ("200".equals(status)){
+                                        promptDialog.dismissImmediately();
                                         ToastUtil.shortBottonToast(getContext(),"发送成功，请注意查收邮箱!");
+                                        getActivity().onBackPressed();
                                     }else {
+                                        promptDialog.dismissImmediately();
                                         ToastUtil.shortBottonToast(getContext(),"请检查邮箱地址是否正确!");
                                     }
                                 }
