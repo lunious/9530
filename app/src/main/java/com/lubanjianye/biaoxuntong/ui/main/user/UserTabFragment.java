@@ -247,11 +247,11 @@ public class UserTabFragment extends BaseFragment1 implements View.OnClickListen
                 break;
             case R.id.rl_login:
                 //跳到个人中心
-                startActivity(new Intent(getContext(), AvaterActivity.class));
+                ARouter.getInstance().build("/com/AvaterActivity").navigation();
                 break;
             case R.id.img_default_avatar:
                 //跳到登陆界面
-                startActivity(new Intent(getContext(), SignInActivity.class));
+                ARouter.getInstance().build("/com/SignInActivity").navigation();
                 break;
             case R.id.ll_company:
                 if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {

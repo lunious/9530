@@ -12,6 +12,7 @@ import com.lubanjianye.biaoxuntong.base.MainActivity;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
+import com.lubanjianye.biaoxuntong.ui.main.user.avater.AccountActivity;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -112,7 +113,8 @@ public class LauncherActivity extends BaseActivity {
             finish();
         } else {
             //进入主页
-            ARouter.getInstance().build("/com/MainActivity").navigation();
+//            ARouter.getInstance().build("/com/MainActivity").navigation();
+            startActivity(new Intent(LauncherActivity.this, MainActivity.class));
             finish();
         }
 

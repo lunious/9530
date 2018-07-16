@@ -509,7 +509,7 @@ public class IndexTabFragment extends BaseFragment1 implements View.OnClickListe
 
 
     private void setUI(List<String> mList) {
-        mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
+        mAdapter = new IndexFragmentAdapter(getContext(), getChildFragmentManager(), mList);
         indexVp.setAdapter(mAdapter);
         indexStlTab.setViewPager(indexVp);
         mAdapter.notifyDataSetChanged();
