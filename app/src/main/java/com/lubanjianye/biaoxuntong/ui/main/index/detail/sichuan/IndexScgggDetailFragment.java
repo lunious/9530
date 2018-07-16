@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -25,7 +26,6 @@ import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjg
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
 import com.lubanjianye.biaoxuntong.util.AppConfig;
@@ -782,10 +782,7 @@ public class IndexScgggDetailFragment extends BaseFragment1 implements View.OnCl
 
             case R.id.tv_gzgg:
                 if (!tvGz.getText().toString().equals("无")){
-                    intent = new Intent(getActivity(), BrowserSuitActivity.class);
-                    intent.putExtra("url", gzUrl);
-                    intent.putExtra("title", "更正公告");
-                    startActivity(intent);
+                    ARouter.getInstance().build("/com/BrowserSuitActivity").withString("mUrl",shareUrl).withString("mTitle","更正公告").navigation();
                 }
                 break;
             case R.id.tv_jggg:

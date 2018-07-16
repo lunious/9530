@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -29,7 +30,6 @@ import com.lubanjianye.biaoxuntong.bean.QueryBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
@@ -525,10 +525,7 @@ public class QueryFragment extends BaseFragment1 implements View.OnClickListener
         switch (view.getId()) {
             case R.id.vip_detail:
                 String VipUrl = "http://m.lubanjianye.com/home/index/vipservice.html";
-                Intent intent = new Intent(getActivity(), BrowserSuitActivity.class);
-                intent.putExtra("url", VipUrl);
-                intent.putExtra("title", "");
-                startActivity(intent);
+                ARouter.getInstance().build("/com/BrowserSuitActivity").withString("mUrl",VipUrl).withString("mTitle","").navigation();
                 break;
             case R.id.btn_add:
                 if (TextUtils.isEmpty(one)) {

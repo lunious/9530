@@ -15,14 +15,6 @@ import com.lubanjianye.biaoxuntong.R;
 
 import java.util.List;
 
-/**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.ui.dropdown
- * 文件名:   SpinerPopWindow
- * 创建者:   lunious
- * 创建时间: 2017/12/15  18:12
- * 描述:     TODO
- */
 
 public class SpinerPopWindow<T> extends PopupWindow {
 

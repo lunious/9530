@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -26,7 +27,6 @@ import com.lubanjianye.biaoxuntong.bean.IndexListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.detail.IndexArticleDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.ui.main.index.IndexListAdapter;
@@ -203,13 +203,8 @@ public class SearchIndexListFragment extends BaseFragment1 {
                         startActivity(intent);
                     } else if ("cqcggg".equals(entity)) {
                         final String title = data.getEntryName();
-                        intent = new Intent(getActivity(), BrowserDetailActivity.class);
-                        intent.putExtra("api", BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL);
-                        intent.putExtra("title", title);
-                        intent.putExtra("entity", entity);
-                        intent.putExtra("entityid", entityId);
-                        startActivity(intent);
-
+                        ARouter.getInstance().build("/com/BrowserDetailActivity").withString("mApi",BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL)
+                                .withString("mTitle",title).withString("mEntity",entity).withInt("mEntityid",entityId).navigation();
                     } else if ("cqsggjy".equals(entity)) {
                         intent = new Intent(BiaoXunTong.getApplicationContext(), IndexArticleDetailActivity.class);
                         intent.putExtra("entityId", entityId);

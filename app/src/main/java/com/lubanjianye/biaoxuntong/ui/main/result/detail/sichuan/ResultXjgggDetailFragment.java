@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
@@ -20,7 +21,6 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexScgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgrowDetailActivity;
@@ -371,10 +371,7 @@ public class ResultXjgggDetailFragment extends BaseFragment1 implements View.OnC
                                         tvOwerLianxiLink.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                Intent intent = new Intent(getActivity(), BrowserSuitActivity.class);
-                                                intent.putExtra("url", link);
-                                                intent.putExtra("title", shareTitle);
-                                                startActivity(intent);
+                                                ARouter.getInstance().build("/com/BrowserSuitActivity").withString("mUrl",link).withString("mTitle",shareTitle).navigation();
                                             }
                                         });
                                     } else {
@@ -552,10 +549,7 @@ public class ResultXjgggDetailFragment extends BaseFragment1 implements View.OnC
                                         tvOwerLianxiLink.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
-                                                Intent intent = new Intent(getActivity(), BrowserSuitActivity.class);
-                                                intent.putExtra("url", link);
-                                                intent.putExtra("title", shareTitle);
-                                                startActivity(intent);
+                                                ARouter.getInstance().build("/com/BrowserSuitActivity").withString("mUrl",link).withString("mTitle",shareTitle).navigation();
                                             }
                                         });
                                     } else {

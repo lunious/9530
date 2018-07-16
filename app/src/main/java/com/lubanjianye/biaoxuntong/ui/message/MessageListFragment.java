@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -21,7 +22,6 @@ import com.lubanjianye.biaoxuntong.bean.MessageListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.chongqing.IndexCqsggjyDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
@@ -176,12 +176,8 @@ public class MessageListFragment extends BaseFragment1 implements View.OnClickLi
                     startActivity(intent);
                 } else if ("cqcggg".equals(entity)) {
                     final String title = data.getEntityName();
-                    intent = new Intent(getActivity(), BrowserDetailActivity.class);
-                    intent.putExtra("api", BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL);
-                    intent.putExtra("title", title);
-                    intent.putExtra("entity", entity);
-                    intent.putExtra("entityid", entityId);
-                    startActivity(intent);
+                    ARouter.getInstance().build("/com/BrowserDetailActivity").withString("mApi",BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL)
+                            .withString("mTitle",title).withString("mEntity",entity).withInt("mEntityid",entityId).navigation();
                 } else if ("cqsggjy".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexCqsggjyDetailActivity.class);
                     intent.putExtra("entityId", entityId);

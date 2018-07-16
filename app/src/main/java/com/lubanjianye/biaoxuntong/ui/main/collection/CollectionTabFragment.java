@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -22,7 +23,6 @@ import com.lubanjianye.biaoxuntong.bean.CollectionListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.detail.IndexArticleDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.detail.ResultArticleDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
@@ -55,11 +55,9 @@ import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
 import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
-
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -364,12 +362,8 @@ public class CollectionTabFragment extends BaseFragment1 implements View.OnClick
                         startActivity(intent);
                     } else if ("cqcggg".equals(entity)) {
                         final String title = data.getEntryName();
-                        intent = new Intent(getActivity(), BrowserDetailActivity.class);
-                        intent.putExtra("api", BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL);
-                        intent.putExtra("title", title);
-                        intent.putExtra("entity", entity);
-                        intent.putExtra("entityid", entityId);
-                        startActivity(intent);
+                        ARouter.getInstance().build("/com/BrowserDetailActivity").withString("mApi",BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL)
+                                .withString("mTitle",title).withString("mEntity",entity).withInt("mEntityid",entityId).navigation();
                     } else if ("cqsggjy".equals(entity)) {
                         intent = new Intent(BiaoXunTong.getApplicationContext(), IndexCqsggjyDetailActivity.class);
                         intent.putExtra("entityId", entityId);

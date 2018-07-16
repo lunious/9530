@@ -25,7 +25,6 @@ import com.lubanjianye.biaoxuntong.ui.detail.IndexArticleDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgrowDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.view.TipView;
 import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexScgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
@@ -191,12 +190,8 @@ public class IndexListFragment extends BaseFragment1 {
                         startActivity(intent);
                     } else if ("cqcggg".equals(entity)) {
                         final String title = data.getEntryName();
-                        intent = new Intent(getActivity(), BrowserDetailActivity.class);
-                        intent.putExtra("api", BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL);
-                        intent.putExtra("title", title);
-                        intent.putExtra("entity", entity);
-                        intent.putExtra("entityid", entityId);
-                        startActivity(intent);
+                        ARouter.getInstance().build("/com/BrowserDetailActivity").withString("mApi",BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL)
+                                .withString("mTitle",title).withString("mEntity",entity).withInt("mEntityid",entityId).navigation();
 
                     } else if ("cqsggjy".equals(entity)) {
                         intent = new Intent(BiaoXunTong.getApplicationContext(), IndexArticleDetailActivity.class);

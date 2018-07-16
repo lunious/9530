@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -22,7 +23,6 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
@@ -644,20 +644,14 @@ public class IndexCqsggjyDetailFragment extends BaseFragment1 implements View.On
                 }
                 break;
             case R.id.tv_yw:
-                Intent intent = new Intent(getActivity(), BrowserSuitActivity.class);
-                intent.putExtra("url", shareUrl);
-                intent.putExtra("title", shareTitle);
-                startActivity(intent);
+                ARouter.getInstance().build("/com/BrowserSuitActivity").withString("mUrl",shareUrl).withString("mTitle",shareTitle).navigation();
                 break;
             case R.id.tv_gzgg:
-                intent = new Intent(getActivity(), BrowserSuitActivity.class);
-                intent.putExtra("url", gzUrl);
-                intent.putExtra("title", "更正公告");
-                startActivity(intent);
+                ARouter.getInstance().build("/com/BrowserSuitActivity").withString("mUrl",gzUrl).withString("mTitle","更正公告").navigation();
                 break;
             case R.id.tv_jggg:
                 if ("cqsggjyzbjg".equals(jgEntity)) {
-                    intent = new Intent(BiaoXunTong.getApplicationContext(), ResultCqsggjyzbjgDetailActivity.class);
+                    Intent intent = new Intent(BiaoXunTong.getApplicationContext(), ResultCqsggjyzbjgDetailActivity.class);
                     intent.putExtra("entityId", Integer.valueOf(jgEntityId));
                     intent.putExtra("entity", jgEntity);
                     intent.putExtra("ajaxlogtype", "0");
