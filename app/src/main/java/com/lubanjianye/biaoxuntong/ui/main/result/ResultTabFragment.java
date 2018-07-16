@@ -7,13 +7,13 @@ import android.view.View;
 
 import com.flyco.tablayout.SlidingTabLayout;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ResultTabFragment extends BaseFragment {
+public class ResultTabFragment extends BaseFragment1 {
 
     private AppCompatTextView mainBarName = null;
     private SlidingTabLayout resulttStlTab = null;

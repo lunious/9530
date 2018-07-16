@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.base.MainActivity;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
@@ -27,7 +27,7 @@ import java.util.List;
 import static com.lubanjianye.biaoxuntong.app.BiaoXunTong.getApplicationContext;
 
 
-public class LauncherScrollFragment extends BaseFragment {
+public class LauncherScrollFragment extends BaseFragment1 {
 
     private ViewPager vpGuidePages = null;
     private LinearLayout llGuidePoints = null;

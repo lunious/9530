@@ -22,7 +22,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.ui.search.adapter.BaseFragmentStateAdapter;
 import com.lubanjianye.biaoxuntong.ui.search.rx.RxBus;
 import com.lubanjianye.biaoxuntong.ui.search.rx.RxManager;
@@ -40,7 +40,7 @@ import java.util.List;
 
 import rx.functions.Action1;
 
-public class SearchFragment extends BaseFragment implements View.OnClickListener {
+public class SearchFragment extends BaseFragment1 implements View.OnClickListener {
 
 
     private ViewPager viewPager;

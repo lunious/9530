@@ -2,8 +2,8 @@ package com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan;
 
 import android.content.Intent;
 
-import com.lubanjianye.biaoxuntong.base.BaseActivity;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseActivity1;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 
 /**
  * 项目名:   LBBXT
@@ -14,7 +14,7 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
  * 描述:     TODO
  */
 
-public class IndexHyzxDetailActivity extends BaseActivity {
+public class IndexHyzxDetailActivity extends BaseActivity1 {
 
 
     private String mTitle = "";
@@ -22,7 +22,7 @@ public class IndexHyzxDetailActivity extends BaseActivity {
     private String mContent = "";
 
     @Override
-    public BaseFragment setRootFragment() {
+    public BaseFragment1 setRootFragment() {
         Intent intent = getIntent();
         if (intent != null) {
             mTitle = intent.getStringExtra("title");

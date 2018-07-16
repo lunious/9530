@@ -19,7 +19,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.bean.BindCompanyBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
@@ -48,7 +48,7 @@ import java.util.List;
  * 描述:     TODO
  */
 
-public class BindCompanyFragment extends BaseFragment implements View.OnClickListener {
+public class BindCompanyFragment extends BaseFragment1 implements View.OnClickListener {
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;

@@ -17,26 +17,26 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.bean.CollectionListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.detail.IndexArticleDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.detail.ResultArticleDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.chongqing.IndexCqsggjyDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity;
-import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgrowDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgtableDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexXcgggDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultXjgggDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.chongqing.IndexCqsggjyDetailActivity;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
@@ -64,7 +64,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CollectionTabFragment extends BaseFragment implements View.OnClickListener {
+public class CollectionTabFragment extends BaseFragment1 implements View.OnClickListener {
 
     private AppCompatTextView mainBarName = null;
     private AppCompatButton btnToLogin = null;

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.ui.push.PushService;
 import com.lzy.okgo.OkGo;
@@ -22,6 +23,9 @@ import okhttp3.OkHttpClient;
 
 
 public class App extends Application {
+    //开发者模式开关
+    public static boolean isDebug = true;
+
 
     @Override
     public void onCreate() {
@@ -39,7 +43,17 @@ public class App extends Application {
         initShareUtil();
         //初始化okgo
         okgo();
+        //初始化Arouter
+        initArouter();
 
+    }
+
+    private void initArouter() {
+        if (isDebug) {           // 这两行必须写在init之前，否则这些配置在init过程中将无效
+            ARouter.openLog();     // 打印日志
+            ARouter.openDebug();   // 开启调试模式(如果在InstantRun模式下运行，必须开启调试模式！线上版本需要关闭,否则有安全风险)
+        }
+        ARouter.init(this); // 尽可能早，推荐在Application中初始化
     }
 
     private void initFragment() {

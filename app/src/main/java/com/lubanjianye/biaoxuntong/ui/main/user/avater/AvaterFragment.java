@@ -17,7 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
@@ -50,7 +50,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * 个人中心
  */
 
-public class AvaterFragment extends BaseFragment implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
+public class AvaterFragment extends BaseFragment1 implements View.OnClickListener, EasyPermissions.PermissionCallbacks {
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;

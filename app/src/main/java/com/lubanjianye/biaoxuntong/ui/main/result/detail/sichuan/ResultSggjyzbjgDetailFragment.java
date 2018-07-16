@@ -17,20 +17,20 @@ import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexScgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgrowDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgtableDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexXcgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.query.CompanySearchResultActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
+import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgtableDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexXcgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
@@ -50,7 +50,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 
 
-public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
+public class ResultSggjyzbjgDetailFragment extends BaseFragment1 implements View.OnClickListener, OpenBuilder.Callback {
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;

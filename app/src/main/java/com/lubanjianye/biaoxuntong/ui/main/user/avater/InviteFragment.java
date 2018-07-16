@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 /**
@@ -12,7 +12,7 @@ import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
  * Date: 2018/6/25 16:35
  * Description:
  */
-public class InviteFragment extends BaseFragment implements View.OnClickListener {
+public class InviteFragment extends BaseFragment1 implements View.OnClickListener {
     private LinearLayout llBack = null;
     private LinearLayout llWenhao = null;
 

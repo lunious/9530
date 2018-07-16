@@ -14,7 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.bean.CompanySgyjListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
@@ -42,7 +42,7 @@ import java.util.List;
  * 描述:     TODO
  */
 
-public class MyCompanyQyyjAllListFragment extends BaseFragment implements View.OnClickListener {
+public class MyCompanyQyyjAllListFragment extends BaseFragment1 implements View.OnClickListener {
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;

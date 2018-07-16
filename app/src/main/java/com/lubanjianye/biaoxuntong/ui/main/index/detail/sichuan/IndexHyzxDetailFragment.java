@@ -2,7 +2,6 @@ package com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,11 +9,11 @@ import android.widget.LinearLayout;
 
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 
 
-public class IndexHyzxDetailFragment extends BaseFragment implements View.OnClickListener {
+public class IndexHyzxDetailFragment extends BaseFragment1 implements View.OnClickListener {
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;

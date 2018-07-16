@@ -12,7 +12,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.igexin.sdk.PushManager;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
@@ -28,7 +28,7 @@ import org.greenrobot.eventbus.EventBus;
 
 
 
-public class ZhLoginFragment extends BaseFragment implements View.OnClickListener {
+public class ZhLoginFragment extends BaseFragment1 implements View.OnClickListener {
 
     private AppCompatEditText etLoginUsername = null;
     private AppCompatEditText etLoginPwd = null;

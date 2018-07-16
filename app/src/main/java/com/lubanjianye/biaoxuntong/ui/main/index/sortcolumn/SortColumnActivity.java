@@ -1,7 +1,7 @@
 package com.lubanjianye.biaoxuntong.ui.main.index.sortcolumn;
 
-import com.lubanjianye.biaoxuntong.base.BaseActivity;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseActivity1;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 
 /**
  * 项目名:   LBBXT
@@ -12,9 +12,9 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
  * 描述:     TODO
  */
 
-public class SortColumnActivity extends BaseActivity {
+public class SortColumnActivity extends BaseActivity1 {
     @Override
-    public BaseFragment setRootFragment() {
+    public BaseFragment1 setRootFragment() {
         return new SortColumnFragment();
     }
 }

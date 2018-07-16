@@ -5,7 +5,7 @@ import android.content.Intent;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.base.MainActivity;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
@@ -19,7 +19,7 @@ import com.lzy.okgo.model.Response;
 import java.util.List;
 
 
-public class LauncherFragment extends BaseFragment {
+public class LauncherFragment extends BaseFragment1 {
 
     private long userId = 0;
     private String token = null;

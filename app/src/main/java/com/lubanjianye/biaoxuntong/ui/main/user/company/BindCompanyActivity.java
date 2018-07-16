@@ -1,7 +1,7 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.company;
 
-import com.lubanjianye.biaoxuntong.base.BaseActivity;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseActivity1;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 
 /**
  * 项目名:   9527
@@ -12,9 +12,9 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
  * 描述:     TODO
  */
 
-public class BindCompanyActivity extends BaseActivity {
+public class BindCompanyActivity extends BaseActivity1 {
     @Override
-    public BaseFragment setRootFragment() {
+    public BaseFragment1 setRootFragment() {
         return new BindCompanyFragment();
     }
 }

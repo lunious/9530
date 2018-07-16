@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.lubanjianye.biaoxuntong.base.BaseActivity;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseActivity1;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -20,7 +20,7 @@ import com.lzy.okgo.model.Response;
  * 描述:     TODO
  */
 
-public class ResultXjgggDetailActivity extends BaseActivity {
+public class ResultXjgggDetailActivity extends BaseActivity1 {
 
     private int mEntityId = -1;
     private String mEntity = "";
@@ -28,7 +28,7 @@ public class ResultXjgggDetailActivity extends BaseActivity {
     private String mId = "";
 
     @Override
-    public BaseFragment setRootFragment() {
+    public BaseFragment1 setRootFragment() {
         Intent intent = getIntent();
         if (intent != null) {
             mEntityId = intent.getIntExtra("entityId", -1);

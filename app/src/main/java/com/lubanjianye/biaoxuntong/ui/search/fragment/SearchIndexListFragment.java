@@ -21,7 +21,7 @@ import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.bean.IndexListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
@@ -30,7 +30,6 @@ import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.detail.IndexArticleDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.ui.main.index.IndexListAdapter;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.chongqing.IndexCqsggjyDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexScgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
@@ -49,7 +48,7 @@ import com.lzy.okgo.model.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchIndexListFragment extends BaseFragment {
+public class SearchIndexListFragment extends BaseFragment1 {
 
 
     private TextView tvArea = null;

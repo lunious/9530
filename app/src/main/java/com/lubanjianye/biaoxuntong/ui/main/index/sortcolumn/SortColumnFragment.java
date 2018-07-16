@@ -17,7 +17,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnItemDragListener;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.bean.SortColumnBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SortColumnFragment extends BaseFragment implements View.OnClickListener {
+public class SortColumnFragment extends BaseFragment1 implements View.OnClickListener {
 
     private ImageView ivClose = null;
     private RecyclerView oldColumnRv = null;

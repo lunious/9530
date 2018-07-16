@@ -16,20 +16,19 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.bean.ResultListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.ui.detail.IndexArticleDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.detail.ResultArticleDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.search.activity.SearchActivity;
 import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultSggjyzbjgDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.result.detail.sichuan.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
@@ -51,7 +50,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ResultListFragment extends BaseFragment {
+public class ResultListFragment extends BaseFragment1 {
 
     private RecyclerView resultRecycler = null;
     private SmartRefreshLayout resultRefresh = null;

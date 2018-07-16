@@ -24,7 +24,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.igexin.sdk.PushManager;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
@@ -70,7 +70,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 import static com.lubanjianye.biaoxuntong.app.BiaoXunTong.getApplicationContext;
 
 
-public class IndexTabFragment extends BaseFragment implements View.OnClickListener, BDLocationListener, EasyPermissions.PermissionCallbacks {
+public class IndexTabFragment extends BaseFragment1 implements View.OnClickListener, BDLocationListener, EasyPermissions.PermissionCallbacks {
 
     private SlidingTabLayout indexStlTab = null;
     private ViewPager indexVp = null;

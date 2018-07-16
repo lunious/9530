@@ -9,47 +9,43 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.about.AboutActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AccountActivity;
-import com.lubanjianye.biaoxuntong.ui.main.user.avater.InviteActivity;
-import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
-import com.lubanjianye.biaoxuntong.ui.main.user.company.MyCompanyActivity;
+import com.lubanjianye.biaoxuntong.ui.main.user.avater.InviteActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.setting.SettingActivity;
+import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.ui.main.user.company.MyCompanyActivity;
 import com.lubanjianye.biaoxuntong.ui.message.MessageActivity;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
-import com.lubanjianye.biaoxuntong.util.loader.GlideImageLoader;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
-import com.youth.banner.Banner;
-import com.youth.banner.listener.OnBannerListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class UserTabFragment extends BaseFragment implements View.OnClickListener {
+public class UserTabFragment extends BaseFragment1 implements View.OnClickListener {
 
     private CircleImageView imgUserAvatar = null;
     private CircleImageView imgDefaultAvatar = null;
@@ -311,11 +307,11 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.ll_questions:
                 //关于我们界面
-                startActivity(new Intent(getContext(), AboutActivity.class));
+                ARouter.getInstance().build("/com/AboutActivity").navigation();
                 break;
             case R.id.ll_setting:
                 //设置界面
-                startActivity(new Intent(getContext(), SettingActivity.class));
+                ARouter.getInstance().build("/com/SettingActivity").navigation();
                 break;
             default:
                 break;

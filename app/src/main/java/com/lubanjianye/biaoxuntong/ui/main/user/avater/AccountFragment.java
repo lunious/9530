@@ -14,14 +14,14 @@ import android.widget.LinearLayout;
 import com.just.agentweb.AgentWebConfig;
 import com.just.agentweb.AgentWebUtils;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 
 /**
  * Author: lunious
  * Date: 2018/6/25 14:57
  * Description:
  */
-public class AccountFragment extends BaseFragment implements View.OnClickListener {
+public class AccountFragment extends BaseFragment1 implements View.OnClickListener {
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
     private WebView webView = null;

@@ -14,7 +14,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.bean.CompanySgyjListBean;
 import com.lubanjianye.biaoxuntong.bean.MyCompanyQyzzAllListBean;
 import com.lubanjianye.biaoxuntong.bean.MyCompanyRyzzAllListBean;
@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MyCompanyFragment extends BaseFragment implements View.OnClickListener {
+public class MyCompanyFragment extends BaseFragment1 implements View.OnClickListener {
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;

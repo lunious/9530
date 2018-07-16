@@ -16,7 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.bean.CompanyQyzzListBean;
 import com.lubanjianye.biaoxuntong.bean.CompanyRyzzListBean;
 import com.lubanjianye.biaoxuntong.bean.CompanySgyjListBean;
@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CompanyDetailFragment extends BaseFragment implements View.OnClickListener {
+public class CompanyDetailFragment extends BaseFragment1 implements View.OnClickListener {
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;

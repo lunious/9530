@@ -18,13 +18,13 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.bean.CompanySearchResultListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.main.query.detail.CompanyDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CompanySearchResultFragment extends BaseFragment implements View.OnClickListener {
+public class CompanySearchResultFragment extends BaseFragment1 implements View.OnClickListener {
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;

@@ -2,21 +2,21 @@ package com.lubanjianye.biaoxuntong.ui.browser;
 
 import android.content.Intent;
 
-import com.lubanjianye.biaoxuntong.base.BaseActivity;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseActivity1;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 
 /**
  * Created by 11645 on 2018/3/22.
  */
 
-public class BrowserDetailActivity extends BaseActivity {
+public class BrowserDetailActivity extends BaseActivity1 {
     private String mApi = "";
     private String mTitle = "";
     private String mEntity = "";
     private int mEntityid = -1;
 
     @Override
-    public BaseFragment setRootFragment() {
+    public BaseFragment1 setRootFragment() {
         Intent intent = getIntent();
         if (intent != null) {
             mApi = intent.getStringExtra("api");

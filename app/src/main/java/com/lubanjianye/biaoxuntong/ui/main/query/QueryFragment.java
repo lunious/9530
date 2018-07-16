@@ -23,16 +23,16 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.bean.JsonString;
 import com.lubanjianye.biaoxuntong.bean.QueryBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
-import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
+import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
@@ -58,7 +58,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class QueryFragment extends BaseFragment implements View.OnClickListener {
+public class QueryFragment extends BaseFragment1 implements View.OnClickListener {
 
     private AppCompatTextView mainBarName = null;
     private EditText etQuery = null;

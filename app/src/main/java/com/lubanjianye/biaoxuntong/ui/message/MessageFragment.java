@@ -10,7 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
@@ -29,7 +29,7 @@ import java.util.List;
  * Created by 11645 on 2018/3/21.
  */
 
-public class MessageFragment extends BaseFragment implements View.OnClickListener {
+public class MessageFragment extends BaseFragment1 implements View.OnClickListener {
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;

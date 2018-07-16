@@ -1,13 +1,10 @@
 package com.lubanjianye.biaoxuntong.ui.browser;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -16,7 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.just.agentweb.AgentWeb;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
@@ -35,7 +32,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 
 
-public class BrowserDetailFragment extends BaseFragment implements View.OnClickListener {
+public class BrowserDetailFragment extends BaseFragment1 implements View.OnClickListener {
 
 
     private LinearLayout mBack = null;

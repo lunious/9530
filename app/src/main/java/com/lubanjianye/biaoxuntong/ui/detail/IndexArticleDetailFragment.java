@@ -26,19 +26,15 @@ import com.just.agentweb.AgentWebConfig;
 import com.just.agentweb.AgentWebUtils;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
 import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
-import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
-import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
-import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
@@ -56,7 +52,7 @@ import java.util.List;
 import static com.lubanjianye.biaoxuntong.app.BiaoXunTong.getApplicationContext;
 
 
-public class IndexArticleDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
+public class IndexArticleDetailFragment extends BaseFragment1 implements View.OnClickListener, OpenBuilder.Callback {
 
 
     private LinearLayout llIvBack = null;

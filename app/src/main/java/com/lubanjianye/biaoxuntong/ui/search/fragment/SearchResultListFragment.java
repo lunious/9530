@@ -17,7 +17,7 @@ import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.bean.ResultListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
@@ -44,7 +44,7 @@ import java.util.List;
  * Created by lunious on 2018/3/28.
  * Desc:
  */
-public class SearchResultListFragment extends BaseFragment {
+public class SearchResultListFragment extends BaseFragment1 {
 
 
     private RecyclerView resultRecycler = null;

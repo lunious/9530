@@ -2,18 +2,18 @@ package com.lubanjianye.biaoxuntong.ui.main.query;
 
 import android.content.Intent;
 
-import com.lubanjianye.biaoxuntong.base.BaseActivity;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseActivity1;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 
 
-public class CompanySearchResultActivity extends BaseActivity {
+public class CompanySearchResultActivity extends BaseActivity1 {
 
     private String provinceCode = "";
     private String qyIds = "";
     private String showSign = "";
 
     @Override
-    public BaseFragment setRootFragment() {
+    public BaseFragment1 setRootFragment() {
 
         Intent intent = getIntent();
         if (intent != null) {

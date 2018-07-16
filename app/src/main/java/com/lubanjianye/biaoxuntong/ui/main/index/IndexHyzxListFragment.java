@@ -13,15 +13,15 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.bean.IndexHyzxListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexHyzxDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.view.TipView;
 import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexHyzxDetailActivity;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
@@ -49,7 +49,7 @@ import java.util.List;
  * 描述:     TODO
  */
 
-public class IndexHyzxListFragment extends BaseFragment {
+public class IndexHyzxListFragment extends BaseFragment1 {
 
     private RecyclerView indexHyzxRecycler = null;
     private SmartRefreshLayout indexHyzxRefresh = null;

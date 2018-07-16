@@ -13,7 +13,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.igexin.sdk.PushManager;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
@@ -40,7 +40,7 @@ import me.shaohui.shareutil.login.result.WxToken;
 import me.shaohui.shareutil.login.result.WxUser;
 
 
-public class SignInFragment extends BaseFragment implements View.OnClickListener {
+public class SignInFragment extends BaseFragment1 implements View.OnClickListener {
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;

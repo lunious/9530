@@ -2,19 +2,19 @@ package com.lubanjianye.biaoxuntong.ui.main.query.detail;
 
 import android.content.Intent;
 
-import com.lubanjianye.biaoxuntong.base.BaseActivity;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseActivity1;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 
 
 
-public class CompanyDetailActivity extends BaseActivity {
+public class CompanyDetailActivity extends BaseActivity1 {
 
     private String sfId = "";
     private String lxr = "";
 
 
     @Override
-    public BaseFragment setRootFragment() {
+    public BaseFragment1 setRootFragment() {
 
         Intent intent = getIntent();
         if (intent != null) {

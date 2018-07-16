@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.ui.search.adapter.SearchHistoryAdapter;
 import com.lubanjianye.biaoxuntong.ui.search.rx.RxBus;
 import com.lubanjianye.biaoxuntong.ui.search.util.AccountPreference;
@@ -25,7 +25,7 @@ import java.util.List;
 
 import cn.lankton.flowlayout.FlowLayout;
 
-public class SearchHistoryFragment extends BaseFragment {
+public class SearchHistoryFragment extends BaseFragment1 {
 
     private static final int MAX_HISTORY_AMOUNT = 19;
 

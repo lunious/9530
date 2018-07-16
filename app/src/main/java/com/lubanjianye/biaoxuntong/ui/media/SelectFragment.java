@@ -24,7 +24,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.ui.media.adapter.ImageAdapter;
 import com.lubanjianye.biaoxuntong.ui.media.adapter.ImageFolderAdapter;
 import com.lubanjianye.biaoxuntong.ui.media.bean.Image;
@@ -44,7 +44,7 @@ import java.util.List;
  * Created by 11645 on 2018/1/26.
  */
 
-public class SelectFragment extends BaseFragment implements SelectImageContract.View, View.OnClickListener,
+public class SelectFragment extends BaseFragment1 implements SelectImageContract.View, View.OnClickListener,
         ImageLoaderListener, BaseRecyclerAdapter.OnItemClickListener {
 
 

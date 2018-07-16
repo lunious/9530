@@ -14,7 +14,7 @@ import android.view.View;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
@@ -30,7 +30,7 @@ import com.lzy.okgo.model.Response;
 import org.greenrobot.eventbus.EventBus;
 
 
-public class YzmLoginFragment extends BaseFragment implements View.OnClickListener {
+public class YzmLoginFragment extends BaseFragment1 implements View.OnClickListener {
 
     private AppCompatEditText etRetrieveTel = null;
     private AppCompatEditText etRetrieveCodeInput = null;

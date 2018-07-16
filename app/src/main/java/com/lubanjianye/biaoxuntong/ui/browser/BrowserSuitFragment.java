@@ -8,7 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -17,18 +16,16 @@ import android.widget.LinearLayout;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.AgentWebConfig;
 import com.just.agentweb.AgentWebUtils;
-import com.just.agentweb.DefaultWebClient;
 import com.just.agentweb.IAgentWebSettings;
-import com.just.agentweb.LogUtils;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 /**
  * Created by 11645 on 2018/3/22.
  */
 
-public class BrowserSuitFragment extends BaseFragment implements View.OnClickListener {
+public class BrowserSuitFragment extends BaseFragment1 implements View.OnClickListener {
 
 
     private LinearLayout mBack = null;

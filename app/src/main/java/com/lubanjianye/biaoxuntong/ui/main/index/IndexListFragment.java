@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -14,7 +13,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.bean.IndexListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
@@ -22,13 +21,13 @@ import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.detail.IndexArticleDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgrowDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.view.TipView;
 import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexScgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjyDetailActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgrowDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgtableDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexXcgggDetailActivity;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
@@ -56,7 +55,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class IndexListFragment extends BaseFragment {
+public class IndexListFragment extends BaseFragment1 {
 
     private RecyclerView indexRecycler = null;
     private SmartRefreshLayout indexRefresh = null;

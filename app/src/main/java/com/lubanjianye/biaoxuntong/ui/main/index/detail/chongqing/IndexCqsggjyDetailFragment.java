@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.TextUtils;
@@ -19,13 +18,13 @@ import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserSuitActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.chongqing.ResultCqsggjyzbjgDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
@@ -46,7 +45,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.List;
 
 
-public class IndexCqsggjyDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
+public class IndexCqsggjyDetailFragment extends BaseFragment1 implements View.OnClickListener, OpenBuilder.Callback {
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
     private MultipleStatusView indexSggjyDetailStatusView = null;

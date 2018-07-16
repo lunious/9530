@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.parser.RichTextParser;
@@ -26,7 +26,7 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
 
-public class SignUpFragment extends BaseFragment implements View.OnClickListener {
+public class SignUpFragment extends BaseFragment1 implements View.OnClickListener {
 
     private PromptDialog promptDialog = null;
 

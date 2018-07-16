@@ -3,63 +3,49 @@ package com.lubanjianye.biaoxuntong.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import com.gyf.barlibrary.ImmersionBar;
 import com.lubanjianye.biaoxuntong.ui.share.ShareDialog;
 import com.lubanjianye.biaoxuntong.util.HTMLUtil;
 
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
-import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
+import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
-/**
- * Author: lunious
- * Date: 2018/7/16 13:44
- * Description:
- */
-public abstract class BaseActivity extends SwipeBackActivity {
 
-    private Unbinder unbinder;
+public abstract class BaseFragment1 extends SwipeBackFragment {
+
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //初始化，默认透明状态栏和黑色导航栏
-        ImmersionBar.with(this).init();
-        setContentView(getLayoutId());
-        unbinder = ButterKnife.bind(this);
-        initData(savedInstanceState);
-        initEvent(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView = null;
+        if (setLayout() instanceof Integer) {
+            rootView = inflater.inflate((Integer) setLayout(), container, false);
+        } else if (setLayout() instanceof View) {
+            rootView = (View) setLayout();
+        }
+        return rootView;
+    }
 
+    public final BaseActivity1 getProxyActivity() {
+        return (BaseActivity1) _mActivity;
     }
 
     @Override
-    protected void onDestroy() {
-        //不调用该方法，如果界面bar发生改变，在不关闭app的情况下，退出此界面再进入将记忆最后一次bar改变的状态
-        ImmersionBar.with(this).destroy();
-        //垃圾回收
-        System.gc();
-        System.runFinalization();
-        unbinder.unbind();
-        super.onDestroy();
-
+    public void onLazyInitView(@Nullable Bundle savedInstanceState) {
+        super.onLazyInitView(savedInstanceState);
+        initView();
+        initData();
+        initEvent();
     }
 
+    public abstract Object setLayout();
 
-    /**
-     * 布局
-     */
-    protected abstract int getLayoutId();
+    public abstract void initView();
 
-    /**
-     * 数据
-     */
-    protected abstract void initData(Bundle savedInstanceState);
+    public abstract void initData();
 
-    /**
-     * 事件
-     */
-    protected abstract void initEvent(Bundle savedInstanceState);
+    public abstract void initEvent();
 
 
     protected ShareDialog mAlertDialog;
@@ -84,7 +70,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
         // 分享
         if (mAlertDialog == null) {
             mAlertDialog = new
-                    ShareDialog(this, id)
+                    ShareDialog(getActivity(), id)
                     .type(id)
                     .title(title)
                     .content(content)

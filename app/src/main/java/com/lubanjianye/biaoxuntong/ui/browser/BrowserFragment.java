@@ -12,14 +12,14 @@ import android.widget.LinearLayout;
 
 import com.just.agentweb.AgentWeb;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 /**
  * Created by 11645 on 2018/3/22.
  */
 
-public class BrowserFragment extends BaseFragment implements View.OnClickListener {
+public class BrowserFragment extends BaseFragment1 implements View.OnClickListener {
 
 
     private LinearLayout mBack = null;

@@ -14,7 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
@@ -31,7 +31,7 @@ import java.util.regex.Pattern;
  * Date: 2018/7/11 10:24
  * Description:
  */
-public class QybgFragment extends BaseFragment implements View.OnClickListener {
+public class QybgFragment extends BaseFragment1 implements View.OnClickListener {
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
     private TextView tvCompany = null;

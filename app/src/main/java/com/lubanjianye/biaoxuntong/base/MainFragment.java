@@ -34,7 +34,7 @@ public class MainFragment extends MainTabFragment {
     public static final int FOUR = 3;
     public static final int FIVE = 4;
 
-    private BaseFragment[] mFragments = new BaseFragment[5];
+    private BaseFragment1[] mFragments = new BaseFragment1[5];
 
     private BottomBar mBottomBar;
 
@@ -48,7 +48,7 @@ public class MainFragment extends MainTabFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        BaseFragment firstFragment = findChildFragment(IndexTabFragment.class);
+        BaseFragment1 firstFragment = findChildFragment(IndexTabFragment.class);
         if (firstFragment == null) {
             mFragments[FIRST] = new IndexTabFragment();
             mFragments[SECOND] = new QueryFragment();

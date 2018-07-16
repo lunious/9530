@@ -6,7 +6,7 @@ import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 
-public class MainTabFragment extends BaseFragment {
+public class MainTabFragment extends BaseFragment1 {
 
 
     @Override
