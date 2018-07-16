@@ -2,6 +2,8 @@ package com.lubanjianye.biaoxuntong.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.widget.FrameLayout;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
@@ -9,40 +11,45 @@ import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
+import com.lubanjianye.biaoxuntong.ui.main.collection.CollectionTabFragment;
 import com.lubanjianye.biaoxuntong.ui.main.index.IndexTabFragment;
 import com.lubanjianye.biaoxuntong.ui.main.query.QueryFragment;
-import com.lubanjianye.biaoxuntong.ui.main.user.UserTabFragment;
 import com.lubanjianye.biaoxuntong.ui.main.result.ResultTabFragment;
-import com.lubanjianye.biaoxuntong.ui.main.collection.CollectionTabFragment;
+import com.lubanjianye.biaoxuntong.ui.main.user.UserTabFragment;
 import com.lubanjianye.biaoxuntong.ui.view.botton.BottomBar;
 import com.lubanjianye.biaoxuntong.ui.view.botton.BottomBarTab;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
+import butterknife.BindView;
 
-public class MainFragment extends MainTabFragment {
+import butterknife.Unbinder;
+
+
+public class MainFragment extends BaseFragment {
 
     public static final int FIRST = 0;
     public static final int SECOND = 1;
     public static final int THIRD = 2;
     public static final int FOUR = 3;
     public static final int FIVE = 4;
+    @BindView(R.id.main_tab_container)
+    FrameLayout mainTabContainer;
+    @BindView(R.id.bottomBar)
+    BottomBar bottomBar;
+    Unbinder unbinder;
 
     private BaseFragment1[] mFragments = new BaseFragment1[5];
 
-    private BottomBar mBottomBar;
-
-
-    @Override
-    public Object setLayout() {
-        return R.layout.fragment_main;
-    }
 
 
     @Override
@@ -81,29 +88,20 @@ public class MainFragment extends MainTabFragment {
 
         //取消注册EventBus
         EventBus.getDefault().unregister(this);
+        unbinder.unbind();
     }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void XXXXXX(EventMessage message) {
-
-        if (EventMessage.READ_STATUS.equals(message.getMessage()) || EventMessage.LOGIN_SUCCSS.equals(message.getMessage())) {
-            showMessageCount();
-        } else if (EventMessage.LOGIN_OUT.equals(message.getMessage())) {
-            mBottomBar.getItem(4).setUnreadCount(-1);
-        }
-
-    }
-
 
     @Override
-    public void initView() {
+    protected int getLayoutId() {
+        return R.layout.fragment_main;
+    }
 
+    @Override
+    protected void initData(Bundle savedInstanceState) {
         //注册EventBus
         EventBus.getDefault().register(this);
 
-
-        mBottomBar = getView().findViewById(R.id.bottomBar);
-        mBottomBar
+        bottomBar
                 .addItem(new BottomBarTab(_mActivity, R.mipmap.main_index_tab, getString(R.string.first)))
                 .addItem(new BottomBarTab(_mActivity, R.mipmap.main_query_tab, getString(R.string.second)))
                 .addItem(new BottomBarTab(_mActivity, R.mipmap.main_collection_tab, getString(R.string.third)))
@@ -111,7 +109,7 @@ public class MainFragment extends MainTabFragment {
                 .addItem(new BottomBarTab(_mActivity, R.mipmap.main_user_tab, getString(R.string.five)));
 
 
-        mBottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
+        bottomBar.setOnTabSelectedListener(new BottomBar.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int position, int prePosition) {
                 showHideFragment(mFragments[position], mFragments[prePosition]);
@@ -137,9 +135,25 @@ public class MainFragment extends MainTabFragment {
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             showMessageCount();
         }
+    }
 
+    @Override
+    protected void initEnvent(Bundle savedInstanceState) {
 
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void XXXXXX(EventMessage message) {
+
+        if (EventMessage.READ_STATUS.equals(message.getMessage()) || EventMessage.LOGIN_SUCCSS.equals(message.getMessage())) {
+            showMessageCount();
+        } else if (EventMessage.LOGIN_OUT.equals(message.getMessage())) {
+            bottomBar.getItem(4).setUnreadCount(-1);
+        }
+
+    }
+
+
 
     private long id = 0;
 
@@ -162,15 +176,36 @@ public class MainFragment extends MainTabFragment {
                             final JSONObject data = userInfo.getJSONObject("data");
                             final int messNum = data.getInteger("mesCount");
                             if (messNum > 0) {
-                                mBottomBar.getItem(4).setUnreadCount(0);
+                                bottomBar.getItem(4).setUnreadCount(0);
                             } else {
-                                mBottomBar.getItem(4).setUnreadCount(-1);
+                                bottomBar.getItem(4).setUnreadCount(-1);
                             }
                         } else {
-                            mBottomBar.getItem(4).setUnreadCount(-1);
+                            bottomBar.getItem(4).setUnreadCount(-1);
                         }
                     }
                 });
+    }
+
+
+    // 再点一次退出程序时间设置
+    private static final long WAIT_TIME = 3000L;
+    private long TOUCH_TIME = 0;
+
+    /**
+     * 处理回退事件
+     *
+     * @return
+     */
+    @Override
+    public boolean onBackPressedSupport() {
+        if (System.currentTimeMillis() - TOUCH_TIME < WAIT_TIME) {
+            _mActivity.finish();
+        } else {
+            TOUCH_TIME = System.currentTimeMillis();
+            ToastUtil.shortToast(getContext(), "再按一次退出程序");
+        }
+        return true;
     }
 
 
