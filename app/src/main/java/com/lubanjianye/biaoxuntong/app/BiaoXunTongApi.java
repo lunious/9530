@@ -7,7 +7,6 @@ public abstract class BiaoXunTongApi {
 
 
     public static final String BASEURL = "http://api.lubanjianye.com/";
-//    public static final String BASEURL = "http://192.168.0.50:8080/";
     /**
      * 一键已读
      */

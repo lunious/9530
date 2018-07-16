@@ -232,18 +232,18 @@ public class UserTabFragment extends BaseFragment1 implements View.OnClickListen
                 break;
             case R.id.ic_erweima:
                 //跳到我的邀请
-                startActivity(new Intent(getContext(), InviteActivity.class));
+                ARouter.getInstance().build("/com/InviteActivity").navigation();
                 break;
             case R.id.ll_account:
                 //跳到我的账户
-                startActivity(new Intent(getContext(), AccountActivity.class));
+                ARouter.getInstance().build("/com/AccountActivity").navigation();
                 break;
             case R.id.ll_share:
                 ToastUtil.shortBottonToast(getContext(), "我的分享");
                 break;
             case R.id.ll_message:
                 //跳到消息中心
-                startActivity(new Intent(getContext(), MessageActivity.class));
+                ARouter.getInstance().build("/com/MessageActivity").navigation();
                 break;
             case R.id.rl_login:
                 //跳到个人中心
@@ -265,7 +265,7 @@ public class UserTabFragment extends BaseFragment1 implements View.OnClickListen
                     }
                     if (!TextUtils.isEmpty(companyName)) {
                         //进入我的资质界面
-                        startActivity(new Intent(getContext(), MyCompanyActivity.class));
+                        ARouter.getInstance().build("/com/MyCompanyActivity").navigation();
 
                     } else {
                         //进入个人中心界面
@@ -276,7 +276,7 @@ public class UserTabFragment extends BaseFragment1 implements View.OnClickListen
                     }
                 } else {
                     //未登录去登陆
-                    startActivity(new Intent(getContext(), SignInActivity.class));
+                    ARouter.getInstance().build("/com/SignInActivity").navigation();
                 }
                 break;
             case R.id.ll_helper:

@@ -2,6 +2,7 @@ package com.lubanjianye.biaoxuntong.ui.browser;
 
 import android.content.Intent;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
 import com.lubanjianye.biaoxuntong.base.BaseActivity1;
 import com.lubanjianye.biaoxuntong.base.BaseFragment1;
 
@@ -9,6 +10,7 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment1;
  * Created by 11645 on 2018/3/22.
  */
 
+@Route(path = "/com/BrowserDetailActivity")
 public class BrowserDetailActivity extends BaseActivity1 {
     private String mApi = "";
     private String mTitle = "";

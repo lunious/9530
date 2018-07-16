@@ -5,6 +5,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -19,7 +21,6 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.detail.IndexArticleDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.sichuan.IndexSggjycgrowDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.view.TipView;
@@ -371,15 +372,9 @@ public class IndexListFragment extends BaseFragment1 {
                 if (position == 0) {
                     toShare(0, "我正在使用【鲁班标讯通】,推荐给你", "企业资质、人员资格、业绩、信用奖惩、经营风险、法律诉讼一键查询！", detail_1);
                 } else if (position == 1) {
-                    intent = new Intent(getActivity(), BrowserActivity.class);
-                    intent.putExtra("url", detail_2);
-                    intent.putExtra("title", "鲁班建业通-招投标神器");
-                    startActivity(intent);
+                    ARouter.getInstance().build("/com/BrowserActivity").withString("mUrl",detail_2).withString("mTitle","鲁班建业通-招投标神器").navigation();
                 } else {
-                    intent = new Intent(getActivity(), BrowserActivity.class);
-                    intent.putExtra("url", detail_3);
-                    intent.putExtra("title", "鲁班建业通-招投标神器");
-                    startActivity(intent);
+                    ARouter.getInstance().build("/com/BrowserActivity").withString("mUrl",detail_3).withString("mTitle","鲁班建业通-招投标神器").navigation();
                 }
             }
         });

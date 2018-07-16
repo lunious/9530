@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lubanjianye.biaoxuntong.ui.share.ShareDialog;
 import com.lubanjianye.biaoxuntong.util.HTMLUtil;
@@ -24,6 +25,8 @@ public abstract class BaseActivity extends SwipeBackActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //初始化Arouter注解方法
+        ARouter.getInstance().inject(this);
         //初始化，默认透明状态栏和黑色导航栏
         ImmersionBar.with(this).init();
         setContentView(getLayoutId());

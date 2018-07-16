@@ -4,14 +4,6 @@ import android.app.Activity;
 import android.os.Handler;
 import java.util.HashMap;
 
-/**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.app
- * 文件名:   Configurator
- * 创建者:   lunious
- * 创建时间: 2017/12/10  19:18
- * 描述:     TODO
- */
 
 public class Configurator {
 

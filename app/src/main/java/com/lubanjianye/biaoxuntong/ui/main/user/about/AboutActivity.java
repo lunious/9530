@@ -1,16 +1,14 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.about;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.LinearLayout;
 import com.alibaba.android.arouter.facade.annotation.Route;
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseActivity;
-import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.util.appinfo.AppApplicationMgr;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -58,10 +56,7 @@ public class AboutActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tv_luban:
-                Intent intent = new Intent(this, BrowserActivity.class);
-                intent.putExtra("url", "http://www.lubanjianye.com/");
-                intent.putExtra("title", "鲁班建业通-招投标神器");
-                startActivity(intent);
+                ARouter.getInstance().build("/com/BrowserActivity").withString("mUrl","http://www.lubanjianye.com/").withString("mTitle","鲁班建业通-招投标神器").navigation();
                 break;
             case R.id.ll_tj:
                 toShare(0, "我正在使用【鲁班标讯通】,推荐给你", "企业资质、人员资格、业绩、信用奖惩、经营风险、法律诉讼一键查询！", "http://api.lubanjianye.com/bxtajax/Entryajax/sharehtml?src=share");
