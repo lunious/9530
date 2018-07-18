@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
+
+import com.alibaba.android.arouter.launcher.ARouter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -22,7 +24,6 @@ import com.lubanjianye.biaoxuntong.bean.CompanyRyzzListBean;
 import com.lubanjianye.biaoxuntong.bean.CompanySgyjListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
-import com.lubanjianye.biaoxuntong.ui.main.query.qybg.QybgActivity;
 import com.lubanjianye.biaoxuntong.ui.view.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
@@ -312,10 +313,7 @@ public class CompanyDetailFragment extends BaseFragment1 implements View.OnClick
                 startActivity(intent);
                 break;
             case R.id.ll_qibg:
-                intent = new Intent(getActivity(), QybgActivity.class);
-                intent.putExtra("sfId", sfId);
-                intent.putExtra("companyName", companyName);
-                startActivity(intent);
+                ARouter.getInstance().build("/com/QybgActivity").withString("sfId",sfId).withString("companyName",companyName).navigation();
                 break;
             default:
                 break;

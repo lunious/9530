@@ -8,7 +8,6 @@ import com.gyf.barlibrary.ImmersionBar;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
 

@@ -37,7 +37,6 @@ import com.lzy.okgo.model.Response;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
-
 import rx.functions.Action1;
 
 public class SearchFragment extends BaseFragment1 implements View.OnClickListener {

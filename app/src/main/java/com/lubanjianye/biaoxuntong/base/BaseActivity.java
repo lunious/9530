@@ -3,12 +3,10 @@ package com.lubanjianye.biaoxuntong.base;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-
 import com.alibaba.android.arouter.launcher.ARouter;
 import com.gyf.barlibrary.ImmersionBar;
 import com.lubanjianye.biaoxuntong.ui.share.ShareDialog;
 import com.lubanjianye.biaoxuntong.util.HTMLUtil;
-
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
