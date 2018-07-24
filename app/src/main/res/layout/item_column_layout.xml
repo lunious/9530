@@ -12,6 +12,7 @@
         android:layout_marginTop="@dimen/d5"
         android:background="@drawable/shape_column_bg"
         android:gravity="center"
+        android:maxLines="1"
         android:padding="@dimen/d2"
         android:text="资讯"
         android:textSize="@dimen/s14" />
